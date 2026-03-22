@@ -881,6 +881,52 @@ function App() {
     else{setCopied(key);showToast("Copied to clipboard!");}
   }
 
+  function logShift(){
+    if(!shiftInput.tips&&!shiftInput.rating&&!shiftInput.deliveries) return;
+    const entry={
+      date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"}),
+      time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),
+      tips:parseFloat(shiftInput.tips)||0,
+      rating:parseFloat(shiftInput.rating)||0,
+      deliveries:parseInt(shiftInput.deliveries)||0,
+      note:shiftInput.note.trim(),
+    };
+    const updated=[entry,...shifts].slice(0,90);
+    setShifts(updated);
+    save("dp3-shifts",updated);
+    setShiftInput({tips:"",rating:"",deliveries:"",note:""});
+    showToast("Shift logged!");
+  }
+
+  function addJournal(){
+    if(!journalInput.trim()) return;
+    const entry={text:journalInput.trim(),date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})};
+    const updated=[entry,...journal].slice(0,200);
+    setJournal(updated);
+    save("dp3-journal",updated);
+    setJournalInput("");
+    showToast("Entry saved!");
+  }
+
+  function togglePreShift(i){
+    const updated=preShift.map((item,idx)=>idx===i?{...item,done:!item.done}:item);
+    setPreShift(updated);
+    save("dp3-preshift",updated);
+  }
+
+  function resetPreShift(){
+    const updated=preShift.map(item=>({...item,done:false}));
+    setPreShift(updated);
+    save("dp3-preshift",updated);
+  }
+
+  const trackLast7=shifts.slice(0,7);
+  const trackAvgTips=trackLast7.length?(trackLast7.reduce((a,s)=>a+s.tips,0)/trackLast7.length).toFixed(2):null;
+  const trackRated=trackLast7.filter(s=>s.rating>0);
+  const trackAvgRating=trackRated.length?(trackRated.reduce((a,s)=>a+s.rating,0)/trackRated.length).toFixed(2):null;
+  const trackDeliveries=trackLast7.reduce((a,s)=>a+s.deliveries,0);
+  const trackTrendUp=shifts.length>=6&&(shifts.slice(0,3).reduce((a,s)=>a+s.tips,0)/3)>(shifts.slice(3,6).reduce((a,s)=>a+s.tips,0)/3);
+
   function toggleCheck(i){
     const updated=checks.map((c,idx)=>idx===i?{...c,done:!c.done}:c);
     setChecks(updated);
@@ -1609,63 +1655,11 @@ function App() {
           </div>
         )}
 
-      </div>
-
         {/* ══ TRACK ═════════════════════════════════════════════════════════════ */}
-        {tab==="track"&&(()=>{
-          const GREEN=C.green, AMBER=C.amber, BLUE=C.blue;
-
-          function logShift(){
-            if(!shiftInput.tips&&!shiftInput.rating&&!shiftInput.deliveries) return;
-            const entry={
-              date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"}),
-              time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),
-              tips:parseFloat(shiftInput.tips)||0,
-              rating:parseFloat(shiftInput.rating)||0,
-              deliveries:parseInt(shiftInput.deliveries)||0,
-              note:shiftInput.note.trim(),
-            };
-            const updated=[entry,...shifts].slice(0,90);
-            setShifts(updated);
-            save("dp3-shifts",updated);
-            setShiftInput({tips:"",rating:"",deliveries:"",note:""});
-            showToast("Shift logged!");
-          }
-
-          function addJournal(){
-            if(!journalInput.trim()) return;
-            const entry={text:journalInput.trim(),date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})};
-            const updated=[entry,...journal].slice(0,200);
-            setJournal(updated);
-            save("dp3-journal",updated);
-            setJournalInput("");
-            showToast("Entry saved!");
-          }
-
-          function togglePreShift(i){
-            const updated=preShift.map((item,idx)=>idx===i?{...item,done:!item.done}:item);
-            setPreShift(updated);
-            save("dp3-preshift",updated);
-          }
-
-          function resetPreShift(){
-            const updated=preShift.map(item=>({...item,done:false}));
-            setPreShift(updated);
-            save("dp3-preshift",updated);
-          }
-
-          // Stats calculations
-          const last7=shifts.slice(0,7);
-          const avgTips=last7.length?( last7.reduce((a,s)=>a+s.tips,0)/last7.length).toFixed(2):null;
-          const avgRating=last7.filter(s=>s.rating>0).length?(last7.filter(s=>s.rating>0).reduce((a,s)=>a+s.rating,0)/last7.filter(s=>s.rating>0).length).toFixed(2):null;
-          const totalDeliveries=last7.reduce((a,s)=>a+s.deliveries,0);
-          const allAvgTips=shifts.length?(shifts.reduce((a,s)=>a+s.tips,0)/shifts.length).toFixed(2):null;
-          const trendUp=shifts.length>=4&&(shifts.slice(0,3).reduce((a,s)=>a+s.tips,0)/3)>(shifts.slice(3,6).reduce((a,s)=>a+s.tips,0)/3);
-
-          return(
+        {tab==="track"&&(
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
-              <div style={{fontSize:13,fontWeight:800,color:GREEN,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Track</div>
+              <div style={{fontSize:13,fontWeight:800,color:C.green,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Track</div>
               <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Your Progress</div>
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Log shifts, track tips, and see if the app is working.</div>
             </div>
@@ -1673,7 +1667,7 @@ function App() {
             {/* Sub-nav */}
             <div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
               {[["log","📊 Tips & Ratings"],["preshift","✅ Pre-Shift"],["journal","📓 Journal"]].map(([id,label])=>(
-                <button key={id} onClick={()=>setShiftView(id)} style={{flex:1,background:shiftView===id?GREEN:"transparent",border:"none",borderRadius:9,padding:"9px 4px",fontSize:11,fontWeight:700,cursor:"pointer",color:shiftView===id?"#000":C.text3,transition:"all 0.18s",boxShadow:shiftView===id?`0 0 12px ${GREEN}50`:"none"}}>{label}</button>
+                <button key={id} onClick={()=>setShiftView(id)} style={{flex:1,background:shiftView===id?C.green:"transparent",border:"none",borderRadius:9,padding:"9px 4px",fontSize:11,fontWeight:700,cursor:"pointer",color:shiftView===id?"#000":C.text3,transition:"all 0.18s",boxShadow:shiftView===id?`0 0 12px ${C.green}50`:"none"}}>{label}</button>
               ))}
             </div>
 
@@ -1685,9 +1679,9 @@ function App() {
                 {shifts.length>0&&(
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
                     {[
-                      ["Avg Tips","$"+(avgTips||"—"),GREEN,avgTips?"last 7 shifts":"no data"],
-                      ["Avg Rating",avgRating||"—",AMBER,avgRating?"last 7 shifts":"no ratings yet"],
-                      ["Deliveries",totalDeliveries||"—",BLUE,"last 7 shifts"],
+                      ["Avg Tips","$"+(trackAvgTips||"—"),C.green,trackAvgTips?"last 7 shifts":"no data"],
+                      ["Avg Rating",trackAvgRating||"—",C.amber,trackAvgRating?"last 7 shifts":"no ratings yet"],
+                      ["Deliveries",trackDeliveries||"—",C.blue,"last 7 shifts"],
                     ].map(([label,val,col,sub],i)=>(
                       <div key={i} style={{background:C.s1,border:`1px solid ${col}20`,borderRadius:14,padding:"12px 10px",textAlign:"center"}}>
                         <div style={{fontSize:11,color:C.text3,fontWeight:600,marginBottom:4}}>{label}</div>
@@ -1700,11 +1694,11 @@ function App() {
 
                 {/* Trend indicator */}
                 {shifts.length>=6&&(
-                  <div style={{background:trendUp?`rgba(16,185,129,0.08)`:`rgba(244,63,94,0.08)`,border:`1px solid ${trendUp?"rgba(16,185,129,0.25)":"rgba(244,63,94,0.25)"}`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",gap:10}}>
-                    <span style={{fontSize:20}}>{trendUp?"📈":"📉"}</span>
+                  <div style={{background:trackTrendUp?`rgba(16,185,129,0.08)`:`rgba(244,63,94,0.08)`,border:`1px solid ${trackTrendUp?"rgba(16,185,129,0.25)":"rgba(244,63,94,0.25)"}`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",gap:10}}>
+                    <span style={{fontSize:20}}>{trackTrendUp?"📈":"📉"}</span>
                     <div>
-                      <div style={{fontSize:13,fontWeight:700,color:trendUp?GREEN:C.red}}>{trendUp?"Your tips are trending up":"Your tips have dipped recently"}</div>
-                      <div style={{fontSize:12,color:C.text2,marginTop:2}}>{trendUp?"Keep doing what you're doing — it's working.":"Review the Earn tab for habits that help."}</div>
+                      <div style={{fontSize:13,fontWeight:700,color:trackTrendUp?C.green:C.red}}>{trackTrendUp?"Your tips are trending up":"Your tips have dipped recently"}</div>
+                      <div style={{fontSize:12,color:C.text2,marginTop:2}}>{trackTrendUp?"Keep doing what you're doing — it's working.":"Review the Earn tab for habits that help."}</div>
                     </div>
                   </div>
                 )}
@@ -1735,7 +1729,7 @@ function App() {
                     onChange={e=>setShiftInput({...shiftInput,note:e.target.value})}
                     style={{background:C.s2,border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"10px 12px",color:C.text,fontSize:13,width:"100%",marginBottom:12}}
                   />
-                  <button onClick={logShift} style={{background:`linear-gradient(135deg,${GREEN},#059669)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 4px 16px rgba(16,185,129,0.35)`}}>Log This Shift</button>
+                  <button onClick={logShift} style={{background:`linear-gradient(135deg,${C.green},#059669)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 4px 16px rgba(16,185,129,0.35)`}}>Log This Shift</button>
                 </div>
 
                 {/* History */}
@@ -1756,8 +1750,8 @@ function App() {
                           <div>
                             <div style={{fontSize:12,color:C.text3,marginBottom:3}}>{s.date} · {s.time}</div>
                             <div style={{display:"flex",gap:12,alignItems:"center"}}>
-                              {s.tips>0&&<span style={{fontSize:15,fontWeight:900,color:GREEN}}>${s.tips.toFixed(2)}</span>}
-                              {s.rating>0&&<span style={{fontSize:13,fontWeight:700,color:AMBER}}>⭐ {s.rating}</span>}
+                              {s.tips>0&&<span style={{fontSize:15,fontWeight:900,color:C.green}}>${s.tips.toFixed(2)}</span>}
+                              {s.rating>0&&<span style={{fontSize:13,fontWeight:700,color:C.amber}}>⭐ {s.rating}</span>}
                               {s.deliveries>0&&<span style={{fontSize:13,color:C.text2}}>{s.deliveries} deliveries</span>}
                             </div>
                           </div>
@@ -1781,16 +1775,16 @@ function App() {
                 {preShift.map((item,i)=>(
                   <button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>togglePreShift(i)}
                     style={{background:item.done?`rgba(16,185,129,0.08)`:C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.18s",boxShadow:item.done?`0 0 14px rgba(16,185,129,0.18)`:"none"}}>
-                    <div style={{width:26,height:26,borderRadius:8,border:`2px solid ${item.done?GREEN:"rgba(255,255,255,0.15)"}`,background:item.done?GREEN:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>
+                    <div style={{width:26,height:26,borderRadius:8,border:`2px solid ${item.done?C.green:"rgba(255,255,255,0.15)"}`,background:item.done?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>
                       {item.done&&<span style={{color:"#000",fontSize:14,fontWeight:900}}>✓</span>}
                     </div>
-                    <span style={{fontSize:14,fontWeight:600,color:item.done?GREEN:C.text,flex:1}}>{item.e} {item.t}</span>
+                    <span style={{fontSize:14,fontWeight:600,color:item.done?C.green:C.text,flex:1}}>{item.e} {item.t}</span>
                   </button>
                 ))}
                 <div style={{display:"flex",gap:8,marginTop:4}}>
                   <button onClick={resetPreShift} style={{flex:1,background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text3}}>Reset for Next Shift</button>
                   {preShift.filter(i=>i.done).length===preShift.length&&preShift.length>0&&(
-                    <div style={{flex:1,background:`rgba(16,185,129,0.1)`,border:`1px solid rgba(16,185,129,0.3)`,borderRadius:12,padding:"12px",textAlign:"center",fontSize:13,fontWeight:800,color:GREEN}}>🚀 Ready to roll!</div>
+                    <div style={{flex:1,background:`rgba(16,185,129,0.1)`,border:`1px solid rgba(16,185,129,0.3)`,borderRadius:12,padding:"12px",textAlign:"center",fontSize:13,fontWeight:800,color:C.green}}>🚀 Ready to roll!</div>
                   )}
                 </div>
               </div>
@@ -1810,7 +1804,7 @@ function App() {
                   rows={4}
                   style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.7,width:"100%"}}
                 />
-                <button onClick={addJournal} style={{background:`linear-gradient(135deg,${BLUE},#1d4ed8)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:`0 4px 16px rgba(59,130,246,0.3)`}}>Save Entry</button>
+                <button onClick={addJournal} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:`0 4px 16px rgba(59,130,246,0.3)`}}>Save Entry</button>
 
                 {journal.length===0&&(
                   <div style={{textAlign:"center",padding:"28px 16px",color:C.text3,fontSize:13,background:C.s1,borderRadius:16}}>
@@ -1832,8 +1826,7 @@ function App() {
               </div>
             )}
           </div>
-          );
-        })()}
+        )}
 
       </div>
 
