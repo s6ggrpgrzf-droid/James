@@ -15,6 +15,7 @@
 </head>
 <body>
   <div id="root"></div>
+  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -23,7 +24,6 @@ const {useState,useEffect,useCallback,useRef}=React;
 
 const CSS = `
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-*,*::before,*::after{margin:0;padding:0;}
 html{height:100%;width:100%;background:#07080A;}
 body{height:100%;width:100%;background:#07080A;overscroll-behavior:none;-webkit-tap-highlight-color:transparent;margin:0;padding:0;}
 #root{height:100%;width:100%;background:#07080A;}
@@ -1049,8 +1049,8 @@ function App() {
               const open=tipOpen===i;
               const fav=favTips.has(i);
               return(
-                <div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>pro?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
-                  style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",opacity:pro?1:0.55,transition:"opacity 0.15s"}}>
+                <div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(pro||i<3)?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
+                  style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",opacity:(pro||i<3)?1:0.55,transition:"opacity 0.15s"}}>
                   <div style={{display:"flex",alignItems:"center",gap:12}}>
                     <div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
                     <div style={{flex:1,minWidth:0}}>
@@ -1061,6 +1061,8 @@ function App() {
                       <button onClick={e=>{e.stopPropagation();toggleFavTip(i);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"4px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
                         {fav?"★":"☆"}
                       </button>
+                    ):i<3?(
+                      <div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>
                     ):(
                       <span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
                     )}
@@ -1856,37 +1858,37 @@ function App() {
 
             {payStep==="offer"&&(
               <div>
-                <div style={{textAlign:"center",marginBottom:22}}>
-                  <div style={{fontSize:44,marginBottom:10}}>🔒</div>
-                  <div style={{fontSize:22,fontWeight:900,marginBottom:6}}>Become Elite</div>
-                  <div style={{fontSize:14,color:C.text2,lineHeight:1.7}}>Everything you need to earn more, protect your account, and stay sharp — all in one place.</div>
+                <div style={{textAlign:"center",marginBottom:20}}>
+                  <div style={{fontSize:44,marginBottom:10}}>⚡</div>
+                  <div style={{fontSize:23,fontWeight:900,marginBottom:6}}>Become Elite</div>
+                  <div style={{fontSize:14,color:C.text2,lineHeight:1.7}}>One-time $7. Lifetime access. Every update included free.</div>
                 </div>
-                <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:20}}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:12,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+                <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:18}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:14,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
                     <span style={{fontSize:15,fontWeight:700}}>Elite Access</span>
-                    <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
+                    <span style={{fontSize:24,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
                   </div>
-                  <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {["10 quick tips with full explanations","7 in-depth learning sections on psychology, tipping science, de-escalation & more","30 message templates with one-tap copy","4 training videos — the science behind what earns more","Platform habits & appeal scripts for DoorDash, Uber Eats, Spark & Instacart","Per-delivery checklists that save your progress","Notes log for problem addresses and difficult customers","Tip & rating tracker — see if the app is actually working for you","Pre-shift checklist — be ready before every shift","Shift journal — private log of what worked and what didn't"].map((f,i)=>(
-                      <div key={i} style={{display:"flex",alignItems:"center",gap:8,fontSize:12,color:C.text2}}>
-                        <span style={{color:C.green,fontWeight:900,fontSize:13}}>✓</span>{f}
+                  <div style={{display:"flex",flexDirection:"column",gap:9}}>
+                    {[["💬","30 message scripts — one tap to copy, ready to send"],["🛡️","Appeal letters for false complaints & unfair ratings"],["🎓","4 training videos on psychology & what actually earns tips"],["📖","Full beginner guide — all 4 platforms explained simply"],["🧠","Deeper learning — tip science, de-escalation & more"],["📊","Shift tracker, pre-shift checklist & shift journal"]].map(([e,f],i)=>(
+                      <div key={i} style={{display:"flex",alignItems:"center",gap:10,fontSize:13,color:C.text2}}>
+                        <span style={{fontSize:15,flexShrink:0}}>{e}</span>{f}
                       </div>
                     ))}
                   </div>
                 </div>
-                <button onClick={()=>{window.open(STRIPE_LINK,"_blank");setPayStep("code");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
-                  <span style={{fontSize:20}}>💳</span>
-                  <div style={{textAlign:"left"}}>
-                    <div>Become Elite — $7</div>
-                    <div style={{fontSize:13,fontWeight:500,opacity:0.75,marginTop:2}}>Opens secure Stripe checkout</div>
-                  </div>
-                </button>
-                <div style={{textAlign:"center",fontSize:13,color:C.text3,marginBottom:20}}>Lifetime access · Free updates forever</div>
+                {/* Stripe Buy Button - stays on page */}
+                <div style={{marginBottom:8,borderRadius:16,overflow:"hidden"}}>
+                  <stripe-buy-button
+                    buy-button-id="buy_btn_1TDdtnFiKgrWyiUSvZdQ3WUq"
+                    publishable-key="pk_live_51TDCUPFiKgrWyiUST12cAEZcdXtQgUcvVIaLtvN5FxHx1egK06TeD4loMiQD8TdEKLT3sXumDSBVQEJsGvrjhU3I00AHUtMsVD"
+                  />
+                </div>
+                <div style={{textAlign:"center",fontSize:12,color:C.text3,marginBottom:20}}>Secure checkout · Lifetime access · Free updates forever</div>
                 <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:16}}>
-                  <div style={{fontSize:13,color:C.text3,marginBottom:10}}>Already paid? Enter your unlock code:</div>
+                  <div style={{fontSize:13,color:C.text2,fontWeight:700,marginBottom:8}}>Already paid? Enter your unlock code:</div>
                   <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter code from your receipt..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"13px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
                   {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
-                  <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:12,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:12}}>Unlock with Code</button>
+                  <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:12,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:10}}>Unlock with Code</button>
                   <button onClick={()=>setPayStep("restore")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:12,width:"100%",padding:"4px"}}>Lost your code? Restore purchase →</button>
                 </div>
               </div>
@@ -1911,23 +1913,38 @@ function App() {
               <div>
                 <div style={{textAlign:"center",marginBottom:20}}>
                   <div style={{fontSize:44,marginBottom:10}}>📧</div>
-                  <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Restore Your Purchase</div>
-                  <div style={{fontSize:13,color:C.text2,lineHeight:1.7}}>Enter the email you used when you paid. We'll resend your unlock code.</div>
+                  <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Lost Your Code?</div>
+                  <div style={{fontSize:13,color:C.text2,lineHeight:1.75}}>Check your Stripe receipt email first — the unlock code is in there. Can't find it? Email us directly and we'll sort it out fast.</div>
                 </div>
-                <input value={restoreEmail} onChange={e=>{setRestoreEmail(e.target.value);setRestoreMsg("");}} placeholder="your@email.com" style={{background:"rgba(0,0,0,0.3)",border:"1.5px solid rgba(255,255,255,0.1)",borderRadius:12,padding:"14px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
-                {restoreMsg&&<div style={{fontSize:12,color:restoreMsg.includes("If")?C.green:C.red,marginBottom:8,lineHeight:1.5}}>{restoreMsg}</div>}
-                <button onClick={handleRestore} style={{background:C.blue,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",marginBottom:10}}>Send My Code</button>
+                <div style={{background:"rgba(59,130,246,0.07)",border:"1px solid rgba(59,130,246,0.2)",borderRadius:14,padding:"16px 18px",marginBottom:16,textAlign:"center"}}>
+                  <div style={{fontSize:13,color:C.text2,marginBottom:8}}>Email us with your Stripe receipt and we'll send your code:</div>
+                  <a href="mailto:support@droppilot.app" style={{fontSize:15,fontWeight:800,color:C.blue,textDecoration:"none"}}>support@droppilot.app</a>
+                </div>
+                <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:16,marginBottom:12}}>
+                  <div style={{fontSize:13,color:C.text2,fontWeight:700,marginBottom:8}}>Or enter your code if you have it:</div>
+                  <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter unlock code..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"13px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
+                  {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
+                  <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Unlock with Code</button>
+                </div>
                 <button onClick={()=>setPayStep("offer")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,width:"100%",padding:"8px"}}>← Go back</button>
               </div>
             )}
 
             {payStep==="done"&&(
               <div style={{textAlign:"center",padding:"10px 0"}}>
-                <div style={{fontSize:64,marginBottom:16}}>🎉</div>
-                <div style={{fontSize:24,fontWeight:900,marginBottom:8}}>You're Elite.</div>
-                <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training video, and every update we ship from here on. Yours forever.</div>
-                <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.purple,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 6px 20px rgba(139,92,246,0.4)",marginBottom:10}}>Go to Account Defense</button>
-                <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>See Message Templates</button>
+                <div style={{fontSize:64,marginBottom:14}}>🎉</div>
+                <div style={{fontSize:26,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>You're Elite.</div>
+                <div style={{fontSize:14,color:C.text2,marginBottom:10,lineHeight:1.75}}>Welcome to the full DropPilot system. Every script, video, defense tool, and update we ever ship — yours forever.</div>
+                <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:24,textAlign:"left"}}>
+                  {[["💬","Start with Scripts — copy a message before your next delivery"],["🛡️","Check Defend — set up your platform habits now"],["📖","New to this? Start in Basics"],["📊","Log your first shift in Track to start measuring progress"]].map(([e,f],i)=>(
+                    <div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(245,166,35,0.06)",borderRadius:10,padding:"10px 13px",border:"1px solid rgba(245,166,35,0.12)"}}>
+                      <span style={{fontSize:15,flexShrink:0}}>{e}</span>
+                      <span style={{fontSize:13,color:C.text2}}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 6px 24px rgba(245,166,35,0.4)",marginBottom:10}}>Go to Scripts →</button>
+                <button onClick={()=>{setShowPay(false);setPayStep("offer");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>Explore the App</button>
               </div>
             )}
           </div>
