@@ -400,11 +400,11 @@ function IntroAnimation({onDone}) {
 
       {/* Scene 2: Five sections */}
       <div style={ss(2)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>five sections. one toolkit.</div>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>six sections. one toolkit.</div>
         <div className="iup id1" style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.6px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Everything you need<br/>to earn more on<br/>every single shift.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
-          {[["⭐",A,"Earn","Tips, psychology, and habits that raise your rating"],["💬",B,"Scripts","Word-for-word messages for every situation"],["📖",T,"Basics","New to gig work? Everything explained from scratch"],["🛡️",P,"Defend","Protect your account when things go wrong"],["🎓",A,"Training","Short videos on what actually earns more money"]].map(([e,col,label,desc],i)=>(
+          {[["⭐",A,"Earn","Tips, psychology, and habits that raise your rating"],["💬",B,"Scripts","Word-for-word messages for every situation"],["📊",G,"Track","Log tips, ratings, and shifts — see your progress"],["📖",T,"Basics","New to gig work? Everything explained from scratch"],["🛡️",P,"Defend","Protect your account when things go wrong"],["🎓",A,"Training","Short videos on what actually earns more money"]].map(([e,col,label,desc],i)=>(
             <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,animationDelay:`${0.25+i*0.1}s`,opacity:0}}>
               <div style={{width:32,height:32,borderRadius:9,background:`${col}15`,border:`1px solid ${col}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
               <div style={{flex:1,minWidth:0}}><div style={{fontSize:13,fontWeight:800,color:col,marginBottom:1}}>{label}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.45)",lineHeight:1.3}}>{desc}</div></div>
@@ -434,7 +434,7 @@ function IntroAnimation({onDone}) {
         <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["📖",T,"Basics Guide"],["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
+          {[["📖",T,"Basics Guide"],["💬",B,"30+ Scripts"],["📊",G,"Tip Tracker"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["💰",A,"Tip Science"],["📓",G,"Shift Journal"]].map(([e,col,label],i)=>(
             <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"11px 12px",display:"flex",alignItems:"center",gap:8}}>
               <span style={{fontSize:18}}>{e}</span>
               <span style={{fontSize:12,fontWeight:700,color:col}}>{label}</span>
@@ -469,7 +469,7 @@ function IntroAnimation({onDone}) {
           <div className="iup id1" style={{fontSize:12,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Driver Command Center</div>
           <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
           <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:7,marginBottom:26,width:"100%"}}>
-            {[["⭐","Earn",A,"Free"],["💬","Scripts",B,"Elite"],["📖","Basics",T,"Elite"],["🛡️","Defend",P,"Elite"],["🎓","Training",A,"Elite"]].map(([e,t,col,badge],i)=>(
+            {[["⭐","Earn",A,"Free"],["💬","Scripts",B,"Elite"],["📊","Track",G,"Elite"],["📖","Basics",T,"Elite"],["🛡️","Defend",P,"Elite"],["🎓","Training",A,"Elite"]].map(([e,t,col,badge],i)=>(
               <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"9px 14px",background:"rgba(255,255,255,0.04)",borderRadius:12,border:"1px solid rgba(255,255,255,0.07)",animationDelay:`${0.25+i*0.09}s`,opacity:0}}>
                 <span style={{fontSize:16,flexShrink:0}}>{e}</span>
                 <span style={{fontSize:13,color:"rgba(255,255,255,0.75)",fontWeight:600,flex:1}}>{t}</span>
@@ -817,6 +817,14 @@ function App() {
   const [noteInput, setNoteInput]       = useState("");
   const [notes, setNotes]               = useState([]);
 
+  // Track tab
+  const [shifts, setShifts]             = useState([]);
+  const [shiftInput, setShiftInput]     = useState({tips:"",rating:"",deliveries:"",note:""});
+  const [shiftView, setShiftView]       = useState("log"); // log | journal | preshift
+  const [journalInput, setJournalInput] = useState("");
+  const [journal, setJournal]           = useState([]);
+  const [preShift, setPreShift]         = useState([]);
+
   const STRIPE_LINK = "https://buy.stripe.com/5kQeVd8XofwO78v8ZU48001";
 
   useEffect(()=>{
@@ -827,11 +835,25 @@ function App() {
       load("dp3-fav-tips",[]),
       load("dp3-fav-tpl",[]),
       load("dp3-notes",[]),
-    ]).then(([c,p,seen,ft,ftpl,n])=>{
+      load("dp3-shifts",[]),
+      load("dp3-journal",[]),
+      load("dp3-preshift",[
+        {e:"🔋",t:"Phone charged to 100%",done:false},
+        {e:"🔌",t:"Car charger packed",done:false},
+        {e:"📍",t:"GPS turned on",done:false},
+        {e:"🎒",t:"Delivery bag / hot bag ready",done:false},
+        {e:"💧",t:"Water bottle packed",done:false},
+        {e:"📱",t:"Delivery app logged in and working",done:false},
+        {e:"🧾",t:"Gas tank not on empty",done:false},
+      ]),
+    ]).then(([c,p,seen,ft,ftpl,n,sh,jn,ps])=>{
       setCfg_(c); setPro(!!p); setLoaded(true);
       setFavTips(new Set(ft));
       setFavTemplates(new Set(ftpl));
       setNotes(n);
+      setShifts(sh);
+      setJournal(jn);
+      setPreShift(ps);
       if(!seen) setShowIntro(true);
     });
   },[]);
@@ -1589,18 +1611,244 @@ function App() {
 
       </div>
 
+        {/* ══ TRACK ═════════════════════════════════════════════════════════════ */}
+        {tab==="track"&&(()=>{
+          const GREEN=C.green, AMBER=C.amber, BLUE=C.blue;
+
+          function logShift(){
+            if(!shiftInput.tips&&!shiftInput.rating&&!shiftInput.deliveries) return;
+            const entry={
+              date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"}),
+              time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),
+              tips:parseFloat(shiftInput.tips)||0,
+              rating:parseFloat(shiftInput.rating)||0,
+              deliveries:parseInt(shiftInput.deliveries)||0,
+              note:shiftInput.note.trim(),
+            };
+            const updated=[entry,...shifts].slice(0,90);
+            setShifts(updated);
+            save("dp3-shifts",updated);
+            setShiftInput({tips:"",rating:"",deliveries:"",note:""});
+            showToast("Shift logged!");
+          }
+
+          function addJournal(){
+            if(!journalInput.trim()) return;
+            const entry={text:journalInput.trim(),date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})};
+            const updated=[entry,...journal].slice(0,200);
+            setJournal(updated);
+            save("dp3-journal",updated);
+            setJournalInput("");
+            showToast("Entry saved!");
+          }
+
+          function togglePreShift(i){
+            const updated=preShift.map((item,idx)=>idx===i?{...item,done:!item.done}:item);
+            setPreShift(updated);
+            save("dp3-preshift",updated);
+          }
+
+          function resetPreShift(){
+            const updated=preShift.map(item=>({...item,done:false}));
+            setPreShift(updated);
+            save("dp3-preshift",updated);
+          }
+
+          // Stats calculations
+          const last7=shifts.slice(0,7);
+          const avgTips=last7.length?( last7.reduce((a,s)=>a+s.tips,0)/last7.length).toFixed(2):null;
+          const avgRating=last7.filter(s=>s.rating>0).length?(last7.filter(s=>s.rating>0).reduce((a,s)=>a+s.rating,0)/last7.filter(s=>s.rating>0).length).toFixed(2):null;
+          const totalDeliveries=last7.reduce((a,s)=>a+s.deliveries,0);
+          const allAvgTips=shifts.length?(shifts.reduce((a,s)=>a+s.tips,0)/shifts.length).toFixed(2):null;
+          const trendUp=shifts.length>=4&&(shifts.slice(0,3).reduce((a,s)=>a+s.tips,0)/3)>(shifts.slice(3,6).reduce((a,s)=>a+s.tips,0)/3);
+
+          return(
+          <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+            <div style={{textAlign:"center",padding:"8px 0 4px"}}>
+              <div style={{fontSize:13,fontWeight:800,color:GREEN,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Track</div>
+              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Your Progress</div>
+              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Log shifts, track tips, and see if the app is working.</div>
+            </div>
+
+            {/* Sub-nav */}
+            <div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
+              {[["log","📊 Tips & Ratings"],["preshift","✅ Pre-Shift"],["journal","📓 Journal"]].map(([id,label])=>(
+                <button key={id} onClick={()=>setShiftView(id)} style={{flex:1,background:shiftView===id?GREEN:"transparent",border:"none",borderRadius:9,padding:"9px 4px",fontSize:11,fontWeight:700,cursor:"pointer",color:shiftView===id?"#000":C.text3,transition:"all 0.18s",boxShadow:shiftView===id?`0 0 12px ${GREEN}50`:"none"}}>{label}</button>
+              ))}
+            </div>
+
+            {/* ── TIP & RATING TRACKER ── */}
+            {shiftView==="log"&&(
+              <div style={{display:"flex",flexDirection:"column",gap:16}}>
+
+                {/* Stats row */}
+                {shifts.length>0&&(
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>
+                    {[
+                      ["Avg Tips","$"+(avgTips||"—"),GREEN,avgTips?"last 7 shifts":"no data"],
+                      ["Avg Rating",avgRating||"—",AMBER,avgRating?"last 7 shifts":"no ratings yet"],
+                      ["Deliveries",totalDeliveries||"—",BLUE,"last 7 shifts"],
+                    ].map(([label,val,col,sub],i)=>(
+                      <div key={i} style={{background:C.s1,border:`1px solid ${col}20`,borderRadius:14,padding:"12px 10px",textAlign:"center"}}>
+                        <div style={{fontSize:11,color:C.text3,fontWeight:600,marginBottom:4}}>{label}</div>
+                        <div style={{fontSize:20,fontWeight:900,color:col,letterSpacing:"-0.5px"}}>{val}</div>
+                        <div style={{fontSize:10,color:C.text3,marginTop:3}}>{sub}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Trend indicator */}
+                {shifts.length>=6&&(
+                  <div style={{background:trendUp?`rgba(16,185,129,0.08)`:`rgba(244,63,94,0.08)`,border:`1px solid ${trendUp?"rgba(16,185,129,0.25)":"rgba(244,63,94,0.25)"}`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",gap:10}}>
+                    <span style={{fontSize:20}}>{trendUp?"📈":"📉"}</span>
+                    <div>
+                      <div style={{fontSize:13,fontWeight:700,color:trendUp?GREEN:C.red}}>{trendUp?"Your tips are trending up":"Your tips have dipped recently"}</div>
+                      <div style={{fontSize:12,color:C.text2,marginTop:2}}>{trendUp?"Keep doing what you're doing — it's working.":"Review the Earn tab for habits that help."}</div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Log a shift */}
+                <div style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:18}}>
+                  <div style={{fontSize:14,fontWeight:800,marginBottom:14}}>Log a Shift</div>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:12}}>
+                    {[
+                      ["tips","Tips Earned","$0.00","number"],
+                      ["rating","Star Rating","4.9","number"],
+                      ["deliveries","Deliveries","0","number"],
+                    ].map(([field,label,placeholder,type])=>(
+                      <div key={field}>
+                        <div style={{fontSize:11,fontWeight:700,color:C.text2,marginBottom:5}}>{label}</div>
+                        <input
+                          type={type} inputMode="decimal" placeholder={placeholder}
+                          value={shiftInput[field]}
+                          onChange={e=>setShiftInput({...shiftInput,[field]:e.target.value})}
+                          style={{background:C.s2,border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"10px 10px",color:C.text,fontSize:14,width:"100%",fontWeight:700}}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <input
+                    placeholder="Quick note — anything worth remembering (optional)"
+                    value={shiftInput.note}
+                    onChange={e=>setShiftInput({...shiftInput,note:e.target.value})}
+                    style={{background:C.s2,border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"10px 12px",color:C.text,fontSize:13,width:"100%",marginBottom:12}}
+                  />
+                  <button onClick={logShift} style={{background:`linear-gradient(135deg,${GREEN},#059669)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 4px 16px rgba(16,185,129,0.35)`}}>Log This Shift</button>
+                </div>
+
+                {/* History */}
+                {shifts.length===0&&(
+                  <div style={{textAlign:"center",padding:"28px 16px",color:C.text3,fontSize:13,background:C.s1,borderRadius:16}}>
+                    <div style={{fontSize:32,marginBottom:10}}>📊</div>
+                    <div style={{fontWeight:700,color:C.text2,marginBottom:4}}>No shifts logged yet</div>
+                    <div>Log your first shift above to start tracking your progress.</div>
+                  </div>
+                )}
+
+                {shifts.length>0&&(
+                  <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                    <div style={{fontSize:13,fontWeight:800,color:C.text2}}>Shift History</div>
+                    {shifts.map((s,i)=>(
+                      <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"13px 15px"}}>
+                        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:s.note?8:0}}>
+                          <div>
+                            <div style={{fontSize:12,color:C.text3,marginBottom:3}}>{s.date} · {s.time}</div>
+                            <div style={{display:"flex",gap:12,alignItems:"center"}}>
+                              {s.tips>0&&<span style={{fontSize:15,fontWeight:900,color:GREEN}}>${s.tips.toFixed(2)}</span>}
+                              {s.rating>0&&<span style={{fontSize:13,fontWeight:700,color:AMBER}}>⭐ {s.rating}</span>}
+                              {s.deliveries>0&&<span style={{fontSize:13,color:C.text2}}>{s.deliveries} deliveries</span>}
+                            </div>
+                          </div>
+                          <button onClick={()=>{const u=shifts.filter((_,idx)=>idx!==i);setShifts(u);save("dp3-shifts",u);}} style={{background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:16,padding:"4px"}}>✕</button>
+                        </div>
+                        {s.note&&<div style={{fontSize:12,color:C.text2,lineHeight:1.5,paddingTop:8,borderTop:"1px solid rgba(255,255,255,0.06)"}}>{s.note}</div>}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ── PRE-SHIFT CHECKLIST ── */}
+            {shiftView==="preshift"&&(
+              <div style={{display:"flex",flexDirection:"column",gap:12}}>
+                <div style={{background:`rgba(16,185,129,0.07)`,border:`1px solid rgba(16,185,129,0.2)`,borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}>
+                  <span style={{fontSize:18,flexShrink:0}}>💡</span>
+                  <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>Check these off before every shift. A prepared driver earns more — and stressed less.</div>
+                </div>
+                {preShift.map((item,i)=>(
+                  <button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>togglePreShift(i)}
+                    style={{background:item.done?`rgba(16,185,129,0.08)`:C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.18s",boxShadow:item.done?`0 0 14px rgba(16,185,129,0.18)`:"none"}}>
+                    <div style={{width:26,height:26,borderRadius:8,border:`2px solid ${item.done?GREEN:"rgba(255,255,255,0.15)"}`,background:item.done?GREEN:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>
+                      {item.done&&<span style={{color:"#000",fontSize:14,fontWeight:900}}>✓</span>}
+                    </div>
+                    <span style={{fontSize:14,fontWeight:600,color:item.done?GREEN:C.text,flex:1}}>{item.e} {item.t}</span>
+                  </button>
+                ))}
+                <div style={{display:"flex",gap:8,marginTop:4}}>
+                  <button onClick={resetPreShift} style={{flex:1,background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text3}}>Reset for Next Shift</button>
+                  {preShift.filter(i=>i.done).length===preShift.length&&preShift.length>0&&(
+                    <div style={{flex:1,background:`rgba(16,185,129,0.1)`,border:`1px solid rgba(16,185,129,0.3)`,borderRadius:12,padding:"12px",textAlign:"center",fontSize:13,fontWeight:800,color:GREEN}}>🚀 Ready to roll!</div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* ── SHIFT JOURNAL ── */}
+            {shiftView==="journal"&&(
+              <div style={{display:"flex",flexDirection:"column",gap:14}}>
+                <div style={{background:`rgba(59,130,246,0.07)`,border:`1px solid rgba(59,130,246,0.2)`,borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}>
+                  <span style={{fontSize:18,flexShrink:0}}>📓</span>
+                  <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>Record how your shifts go. What worked, what didn't, anything worth remembering. Only you can see this.</div>
+                </div>
+                <textarea
+                  value={journalInput}
+                  onChange={e=>setJournalInput(e.target.value)}
+                  placeholder={"e.g. Good shift tonight — the arrival text trick worked on almost every delivery. One customer was upset about cold food, used the recovery script and they seemed fine. Trying the two-handed handoff starting tomorrow."}
+                  rows={4}
+                  style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.7,width:"100%"}}
+                />
+                <button onClick={addJournal} style={{background:`linear-gradient(135deg,${BLUE},#1d4ed8)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:`0 4px 16px rgba(59,130,246,0.3)`}}>Save Entry</button>
+
+                {journal.length===0&&(
+                  <div style={{textAlign:"center",padding:"28px 16px",color:C.text3,fontSize:13,background:C.s1,borderRadius:16}}>
+                    <div style={{fontSize:32,marginBottom:10}}>📓</div>
+                    <div style={{fontWeight:700,color:C.text2,marginBottom:4}}>No entries yet</div>
+                    <div>Write your first entry above. Even one sentence per shift makes a difference.</div>
+                  </div>
+                )}
+
+                {journal.map((entry,i)=>(
+                  <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:14,padding:"13px 15px"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
+                      <div style={{fontSize:11,color:C.text3,fontWeight:600}}>{entry.date} · {entry.time}</div>
+                      <button onClick={()=>{const u=journal.filter((_,idx)=>idx!==i);setJournal(u);save("dp3-journal",u);}} style={{background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:15,padding:"0 2px"}}>✕</button>
+                    </div>
+                    <div style={{fontSize:13,color:C.text,lineHeight:1.75}}>{entry.text}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          );
+        })()}
+
+      </div>
+
       {/* ── Bottom Nav ──────────────────────────────────────────────────────── */}
       <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
-        {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
+        {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"track",l:"Track",e:"📊",ac:C.green},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
           const active=tab===n.id;
           const popping=navPop===n.id;
           return(
-            <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"6px 1px 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
-              {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:28,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac}`}}/>}
-              <div className={popping?"nav-pop":""} style={{width:40,height:28,borderRadius:10,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
-                <span style={{fontSize:active?18:15,transition:"font-size 0.18s"}}>{n.e}</span>
+            <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
+              {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac}`}}/>}
+              <div className={popping?"nav-pop":""} style={{width:36,height:26,borderRadius:9,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
+                <span style={{fontSize:active?16:14,transition:"font-size 0.18s"}}>{n.e}</span>
               </div>
-              <span style={{fontSize:10,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px"}}>{n.l}</span>
+              <span style={{fontSize:9,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px"}}>{n.l}</span>
             </button>
           );
         })}
@@ -1626,7 +1874,7 @@ function App() {
                     <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {["10 quick tips with full explanations","7 in-depth learning sections on psychology, tipping science, de-escalation & more","30 message templates with one-tap copy","4 training videos — the science behind what earns more","Platform habits & appeal scripts for DoorDash, Uber Eats, Spark & Instacart","Per-delivery checklists that save your progress","Notes log for problem addresses and difficult customers"].map((f,i)=>(
+                    {["10 quick tips with full explanations","7 in-depth learning sections on psychology, tipping science, de-escalation & more","30 message templates with one-tap copy","4 training videos — the science behind what earns more","Platform habits & appeal scripts for DoorDash, Uber Eats, Spark & Instacart","Per-delivery checklists that save your progress","Notes log for problem addresses and difficult customers","Tip & rating tracker — see if the app is actually working for you","Pre-shift checklist — be ready before every shift","Shift journal — private log of what worked and what didn't"].map((f,i)=>(
                       <div key={i} style={{display:"flex",alignItems:"center",gap:8,fontSize:12,color:C.text2}}>
                         <span style={{color:C.green,fontWeight:900,fontSize:13}}>✓</span>{f}
                       </div>
