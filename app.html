@@ -8,6 +8,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="theme-color" content="#07080A"/>
   <title>DropPilot</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icon-192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
@@ -72,10 +74,14 @@ button:active{opacity:0.82;transform:scale(0.96);}
 .lock-shake{animation:lockShake 0.5s ease;}
 .defender-pulse{animation:defenderPulse 2.4s ease-in-out infinite;}
 .shimmer-locked{background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,0.04) 50%,transparent 70%);background-size:200% 100%;animation:shimmerSlide 2.2s ease-in-out infinite;}
+.wm{position:fixed;pointer-events:none;user-select:none;-webkit-user-select:none;z-index:50;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.045);letter-spacing:1px;white-space:nowrap;transform:rotate(-35deg);transform-origin:center;}
 `;
 
 async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
 async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+// Code validation handled locally via hash
+const ELITE_HASH="9967509c09c9247fa513abbf2e330af4874242c92d0a0f8ddd1082894c45d0b3";
+async function hashCode(s){const b=new TextEncoder().encode(s.trim().toUpperCase());const h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,"0")).join("");}
 
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
@@ -86,6 +92,23 @@ const C = {
   text:"#EDF0F7", text2:"#8B95A8", text3:"#6B7A8D",
   sans:"'Outfit',system-ui,sans-serif", mono:"'JetBrains Mono','Courier New',monospace"
 };
+
+// ─── Updates ─────────────────────────────────────────────────────────────────
+// To add a new update: add an object to the top of this array and bump LATEST_UPDATE_ID
+const LATEST_UPDATE_ID = "2025-01-001";
+const UPDATES = [
+  {
+    id:"2025-01-001",
+    date:"Jan 2025",
+    title:"Backup & Restore + Install as App",
+    items:[
+      "Your data is now yours — back it up and restore it any time from Settings",
+      "Install DropPilot on your home screen — works like a real app, no App Store needed",
+      "Settings now has a visible gear button in the top right",
+      "Stronger, harder-to-guess unlock code system",
+    ]
+  },
+];
 
 // ─── Free Tips ────────────────────────────────────────────────────────────────
 const ALL_TIPS = [
@@ -647,7 +670,7 @@ function VideoPlayer({video}) {
           </div>}
           {sc.cta&&<div style={{textAlign:"center",animation:"vUp 0.5s 0.45s both",opacity:0}}>
             <div style={{background:"rgba(245,166,35,0.12)",border:"2px solid rgba(245,166,35,0.5)",borderRadius:14,padding:"11px 20px",display:"inline-block"}}>
-              <div style={{fontSize:13,fontWeight:800,color:A}}>Free to explore — droppilot.app</div>
+              <div style={{fontSize:13,fontWeight:800,color:A}}>Free to explore — https://bit.ly/droppilot</div>
               <div style={{fontSize:12,color:"rgba(255,255,255,0.35)",marginTop:2}}>Full access — $7 one time</div>
             </div>
           </div>}
@@ -763,10 +786,11 @@ function App() {
     setTab(id);
     setTimeout(()=>setNavPop(null), 400);
   }
-  const [cfg, setCfg_]          = useState({name:"",unlockCode:"DROP2026"});
+  const [cfg, setCfg_]          = useState({name:""});
   const [pro, setPro]           = useState(false);
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [toast, setToast]       = useState(null);
 
   // Modals
@@ -829,9 +853,10 @@ function App() {
 
   useEffect(()=>{
     Promise.all([
-      load("dp3-cfg",{name:"",unlockCode:"DROP2026"}),
+      load("dp3-cfg",{name:""}),
       load("dp3-elite",false),
       load("dp3-intro-seen",false),
+      load("dp3-update-seen",""),
       load("dp3-fav-tips",[]),
       load("dp3-fav-tpl",[]),
       load("dp3-notes",[]),
@@ -846,7 +871,7 @@ function App() {
         {e:"📱",t:"Delivery app logged in and working",done:false},
         {e:"🧾",t:"Gas tank not on empty",done:false},
       ]),
-    ]).then(([c,p,seen,ft,ftpl,n,sh,jn,ps])=>{
+    ]).then(([c,p,seen,updateSeen,ft,ftpl,n,sh,jn,ps])=>{
       setCfg_(c); setPro(!!p); setLoaded(true);
       setFavTips(new Set(ft));
       setFavTemplates(new Set(ftpl));
@@ -854,7 +879,8 @@ function App() {
       setShifts(sh);
       setJournal(jn);
       setPreShift(ps);
-      if(!seen) setShowIntro(true);
+      if(!seen){ setShowIntro(true); }
+      else if(updateSeen !== LATEST_UPDATE_ID){ setShowUpdate(true); }
     });
   },[]);
 
@@ -862,9 +888,10 @@ function App() {
 
   function showToast(msg){setToast(msg);}
 
-  function tryCode(){
+  async function tryCode(){
     if(!codeIn.trim()){setCodeErr("Please enter your unlock code.");return;}
-    if(cfg.unlockCode&&codeIn.trim().toUpperCase()===cfg.unlockCode.trim().toUpperCase()){
+    const h=await hashCode(codeIn);
+    if(h===ELITE_HASH){
       setPro(true); save("dp3-elite",true); setPayStep("done");
     } else {
       setCodeErr("That code isn't correct. Check your receipt email from Stripe.");
@@ -973,6 +1000,39 @@ function App() {
     save("dp3-notes",updated);
   }
 
+  function backupData(){
+    const keys=["dp3-cfg","dp3-elite","dp3-intro-seen","dp3-fav-tips","dp3-fav-tpl","dp3-notes","dp3-shifts","dp3-journal","dp3-preshift","dp3-checks-doordash","dp3-checks-ubereats","dp3-checks-spark","dp3-checks-instacart"];
+    const backup={version:1,date:new Date().toISOString(),data:{}};
+    keys.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)backup.data[k]=v;});
+    const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download=`droppilot-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast("Backup downloaded!");
+  }
+
+  function restoreData(e){
+    const file=e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const backup=JSON.parse(ev.target.result);
+        if(!backup.data) throw new Error("Invalid backup file");
+        Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));
+        showToast("Backup restored! Reloading...");
+        setTimeout(()=>window.location.reload(),1200);
+      }catch{
+        showToast("Could not read that file.");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value="";
+  }
+
   // Filter templates by search
   const filteredCats = templateSearch.trim()
     ? MSG_CATS.map(cat=>({
@@ -999,13 +1059,17 @@ function App() {
       {toast&&<Toast msg={toast} onDone={()=>setToast(null)}/>}
 
       {/* ── Header ──────────────────────────────────────────────────────────── */}
-      <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",position:"sticky",top:0,zIndex:60}}>
-        <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default"}}>
+      <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:60}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none"}}>
           <div className="glow" style={{width:38,height:38,borderRadius:12,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🚗</div>
           <div>
             <div style={{fontSize:18,fontWeight:900,letterSpacing:"-0.5px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
             <div style={{fontSize:12,color:C.text3,letterSpacing:"1.5px",fontWeight:700}}>DRIVER COMMAND CENTER</div>
           </div>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <a href="index.html" aria-label="Home" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,textDecoration:"none",flexShrink:0}}>🏠</a>
+          <button onClick={()=>setShowCfg(o=>!o)} aria-label="Settings" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0}}>⚙️</button>
         </div>
       </div>
 
@@ -1019,20 +1083,47 @@ function App() {
           </div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <div style={{fontSize:12,fontWeight:800,color:C.amber,marginBottom:10}}>💳 Access</div>
-            <div>
-              <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Unlock Code</div>
-              <input value={cfg.unlockCode||""} onChange={e=>setCfg({...cfg,unlockCode:e.target.value})} placeholder="e.g. DROP2026" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
+            <div style={{background:pro?"rgba(16,185,129,0.07)":"rgba(255,255,255,0.03)",border:`1px solid ${pro?"rgba(16,185,129,0.2)":"rgba(255,255,255,0.07)"}`,borderRadius:11,padding:"11px 13px",display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:17}}>{pro?"✅":"🔒"}</span>
+              <div>
+                <div style={{fontSize:13,fontWeight:700,color:pro?C.green:C.text2}}>{pro?"Elite Access Active":"Free Plan"}</div>
+                {!pro&&<div style={{fontSize:11,color:C.text3,marginTop:1}}>Tap "Unlock with Code" in the paywall to activate.</div>}
+              </div>
             </div>
           </div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+            <button onClick={()=>{setShowUpdate(true);setShowCfg(false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>🆕 What's New</button>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
             {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Elite Access</button>}
+          </div>
+          <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+            <div style={{fontSize:12,fontWeight:800,color:C.teal,marginBottom:10}}>💾 Your Data</div>
+            <div style={{fontSize:12,color:C.text3,lineHeight:1.6,marginBottom:10}}>Back up your shifts, journal, notes and settings to a file. Restore it any time — on this device or a new one.</div>
+            <button onClick={backupData} style={{background:"rgba(6,182,212,0.08)",border:"1px solid rgba(6,182,212,0.2)",borderRadius:11,padding:"11px 12px",color:C.teal,fontSize:13,fontWeight:700,width:"100%",cursor:"pointer",marginBottom:8}}>⬇ Download Backup</button>
+            <label style={{display:"block",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,fontWeight:700,width:"100%",cursor:"pointer",textAlign:"center",boxSizing:"border-box"}}>
+              ⬆ Restore from Backup
+              <input type="file" accept=".json" onChange={restoreData} style={{display:"none"}}/>
+            </label>
           </div>
           <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
         </div>
       )}
 
-      <div style={{flex:1,overflowY:"auto",paddingBottom:80}}>
+      <div style={{flex:1,overflowY:"auto",paddingBottom:80,position:"relative"}}>
+        {/* Watermark overlay - only shown for elite users */}
+        {pro&&(
+          <div style={{position:"fixed",inset:0,pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",zIndex:50,overflow:"hidden"}}>
+            {[...Array(12)].map((_,i)=>(
+              <div key={i} className="wm" style={{
+                top:`${(i%4)*28+8}%`,
+                left:`${Math.floor(i/4)*38-10}%`,
+                opacity:0.045,
+              }}>
+                {(cfg.name?cfg.name+' · ':'')+'DropPilot Elite · bit.ly/droppilot'}
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* ══ TIPS ══════════════════════════════════════════════════════════════ */}
         {tab==="tips"&&(
@@ -1832,13 +1923,22 @@ function App() {
 
       </div>
 
+      {/* ── Elite content notice ── */}
+      {pro&&(
+        <div style={{position:"fixed",bottom:56,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,zIndex:49,pointerEvents:"none"}}>
+          <div style={{margin:"0 16px",background:"rgba(7,8,10,0.85)",backdropFilter:"blur(8px)",WebkitBackdropFilter:"blur(8px)",borderTop:"1px solid rgba(255,255,255,0.05)",padding:"5px 16px",display:"flex",alignItems:"center",justifyContent:"center",gap:6}}>
+            <span style={{fontSize:10,color:"rgba(255,255,255,0.18)",fontWeight:700,letterSpacing:"0.5px"}}>🔒 Elite content · For your personal use only · Please don't share</span>
+          </div>
+        </div>
+      )}
+
       {/* ── Bottom Nav ──────────────────────────────────────────────────────── */}
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
+      <nav role="navigation" aria-label="Main navigation" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
         {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"track",l:"Track",e:"📊",ac:C.green},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
           const active=tab===n.id;
           const popping=navPop===n.id;
           return(
-            <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
+            <button key={n.id} onClick={()=>changeTab(n.id)} aria-label={n.l} aria-current={active?"page":undefined} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
               {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac}`}}/>}
               <div className={popping?"nav-pop":""} style={{width:36,height:26,borderRadius:9,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
                 <span style={{fontSize:active?16:14,transition:"font-size 0.18s"}}>{n.e}</span>
@@ -1847,9 +1947,44 @@ function App() {
             </button>
           );
         })}
-      </div>
+      </nav>
 
       {/* ── Paywall Modal ────────────────────────────────────────────────────── */}
+      {/* ── What's New Modal ───────────────────────────────────────────────── */}
+      {showUpdate&&(
+        <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+          <div onClick={()=>{setShowUpdate(false);save("dp3-update-seen",LATEST_UPDATE_ID);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
+          <div style={{position:"relative",background:`linear-gradient(180deg,${C.s2},${C.s1})`,borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:24,paddingBottom:44,width:"100%",maxWidth:430,zIndex:1,maxHeight:"80vh",overflowY:"auto"}}>
+            <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 22px"}}/>
+            <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20}}>
+              <div style={{width:44,height:44,borderRadius:13,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>🚗</div>
+              <div>
+                <div style={{fontSize:11,fontWeight:800,color:C.amber,letterSpacing:"2px",textTransform:"uppercase",marginBottom:2}}>What's New</div>
+                <div style={{fontSize:20,fontWeight:900,letterSpacing:"-0.5px"}}>DropPilot Update</div>
+              </div>
+            </div>
+            {UPDATES.map((u,ui)=>(
+              <div key={ui} style={{marginBottom:ui<UPDATES.length-1?22:0}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+                  <div style={{fontSize:11,fontWeight:800,color:C.text3,letterSpacing:"1.5px",textTransform:"uppercase"}}>{u.date}</div>
+                  <div style={{flex:1,height:1,background:"rgba(255,255,255,0.06)"}}/>
+                </div>
+                <div style={{fontSize:15,fontWeight:800,marginBottom:10,color:C.text}}>{u.title}</div>
+                <div style={{display:"flex",flexDirection:"column",gap:7}}>
+                  {u.items.map((item,ii)=>(
+                    <div key={ii} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"10px 12px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:11}}>
+                      <div style={{width:6,height:6,borderRadius:"50%",background:C.amber,flexShrink:0,marginTop:5}}/>
+                      <div style={{fontSize:13,color:C.text2,lineHeight:1.55}}>{item}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <button onClick={()=>{setShowUpdate(false);save("dp3-update-seen",LATEST_UPDATE_ID);}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginTop:22}}>Got it →</button>
+          </div>
+        </div>
+      )}
+
       {showPay&&(
         <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
           <div onClick={()=>{setShowPay(false);setPayStep("offer");setCodeIn("");setCodeErr("");setRestoreEmail("");setRestoreMsg("");}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
@@ -1955,6 +2090,12 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
+}
 
   </script>
 </body>
