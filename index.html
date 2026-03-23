@@ -7,6 +7,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="theme-color" content="#07080A"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icon-192.png"/>
   <title>DropPilot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -16,6 +18,7 @@
 <body>
   <div id="root"></div>
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+  <script src="data.js"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -75,8 +78,21 @@ button:active{opacity:0.82;transform:scale(0.96);}
 .wm{position:fixed;pointer-events:none;user-select:none;-webkit-user-select:none;z-index:50;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.045);letter-spacing:1px;white-space:nowrap;transform:rotate(-35deg);transform-origin:center;}
 `;
 
+// ─── Updates ─────────────────────────────────────────────────────────────────
+const LATEST_UPDATE_ID = "2025-01-001";
+const UPDATES = [
+  {id:"2025-01-001",date:"Jan 2025",title:"Backup & Restore + Secure Paywall",items:[
+    "Download a backup of your data any time from Settings",
+    "Restore your data on a new device in seconds",
+    "Paywall is now more secure — unlock code can no longer be found in DevTools",
+    "Settings now has a visible gear button in the top right",
+  ]},
+];
+
 async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
 async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+const ELITE_HASH="9967509c09c9247fa513abbf2e330af4874242c92d0a0f8ddd1082894c45d0b3";
+async function hashCode(s){const b=new TextEncoder().encode(s.trim().toUpperCase());const h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,"0")).join("");}
 
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
@@ -490,41 +506,59 @@ function IntroAnimation({onDone}) {
 
 // ─── Training Videos Data ─────────────────────────────────────────────────────
 const VIDEOS = [
-  {id:0,title:"Why Customer Service Makes You More Money",dur:35000,icon:"📈",color:"#10B981",desc:"The simple math of one extra dollar per delivery adding up fast.",
+  {id:0,title:"Why Customer Service Makes You More Money",dur:36000,icon:"📈",color:"#10B981",desc:"The simple math of one extra dollar per delivery adding up fast.",
     scenes:[
-      {t:0,tag:"the truth about gig work",emoji:"💸",hed:"Most drivers are\nleaving money\non the table.",sub:"Every single shift."},
-      {t:4000,tag:"the silent income killer",emoji:"⭐",hed:"One unfair 1-star\ncan cost you\nbetter orders.",sub:"Platforms show high-paying orders to high-rated drivers first. Low rating = worse orders. It compounds fast.",hi:{color:"#F43F5E",text:"Low rating → worse orders → less money → harder to recover. The cycle is very real."}},
-      {t:9500,tag:"the math is simple",emoji:"🧮",hed:"Just $1 more tip.\nEvery delivery.",sub:null,math:[["20 deliveries a day","+$20/day"],["5 days a week","+$100/week"],["Every month","+$400","big"]]},
-      {t:16000,tag:"what drives the extra dollar",emoji:"💡",hed:"Tips are emotional,\nnot logical.",sub:"Customers tip based on how they felt during the delivery — not how fast you were.",hi:{color:"#10B981",text:"A warm smile and a genuine 'enjoy your meal' makes people feel cared for. That feeling is worth real money."}},
-      {t:22500,tag:"the compound effect",emoji:"📊",hed:"Better service.\nBetter rating.\nBetter orders.\nMore money.",sub:"It all starts with how you treat people at the door."},
-      {t:28000,tag:"start now",emoji:"🚗",hed:"DropPilot",sub:"Customer service scripts, account protection, and message templates.",cta:true},
+      {t:0,tag:"the truth about gig work",emoji:"💸",hed:"Most drivers are\nleaving money\non the table.",sub:"Every single shift.",narr:"Most drivers are leaving money on the table. Every single shift. Not because they are bad drivers — because they do not know what is actually costing them."},
+      {t:4500,tag:"the silent income killer",emoji:"⭐",hed:"One low rating\ncuts you off\nfrom better orders.",sub:"Platforms show high-paying orders to high-rated drivers first.",hi:{color:"#F43F5E",text:"Low rating → worse orders → less money → harder to recover."},narr:"Platforms show the high-paying orders to high-rated drivers first. If your rating drops you see worse orders and less money."},
+      {t:10000,tag:"the math is simple",emoji:"🧮",hed:"Just $1 more tip.\nEvery delivery.",sub:null,math:[["20 deliveries a day","+$20/day"],["5 days a week","+$100/week"],["Every month","+$400","big"]],narr:"One extra dollar in tips every delivery. Twenty deliveries a day — twenty dollars. Five days a week — a hundred dollars. Every month — four hundred extra dollars."},
+      {t:17000,tag:"what drives the extra dollar",emoji:"💡",hed:"Tips are emotional,\nnot logical.",sub:"Customers tip based on how they felt — not how fast you were.",hi:{color:"#10B981",text:"A warm smile and a genuine enjoy your meal makes people feel cared for. That feeling is worth real money."},narr:"Tips are not about speed. Customers tip based on how they felt during the delivery."},
+      {t:24000,tag:"the compound effect",emoji:"📊",hed:"Better service.\nBetter rating.\nBetter orders.\nMore money.",sub:"Every shift, it builds.",bars:[["Lower service","-$400/mo",42,"#F43F5E"],["One extra dollar","+$400/mo",94,"#10B981"]],narr:"Better service leads to a better rating. A better rating leads to better orders. Better orders lead to more money."},
+      {t:30500,tag:"your takeaway",emoji:"🎯",hed:"One dollar more.\nEvery delivery.\nThat is the goal.",sub:null,takeaway:"Set your intention before your next shift: one dollar more per delivery.",narr:"One dollar more. Every delivery. That is the goal."},
     ]},
-  {id:1,title:"Why the Words You Choose Actually Matter",dur:36000,icon:"💬",color:"#3B82F6",desc:"The simple psychology behind exact words that earn more tips and better ratings.",
+  {id:1,title:"Why the Words You Choose Actually Matter",dur:38000,icon:"💬",color:"#3B82F6",desc:"The simple psychology behind exact words that earn more tips and better ratings.",
     scenes:[
-      {t:0,tag:"it's not just what you say",emoji:"🧠",hed:"The words you\nchoose matter\nmore than\nyou think.",sub:"Not because of politeness. Because of basic human psychology."},
-      {t:4500,tag:"phrase #1",emoji:"🙌",hed:'"Thank you for\nyour patience."',sub:null,vs:{bad:["Instead of","Sorry for the wait"],good:["Say this","Thank you for your patience"]},why:{color:"#3B82F6",text:"Apologizing puts you in a guilty position. Thanking them for their patience credits the customer instead. People respond better to being appreciated than to apologies."}},
-      {t:11000,tag:"phrase #2",emoji:"🤝",hed:'"I\'ll make sure\neverything is\ntaken care of."',sub:"Vague reassurances feel empty. Taking personal ownership feels trustworthy.",hi:{color:"#F5A623",text:"'I'll make sure' signals personal responsibility. Customers give more goodwill to people who own their role."}},
-      {t:17500,tag:"phrase #3",emoji:"💬",hed:"Text first.\nNever call first.",sub:"A call from an unknown number feels intrusive. A text respects their time.",vs2:[["📞","Calling","Interrupts. Creates anxiety. Often ignored.","#F43F5E"],["💬","Texting","Non-intrusive. They respond when ready. Much higher response rate.","#10B981"]]},
-      {t:24000,tag:"phrase #4",emoji:"🌙",hed:'"Enjoy your meal!"\nNot "here you go."',sub:"How an interaction ends determines how people remember the entire experience.",hi:{color:"#8B5CF6",text:"The ending rewrites the whole delivery in a customer's memory. A warm ending = a positive memory = a tip and 5 stars."}},
-      {t:30000,tag:"the bottom line",emoji:"💰",hed:"The right words\ncost nothing.",sub:"But the wrong ones cost you tips, ratings, and access to better orders. Every single day."},
+      {t:0,tag:"it is not just what you say",emoji:"🧠",hed:"The words you\nchoose change\nhow people\nfeel about you.",sub:"Not politeness. Basic human psychology.",narr:"The words you choose matter more than you think. Not because of politeness. Because of basic human psychology."},
+      {t:5000,tag:"phrase 1 — running late",emoji:"🙌",hed:"Thank you for your patience.\nNot Sorry for the wait.",sub:null,vs:{bad:["Instead of","Sorry for the wait"],good:["Say this","Thank you for your patience"]},why:{color:"#3B82F6",text:"Thanking them credits the customer. People respond better to being appreciated than to apologies."},narr:"Instead of sorry for the wait — say thank you for your patience."},
+      {t:12500,tag:"phrase 2 — when something is wrong",emoji:"🤝",hed:"I will make sure\neverything is\ntaken care of.",sub:"Use this when a customer seems worried. Own it immediately.",hi:{color:"#F5A623",text:"Personal ownership builds trust instantly. These words stop an escalation before it starts."},narr:"When something goes wrong say: I will make sure everything is taken care of."},
+      {t:19500,tag:"phrase 3 — cannot reach them",emoji:"💬",hed:"Text first.\nNever call first.",sub:"A call from an unknown number feels intrusive.",vs2:[["📞","Calling","Interrupts. Creates anxiety. Often ignored.","#F43F5E"],["💬","Texting","Non-intrusive. Much higher response rate.","#10B981"]],narr:"Always text first. Never call first."},
+      {t:26500,tag:"phrase 4 — the handoff",emoji:"🌟",hed:"Enjoy your meal!\nNot here you go.",sub:"How an interaction ends is how people remember the whole experience.",hi:{color:"#8B5CF6",text:"A warm ending rewrites the whole delivery in a customer memory."},narr:"End every handoff with enjoy your meal — not here you go."},
+      {t:32500,tag:"your takeaway",emoji:"🎯",hed:"Four phrases.\nMemorize them.",sub:null,takeaway:"Thank you for your patience · I will make sure it is taken care of · Text do not call · Enjoy your meal",narr:"Four phrases. Thank you for your patience. Text do not call. Enjoy your meal."},
     ]},
-  {id:2,title:"What Top Earners Do Differently",dur:36000,icon:"🏆",color:"#F5A623",desc:"The 60-second habit gap between average drivers and top earners.",
+  {id:2,title:"What Top Earners Do Differently",dur:37000,icon:"🏆",color:"#F5A623",desc:"The 60-second habit gap between average drivers and top earners.",
     scenes:[
-      {t:0,tag:"the gap is smaller than you think",emoji:"🔍",hed:"Top earners are\nnot faster.\nThey are smarter\nat the door.",sub:"Here is exactly what they do."},
-      {t:5000,tag:"what most drivers do",emoji:"❌",hed:"The silent drop-off.",sub:null,listBad:["Pull up. Pick up. Drop off. Leave.","No greeting. No eye contact.","No text. No confirmation.","Just a bag on a doorstep."]},
-      {t:11000,tag:"what top earners do",emoji:"✅",hed:"The 60-second\ndifference.",sub:null,listGood:[["💬","Text when 3 minutes away"],["😊","Smile and greet at the door"],["📸","Photo every drop-off without fail"],["✅","Confirm delivery in the app"]]},
-      {t:18000,tag:"the habit gap",emoji:"📊",hed:"Same roads.\nSame apps.\nVery different\nincome.",sub:"0.4 stars separates average from top earner. That's not luck. That's habit.",bars:[["Average driver","~4.5 ⭐",62,"#F43F5E"],["Top earner","~4.9 ⭐",96,"#F5A623"]]},
-      {t:25000,tag:"your photo is your protection",emoji:"📸",hed:"A photo is not\njust courtesy.\nIt is evidence.",sub:"False non-delivery complaints are a top cause of deactivation. A timestamped photo wins almost every dispute.",hi:{color:"#F5A623",text:"Drivers who photo every drop-off win almost every false complaint. Drivers who don't — lose almost every one."}},
-      {t:30500,tag:"start today",emoji:"⏱️",hed:"60 extra seconds.\nEvery shift after.",sub:"Text ahead. Smile. Photo. Confirm. That is the whole difference."},
+      {t:0,tag:"the gap is smaller than you think",emoji:"🔍",hed:"Top earners are\nnot faster.\nThey are smarter\nat the door.",sub:"Here is exactly what they do.",narr:"Top earners are not faster. They are smarter at the door."},
+      {t:5500,tag:"what most drivers do",emoji:"❌",hed:"The silent drop-off.",sub:null,listBad:["Pull up. Pick up. Drop off. Leave.","No greeting. No eye contact.","No text. No confirmation.","Just a bag on a doorstep."],narr:"The average driver does this. Pull up. Pick up. Drop off. Leave."},
+      {t:11500,tag:"what top earners do",emoji:"✅",hed:"The 60-second\ndifference.",sub:null,listGood:[["💬","Text when 3 minutes away"],["😊","Greet them at the door"],["🤲","Two hands on the bag, chest height"],["📸","Photo every drop-off without fail"],["🌟","Enjoy your meal before you leave"]],narr:"Top earners text three minutes before arriving, greet at the door, hold the bag with two hands, take a photo every time, and say enjoy your meal."},
+      {t:18500,tag:"the habit gap",emoji:"📊",hed:"Same roads.\nSame apps.\nVery different\nincome.",sub:"0.4 stars separates average from top earner.",bars:[["Average driver","~4.5 stars",62,"#F43F5E"],["Top earner","~4.9 stars",96,"#F5A623"]],narr:"Zero point four stars separates the average driver from the top earner. Same roads. Same apps."},
+      {t:26000,tag:"your photo is your protection",emoji:"📸",hed:"A photo is not\njust courtesy.\nIt is evidence.",sub:"False non-delivery complaints are a top cause of deactivation.",hi:{color:"#F5A623",text:"Drivers who photo every drop-off win almost every false complaint. Drivers who do not — lose almost every one."},narr:"Your delivery photo is not just courtesy. It is evidence."},
+      {t:31500,tag:"your takeaway",emoji:"🎯",hed:"Text. Greet.\nTwo hands.\nPhoto.\nEnjoy your meal.",sub:null,takeaway:"Five habits. Sixty seconds. Do all five on your very next delivery.",narr:"Text. Greet. Two hands. Photo. Enjoy your meal. Five habits. Sixty seconds."},
     ]},
-  {id:3,title:"Please, Thank You, and You're Welcome",dur:40000,icon:"🙏",color:"#8B5CF6",desc:"Three simple phrases backed by real research that measurably increase tips.",
+  {id:3,title:"Please, Thank You, and You are Welcome",dur:42000,icon:"🙏",color:"#8B5CF6",desc:"Three simple phrases backed by real research that measurably increase tips.",
     scenes:[
-      {t:0,tag:"backed by real research",emoji:"🔬",hed:"Three phrases.\nProven results.",sub:"Please. Thank you. You're welcome.\nNot just good manners — measurable income."},
-      {t:5000,tag:"the word 'please'",emoji:"🙏",hed:'"Please" makes\npeople more\nlikely to help.',sub:"Research shows adding 'please' to a request increases compliance by up to 18%.",hi:{color:"#F5A623",text:"'Could you buzz me in?' gets ignored.\n'Could you please buzz me in?' gets answered.\nSame words. One addition. Very different result."},cite:"Source: Langer, Blank & Chanowitz — Journal of Personality and Social Psychology"},
-      {t:12500,tag:"the words 'thank you'",emoji:"🙌",hed:'"Thank you"\nmakes people\nwant to give back.',sub:"When someone expresses real gratitude, people feel an urge to reciprocate — to give something back.",hi:{color:"#3B82F6",text:"A sincere 'thank you for your order' at the door triggers a natural urge to tip. It's a basic human response."},cite:"Source: Cialdini — Influence: The Psychology of Persuasion"},
-      {t:20000,tag:"a real study on tips",emoji:"💰",hed:null,stat:"23%",statSub:"more in tips",sub:"A Cornell University study found servers who gave a genuine, personal thank you received 23% more in tips than those who didn't.",cite:"Source: Leodoro & Lynn — Cornell Hotel and Restaurant Administration Quarterly"},
-      {t:27000,tag:"the most underused phrase",emoji:"💬",hed:'"You\'re welcome"\nvs\n"No problem."',sub:null,vs:{bad:["No problem","Implies it could have been a problem. Subtly weakens the interaction."],good:["You're welcome","Confirms something of value was given. Ends the exchange properly."]},why:{color:"#8B5CF6",text:"'You're welcome' tells the customer their delivery mattered. 'No problem' minimizes it. People tip more when they feel the delivery was meaningful."},cite:"Source: Lakoff — Language and Woman's Place"},
-      {t:34000,tag:"three words. real results.",emoji:"✨",hed:"Please.\nThank you.\nYou're welcome.",sub:"Three simple phrases. Backed by decades of research. Drivers who use them earn more, rate higher, and keep their accounts longer.",hi:{color:"#10B981",text:"It's not about being soft. It's strategy. And the data proves it."}},
+      {t:0,tag:"backed by real research",emoji:"🔬",hed:"Three phrases.\nProven results.",sub:"Not just manners — measurable income.",narr:"Please. Thank you. You are welcome. Not just good manners — measurable income."},
+      {t:5500,tag:"the word please",emoji:"🙏",hed:"Please makes\npeople more\nlikely to help.",sub:"Adding please increases compliance by up to 18%.",hi:{color:"#F5A623",text:"Could you buzz me in gets ignored. Could you please buzz me in gets answered."},cite:"Langer, Blank & Chanowitz — Journal of Personality and Social Psychology",narr:"The word please. Research shows adding please to a request increases compliance by up to eighteen percent."},
+      {t:13500,tag:"the words thank you",emoji:"🙌",hed:"Thank you\ntriggers the\nurge to give back.",sub:"Real gratitude makes people want to reciprocate.",hi:{color:"#3B82F6",text:"A sincere thank you for your order at the door triggers a natural urge to tip."},cite:"Cialdini — Influence: The Psychology of Persuasion",narr:"When someone expresses real gratitude people feel a natural urge to give something back."},
+      {t:21000,tag:"a real study on tips",emoji:"💰",hed:null,stat:"23%",statSub:"more in tips",sub:"Cornell University: servers who gave a genuine personal thank you earned 23% more.",cite:"Leodoro & Lynn — Cornell Hotel and Restaurant Administration Quarterly",narr:"A Cornell University study found that servers who gave a genuine personal thank you received twenty three percent more in tips."},
+      {t:28500,tag:"the most underused phrase",emoji:"💬",hed:"You are welcome\nvs\nNo problem.",sub:null,vs:{bad:["No problem","Implies it could have been a problem. Weakens the interaction."],good:["You are welcome","Confirms something of value was given. Ends the exchange right."]},why:{color:"#8B5CF6",text:"You are welcome tells the customer the delivery mattered. No problem minimizes it."},narr:"You are welcome versus no problem. No problem implies there could have been a problem."},
+      {t:35500,tag:"your takeaway",emoji:"🎯",hed:"Please.\nThank you.\nYou are welcome.",sub:null,takeaway:"Three words. Use all three on your next shift. The research says your tips go up.",narr:"Please when you need something. Thank you at the door. You are welcome when they thank you."},
+    ]},
+  {id:4,title:"The Door — Good vs Bad",dur:42000,icon:"🚪",color:"#06B6D4",desc:"The same delivery, two ways. Watch the difference play out.",
+    scenes:[
+      {t:0,tag:"same house. same food.",emoji:"🏠",hed:"Two deliveries.\nOne door.\nTwo very\ndifferent outcomes.",sub:null,narr:"Same house. Same food. Same driver on different days."},
+      {t:5000,tag:"delivery 1 — the silent drop",emoji:"😶",hed:"No text.\nNo greeting.\nBag on the step.\nGone.",sub:null,listBad:["No heads-up text sent","Silent walk to the door","Bag dropped, no eye contact","No photo taken","Gone before the door opens"],narr:"Delivery one. No text. Silent walk to the door. Bag dropped. No photo. Gone."},
+      {t:12000,tag:"the result",emoji:"💔",hed:"3 stars.\nNo tip.\nAccount\nslowly declining.",sub:null,hi:{color:"#F43F5E",text:"The customer felt like a transaction, not a person. That feeling costs you every single shift."},narr:"The result. Three stars. No tip. The customer felt like a transaction."},
+      {t:19000,tag:"delivery 2 — 60 seconds more",emoji:"✅",hed:"Same door.\nCompletely\ndifferent\napproach.",sub:null,listGood:[["💬","Text sent 3 minutes out"],["😊","Greeted by name at the door"],["🤲","Two hands, bag at chest height"],["📸","Photo taken before leaving"],["🌟","Enjoy your meal as a goodbye"]],narr:"Delivery two. Text three minutes out. Greeted by name. Two hands on the bag. Photo before leaving. Enjoy your meal."},
+      {t:29000,tag:"the result",emoji:"⭐",hed:"5 stars.\nTip added.\nAccount\ngrowing.",sub:null,hi:{color:"#10B981",text:"The customer felt seen and cared for. That feeling is worth real money every single shift."},narr:"The result. Five stars. Tip added. Same roads. Same food. Sixty extra seconds."},
+      {t:35500,tag:"your takeaway",emoji:"🎯",hed:"Text. Smile.\nTwo hands.\nPhoto.\nEnjoy your meal.",sub:null,takeaway:"Five steps. Sixty seconds. The whole difference is right there.",narr:"Text. Smile. Two hands. Photo. Enjoy your meal. Five steps. Sixty seconds."},
+    ]},
+  {id:5,title:"When Things Go Wrong",dur:44000,icon:"⚠️",color:"#F43F5E",desc:"Wrong address, upset customer, late order. Here is exactly what to do.",
+    scenes:[
+      {t:0,tag:"it will happen to you",emoji:"⚠️",hed:"Wrong address.\nUpset customer.\nLate order.\nHere is exactly\nwhat to do.",sub:null,narr:"Something will go wrong on your shift today. Here is exactly what to do in each one."},
+      {t:6000,tag:"cannot find the address",emoji:"📍",hed:"You cannot\nfind them.\nDo not panic.\nDo not leave.",sub:null,steps:[["1","Double-check the address in the app","#F5A623"],["2","Text them where you are and ask for help","#3B82F6"],["3","Wait 2 to 3 minutes for a reply","#06B6D4"],["4","Still nothing? Call support before leaving","#10B981"]],narr:"You cannot find the address. Check it. Text them. Wait two to three minutes. Call support before you leave."},
+      {t:14000,tag:"customer opens the door angry",emoji:"😤",hed:"They are angry.\nDo not match it.\nAbsorb it.",sub:null,vs:{bad:["Wrong move","Explain yourself. Defend yourself. List reasons why it was not your fault."],good:["Right move","I am really sorry about that. I hope the rest of your evening is better."]},why:{color:"#8B5CF6",text:"You cannot win an argument at a doorstep. But you can end it with your rating intact."},narr:"They are angry. Do not explain yourself. Say sorry and wish them well. Then leave."},
+      {t:23000,tag:"order running very late",emoji:"⏰",hed:"You are late.\nOne text\nchanges everything.",sub:null,hi:{color:"#F5A623",text:"Hi running a little behind tonight — on my way and will be there as soon as I can. Really appreciate your patience. Send this before they text you."},narr:"The order is running late. Send a text before they message you. That one text turns a frustrated customer into a patient one."},
+      {t:31000,tag:"the rule for everything",emoji:"🧭",hed:"Acknowledge.\nApologize once.\nPoint to\nthe solution.",sub:"Every problem. Every platform. Every situation.",hi:{color:"#10B981",text:"Do not over-apologize. Do not argue. One acknowledgment, one apology, one next step."},narr:"One rule covers every situation. Acknowledge. Apologize once. Point to the solution."},
+      {t:37500,tag:"your takeaway",emoji:"🎯",hed:"Cannot find them?\nText first.\nAngry customer?\nAbsorb and leave.\nRunning late?\nText before they do.",sub:null,takeaway:"Acknowledge. Apologize once. Point to the solution. Every time.",narr:"Text first. Absorb it and leave. Text before they text you."},
     ]},
 ];
 
@@ -533,14 +567,88 @@ function VideoPlayer({video}) {
   const [scene, setScene] = useState(0);
   const [progress, setProgress] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [narOn, setNarOn] = useState(false);
   const elapsed = useRef(0);
   const rafRef = useRef(null);
   const t0Ref = useRef(null);
 
-  useEffect(()=>{restart(false); return()=>{if(rafRef.current)cancelAnimationFrame(rafRef.current);};},[video.id]);
+  useEffect(()=>{
+    restart(false);
+    return()=>{
+      if(rafRef.current)cancelAnimationFrame(rafRef.current);
+      window.speechSynthesis && window.speechSynthesis.cancel();
+    };
+  },[video.id]);
+
+  useEffect(()=>{
+    if(!narOn) return;
+    const sc = video.scenes[scene];
+    if(!sc || !sc.narr) return;
+    window.speechSynthesis.cancel();
+
+    const PREFERRED = [
+      "Samantha","Karen","Moira","Tessa",
+      "Google US English","Google UK English Female",
+      "Microsoft Aria Online","Microsoft Jenny Online",
+    ];
+
+    function pickVoice(voices){
+      // Try exact name matches first
+      for(const name of PREFERRED){
+        const v = voices.find(v=>v.name===name);
+        if(v) return v;
+      }
+      // Then partial matches — Google, natural, premium, neural
+      const fallbacks = [
+        v => v.name.includes("Google") && v.name.includes("US") && v.lang.startsWith("en"),
+        v => v.name.includes("Google") && v.lang.startsWith("en"),
+        v => /natural|premium|neural/i.test(v.name) && v.lang.startsWith("en"),
+        v => v.lang==="en-US",
+        v => v.lang.startsWith("en"),
+      ];
+      for(const fn of fallbacks){
+        const v = voices.find(fn);
+        if(v) return v;
+      }
+      return null;
+    }
+
+    function speak(voice){
+      const utt = new SpeechSynthesisUtterance(sc.narr);
+      utt.rate = 0.88; utt.pitch = 0.95; utt.volume = 1;
+      if(voice) utt.voice = voice;
+      window.speechSynthesis.speak(utt);
+    }
+
+    // getVoices() is async in most browsers — wait until the list is populated
+    function trySpeak(){
+      const voices = window.speechSynthesis.getVoices();
+      if(voices.length > 0){
+        speak(pickVoice(voices));
+      } else {
+        // Voices not ready yet — listen for when they load
+        const handler = ()=>{
+          window.speechSynthesis.onvoiceschanged = null;
+          const v = window.speechSynthesis.getVoices();
+          speak(pickVoice(v));
+        };
+        window.speechSynthesis.onvoiceschanged = handler;
+        // Hard timeout fallback — if onvoiceschanged never fires, speak anyway
+        setTimeout(()=>{
+          if(window.speechSynthesis.onvoiceschanged===handler){
+            window.speechSynthesis.onvoiceschanged = null;
+            speak(null);
+          }
+        }, 1000);
+      }
+    }
+
+    trySpeak();
+  },[scene, narOn]);
 
   function restart(autoplay=true){
     if(rafRef.current)cancelAnimationFrame(rafRef.current);
+    window.speechSynthesis && window.speechSynthesis.cancel();
     elapsed.current=0; t0Ref.current=null;
     setScene(0); setProgress(0); setPlaying(autoplay);
     if(autoplay) rafRef.current=requestAnimationFrame(tick);
@@ -559,8 +667,11 @@ function VideoPlayer({video}) {
 
   function togglePlay(){
     if(!playing && elapsed.current>=video.dur){restart(true);return;}
-    if(playing){cancelAnimationFrame(rafRef.current);setPlaying(false);}
-    else{
+    if(playing){
+      cancelAnimationFrame(rafRef.current);
+      window.speechSynthesis && window.speechSynthesis.cancel();
+      setPlaying(false);
+    } else {
       const saved=elapsed.current; t0Ref.current=null;
       rafRef.current=requestAnimationFrame(ts=>{t0Ref.current=ts-saved;tick(ts);});
       setPlaying(true);
@@ -569,6 +680,7 @@ function VideoPlayer({video}) {
 
   function jumpToScene(si){
     if(rafRef.current)cancelAnimationFrame(rafRef.current);
+    window.speechSynthesis && window.speechSynthesis.cancel();
     const targetMs=video.scenes[si].t;
     elapsed.current=targetMs; t0Ref.current=null;
     setScene(si); setProgress(targetMs/video.dur*100);
@@ -596,7 +708,7 @@ function VideoPlayer({video}) {
           <div style={{width:32,height:2,borderRadius:99,background:`linear-gradient(90deg,${vc},#fff)`,animation:"vFade 0.4s 0.3s both",opacity:0}}/>
           {sc.sub&&<div style={{fontSize:12,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.75,animation:"vUp 0.5s 0.3s both",opacity:0}} dangerouslySetInnerHTML={{__html:sc.sub.replace(/\n/g,'<br/>')}}/>}
           {sc.hi&&<div style={{width:"100%",background:`${sc.hi.color}10`,border:`1px solid ${sc.hi.color}40`,borderRadius:12,padding:"11px 14px",animation:"vUp 0.5s 0.45s both",opacity:0}}><div style={{fontSize:12,fontWeight:700,color:sc.hi.color,lineHeight:1.7,whiteSpace:"pre-line"}}>{sc.hi.text}</div></div>}
-          {sc.cite&&<div style={{fontSize:12,color:"rgba(255,255,255,0.25)",fontStyle:"italic",textAlign:"center",animation:"vFade 0.4s 0.6s both",opacity:0}}>{sc.cite}</div>}
+          {sc.cite&&<div style={{fontSize:11,color:"rgba(255,255,255,0.2)",fontStyle:"italic",textAlign:"center",animation:"vFade 0.4s 0.6s both",opacity:0}}>{sc.cite}</div>}
           {sc.vs&&<div style={{display:"flex",gap:8,width:"100%",animation:"vUp 0.5s 0.3s both",opacity:0}}>
             <div style={{flex:1,background:`${R}10`,border:`1px solid ${R}30`,borderRadius:12,padding:12,textAlign:"center"}}>
               <div style={{fontSize:12,fontWeight:800,color:R,letterSpacing:1,textTransform:"uppercase",marginBottom:6}}>{sc.vs.bad[0]}</div>
@@ -638,6 +750,14 @@ function VideoPlayer({video}) {
               </div>
             ))}
           </div>}
+          {sc.steps&&<div style={{display:"flex",flexDirection:"column",gap:8,width:"100%",animation:"vUp 0.5s 0.2s both",opacity:0}}>
+            {sc.steps.map(([num,txt,col],i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",background:`${col}10`,border:`1px solid ${col}28`,borderRadius:12}}>
+                <div style={{width:26,height:26,borderRadius:"50%",background:`${col}22`,border:`1px solid ${col}60`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:900,color:col,flexShrink:0}}>{num}</div>
+                <span style={{fontSize:13,color:"rgba(255,255,255,0.8)",fontWeight:600,lineHeight:1.4}}>{txt}</span>
+              </div>
+            ))}
+          </div>}
           {sc.bars&&<div style={{width:"100%",animation:"vUp 0.5s 0.3s both",opacity:0}}>
             {sc.bars.map(([label,stars,pct,col],i)=>(
               <div key={i} style={{marginBottom:i<sc.bars.length-1?14:0}}>
@@ -646,28 +766,32 @@ function VideoPlayer({video}) {
               </div>
             ))}
           </div>}
-          {sc.cta&&<div style={{textAlign:"center",animation:"vUp 0.5s 0.45s both",opacity:0}}>
-            <div style={{background:"rgba(245,166,35,0.12)",border:"2px solid rgba(245,166,35,0.5)",borderRadius:14,padding:"11px 20px",display:"inline-block"}}>
-              <div style={{fontSize:13,fontWeight:800,color:A}}>Free to explore — https://bit.ly/droppilot</div>
-              <div style={{fontSize:12,color:"rgba(255,255,255,0.35)",marginTop:2}}>Full access — $7 one time</div>
-            </div>
+          {sc.takeaway&&<div style={{width:"100%",background:`linear-gradient(135deg,${vc}14,${vc}07)`,border:`2px solid ${vc}50`,borderRadius:14,padding:"14px 16px",animation:"vUp 0.5s 0.5s both",opacity:0,textAlign:"center"}}>
+            <div style={{fontSize:10,fontWeight:800,color:`${vc}99`,letterSpacing:"2px",textTransform:"uppercase",marginBottom:6}}>Your Takeaway</div>
+            <div style={{fontSize:13,fontWeight:700,color:"rgba(255,255,255,0.85)",lineHeight:1.65}}>{sc.takeaway}</div>
           </div>}
         </div>
       </div>
       {/* Controls */}
       <div style={{padding:"10px 16px 4px",borderTop:`1px solid ${vc}20`}}>
-        {/* Scene dots */}
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:6,marginBottom:10}}>
           {video.scenes.map((_,si)=>(
             <button key={si} onClick={()=>jumpToScene(si)} style={{width:si===scene?20:8,height:8,borderRadius:99,background:si===scene?vc:"rgba(255,255,255,0.15)",border:"none",cursor:"pointer",padding:0,transition:"all 0.2s"}}/>
           ))}
         </div>
-        <div style={{display:"flex",alignItems:"center",gap:10,paddingBottom:14}}>
-          <button onClick={togglePlay} style={{background:`${vc}18`,border:`1px solid ${vc}40`,borderRadius:20,padding:"7px 16px",fontSize:13,fontWeight:700,cursor:"pointer",color:vc,fontFamily:"'Outfit',sans-serif"}}>
+        <div style={{display:"flex",alignItems:"center",gap:8,paddingBottom:14}}>
+          <button onClick={togglePlay} style={{background:`${vc}18`,border:`1px solid ${vc}40`,borderRadius:20,padding:"7px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:vc,fontFamily:"'Outfit',sans-serif"}}>
             {playing?"⏸ Pause":elapsed.current>=video.dur?"↺ Replay":"▶ Play"}
           </button>
-          <button onClick={()=>restart(false)} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:20,padding:"7px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:"rgba(255,255,255,0.5)",fontFamily:"'Outfit',sans-serif"}}>↺ Restart</button>
-          <div style={{flex:1,background:"rgba(255,255,255,0.07)",borderRadius:99,height:4,overflow:"hidden",marginLeft:4}}>
+          <button onClick={()=>restart(false)} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:20,padding:"7px 12px",fontSize:13,fontWeight:700,cursor:"pointer",color:"rgba(255,255,255,0.5)",fontFamily:"'Outfit',sans-serif"}}>↺</button>
+          <button onClick={()=>{
+            const next=!narOn;
+            setNarOn(next);
+            if(!next) window.speechSynthesis && window.speechSynthesis.cancel();
+          }} style={{background:narOn?`${vc}20`:"rgba(255,255,255,0.06)",border:`1px solid ${narOn?vc+"50":"rgba(255,255,255,0.1)"}`,borderRadius:20,padding:"7px 12px",fontSize:13,fontWeight:700,cursor:"pointer",color:narOn?vc:"rgba(255,255,255,0.5)",fontFamily:"'Outfit',sans-serif",transition:"all 0.2s"}}>
+            {narOn?"🔊 On":"🔇 Off"}
+          </button>
+          <div style={{flex:1,background:"rgba(255,255,255,0.07)",borderRadius:99,height:4,overflow:"hidden",marginLeft:2}}>
             <div style={{height:"100%",width:`${progress}%`,background:`linear-gradient(90deg,${vc},#fff)`,borderRadius:99,transition:"width 0.1s linear"}}/>
           </div>
         </div>
@@ -675,6 +799,7 @@ function VideoPlayer({video}) {
     </div>
   );
 }
+
 
 // ─── Beginner Content ─────────────────────────────────────────────────────────
 const BASICS_CATS = [
@@ -764,10 +889,11 @@ function App() {
     setTab(id);
     setTimeout(()=>setNavPop(null), 400);
   }
-  const [cfg, setCfg_]          = useState({name:"",unlockCode:"DROP2026"});
+  const [cfg, setCfg_]          = useState({name:""});
   const [pro, setPro]           = useState(false);
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [toast, setToast]       = useState(null);
 
   // Modals
@@ -830,9 +956,10 @@ function App() {
 
   useEffect(()=>{
     Promise.all([
-      load("dp3-cfg",{name:"",unlockCode:"DROP2026"}),
+      load("dp3-cfg",{name:""}),
       load("dp3-elite",false),
       load("dp3-intro-seen",false),
+      load("dp3-update-seen",""),
       load("dp3-fav-tips",[]),
       load("dp3-fav-tpl",[]),
       load("dp3-notes",[]),
@@ -847,7 +974,7 @@ function App() {
         {e:"📱",t:"Delivery app logged in and working",done:false},
         {e:"🧾",t:"Gas tank not on empty",done:false},
       ]),
-    ]).then(([c,p,seen,ft,ftpl,n,sh,jn,ps])=>{
+    ]).then(([c,p,seen,updateSeen,ft,ftpl,n,sh,jn,ps])=>{
       setCfg_(c); setPro(!!p); setLoaded(true);
       setFavTips(new Set(ft));
       setFavTemplates(new Set(ftpl));
@@ -855,7 +982,8 @@ function App() {
       setShifts(sh);
       setJournal(jn);
       setPreShift(ps);
-      if(!seen) setShowIntro(true);
+      if(!seen){ setShowIntro(true); }
+      else if(updateSeen !== LATEST_UPDATE_ID){ setShowUpdate(true); }
     });
   },[]);
 
@@ -863,9 +991,10 @@ function App() {
 
   function showToast(msg){setToast(msg);}
 
-  function tryCode(){
+  async function tryCode(){
     if(!codeIn.trim()){setCodeErr("Please enter your unlock code.");return;}
-    if(cfg.unlockCode&&codeIn.trim().toUpperCase()===cfg.unlockCode.trim().toUpperCase()){
+    const h=await hashCode(codeIn);
+    if(h===ELITE_HASH){
       setPro(true); save("dp3-elite",true); setPayStep("done");
     } else {
       setCodeErr("That code isn't correct. Check your receipt email from Stripe.");
@@ -974,6 +1103,37 @@ function App() {
     save("dp3-notes",updated);
   }
 
+  function backupData(){
+    const keys=["dp3-cfg","dp3-elite","dp3-intro-seen","dp3-fav-tips","dp3-fav-tpl","dp3-notes","dp3-shifts","dp3-journal","dp3-preshift","dp3-checks-doordash","dp3-checks-ubereats","dp3-checks-spark","dp3-checks-instacart"];
+    const backup={version:1,date:new Date().toISOString(),data:{}};
+    keys.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)backup.data[k]=v;});
+    const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download=`droppilot-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.click(); URL.revokeObjectURL(url);
+    showToast("Backup downloaded!");
+  }
+
+  function restoreData(e){
+    const file=e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const backup=JSON.parse(ev.target.result);
+        if(!backup.data) throw new Error("Invalid backup file");
+        Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));
+        showToast("Backup restored! Reloading...");
+        setTimeout(()=>window.location.reload(),1200);
+      }catch{
+        showToast("Could not read that file.");
+      }
+    };
+    reader.readAsText(file);
+    e.target.value="";
+  }
+
   // Filter templates by search
   const filteredCats = templateSearch.trim()
     ? MSG_CATS.map(cat=>({
@@ -1000,13 +1160,17 @@ function App() {
       {toast&&<Toast msg={toast} onDone={()=>setToast(null)}/>}
 
       {/* ── Header ──────────────────────────────────────────────────────────── */}
-      <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",position:"sticky",top:0,zIndex:60}}>
-        <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default"}}>
+      <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:60}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none"}}>
           <div className="glow" style={{width:38,height:38,borderRadius:12,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🚗</div>
           <div>
             <div style={{fontSize:18,fontWeight:900,letterSpacing:"-0.5px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
             <div style={{fontSize:12,color:C.text3,letterSpacing:"1.5px",fontWeight:700}}>DRIVER COMMAND CENTER</div>
           </div>
+        </div>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <a href="landing.html" aria-label="Home" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,textDecoration:"none",flexShrink:0}}>🏠</a>
+          <button onClick={()=>setShowCfg(o=>!o)} aria-label="Settings" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0}}>⚙️</button>
         </div>
       </div>
 
@@ -1020,14 +1184,28 @@ function App() {
           </div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <div style={{fontSize:12,fontWeight:800,color:C.amber,marginBottom:10}}>💳 Access</div>
-            <div>
-              <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Unlock Code</div>
-              <input value={cfg.unlockCode||""} onChange={e=>setCfg({...cfg,unlockCode:e.target.value})} placeholder="e.g. DROP2026" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
+            <div style={{background:pro?"rgba(16,185,129,0.07)":"rgba(255,255,255,0.03)",border:`1px solid ${pro?"rgba(16,185,129,0.2)":"rgba(255,255,255,0.07)"}`,borderRadius:11,padding:"11px 13px",display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:17}}>{pro?"✅":"🔒"}</span>
+              <div>
+                <div style={{fontSize:13,fontWeight:700,color:pro?C.green:C.text2}}>{pro?"Elite Access Active":"Free Plan"}</div>
+                {!pro&&<div style={{fontSize:11,color:C.text3,marginTop:1}}>Tap "Unlock with Code" in the paywall to activate.</div>}
+              </div>
             </div>
           </div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+            <button onClick={()=>{setShowUpdate(true);setShowCfg(false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>🆕 What's New</button>
+            <a href="mailto:support@droppilot.app" style={{display:"block",textAlign:"center",background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,fontWeight:700,width:"100%",textDecoration:"none",marginBottom:8}}>✉ Contact Support</a>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
             {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Elite Access</button>}
+          </div>
+          <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+            <div style={{fontSize:12,fontWeight:800,color:C.teal,marginBottom:10}}>💾 Your Data</div>
+            <div style={{fontSize:12,color:C.text3,lineHeight:1.6,marginBottom:10}}>Back up your shifts, journal, notes and settings. Restore any time — on this device or a new one.</div>
+            <button onClick={backupData} style={{background:"rgba(6,182,212,0.08)",border:"1px solid rgba(6,182,212,0.2)",borderRadius:11,padding:"11px 12px",color:C.teal,fontSize:13,fontWeight:700,width:"100%",cursor:"pointer",marginBottom:8}}>⬇ Download Backup</button>
+            <label style={{display:"block",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,fontWeight:700,width:"100%",cursor:"pointer",textAlign:"center",boxSizing:"border-box"}}>
+              ⬆ Restore from Backup
+              <input type="file" accept=".json" onChange={restoreData} style={{display:"none"}}/>
+            </label>
           </div>
           <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
         </div>
@@ -1522,7 +1700,7 @@ function App() {
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
               <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Training Series</div>
               <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>The DropPilot Method</div>
-              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Four short training videos on what actually drives ratings and income.</div>
+              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Six training videos on what drives ratings and income. Tap 🔇 Off inside any video to turn on narration.</div>
             </div>
 
             {pro?(
@@ -1857,12 +2035,12 @@ function App() {
       )}
 
       {/* ── Bottom Nav ──────────────────────────────────────────────────────── */}
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
+      <nav role="navigation" aria-label="Main navigation" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
         {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"track",l:"Track",e:"📊",ac:C.green},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
           const active=tab===n.id;
           const popping=navPop===n.id;
           return(
-            <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
+            <button key={n.id} onClick={()=>changeTab(n.id)} aria-label={n.l} aria-current={active?"page":undefined} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
               {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac}`}}/>}
               <div className={popping?"nav-pop":""} style={{width:36,height:26,borderRadius:9,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
                 <span style={{fontSize:active?16:14,transition:"font-size 0.18s"}}>{n.e}</span>
@@ -1871,9 +2049,43 @@ function App() {
             </button>
           );
         })}
-      </div>
+      </nav>
 
       {/* ── Paywall Modal ────────────────────────────────────────────────────── */}
+      {showUpdate&&(
+        <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+          <div onClick={()=>{setShowUpdate(false);save("dp3-update-seen",LATEST_UPDATE_ID);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
+          <div style={{position:"relative",background:`linear-gradient(180deg,${C.s2},${C.s1})`,borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:24,paddingBottom:44,width:"100%",maxWidth:430,zIndex:1,maxHeight:"80vh",overflowY:"auto"}}>
+            <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 22px"}}/>
+            <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20}}>
+              <div style={{width:44,height:44,borderRadius:13,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>🚗</div>
+              <div>
+                <div style={{fontSize:11,fontWeight:800,color:C.amber,letterSpacing:"2px",textTransform:"uppercase",marginBottom:2}}>What's New</div>
+                <div style={{fontSize:20,fontWeight:900,letterSpacing:"-0.5px"}}>DropPilot Update</div>
+              </div>
+            </div>
+            {UPDATES.map((u,ui)=>(
+              <div key={ui} style={{marginBottom:ui<UPDATES.length-1?22:0}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+                  <div style={{fontSize:11,fontWeight:800,color:C.text3,letterSpacing:"1.5px",textTransform:"uppercase"}}>{u.date}</div>
+                  <div style={{flex:1,height:1,background:"rgba(255,255,255,0.06)"}}/>
+                </div>
+                <div style={{fontSize:15,fontWeight:800,marginBottom:10,color:C.text}}>{u.title}</div>
+                <div style={{display:"flex",flexDirection:"column",gap:7}}>
+                  {u.items.map((item,ii)=>(
+                    <div key={ii} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"10px 12px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:11}}>
+                      <div style={{width:6,height:6,borderRadius:"50%",background:C.amber,flexShrink:0,marginTop:5}}/>
+                      <div style={{fontSize:13,color:C.text2,lineHeight:1.55}}>{item}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <button onClick={()=>{setShowUpdate(false);save("dp3-update-seen",LATEST_UPDATE_ID);}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginTop:22}}>Got it →</button>
+          </div>
+        </div>
+      )}
+
       {showPay&&(
         <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
           <div onClick={()=>{setShowPay(false);setPayStep("offer");setCodeIn("");setCodeErr("");setRestoreEmail("");setRestoreMsg("");}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
@@ -1893,7 +2105,7 @@ function App() {
                     <span style={{fontSize:24,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:9}}>
-                    {[["💬","30 message scripts — one tap to copy, ready to send"],["🛡️","Appeal letters for false complaints & unfair ratings"],["🎓","4 training videos on psychology & what actually earns tips"],["📖","Full beginner guide — all 4 platforms explained simply"],["🧠","Deeper learning — tip science, de-escalation & more"],["📊","Shift tracker, pre-shift checklist & shift journal"]].map(([e,f],i)=>(
+                    {[["💬","30 message scripts — one tap to copy, ready to send"],["🛡️","Appeal letters for false complaints & unfair ratings"],["🎓","6 training videos on psychology & what actually earns tips"],["📖","Full beginner guide — all 4 platforms explained simply"],["🧠","Deeper learning — tip science, de-escalation & more"],["📊","Shift tracker, pre-shift checklist & shift journal"]].map(([e,f],i)=>(
                       <div key={i} style={{display:"flex",alignItems:"center",gap:10,fontSize:13,color:C.text2}}>
                         <span style={{fontSize:15,flexShrink:0}}>{e}</span>{f}
                       </div>
@@ -1981,5 +2193,12 @@ function App() {
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
 
   </script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
+}
+</script>
 </body>
 </html>
