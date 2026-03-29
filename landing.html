@@ -3,34 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="DropPilot — the driver command center. Earn more tips, protect your account, and deliver with confidence every shift."/>
 <title>DropPilot — Driver Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --amber:#F5A623;
-  --amber-d:#C8820A;
-  --bg:#07080A;
-  --s1:#0D0F13;
-  --s2:#12151A;
-  --text:#EDF0F7;
-  --text2:#8B95A8;
-  --text3:#6B7A8D;
-}
+:root{--amber:#F5A623;--amber-d:#C8820A;--bg:#07080A;--text:#EDF0F7;--text2:#8B95A8;}
 body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;}
-
-/* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(7,8,10,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
-.nav-logo{display:flex;align-items:center;gap:10px;}
-.nav-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:18px;}
-.nav-name{font-size:17px;font-weight:900;letter-spacing:-0.3px;background:linear-gradient(110deg,var(--text) 40%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.nav-cta{background:linear-gradient(135deg,var(--amber),var(--amber-d));border:none;border-radius:99px;padding:9px 20px;font-size:13px;font-weight:800;color:#000;cursor:pointer;text-decoration:none;transition:all 0.2s;}
-.nav-cta:hover{transform:scale(1.05);}
-
-/* Hero */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 24px 80px;text-align:center;position:relative;}
-.hero-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,120px);line-height:0.92;letter-spacing:-2px;color:var(--text);margin-bottom:8px;}
+.hero-headline{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,14vw,110px);line-height:0.92;letter-spacing:-2px;color:var(--text);margin-bottom:8px;}
 .hero-headline span{color:var(--amber);}
 .hero-sub{font-size:18px;color:var(--text2);max-width:480px;margin:20px auto 40px;}
 .btn-primary{background:linear-gradient(135deg,var(--amber),var(--amber-d));border:none;border-radius:99px;padding:18px 48px;font-size:18px;font-weight:900;color:#000;cursor:pointer;text-decoration:none;box-shadow:0 12px 40px rgba(245,166,35,0.4);transition:all 0.25s;}
@@ -43,22 +23,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:fl
 
 /* Animations */
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-
-/* Your other sections can go below — I kept the structure simple so it loads */
 </style>
 </head>
 <body>
 
-<!-- Nav -->
-<nav>
-  <div class="nav-logo">
-    <div class="nav-icon">🚗</div>
-    <div class="nav-name">DropPilot</div>
-  </div>
-  <a href="index.html" class="nav-cta">Open App →</a>
-</nav>
-
-<!-- Hero -->
 <div class="hero">
   <div style="font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(245,166,35,0.75);margin-bottom:20px;">DRIVER COMMAND CENTER</div>
   <h1 class="hero-headline">Earn More.<br/><span>Every</span> Shift.</h1>
@@ -82,11 +50,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:fl
   </div>
 </div>
 
-<!-- 4-second auto-redirect -->
+<!-- Stronger 4-second auto-redirect -->
 <script>
 setTimeout(() => {
-  window.location.href = "index.html";
+  window.location.replace("index.html");   // replace = no back button
 }, 4000);
 </script>
+
 </body>
 </html>
