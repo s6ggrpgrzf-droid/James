@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#07080A"/>
+  <title>DropPilot — Earn More Every Shift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+```
+html, body {
+  background: #07080A;
+  color: #EDF0F7;
+  font-family: 'Outfit', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes fadeUp  { from { opacity:0; transform:translateY(20px) } to { opacity:1; transform:translateY(0) } }
+@keyframes glow    { 0%,100% { box-shadow:0 0 20px rgba(245,166,35,0.35) } 50% { box-shadow:0 0 42px rgba(245,166,35,0.7) } }
+@keyframes shimmer { 0% { background-position:-200% center } 100% { background-position:200% center } }
+
+.fu { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+.d1{animation-delay:0.08s;opacity:0}.d2{animation-delay:0.18s;opacity:0}
+.d3{animation-delay:0.28s;opacity:0}.d4{animation-delay:0.38s;opacity:0}
+.d5{animation-delay:0.48s;opacity:0}.d6{animation-delay:0.58s;opacity:0}
+.d7{animation-delay:0.68s;opacity:0}
+
+.wrap {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 20px 64px;
+}
+
+/* Fixed ambient orbs */
+.orb {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+}
+.orb1 { width:280px; height:280px; top:-80px; right:-60px;
+  background: radial-gradient(circle, rgba(245,166,35,0.13), transparent 65%); }
+.orb2 { width:220px; height:220px; bottom:80px; left:-50px;
+  background: radial-gradient(circle, rgba(139,92,246,0.1), transparent 65%); }
+
+.inner { position: relative; z-index: 1; }
+
+/* ── Header ── */
+.hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0 0; margin-bottom: 44px;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon {
+  width: 38px; height: 38px; border-radius: 11px;
+  background: linear-gradient(145deg, #ffc84a, #F5A623, #C8820A);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; animation: glow 3s ease-in-out infinite;
+  box-shadow: 0 4px 18px rgba(245,166,35,0.4), 0 1px 0 rgba(255,255,255,0.15) inset;
+}
+.logo-name {
+  font-size: 20px; font-weight: 900; letter-spacing: -0.6px;
+  background: linear-gradient(110deg, #fff 30%, #F5A623);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.try-badge {
+  font-size: 11px; font-weight: 800; color: #F5A623;
+  background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+  border-radius: 20px; padding: 5px 12px;
+}
+
+/* ── Hero ── */
+.hero { text-align: center; margin-bottom: 36px; }
+.eyebrow {
+  font-size: 11px; font-weight: 800; color: rgba(245,166,35,0.7);
+  letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 14px;
+}
+.headline {
+  font-size: 44px; font-weight: 900; line-height: 1.05; letter-spacing: -2.5px;
+  background: linear-gradient(135deg, #ffffff 30%, #ffc84a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+.divider {
+  width: 34px; height: 2px; border-radius: 99px;
+  background: linear-gradient(90deg, #F5A623, #fff);
+  margin: 0 auto 16px;
+}
+.subline {
+  font-size: 15px; color: #8B95A8; line-height: 1.7;
+  font-weight: 500; max-width: 300px; margin: 0 auto 28px;
+}
+
+/* ── CTA ── */
+.cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #ffc84a, #F5A623, #C8820A);
+  color: #000; font-family: 'Outfit', sans-serif;
+  font-size: 17px; font-weight: 900; letter-spacing: -0.3px;
+  padding: 16px 38px; border-radius: 50px; text-decoration: none;
+  box-shadow: 0 10px 36px rgba(245,166,35,0.5), 0 2px 0 rgba(255,255,255,0.2) inset;
+  position: relative; overflow: hidden; transition: transform 0.15s;
+}
+.cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+  background-size: 200% 100%; animation: shimmer 2.5s ease-in-out infinite;
+}
+.cta:active { transform: scale(0.97); }
+.cta-note { font-size: 12px; color: #6B7A8D; margin-top: 11px; }
+
+/* ── Pain cards ── */
+.pains { display: flex; flex-direction: column; gap: 9px; margin-bottom: 32px; }
+.pain {
+  background: rgba(244,63,94,0.07); border: 1px solid rgba(244,63,94,0.2);
+  border-radius: 12px; padding: 12px 15px;
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.72); line-height: 1.5;
+}
+
+/* ── Features ── */
+.features { display: flex; flex-direction: column; gap: 9px; margin-bottom: 32px; }
+.feat {
+  display: flex; align-items: center; gap: 13px;
+  background: #0D0F13; border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 13px 15px;
+}
+.feat-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.feat-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.feat-desc { font-size: 12px; color: #8B95A8; line-height: 1.4; }
+.feat-badge {
+  margin-left: auto; font-size: 10px; font-weight: 800;
+  border-radius: 6px; padding: 3px 8px; flex-shrink: 0; white-space: nowrap;
+}
+.badge-free { background:rgba(16,185,129,0.12); color:#10B981; border:1px solid rgba(16,185,129,0.25); }
+.badge-elite { background:rgba(245,166,35,0.1); color:#F5A623; border:1px solid rgba(245,166,35,0.25); }
+
+/* ── Price card ── */
+.price-card {
+  background: linear-gradient(160deg, #0f0d00, #0d0f13);
+  border: 1px solid rgba(245,166,35,0.35); border-radius: 22px;
+  padding: 26px 20px; text-align: center; position: relative;
+  overflow: hidden; margin-bottom: 14px;
+}
+.price-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, #F5A623, transparent);
+}
+.price-num {
+  font-size: 58px; font-weight: 900; letter-spacing: -3px;
+  color: #F5A623; line-height: 1; margin-bottom: 4px;
+}
+.price-desc { font-size: 13px; color: #8B95A8; margin-bottom: 20px; }
+.price-list { display: flex; flex-direction: column; gap: 9px; text-align: left; margin-bottom: 22px; }
+.price-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #8B95A8; }
+.chk {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; flex-shrink: 0; color: #10B981;
+}
+.cta-full { width: 100%; justify-content: center; font-size: 15px; padding: 15px; }
+
+/* ── Footer ── */
+.foot {
+  font-size: 11px; color: #6B7A8D; text-align: center;
+  line-height: 1.9; margin-top: 6px;
+}
+.foot a { color: #F5A623; text-decoration: none; font-weight: 700; }
+```
+
+  </style>
+</head>
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <div class="wrap">
+    <div class="inner">
+
+```
+  <!-- Header -->
+  <div class="hd fu d1">
+    <div class="logo">
+      <div class="logo-icon">🚗</div>
+      <div class="logo-name">DropPilot</div>
+    </div>
+    <div class="try-badge">Free to try</div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="eyebrow fu d1">For gig delivery drivers</div>
+    <h1 class="headline fu d2">Earn More.<br/>Every Shift.</h1>
+    <div class="divider fu d2"></div>
+    <p class="subline fu d3">Tips, scripts, account protection, and training — everything top earners use, in one app.</p>
+    <a href="index.html" class="cta fu d4">Open DropPilot &nbsp;→</a>
+    <div class="cta-note fu d4">Free to explore · Elite access $7 · Lifetime</div>
+  </div>
+
+  <!-- Pain points -->
+  <div class="pains">
+    <div class="pain fu d3">⚠️ &nbsp;Your rating decides which orders you even see.</div>
+    <div class="pain fu d4">⚠️ &nbsp;Tips are won or lost in the last 10 seconds at the door.</div>
+    <div class="pain fu d5">⚠️ &nbsp;One false complaint can cost you your account.</div>
+  </div>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feat fu d3">
+      <div class="feat-icon" style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2)">⭐</div>
+      <div><div class="feat-title" style="color:#F5A623">Earn</div><div class="feat-desc">Psychology &amp; habits that raise your rating</div></div>
+      <div class="feat-badge badge-free">FREE</div>
+    </div>
+    <div class="feat fu d3">
+      <div class="feat-icon" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2)">💬</div>
+      <div><div class="feat-title" style="color:#3B82F6">Scripts</div><div class="feat-desc">30 ready-to-send messages for every situation</div></div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat fu d4">
+      <div class="feat-icon" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2)">📊</div>
+      <div><div class="feat-title" style="color:#10B981">Track</div><div class="feat-desc">Log shifts, tips &amp; ratings — see your progress</div></div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat fu d4">
+      <div class="feat-icon" style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2)">🛡️</div>
+      <div><div class="feat-title" style="color:#8B5CF6">Defend</div><div class="feat-desc">Appeal scripts for all 4 platforms</div></div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat fu d5">
+      <div class="feat-icon" style="background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2)">📖</div>
+      <div><div class="feat-title" style="color:#06B6D4">Basics</div><div class="feat-desc">New to gig work? Everything explained simply</div></div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat fu d5">
+      <div class="feat-icon" style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2)">🎓</div>
+      <div><div class="feat-title" style="color:#F5A623">Training</div><div class="feat-desc">6 videos on what actually earns more money</div></div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+  </div>
+
+  <!-- Price -->
+  <div class="price-card fu d5">
+    <div class="price-num">$7</div>
+    <div class="price-desc">One-time · Lifetime access · Free updates forever</div>
+    <div class="price-list">
+      <div class="price-row"><div class="chk">✓</div>Every script, letter &amp; training video</div>
+      <div class="price-row"><div class="chk">✓</div>DoorDash, Uber Eats, Spark &amp; Instacart</div>
+      <div class="price-row"><div class="chk">✓</div>Shift tracker, journal &amp; pre-shift checklist</div>
+      <div class="price-row"><div class="chk">✓</div>Every update we ever ship — free</div>
+    </div>
+    <a href="index.html" class="cta cta-full">Start Free — Unlock Elite for $7</a>
+  </div>
+
+  <!-- Footer -->
+  <div class="foot fu d6">
+    Works on any phone · No account needed · No subscription<br/>
+    <a href="index.html">Open the app →</a>
+  </div>
+
+</div>
+```
+
+  </div>
+
+</body>
+</html>
