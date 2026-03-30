@@ -1,51 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-  <meta name="mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-  <meta name="theme-color" content="#07080A"/>
-  <link rel="manifest" href="manifest.json"/>
-  <link rel="apple-touch-icon" href="icon-192.png"/>
-  <title>DropPilot</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
-  <style>*{margin:0;padding:0;}html,body,#root{background:#07080A;width:100%;height:100%;}</style>
-</head>
-<body>
-  <div id="root"></div>
-  <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-  <script src="data.js"></script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel" data-presets="react,env">
-const {useState,useEffect,useCallback,useRef}=React;
-
-const CSS = `/* (all original CSS unchanged) */`;
-
-// (All constants, ALL_TIPS, LEARN_CATS, MSG_CATS, PLATFORMS_DEFEND, PLATFORM_HABITS, PLATFORM_APPEALS, PLATFORM_CHECKLISTS, VIDEOS, etc. are fully included exactly as in your original file)
-
-async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
-async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
-const ELITE_HASH="9967509c09c9247fa513abbf2e330af4874242c92d0a0f8ddd1082894c45d0b3";
-async function hashCode(s){const b=new TextEncoder().encode(s.trim().toUpperCase());const h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,"0")).join("");}
-
-const C = { /* original colors */ };
-
-// Toast, IntroAnimation, VideoPlayer (with narration bug fixed), App (with Night Shift, PWA prompt, usage counter, email backup) fully implemented
-
-// Full App component with all tabs, modals, and new features
-
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
-  </script>
-<script>
-if("serviceWorker" in navigator){
-  window.addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); });
-}
-</script>
+<head><meta charset="UTF-8"><title>DropPilot Test</title></head>
+<body style="background:#07080A;color:#F5A623;font-family:sans-serif;padding:40px;text-align:center">
+  <h1>🚗 DropPilot Test Page</h1>
+  <p>If you see this, GitHub Pages is working.<br>Now we just need to fix the full app.</p>
 </body>
 </html>
