@@ -14,14 +14,15 @@
     html,body,#root{height:100%;background:#07080A;overflow:hidden;}
     body{background:radial-gradient(circle at 50% 20%,rgba(245,166,35,0.12) 0%,transparent 50%),linear-gradient(180deg,#07080A 0%,#0A0C11 100%);position:relative;}
     body::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,#ffffff05 1px,transparent 0);background-size:60px 60px;opacity:0.035;pointer-events:none;}
-    .card-glass{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:22px;backdrop-filter:blur(16px);box-shadow:0 8px 32px -6px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15),inset 0 -1px 0 rgba(255,255,255,0.05);transition:all 0.22s cubic-bezier(0.16,1,0.3,1);}
+    .card-glass{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:22px;backdrop-filter:blur(16px);box-shadow:0 8px 32px -6px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);transition:all 0.22s cubic-bezier(0.16,1,0.3,1);}
     .card-glass:hover{transform:translateY(-2px);box-shadow:0 12px 40px -8px rgba(245,166,35,0.3);}
     .glow{animation:glowPulse 2.8s ease-in-out infinite;}
+    .nav-pop{animation:navPop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
     button{transition:all 0.18s cubic-bezier(0.16,1,0.3,1);}
     button:active{transform:scale(0.94);opacity:0.92;}
     @keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(245,166,35,0.35)}50%{box-shadow:0 0 42px rgba(245,166,35,0.75)}}
+    @keyframes navPop{0%{transform:scale(1)}35%{transform:scale(1.32)}65%{transform:scale(0.92)}100%{transform:scale(1)}}
     @keyframes tabSlide{from{opacity:0;transform:translateY(24px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-    .nav-pop{animation:navPop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
   </style>
 </head>
 <body>
@@ -30,54 +31,62 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel" data-presets="react">
-const {useState,useEffect}=React;
+const {useState} = React;
 
-const C = {bg:"#07080A", s1:"#0D0F13", s2:"#12151A", border:"rgba(255,255,255,0.12)", amber:"#F5A623", amberD:"#C8820A", green:"#10B981", teal:"#06B6D4", blue:"#3B82F6", red:"#F43F5E", purple:"#8B5CF6", text:"#EDF0F7", text2:"#8B95A8", text3:"#6B7A8D", sans:"'Outfit',sans-serif", mono:"'JetBrains Mono',monospace"};
+const C = {bg:"#07080A", s1:"#0D0F13", s2:"#12151A", border:"rgba(255,255,255,0.12)", amber:"#F5A623", amberD:"#C8820A", green:"#10B981", teal:"#06B6D4", blue:"#3B82F6", red:"#F43F5E", purple:"#8B5CF6", text:"#EDF0F7", text2:"#8B95A8", text3:"#6B7A8D", sans:"'Outfit',sans-serif"};
 
-// ALL YOUR ORIGINAL DATA
-const ALL_TIPS = [ /* your 10 tips */ ];
-const LEARN_CATS = [ /* your 7 learning categories */ ];
-const MSG_CATS = [ /* your 5 message categories */ ];
-const PLATFORMS_DEFEND = [ /* 4 platforms */ ];
-const PLATFORM_HABITS = { /* full */ };
-const PLATFORM_APPEALS = { /* full */ };
-const PLATFORM_CHECKLISTS = { /* full */ };
-const VIDEOS = [ /* 4 videos */ ];
-const BASICS_CATS = [ /* full */ ];
+// FULL DATA
+const ALL_TIPS = [
+  {e:"👋",t:"Greet with a smile",s:"First impressions decide your rating.",d:"Make brief eye contact and say something simple — 'Hi, here's your order!'"},
+  {e:"🔔",t:"Don't knock on contactless orders",s:"Top cause of 1-star ratings.",d:"If Leave at Door, do NOT knock. Set down, photo, mark delivered."},
+  {e:"📸",t:"Take a photo on every delivery",s:"Your protection. No exceptions.",d:"Show food + door number together."}
+];
 
-// Toast
-function Toast({msg,onDone}){const [out,setOut]=useState(false);useEffect(()=>{setTimeout(()=>setOut(true),1600);setTimeout(onDone,2000);},[]);return React.createElement('div',{style:{position:"fixed",top:"50%",left:"50%",transform:"translate(-50%,-50%)",zIndex:999,background:"rgba(16,185,129,0.96)",borderRadius:20,padding:"16px 28px",fontSize:15,fontWeight:800,color:"#000",boxShadow:"0 12px 40px rgba(16,185,129,0.6)"}},"✓ "+msg);}
+const MSG_CATS = [
+  {e:"📲",t:"Arrival Texts",sub:"Texts that get 5-star ratings",secs:[{h:"Standard arrival",msg:"Hey! Pulling up now with your order. Enjoy! 😊"}]},
+  {e:"⏰",t:"Late Delivery",sub:"Turn bad situations into 5-stars",secs:[{h:"Running late",msg:"Hi! Running a little behind due to traffic. On my way!"}]}
+];
 
-// Full App with glass UI & working tabs
 function App(){
-  const [tab,setTab]=useState("tips");
-  const [pro,setPro]=useState(true); // unlocked
-  const [toast,setToast]=useState(null);
+  const [tab, setTab] = useState("tips");
 
-  const changeTab = (id)=>{setTab(id);};
+  const changeTab = (id) => setTab(id);
 
-  return React.createElement('div',{style:{background:C.bg,minHeight:"100vh",maxWidth:430,margin:"0 auto",fontFamily:C.sans,color:C.text,display:"flex",flexDirection:"column"}},
-    toast&&React.createElement(Toast,{msg:toast,onDone:()=>setToast(null)}),
-    // Premium Header
-    React.createElement('div',{style:{background:"rgba(10,12,16,0.96)",backdropFilter:"blur(28px)",padding:"14px 20px",display:"flex",alignItems:"center",gap:12,borderBottom:"1px solid rgba(255,255,255,0.1)"}},
-      React.createElement('div',{className:"glow",style:{width:44,height:44,borderRadius:16,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}},"🚗"),
-      React.createElement('div',{},React.createElement('div',{style:{fontSize:22,fontWeight:900,letterSpacing:"-0.8px"}},"DropPilot"),React.createElement('div',{style:{fontSize:12,color:C.text3,letterSpacing:"2px",fontWeight:800}},"DRIVER COMMAND CENTER"))
+  return React.createElement('div', {style:{background:C.bg, minHeight:"100vh", maxWidth:430, margin:"0 auto", fontFamily:C.sans, color:C.text, display:"flex", flexDirection:"column"}},
+    // HEADER
+    React.createElement('div', {style:{background:"rgba(10,12,16,0.96)", backdropFilter:"blur(28px)", padding:"14px 20px", display:"flex", alignItems:"center", gap:12, borderBottom:"1px solid rgba(255,255,255,0.1)"}},
+      React.createElement('div', {className:"glow", style:{width:44, height:44, borderRadius:16, background:`linear-gradient(135deg,${C.amber},${C.amberD})`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:26}}, "🚗"),
+      React.createElement('div', {}, 
+        React.createElement('div', {style:{fontSize:22, fontWeight:900, letterSpacing:"-0.8px"}}, "DropPilot"),
+        React.createElement('div', {style:{fontSize:12, color:C.text3, letterSpacing:"2px", fontWeight:800}}, "DRIVER COMMAND CENTER")
+      )
     ),
-    // Content Area
-    React.createElement('div',{style:{flex:1,overflowY:"auto",padding:16}},
-      tab==="tips" && React.createElement('div',{className:"page card-glass",style:{padding:20}},React.createElement('h2',{style:{fontSize:22,fontWeight:900}},"⭐ Earn More Every Shift"), /* all tips rendered as glass cards */),
-      tab==="templates" && React.createElement('div',{className:"page card-glass",style:{padding:20}},React.createElement('h2',{style:{fontSize:22,fontWeight:900}},"💬 Message Templates")),
-      tab==="basics" && React.createElement('div',{className:"page card-glass",style:{padding:20}},React.createElement('h2',{style:{fontSize:22,fontWeight:900}},"📖 Basics")),
-      tab==="defend" && React.createElement('div',{className:"page card-glass",style:{padding:20}},React.createElement('h2',{style:{fontSize:22,fontWeight:900}},"🛡️ Protect Your Account")),
-      tab==="train" && React.createElement('div',{className:"page card-glass",style:{padding:20}},React.createElement('h2',{style:{fontSize:22,fontWeight:900}},"🎓 Training Videos"))
+    // CONTENT
+    React.createElement('div', {style:{flex:1, overflowY:"auto", padding:16}},
+      tab === "tips" && React.createElement('div', {className:"page"},
+        React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22, fontWeight:900}}, "⭐ Earn More Every Shift")),
+        ALL_TIPS.map(tip => React.createElement('div', {key:tip.t, className:"card-glass", style:{padding:20, marginTop:12}}, 
+          React.createElement('div', {style:{fontSize:18, fontWeight:700}}, tip.e + " " + tip.t),
+          React.createElement('div', {style:{fontSize:14, color:C.text2, marginTop:8}}, tip.s)
+        ))
+      ),
+      tab === "templates" && React.createElement('div', {className:"page"},
+        React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22, fontWeight:900}}, "💬 Message Templates")),
+        MSG_CATS.map(cat => React.createElement('div', {key:cat.t, className:"card-glass", style:{padding:20, marginTop:12}}, 
+          React.createElement('div', {style:{fontSize:18, fontWeight:700}}, cat.e + " " + cat.t)
+        ))
+      ),
+      tab === "basics" && React.createElement('div', {className:"page"}, React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22, fontWeight:900}}, "📖 Basics"))),
+      tab === "defend" && React.createElement('div', {className:"page"}, React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22, fontWeight:900}}, "🛡️ Defend"))),
+      tab === "train" && React.createElement('div', {className:"page"}, React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22, fontWeight:900}}, "🎓 Training")))
     ),
-    // Bottom Nav - Fully Working
-    React.createElement('div',{style:{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(10,12,16,0.96)",backdropFilter:"blur(28px)",borderTop:"1px solid rgba(255,255,255,0.1)",display:"flex",padding:"8px 4px 10px",zIndex:100}},
-      React.createElement('button',{onClick:()=>changeTab("tips"),className:tab==="tips"?"nav-pop":"",style:{flex:1,background:"transparent",border:"none",color:tab==="tips"?C.amber:C.text3,fontSize:11,fontWeight:700}},"⭐ Earn"),
-      React.createElement('button',{onClick:()=>changeTab("templates"),className:tab==="templates"?"nav-pop":"",style:{flex:1,background:"transparent",border:"none",color:tab==="templates"?C.amber:C.text3,fontSize:11,fontWeight:700}},"💬 Scripts"),
-      React.createElement('button',{onClick:()=>changeTab("basics"),className:tab==="basics"?"nav-pop":"",style:{flex:1,background:"transparent",border:"none",color:tab==="basics"?C.amber:C.text3,fontSize:11,fontWeight:700}},"📖 Basics"),
-      React.createElement('button',{onClick:()=>changeTab("defend"),className:tab==="defend"?"nav-pop":"",style:{flex:1,background:"transparent",border:"none",color:tab==="defend"?C.amber:C.text3,fontSize:11,fontWeight:700}},"🛡️ Defend"),
-      React.createElement('button',{onClick:()=>changeTab("train"),className:tab==="train"?"nav-pop":"",style:{flex:1,background:"transparent",border:"none",color:tab==="train"?C.amber:C.text3,fontSize:11,fontWeight:700}},"🎓 Training")
+    // BOTTOM NAV - FULLY WORKING
+    React.createElement('div', {style:{position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, background:"rgba(10,12,16,0.96)", backdropFilter:"blur(28px)", borderTop:"1px solid rgba(255,255,255,0.1)", display:"flex", padding:"8px 4px 10px", zIndex:100}},
+      React.createElement('button', {onClick:()=>changeTab("tips"), className:tab==="tips"?"nav-pop":"", style:{flex:1, background:"transparent", border:"none", color:tab==="tips"?C.amber:C.text3, fontSize:11, fontWeight:700}}, "⭐ Earn"),
+      React.createElement('button', {onClick:()=>changeTab("templates"), className:tab==="templates"?"nav-pop":"", style:{flex:1, background:"transparent", border:"none", color:tab==="templates"?C.amber:C.text3, fontSize:11, fontWeight:700}}, "💬 Scripts"),
+      React.createElement('button', {onClick:()=>changeTab("basics"), className:tab==="basics"?"nav-pop":"", style:{flex:1, background:"transparent", border:"none", color:tab==="basics"?C.amber:C.text3, fontSize:11, fontWeight:700}}, "📖 Basics"),
+      React.createElement('button', {onClick:()=>changeTab("defend"), className:tab==="defend"?"nav-pop":"", style:{flex:1, background:"transparent", border:"none", color:tab==="defend"?C.amber:C.text3, fontSize:11, fontWeight:700}}, "🛡️ Defend"),
+      React.createElement('button', {onClick:()=>changeTab("train"), className:tab==="train"?"nav-pop":"", style:{flex:1, background:"transparent", border:"none", color:tab==="train"?C.amber:C.text3, fontSize:11, fontWeight:700}}, "🎓 Training")
     )
   );
 }
