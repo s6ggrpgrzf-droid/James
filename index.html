@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="theme-color" content="#07080A"/>
+  <title>DropPilot - Driver Command Center</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Core -->
+  <script type="text/babel" data-presets="react,env" src="src/constants.js"></script>
+  <script type="text/babel" data-presets="react,env" src="src/utils.js"></script>
+
+  <!-- Data -->
+  <script type="text/babel" data-presets="react,env" src="src/data/tips.js"></script>
+  <script type="text/babel" data-presets="react,env" src="src/data/learnContent.js"></script>
+  <script type="text/babel" data-presets="react,env" src="src/data/messageTemplates.js"></script>
+  <script type="text/babel" data-presets="react,env" src="src/data/platforms.js"></script>
+  <script type="text/babel" data-presets="react,env" src="src/data/videos.js"></script>
+  <script type="text/babel" data-presets="react,env" src="src/data/basics.js"></script>
+
+  <!-- Components -->
+  <script type="text/babel" data-presets="react,env" src="src/components/Toast.jsx"></script>
+  <script type="text/babel" data-presets="react,env" src="src/components/IntroAnimation.jsx"></script>
+  <script type="text/babel" data-presets="react,env" src="src/components/VideoPlayer.jsx"></script>
+  <script type="text/babel" data-presets="react,env" src="src/components/PaywallModal.jsx"></script>
+
+  <!-- Main App -->
+  <script type="text/babel" data-presets="react,env" src="src/App.jsx"></script>
+
+  <script type="text/babel" data-presets="react,env">
+    ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+  </script>
+</body>
+</html>
