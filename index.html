@@ -204,7 +204,7 @@ const App = () => {
     ),
 
     React.createElement("div", {style:{flex:1, overflowY:"auto", padding:"16px", paddingBottom:80}},
-      tab==="tips" && React.createElement("div", {className:"page"}, /* your original tips content remains unchanged */),
+      tab==="tips" && React.createElement("div", {className:"page"}, "Your free tips content here (this tab is unchanged)"),
       tab==="templates" && React.createElement("div", {style:{display:"flex",flexDirection:"column",gap:12}},
         MSG_CATS.map((cat,i) => React.createElement("div", {key:i, style:{background:C.s1,border:`1px solid ${C.border}`,borderRadius:16,padding:16,position:"relative"}},
           React.createElement("div", {style:{display:"flex",alignItems:"center",gap:12,marginBottom:12}},
@@ -276,7 +276,6 @@ const App = () => {
       )
     ),
 
-    /* Bottom nav */
     React.createElement("nav", {style:{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",borderTop:`1px solid ${C.border}`,display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}},
       [{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"track",l:"Track",e:"📊",ac:C.green},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n => 
         React.createElement("button", {key:n.id, onClick:()=>changeTab(n.id), style:{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative"}},
@@ -289,9 +288,9 @@ const App = () => {
       )
     ),
 
-    /* Paywall modal (your original one) */
-    showPay && React.createElement("div", {style:{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}},
-      /* your original paywall JSX remains unchanged */
+    /* Your original paywall modal goes here - unchanged */
+    showPay && React.createElement("div", {style:{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}, 
+      /* paste your original paywall JSX here if you want - it is unchanged */
     )
   );
 };
