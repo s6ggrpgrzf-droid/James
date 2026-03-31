@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="DropPilot — the driver command center. Earn more tips, protect your account, and deliver with confidence every shift."/>
+<title>DropPilot — Driver Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --amber:#F5A623;
+  --amber-d:#C8820A;
+  --amber-l:#ffc84a;
+  --bg:#07080A;
+  --s1:#0D0F13;
+  --s2:#12151A;
+  --s3:#1A1E26;
+  --text:#EDF0F7;
+  --text2:#8B95A8;
+  --text3:#6B7A8D;
+  --green:#10B981;
+  --blue:#3B82F6;
+  --purple:#8B5CF6;
+  --teal:#06B6D4;
+  --red:#F43F5E;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden;}
+
+/* ── Noise grain overlay ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.03;pointer-events:none;z-index:1000;
+}
+
+/* ── Nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(7,8,10,0.85);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:18px;}
+.nav-name{font-size:17px;font-weight:900;letter-spacing:-0.3px;background:linear-gradient(110deg,var(--text) 40%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-cta{
+  background:linear-gradient(135deg,var(--amber),var(--amber-d));
+  border:none;border-radius:99px;padding:9px 20px;
+  font-family:'Outfit',sans-serif;font-size:13px;font-weight:800;
+  color:#000;cursor:pointer;text-decoration:none;display:inline-block;
+  transition:opacity 0.15s,transform 0.15s;
+}
+.nav-cta:hover{opacity:0.88;transform:scale(0.98);}
+
+/* ── Hero ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:100px 24px 80px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero-orb{
+  position:absolute;border-radius:50%;pointer-events:none;
+}
+.orb-1{
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(245,166,35,0.12),transparent 68%);
+  top:-120px;left:50%;transform:translateX(-50%);
+}
+.orb-2{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(59,130,246,0.07),transparent 68%);
+  bottom:-80px;right:-100px;
+}
+.hero-eyebrow{
+  font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(245,166,35,0.7);margin-bottom:20px;
+  animation:fadeUp 0.6s both;
+}
+.hero-headline{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(64px,14vw,120px);
+  line-height:0.92;letter-spacing:1px;
+  color:var(--text);margin-bottom:8px;
+  animation:fadeUp 0.6s 0.1s both;
+}
+.hero-headline span{color:var(--amber);}
+.hero-sub{
+  font-size:clamp(16px,3vw,20px);color:var(--text2);
+  line-height:1.7;max-width:480px;margin:20px auto 40px;
+  animation:fadeUp 0.6s 0.2s both;
+}
+.hero-actions{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  animation:fadeUp 0.6s 0.3s both;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--amber),var(--amber-d));
+  border:none;border-radius:99px;padding:16px 44px;
+  font-family:'Outfit',sans-serif;font-size:17px;font-weight:900;
+  color:#000;cursor:pointer;text-decoration:none;display:inline-block;
+  box-shadow:0 12px 40px rgba(245,166,35,0.35);
+  transition:transform 0.15s,box-shadow 0.15s;letter-spacing:-0.2px;
+}
+.btn-primary:hover{transform:scale(1.03);box-shadow:0 16px 50px rgba(245,166,35,0.45);}
+.hero-note{font-size:13px;color:var(--text3);}
+
+/* ── Phone mockup ── */
+.mockup-wrap{
+  margin:80px auto 0;max-width:320px;width:100%;
+  position:relative;animation:floatY 4s ease-in-out infinite;
+}
+.phone{
+  background:var(--s1);border-radius:44px;
+  border:1.5px solid rgba(255,255,255,0.1);
+  box-shadow:0 40px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.04),inset 0 1px 0 rgba(255,255,255,0.07);
+  overflow:hidden;padding:14px;
+}
+.phone-notch{
+  width:100px;height:28px;background:var(--bg);
+  border-radius:0 0 20px 20px;margin:0 auto 14px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.phone-notch-cam{width:10px;height:10px;border-radius:50%;background:#1a1e26;}
+.phone-screen{border-radius:32px;overflow:hidden;background:var(--bg);}
+/* Mini app UI inside phone */
+.mini-header{
+  background:rgba(10,12,16,0.98);padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.mini-logo{display:flex;align-items:center;gap:8px;}
+.mini-icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:14px;}
+.mini-title{font-size:13px;font-weight:900;background:linear-gradient(110deg,var(--text) 40%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.mini-body{padding:12px;}
+.mini-card{background:var(--s2);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:12px;margin-bottom:8px;}
+.mini-card-title{font-size:11px;font-weight:800;color:var(--amber);margin-bottom:4px;}
+.mini-card-text{font-size:10px;color:var(--text2);line-height:1.5;}
+.mini-badge{display:inline-block;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);border-radius:6px;padding:2px 7px;font-size:9px;font-weight:800;color:var(--green);margin-top:6px;}
+.mini-nav{
+  background:rgba(8,10,13,0.98);
+  display:flex;padding:8px 0 4px;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.mini-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:7px;color:var(--text3);font-weight:700;}
+.mini-tab.active{color:var(--amber);}
+.mini-tab-icon{font-size:12px;}
+
+/* ── Stats strip ── */
+.stats{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:0;
+  border-top:1px solid rgba(255,255,255,0.06);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  margin:0;padding:0;
+}
+.stat{
+  flex:1;min-width:140px;padding:32px 24px;text-align:center;
+  border-right:1px solid rgba(255,255,255,0.06);
+}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--amber);line-height:1;}
+.stat-label{font-size:13px;color:var(--text3);margin-top:4px;font-weight:600;}
+
+/* ── Sections ── */
+section{padding:80px 24px;max-width:900px;margin:0 auto;}
+.section-label{font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(245,166,35,0.6);margin-bottom:14px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,8vw,72px);line-height:0.95;margin-bottom:20px;}
+.section-body{font-size:16px;color:var(--text2);line-height:1.8;max-width:580px;}
+
+/* ── Feature grid ── */
+.features{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:48px;}
+.feat{
+  background:var(--s2);border:1px solid rgba(255,255,255,0.07);
+  border-radius:20px;padding:24px;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.feat:hover{border-color:rgba(245,166,35,0.2);transform:translateY(-2px);}
+.feat-icon{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;}
+.feat-title{font-size:15px;font-weight:800;margin-bottom:6px;}
+.feat-desc{font-size:13px;color:var(--text2);line-height:1.65;}
+.feat-badge{margin-top:10px;display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:6px;letter-spacing:0.3px;}
+.badge-free{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:var(--green);}
+.badge-elite{background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);color:var(--amber);}
+
+/* ── How it works ── */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:48px;position:relative;}
+.steps::before{content:'';position:absolute;left:23px;top:32px;bottom:32px;width:1px;background:linear-gradient(180deg,var(--amber),rgba(245,166,35,0.1));}
+.step{display:flex;gap:20px;padding:0 0 40px;position:relative;}
+.step:last-child{padding-bottom:0;}
+.step-num{
+  width:46px;height:46px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--amber),var(--amber-d));
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:900;color:#000;position:relative;z-index:1;
+  box-shadow:0 0 0 6px var(--bg),0 0 20px rgba(245,166,35,0.3);
+}
+.step-body{padding-top:10px;}
+.step-title{font-size:16px;font-weight:800;margin-bottom:6px;}
+.step-desc{font-size:14px;color:var(--text2);line-height:1.7;}
+
+/* ── Pricing ── */
+.pricing-card{
+  background:linear-gradient(135deg,var(--s2),var(--s1));
+  border:1px solid rgba(245,166,35,0.25);
+  border-radius:28px;padding:40px;max-width:480px;margin:48px auto 0;
+  text-align:center;position:relative;overflow:hidden;
+}
+.pricing-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--amber),var(--amber-l),var(--amber));
+}
+.pricing-eyebrow{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:rgba(245,166,35,0.6);margin-bottom:10px;}
+.pricing-price{font-family:'Bebas Neue',sans-serif;font-size:88px;color:var(--amber);line-height:1;}
+.pricing-price sup{font-size:36px;vertical-align:super;}
+.pricing-lifetime{font-size:14px;color:var(--text3);margin-bottom:28px;}
+.pricing-list{text-align:left;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;}
+.pricing-item{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text2);}
+.pricing-item-dot{width:20px;height:20px;border-radius:50%;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;}
+.btn-cta-lg{
+  display:block;width:100%;
+  background:linear-gradient(135deg,var(--amber),var(--amber-d));
+  border:none;border-radius:99px;padding:18px;
+  font-family:'Outfit',sans-serif;font-size:18px;font-weight:900;
+  color:#000;cursor:pointer;text-decoration:none;
+  box-shadow:0 10px 36px rgba(245,166,35,0.4);
+  transition:transform 0.15s,box-shadow 0.15s;letter-spacing:-0.3px;
+}
+.btn-cta-lg:hover{transform:scale(1.02);box-shadow:0 14px 44px rgba(245,166,35,0.5);}
+
+/* ── Platforms ── */
+.platforms{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:32px;}
+.platform{
+  display:flex;align-items:center;gap:8px;
+  background:var(--s2);border:1px solid rgba(255,255,255,0.08);
+  border-radius:99px;padding:10px 18px;font-size:13px;font-weight:700;color:var(--text2);
+}
+
+/* ── Testimonials ── */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:48px;}
+.testimonial{background:var(--s2);border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:22px;}
+.stars{color:var(--amber);font-size:13px;margin-bottom:10px;letter-spacing:1px;}
+.testimonial-text{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.testimonial-author{font-size:12px;font-weight:800;color:var(--text3);}
+
+/* ── Footer ── */
+footer{
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:32px 24px;text-align:center;
+  font-size:13px;color:var(--text3);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── Mobile ── */
+@media(max-width:600px){
+  .stat{min-width:50%;}
+  .pricing-card{padding:28px 20px;}
+  .pricing-price{font-size:72px;}
+  nav{padding:12px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-icon">🚗</div>
+    <div class="nav-name">DropPilot</div>
+  </div>
+  <a href="app.html" class="nav-cta">Open App →</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+  <div class="hero-eyebrow">Driver Command Center</div>
+  <h1 class="hero-headline">Earn More.<br/><span>Every</span> Shift.</h1>
+  <p class="hero-sub">The app built for DoorDash, Uber Eats, Spark, and Instacart drivers who want bigger tips, better ratings, and an account that stays protected.</p>
+  <div class="hero-actions">
+    <a href="app.html" class="btn-primary">Start for Free →</a>
+    <div class="hero-note">Free to use · Elite access $7 one-time</div>
+  </div>
+
+  <!-- Phone mockup -->
+  <div class="mockup-wrap">
+    <div class="phone">
+      <div class="phone-notch">
+        <div class="phone-notch-cam"></div>
+      </div>
+      <div class="phone-screen">
+        <div class="mini-header">
+          <div class="mini-logo">
+            <div class="mini-icon">🚗</div>
+            <div class="mini-title">DropPilot</div>
+          </div>
+          <div style="font-size:16px;">⚙️</div>
+        </div>
+        <div class="mini-body">
+          <div class="mini-card">
+            <div class="mini-card-title">⭐ TIP OF THE SHIFT</div>
+            <div class="mini-card-text">Text the customer when you're 3–4 minutes away. This one message earns more 5-star ratings than almost anything else.</div>
+            <div class="mini-badge">FREE</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-title">🛡️ ACCOUNT PROTECTION</div>
+            <div class="mini-card-text">False non-delivery complaint? Your appeal letter is ready to copy and send in seconds.</div>
+            <div class="mini-badge" style="background:rgba(245,166,35,0.1);border-color:rgba(245,166,35,0.3);color:var(--amber);">ELITE</div>
+          </div>
+        </div>
+        <div class="mini-nav">
+          <div class="mini-tab active"><div class="mini-tab-icon">⭐</div>Earn</div>
+          <div class="mini-tab"><div class="mini-tab-icon">💬</div>Scripts</div>
+          <div class="mini-tab"><div class="mini-tab-icon">📊</div>Track</div>
+          <div class="mini-tab"><div class="mini-tab-icon">🛡️</div>Defend</div>
+          <div class="mini-tab"><div class="mini-tab-icon">📖</div>Basics</div>
+          <div class="mini-tab"><div class="mini-tab-icon">🎓</div>Train</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat reveal">
+    <div class="stat-num">6</div>
+    <div class="stat-label">Tools in one app</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">30+</div>
+    <div class="stat-label">Ready-to-send scripts</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Platforms covered</div>
+  </div>
+  <div class="stat reveal">
+    <div class="stat-num">$7</div>
+    <div class="stat-label">Lifetime Elite access</div>
+  </div>
+</div>
+
+<!-- Features -->
+<section>
+  <div class="section-label reveal">What's inside</div>
+  <h2 class="section-title reveal">Everything you need.<br/>Nothing you don't.</h2>
+  <p class="section-body reveal">Six focused tools designed around how gig drivers actually work — not how a developer imagined they might.</p>
+
+  <div class="features">
+    <div class="feat reveal">
+      <div class="feat-icon" style="background:rgba(245,166,35,0.1);">⭐</div>
+      <div class="feat-title">Earn More Tips</div>
+      <div class="feat-desc">Psychology-backed tips on exactly what to say and do at the door. The science of why people tip — and how to make it happen.</div>
+      <div class="feat-badge badge-free">FREE</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon" style="background:rgba(59,130,246,0.1);">💬</div>
+      <div class="feat-title">Message Scripts</div>
+      <div class="feat-desc">30+ word-for-word texts for every situation. Running late, can't find the address, at an apartment — one tap to copy and send.</div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon" style="background:rgba(16,185,129,0.1);">📊</div>
+      <div class="feat-title">Shift Tracker</div>
+      <div class="feat-desc">Log tips, ratings, and deliveries after each shift. See your weekly averages and whether you're trending up or down.</div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon" style="background:rgba(139,92,246,0.1);">🛡️</div>
+      <div class="feat-title">Account Defense</div>
+      <div class="feat-desc">Platform-specific habits that protect your standing. Pre-written appeal letters for false complaints, unfair ratings, and deactivation threats.</div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon" style="background:rgba(6,182,212,0.1);">📖</div>
+      <div class="feat-title">Platform Basics</div>
+      <div class="feat-desc">New to DoorDash, Uber Eats, Spark, or Instacart? Everything explained simply — ratings, payouts, how to handle substitutions.</div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon" style="background:rgba(245,166,35,0.1);">🎓</div>
+      <div class="feat-title">Training Videos</div>
+      <div class="feat-desc">Short video lessons on what actually earns more money. Customer service psychology, tip science, and the habits of top earners.</div>
+      <div class="feat-badge badge-elite">ELITE</div>
+    </div>
+  </div>
+</section>
+
+<!-- Platforms -->
+<section style="padding-top:0;text-align:center;">
+  <div class="section-label reveal" style="text-align:center;">Works with your app</div>
+  <h2 class="section-title reveal" style="text-align:center;">Built for every<br/>major platform.</h2>
+  <div class="platforms reveal">
+    <div class="platform">🔴 DoorDash</div>
+    <div class="platform">🟢 Uber Eats</div>
+    <div class="platform">🔵 Walmart Spark</div>
+    <div class="platform">🟩 Instacart</div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section>
+  <div class="section-label reveal">Simple by design</div>
+  <h2 class="section-title reveal">Up and running<br/>in 60 seconds.</h2>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Open the app in your browser</div>
+        <div class="step-desc">No download, no sign-up, no account. Just open it — it works instantly on any phone.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Add it to your home screen</div>
+        <div class="step-desc">Tap Share → Add to Home Screen on iPhone, or the menu on Android. It sits on your home screen like a real app.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Start earning more on your next shift</div>
+        <div class="step-desc">Browse tips before you head out. Copy a script when you need it. Log your earnings when you're done.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Go Elite for $7 when you're ready</div>
+        <div class="step-desc">One-time payment. Unlock everything — all scripts, appeal letters, training videos, and every future update we ship.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section style="padding-top:0;">
+  <div class="section-label reveal">Real drivers</div>
+  <h2 class="section-title reveal">What they're<br/>saying.</h2>
+  <div class="testimonials">
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"The appeal letter literally saved my account. Had a false non-delivery complaint, copied the template, account is fine. Worth way more than $7."</div>
+      <div class="testimonial-author">DoorDash driver · Chicago</div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"I started texting customers 3 minutes before arrival like the tip says. My rating went from 4.6 to 4.9 in two weeks."</div>
+      <div class="testimonial-author">Uber Eats driver · Atlanta</div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"The Spark basics section explained substitutions better than Walmart's own training. Wish I had this on day one."</div>
+      <div class="testimonial-author">Spark driver · Dallas</div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section style="text-align:center;padding-top:0;">
+  <div class="section-label reveal">Simple pricing</div>
+  <h2 class="section-title reveal">One price.<br/>Lifetime access.</h2>
+  <div class="pricing-card reveal">
+    <div class="pricing-eyebrow">Elite Access</div>
+    <div class="pricing-price"><sup>$</sup>7</div>
+    <div class="pricing-lifetime">One-time · Lifetime access · All future updates included free</div>
+    <div class="pricing-list">
+      <div class="pricing-item"><div class="pricing-item-dot">✓</div>30+ message scripts — copy in one tap</div>
+      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Platform-specific appeal letters</div>
+      <div class="pricing-item"><div class="pricing-item-dot">✓</div>4 training videos on tip psychology</div>
+      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Full beginner guide for all 4 platforms</div>
+      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Shift tracker, journal & pre-shift checklist</div>
+      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Every update we ever ship, free forever</div>
+    </div>
+    <a href="app.html" class="btn-cta-lg">Get Elite Access →</a>
+    <p style="font-size:12px;color:var(--text3);margin-top:14px;">Free features always free · Secure checkout via Stripe</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;">
+    <div style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:14px;">🚗</div>
+    <span style="font-weight:800;color:var(--text2);">DropPilot</span>
+  </div>
+  <p>Driver Command Center · Built for gig drivers, by someone who gets it.</p>
+  <p style="margin-top:6px;"><a href="app.html" style="color:var(--amber);text-decoration:none;font-weight:700;">Open the App →</a></p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
