@@ -30,26 +30,15 @@ const {useState} = React;
 
 const C = {amber:"#F5A623", text:"#EDF0F7", text2:"#8B95A8", sans:"'Outfit',sans-serif"};
 
-const ALL_TIPS = [
-  {e:"👋",t:"Greet with a smile",s:"First impressions decide your rating.",d:"Make brief eye contact and say 'Hi, here's your order!'"},
-  {e:"📸",t:"Take a photo on every delivery",s:"Your photo is your protection.",d:"Show food + door number together."},
-  {e:"💬",t:"Text when you're 3-4 minutes away",s:"This earns more 5-star ratings.",d:"Quick heads-up sets a professional tone."}
-];
-
-const MSG_CATS = [
-  {e:"📲",t:"Arrival Texts",sub:"Texts that get 5-star ratings",secs:[{h:"Standard arrival",msg:"Hey! Pulling up now with your order. Enjoy! 😊"}]},
-  {e:"⏰",t:"Late Delivery",sub:"Turn bad situations into 5-stars",secs:[{h:"Running late",msg:"Hi! Running a little behind due to traffic. On my way!"}]}
-];
-
 function App(){
   const [tab, setTab] = useState("tips");
 
   const changeTab = (id) => setTab(id);
 
-  return React.createElement('div', {style:{background:C.amber,height:"100vh",display:"flex",flexDirection:"column",fontFamily:C.sans,color:C.text}},
+  return React.createElement('div', {style:{background:"#07080A", minHeight:"100vh", maxWidth:430, margin:"0 auto", fontFamily:C.sans, color:C.text, display:"flex", flexDirection:"column"}},
     // Header
-    React.createElement('div', {style:{background:"rgba(10,12,16,0.96)",padding:"14px 20px",display:"flex",alignItems:"center",gap:12,borderBottom:"1px solid rgba(255,255,255,0.1)"}},
-      React.createElement('div', {className:"glow", style:{width:44,height:44,borderRadius:16,background:`linear-gradient(135deg,${C.amber},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}}, "🚗"),
+    React.createElement('div', {style:{background:"rgba(10,12,16,0.96)", padding:"14px 20px", display:"flex", alignItems:"center", gap:12, borderBottom:"1px solid rgba(255,255,255,0.1)"}},
+      React.createElement('div', {className:"glow", style:{width:44,height:44,borderRadius:16,background:"linear-gradient(135deg,#F5A623,#C8820A)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26}}, "🚗"),
       React.createElement('div', {}, 
         React.createElement('div', {style:{fontSize:22,fontWeight:900}}, "DropPilot"),
         React.createElement('div', {style:{fontSize:12,color:"#8B95A8",letterSpacing:"2px"}}, "DRIVER COMMAND CENTER")
@@ -57,22 +46,11 @@ function App(){
     ),
     // Content
     React.createElement('div', {style:{flex:1,overflowY:"auto",padding:16}},
-      tab==="tips" && React.createElement('div', {style:{animation:"tabSlide 0.3s ease forwards"}},
-        React.createElement('div', {className:"card-glass", style:{padding:20,marginBottom:12}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "⭐ Earn More Every Shift")),
-        ALL_TIPS.map((tip,i) => React.createElement('div', {key:i, className:"card-glass", style:{padding:20,marginBottom:12}}, 
-          React.createElement('div', {style:{fontSize:18,fontWeight:700}}, tip.e + " " + tip.t),
-          React.createElement('div', {style:{fontSize:14,color:C.text2,marginTop:8}}, tip.s)
-        ))
-      ),
-      tab==="templates" && React.createElement('div', {style:{animation:"tabSlide 0.3s ease forwards"}},
-        React.createElement('div', {className:"card-glass", style:{padding:20,marginBottom:12}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "💬 Message Templates")),
-        MSG_CATS.map((cat,i) => React.createElement('div', {key:i, className:"card-glass", style:{padding:20,marginBottom:12}}, 
-          React.createElement('div', {style:{fontSize:18,fontWeight:700}}, cat.e + " " + cat.t)
-        ))
-      ),
-      tab==="basics" && React.createElement('div', {style:{animation:"tabSlide 0.3s ease forwards"}}, React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "📖 Basics"))),
-      tab==="defend" && React.createElement('div', {style:{animation:"tabSlide 0.3s ease forwards"}}, React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "🛡️ Defend"))),
-      tab==="train" && React.createElement('div', {style:{animation:"tabSlide 0.3s ease forwards"}}, React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "🎓 Training")))
+      tab==="tips" && React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "⭐ Earn More Every Shift")),
+      tab==="templates" && React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "💬 Message Templates")),
+      tab==="basics" && React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "📖 Basics")),
+      tab==="defend" && React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "🛡️ Defend")),
+      tab==="train" && React.createElement('div', {className:"card-glass", style:{padding:20}}, React.createElement('h2', {style:{fontSize:22,fontWeight:900}}, "🎓 Training"))
     ),
     // Bottom Nav
     React.createElement('div', {style:{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(10,12,16,0.96)",padding:"8px 4px 10px",display:"flex",borderTop:"1px solid rgba(255,255,255,0.1)"}},
