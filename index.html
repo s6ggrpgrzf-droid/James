@@ -1242,8 +1242,10 @@ function App() {
               const open=tipOpen===i;
               const fav=favTips.has(i);
               return(
-                <div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(pro||i<3)?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
-                  style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",opacity:(pro||i<3)?1:0.55,transition:"opacity 0.15s"}}>
+                <div key={i} style={{position:"relative"}}>
+                {(!pro&&i>=3)&&<div onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{position:"absolute",inset:0,zIndex:9,borderRadius:16,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer"}}><span style={{fontSize:12,fontWeight:800,color:"#F5A623",background:"rgba(7,8,10,0.92)",border:"1px solid rgba(245,166,35,0.5)",borderRadius:8,padding:"6px 14px"}}>{"🔒 Elite — Tap to Unlock"}</span></div>}
+                <div className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(pro||i<3)?setTipOpen(open?null:i):null}
+                  style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",filter:(!pro&&i>=3)?"blur(5px)":"none",pointerEvents:(!pro&&i>=3)?"none":"auto",transition:"filter 0.15s"}}>
                   <div style={{display:"flex",alignItems:"center",gap:12}}>
                     <div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
                     <div style={{flex:1,minWidth:0}}>
@@ -1267,6 +1269,7 @@ function App() {
                     </div>
                   )}
                 </div>
+              </div>
               );
             })}
 
