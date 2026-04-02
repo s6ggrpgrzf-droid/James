@@ -256,6 +256,14 @@ const PLATFORM_HABITS = {
     {e:"⭐",t:"4.7 rating is the key number to protect",why:"Instacart shoppers rated below 4.7 see fewer and lower-paying batches. Some high-paying batches are only available above 4.8. Rating removal is possible for complaints caused by out-of-stock items, store errors, or app issues — but you must request it and frame it correctly."},
     {e:"🔄",t:"Document difficult customers before they complain",why:"If a customer is rude or makes unreasonable demands, note it in the Instacart app's feedback right away. This creates a record before any dispute is filed. It signals to support that the customer has a history — and that helps you if they later file a false complaint."},
   ],
+  flex:[
+    {e:"📸",t:"Photo every single delivery before you leave the door",why:"Amazon uses your delivery photos as the primary evidence in every Delivered Not Received dispute. The photo must clearly show the package at the door with the address or house number visible. Without it you cannot win a DNR case — Amazon will almost always side with the customer. This is the single most important habit on Flex.",urgent:true},
+    {e:"📍",t:"Keep GPS on for your entire route — no exceptions",why:"Amazon tracks your GPS throughout every block. Your location data is pulled in every standing dispute and DNR investigation. If GPS was off when a customer claims non-delivery, you have no evidence you were ever at their address. GPS must stay on from the moment you leave the station to the moment your route ends.",urgent:true},
+    {e:"🖼️",t:"Screenshot your route completion screen after every block",why:"When your route is complete, the Flex app shows a summary confirming all packages were delivered. Screenshot this immediately. This is Amazon's own record that your route was finished successfully. In any standing dispute or DNR investigation, this screen is critical evidence.",urgent:true},
+    {e:"⏰",t:"Arrive at the delivery station early — not just on time",why:"Flex blocks have strict pickup windows. If you arrive late you may lose your block entirely, which counts against your standing. Aim to arrive 10-15 minutes early. Traffic, parking, and check-in lines are your problem — not Amazon's. Early arrival protects your standing and your income."},
+    {e:"📦",t:"Count your packages at the station before you leave",why:"If you drive away short on packages and a customer reports non-delivery, the complaint falls on you — even though you never had the package. Before leaving the station, count your packages against your route. If the count is wrong, report it to station staff immediately and document it in the app before you leave."},
+    {e:"📋",t:"Note your block ID on any stop that goes wrong",why:"Amazon support identifies every block by its block ID. If a stop has an access issue, a damaged package, or a wrong address — note the block ID immediately. You cannot file an effective standing dispute without it. It appears on your block confirmation screen in the Flex app."},
+  ],
 };
 
 const PLATFORM_APPEALS = {
@@ -900,9 +908,19 @@ const BASICS_CATS = [
       {h:"The 4.7 rating — why it's the key number", body:"Instacart shoppers rated below 4.7 see fewer batches and lower-paying ones. Above 4.7 keeps you in good standing. Above 4.8 unlocks premium batches. Your rating is based on your last 100 deliveries. Bad ratings caused by store conditions, out-of-stock items, or app errors can sometimes be removed — but you need to ask support and explain clearly what happened."},
     ]
   },
+  {
+    e:"🟠", t:"Amazon Flex — The Basics", sub:"Platform-specific things every Flex driver needs to know",
+    secs:[
+      {h:"How Amazon Flex works", body:"Amazon Flex pays you to deliver Amazon packages directly to customers. You claim time slots called blocks through the Flex app — typically 3 to 6 hours long. During your block you go to an Amazon delivery station, pick up a batch of packages, and deliver them on a route the app generates. You are paid a flat rate per block, not per package. The number of packages varies but the pay for that block stays the same."},
+      {h:"Blocks — how to get them and keep them", body:"Blocks are the time slots you claim to work. They appear in the Flex app and get claimed fast — sometimes within seconds. The better your standing score, the earlier you get access to blocks before other drivers. If you claim a block and don't show up or arrive late, it counts against your standing. Only claim blocks you are certain you can make. Canceling too often drops your standing and reduces your access to future blocks."},
+      {h:"Your standing score — the most important number", body:"Amazon Flex tracks your performance with a standing score: Fantastic, Great, Fair, At Risk, or Inactive. Your score is based on on-time delivery, Delivered Not Received complaints, and customer feedback. If your score drops to At Risk you lose access to the best blocks. If it reaches Inactive your account may be deactivated. The fastest way to protect your standing is to photograph every single delivery and keep GPS on the entire time."},
+      {h:"Delivered Not Received — your biggest threat", body:"A Delivered Not Received complaint means a customer says their package never arrived. Even if you delivered it correctly the complaint automatically affects your standing. Your only protection is a clear delivery photo showing the package at the door with the house number or address visible. Amazon reviews these photos in every investigation. Drivers who photo every delivery win almost every dispute. Drivers who don't lose almost every one."},
+      {h:"How pay works on Flex", body:"Flex pays a flat rate per block, set before you accept it. A 3-hour block might pay $36-54 depending on your market and time of day. You do not earn per package — you earn per block regardless of how many stops you have. You also keep 100% of any tips customers add through Amazon. Tips appear in your earnings within a few days. Peak times like evenings, weekends, and bad weather usually pay more per block and are worth targeting."},
+      {h:"What gets you deactivated", body:"Amazon Flex will deactivate accounts for too many DNR complaints, standing score dropping to Inactive, repeatedly missing claimed blocks, safety violations, or delivering outside your assigned route. Deactivation usually happens without much warning. Your best protection is a strong photo habit, GPS always on, and only claiming blocks you can reliably complete. If deactivated you can appeal through Flex support email — but reinstatement is difficult and not guaranteed."},
+    ]
+  },
 ];
 
-// ─── App ──────────────────────────────────────────────────────────────────────
 function App() {
   const [tab, setTab]           = useState("tips");
   const [navPop, setNavPop]     = useState(null);
