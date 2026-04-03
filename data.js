@@ -1,5 +1,79 @@
-// DropPilot — Data (FULL UPDATED VERSION WITH AMAZON FLEX)
-// All original content + Amazon Flex + safer appeal templates
+// ─── Updates ─────────────────────────────────────────────────────────────────
+var LATEST_UPDATE_ID = "2025-01-001";
+var UPDATES = [
+  {
+    id:"2025-01-001",
+    date:"Jan 2025",
+    title:"Backup & Restore + Secure Paywall",
+    items:[
+      "Download a backup of your data any time from Settings",
+      "Restore your data on a new device in seconds",
+      "Paywall is now more secure — unlock code can no longer be found in DevTools",
+      "Settings now has a visible gear button in the top right",
+    ]
+  },
+];
+
+// ─── Training Videos Data ─────────────────────────────────────────────────────
+var VIDEOS = [
+  {id:0,title:"Why Customer Service Makes You More Money",dur:36000,icon:"📈",color:"#10B981",desc:"The simple math of one extra dollar per delivery adding up fast.",
+    scenes:[
+      {t:0,tag:"the truth about gig work",emoji:"💸",hed:"Most drivers are\nleaving money\non the table.",sub:"Every single shift.",narr:"Most drivers are leaving money on the table. Every single shift. Not because they are bad drivers — because they do not know what is actually costing them."},
+      {t:4500,tag:"the silent income killer",emoji:"⭐",hed:"One low rating\ncuts you off\nfrom better orders.",sub:"Platforms show high-paying orders to high-rated drivers first.",hi:{color:"#F43F5E",text:"Low rating → worse orders → less money → harder to recover."},narr:"Platforms show the high-paying orders to high-rated drivers first. If your rating drops you see worse orders and less money."},
+      {t:10000,tag:"the math is simple",emoji:"🧮",hed:"Just $1 more tip.\nEvery delivery.",sub:null,math:[["20 deliveries a day","+$20/day"],["5 days a week","+$100/week"],["Every month","+$400","big"]],narr:"One extra dollar in tips every delivery. Twenty deliveries a day — twenty dollars. Five days a week — a hundred dollars. Every month — four hundred extra dollars."},
+      {t:17000,tag:"what drives the extra dollar",emoji:"💡",hed:"Tips are emotional,\nnot logical.",sub:"Customers tip based on how they felt — not how fast you were.",hi:{color:"#10B981",text:"A warm smile and a genuine enjoy your meal makes people feel cared for. That feeling is worth real money."},narr:"Tips are not about speed. Customers tip based on how they felt during the delivery."},
+      {t:24000,tag:"the compound effect",emoji:"📊",hed:"Better service.\nBetter rating.\nBetter orders.\nMore money.",sub:"Every shift, it builds.",bars:[["Lower service","-$400/mo",42,"#F43F5E"],["One extra dollar","+$400/mo",94,"#10B981"]],narr:"Better service leads to a better rating. A better rating leads to better orders. Better orders lead to more money."},
+      {t:30500,tag:"your takeaway",emoji:"🎯",hed:"One dollar more.\nEvery delivery.\nThat is the goal.",sub:null,takeaway:"Set your intention before your next shift: one dollar more per delivery.",narr:"One dollar more. Every delivery. That is the goal."},
+    ]},
+  {id:1,title:"Why the Words You Choose Actually Matter",dur:38000,icon:"💬",color:"#3B82F6",desc:"The simple psychology behind exact words that earn more tips and better ratings.",
+    scenes:[
+      {t:0,tag:"it is not just what you say",emoji:"🧠",hed:"The words you\nchoose change\nhow people\nfeel about you.",sub:"Not politeness. Basic human psychology.",narr:"The words you choose matter more than you think. Not because of politeness. Because of basic human psychology."},
+      {t:5000,tag:"phrase 1 — running late",emoji:"🙌",hed:"Thank you for your patience.\nNot Sorry for the wait.",sub:null,vs:{bad:["Instead of","Sorry for the wait"],good:["Say this","Thank you for your patience"]},why:{color:"#3B82F6",text:"Thanking them credits the customer. People respond better to being appreciated than to apologies."},narr:"Instead of sorry for the wait — say thank you for your patience."},
+      {t:12500,tag:"phrase 2 — when something is wrong",emoji:"🤝",hed:"I will make sure\neverything is\ntaken care of.",sub:"Use this when a customer seems worried. Own it immediately.",hi:{color:"#F5A623",text:"Personal ownership builds trust instantly. These words stop an escalation before it starts."},narr:"When something goes wrong say: I will make sure everything is taken care of."},
+      {t:19500,tag:"phrase 3 — cannot reach them",emoji:"💬",hed:"Text first.\nNever call first.",sub:"A call from an unknown number feels intrusive.",vs2:[["📞","Calling","Interrupts. Creates anxiety. Often ignored.","#F43F5E"],["💬","Texting","Non-intrusive. Much higher response rate.","#10B981"]],narr:"Always text first. Never call first."},
+      {t:26500,tag:"phrase 4 — the handoff",emoji:"🌟",hed:"Enjoy your meal!\nNot here you go.",sub:"How an interaction ends is how people remember the whole experience.",hi:{color:"#8B5CF6",text:"A warm ending rewrites the whole delivery in a customer memory."},narr:"End every handoff with enjoy your meal — not here you go."},
+      {t:32500,tag:"your takeaway",emoji:"🎯",hed:"Four phrases.\nMemorize them.",sub:null,takeaway:"Thank you for your patience · I will make sure it is taken care of · Text do not call · Enjoy your meal",narr:"Four phrases. Thank you for your patience. Text do not call. Enjoy your meal."},
+    ]},
+  {id:2,title:"What Top Earners Do Differently",dur:37000,icon:"🏆",color:"#F5A623",desc:"The 60-second habit gap between average drivers and top earners.",
+    scenes:[
+      {t:0,tag:"the gap is smaller than you think",emoji:"🔍",hed:"Top earners are\nnot faster.\nThey are smarter\nat the door.",sub:"Here is exactly what they do.",narr:"Top earners are not faster. They are smarter at the door."},
+      {t:5500,tag:"what most drivers do",emoji:"❌",hed:"The silent drop-off.",sub:null,listBad:["Pull up. Pick up. Drop off. Leave.","No greeting. No eye contact.","No text. No confirmation.","Just a bag on a doorstep."],narr:"The average driver does this. Pull up. Pick up. Drop off. Leave."},
+      {t:11500,tag:"what top earners do",emoji:"✅",hed:"The 60-second\ndifference.",sub:null,listGood:[["💬","Text when 3 minutes away"],["😊","Greet them at the door"],["🤲","Two hands on the bag, chest height"],["📸","Photo every drop-off without fail"],["🌟","Enjoy your meal before you leave"]],narr:"Top earners text three minutes before arriving, greet at the door, hold the bag with two hands, take a photo every time, and say enjoy your meal."},
+      {t:18500,tag:"the habit gap",emoji:"📊",hed:"Same roads.\nSame apps.\nVery different\nincome.",sub:"0.4 stars separates average from top earner.",bars:[["Average driver","~4.5 stars",62,"#F43F5E"],["Top earner","~4.9 stars",96,"#F5A623"]],narr:"Zero point four stars separates the average driver from the top earner. Same roads. Same apps."},
+      {t:26000,tag:"your photo is your protection",emoji:"📸",hed:"A photo is not\njust courtesy.\nIt is evidence.",sub:"False non-delivery complaints are a top cause of deactivation.",hi:{color:"#F5A623",text:"Drivers who photo every drop-off win almost every false complaint. Drivers who do not — lose almost every one."},narr:"Your delivery photo is not just courtesy. It is evidence."},
+      {t:31500,tag:"your takeaway",emoji:"🎯",hed:"Text. Greet.\nTwo hands.\nPhoto.\nEnjoy your meal.",sub:null,takeaway:"Five habits. Sixty seconds. Do all five on your very next delivery.",narr:"Text. Greet. Two hands. Photo. Enjoy your meal. Five habits. Sixty seconds."},
+    ]},
+  {id:3,title:"Please, Thank You, and You are Welcome",dur:42000,icon:"🙏",color:"#8B5CF6",desc:"Three simple phrases backed by real research that measurably increase tips.",
+    scenes:[
+      {t:0,tag:"backed by real research",emoji:"🔬",hed:"Three phrases.\nProven results.",sub:"Not just manners — measurable income.",narr:"Please. Thank you. You are welcome. Not just good manners — measurable income."},
+      {t:5500,tag:"the word please",emoji:"🙏",hed:"Please makes\npeople more\nlikely to help.",sub:"Adding please increases compliance by up to 18%.",hi:{color:"#F5A623",text:"Could you buzz me in gets ignored. Could you please buzz me in gets answered."},cite:"Langer, Blank & Chanowitz — Journal of Personality and Social Psychology",narr:"The word please. Research shows adding please to a request increases compliance by up to eighteen percent."},
+      {t:13500,tag:"the words thank you",emoji:"🙌",hed:"Thank you\ntriggers the\nurge to give back.",sub:"Real gratitude makes people want to reciprocate.",hi:{color:"#3B82F6",text:"A sincere thank you for your order at the door triggers a natural urge to tip."},cite:"Cialdini — Influence: The Psychology of Persuasion",narr:"When someone expresses real gratitude people feel a natural urge to give something back."},
+      {t:21000,tag:"a real study on tips",emoji:"💰",hed:null,stat:"23%",statSub:"more in tips",sub:"Cornell University: servers who gave a genuine personal thank you earned 23% more.",cite:"Leodoro & Lynn — Cornell Hotel and Restaurant Administration Quarterly",narr:"A Cornell University study found that servers who gave a genuine personal thank you received twenty three percent more in tips."},
+      {t:28500,tag:"the most underused phrase",emoji:"💬",hed:"You are welcome\nvs\nNo problem.",sub:null,vs:{bad:["No problem","Implies it could have been a problem. Weakens the interaction."],good:["You are welcome","Confirms something of value was given. Ends the exchange right."]},why:{color:"#8B5CF6",text:"You are welcome tells the customer the delivery mattered. No problem minimizes it."},narr:"You are welcome versus no problem. No problem implies there could have been a problem."},
+      {t:35500,tag:"your takeaway",emoji:"🎯",hed:"Please.\nThank you.\nYou are welcome.",sub:null,takeaway:"Three words. Use all three on your next shift. The research says your tips go up.",narr:"Please when you need something. Thank you at the door. You are welcome when they thank you."},
+    ]},
+  {id:4,title:"The Door — Good vs Bad",dur:42000,icon:"🚪",color:"#06B6D4",desc:"The same delivery, two ways. Watch the difference play out.",
+    scenes:[
+      {t:0,tag:"same house. same food.",emoji:"🏠",hed:"Two deliveries.\nOne door.\nTwo very\ndifferent outcomes.",sub:null,narr:"Same house. Same food. Same driver on different days."},
+      {t:5000,tag:"delivery 1 — the silent drop",emoji:"😶",hed:"No text.\nNo greeting.\nBag on the step.\nGone.",sub:null,listBad:["No heads-up text sent","Silent walk to the door","Bag dropped, no eye contact","No photo taken","Gone before the door opens"],narr:"Delivery one. No text. Silent walk to the door. Bag dropped. No photo. Gone."},
+      {t:12000,tag:"the result",emoji:"💔",hed:"3 stars.\nNo tip.\nAccount\nslowly declining.",sub:null,hi:{color:"#F43F5E",text:"The customer felt like a transaction, not a person. That feeling costs you every single shift."},narr:"The result. Three stars. No tip. The customer felt like a transaction."},
+      {t:19000,tag:"delivery 2 — 60 seconds more",emoji:"✅",hed:"Same door.\nCompletely\ndifferent\napproach.",sub:null,listGood:[["💬","Text sent 3 minutes out"],["😊","Greeted by name at the door"],["🤲","Two hands, bag at chest height"],["📸","Photo taken before leaving"],["🌟","Enjoy your meal as a goodbye"]],narr:"Delivery two. Text three minutes out. Greeted by name. Two hands on the bag. Photo before leaving. Enjoy your meal."},
+      {t:29000,tag:"the result",emoji:"⭐",hed:"5 stars.\nTip added.\nAccount\ngrowing.",sub:null,hi:{color:"#10B981",text:"The customer felt seen and cared for. That feeling is worth real money every single shift."},narr:"The result. Five stars. Tip added. Same roads. Same food. Sixty extra seconds."},
+      {t:35500,tag:"your takeaway",emoji:"🎯",hed:"Text. Smile.\nTwo hands.\nPhoto.\nEnjoy your meal.",sub:null,takeaway:"Five steps. Sixty seconds. The whole difference is right there.",narr:"Text. Smile. Two hands. Photo. Enjoy your meal. Five steps. Sixty seconds."},
+    ]},
+  {id:5,title:"When Things Go Wrong",dur:44000,icon:"⚠️",color:"#F43F5E",desc:"Wrong address, upset customer, late order. Here is exactly what to do.",
+    scenes:[
+      {t:0,tag:"it will happen to you",emoji:"⚠️",hed:"Wrong address.\nUpset customer.\nLate order.\nHere is exactly\nwhat to do.",sub:null,narr:"Something will go wrong on your shift today. Here is exactly what to do in each one."},
+      {t:6000,tag:"cannot find the address",emoji:"📍",hed:"You cannot\nfind them.\nDo not panic.\nDo not leave.",sub:null,steps:[["1","Double-check the address in the app","#F5A623"],["2","Text them where you are and ask for help","#3B82F6"],["3","Wait 2 to 3 minutes for a reply","#06B6D4"],["4","Still nothing? Call support before leaving","#10B981"]],narr:"You cannot find the address. Check it. Text them. Wait two to three minutes. Call support before you leave."},
+      {t:14000,tag:"customer opens the door angry",emoji:"😤",hed:"They are angry.\nDo not match it.\nAbsorb it.",sub:null,vs:{bad:["Wrong move","Explain yourself. Defend yourself. List reasons why it was not your fault."],good:["Right move","I am really sorry about that. I hope the rest of your evening is better."]},why:{color:"#8B5CF6",text:"You cannot win an argument at a doorstep. But you can end it with your rating intact."},narr:"They are angry. Do not explain yourself. Say sorry and wish them well. Then leave."},
+      {t:23000,tag:"order running very late",emoji:"⏰",hed:"You are late.\nOne text\nchanges everything.",sub:null,hi:{color:"#F5A623",text:"Hi running a little behind tonight — on my way and will be there as soon as I can. Really appreciate your patience. Send this before they text you."},narr:"The order is running late. Send a text before they message you. That one text turns a frustrated customer into a patient one."},
+      {t:31000,tag:"the rule for everything",emoji:"🧭",hed:"Acknowledge.\nApologize once.\nPoint to\nthe solution.",sub:"Every problem. Every platform. Every situation.",hi:{color:"#10B981",text:"Do not over-apologize. Do not argue. One acknowledgment, one apology, one next step."},narr:"One rule covers every situation. Acknowledge. Apologize once. Point to the solution."},
+      {t:37500,tag:"your takeaway",emoji:"🎯",hed:"Cannot find them?\nText first.\nAngry customer?\nAbsorb and leave.\nRunning late?\nText before they do.",sub:null,takeaway:"Acknowledge. Apologize once. Point to the solution. Every time.",narr:"Text first. Absorb it and leave. Text before they text you."},
+    ]},
+];
+
+// DropPilot — Data
+// Edit content here. No JSX — plain JS objects only.
 
 var C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
@@ -106,66 +180,227 @@ var MSG_CATS = [
     {h:"Need a gate code",msg:"Hi! At the gate but need a code to get in. Could you send it over? Right here!",w:"People respond in seconds when their food is right outside."},
     {h:"No one answers the door",msg:"Hi! At your door and knocked. I'll wait a couple minutes — if I don't hear back I may need to leave it at the door. Just want to make sure you get it!",w:"Documents your attempt and gives them a chance to respond."},
     {h:"Safe drop-off with photo",msg:"Your order has been left at your door. Took a photo as confirmation. Enjoy!",w:"Mentioning the photo casually shields you from false complaints."},
-    {h:"Large apartment complex",msg:"Hi! I'm in the [building/complex name] parking lot but having trouble finding your unit. Could you help — which building number, entrance, or stairwell? Almost there!",w:"Asking for a specific landmark gets you a useful response."},
+    {h:"Large apartment complex",msg:"Hi! I'm in the [building/complex name] parking lot but having trouble finding your unit. Could you help — which building number, entrance, or stairwell? Almost there!",w:"Asking for a specific landmark gets you a useful answer fast."},
   ]},
-  // (The rest of your original MSG_CATS continues here — all sections are kept exactly as you had them)
+  {e:"⭐",t:"How to Get Better Tips and Ratings",sub:"What to say — and what never to say",secs:[
+    {h:"Natural sign-off that earns tips",msg:"Enjoy your meal! If anything ever comes up feel free to reach out through the app. Have a great night! 😊",w:"Positions you as someone who cares — without ever asking for anything."},
+    {h:"When you went above and beyond",msg:"Thanks for the order! Made sure to keep everything upright and warm on the way. Hope you enjoy every bite!",w:"Pointing out your care makes them look in the bag with appreciation, not suspicion."},
+    {h:"When you added something extra",msg:"Hi! The bag was light on napkins so I grabbed a few extras. Everything else looks good — enjoy!",w:"If you don't mention it they might not notice. If you do, it's memorable."},
+    {h:"What you should NEVER say",caution:true,msg:"Please leave me 5 stars! / I really need a good rating this week. / Could you add a tip? / This order was really far.",w:"Asking for ratings or tips is against platform rules and makes customers deeply uncomfortable. It almost always results in a worse rating, not a better one."},
+  ]},
+  {e:"🏢",t:"Tricky Delivery Situations",sub:"Word-for-word scripts for the hard ones",secs:[
+    {h:"Hotel delivery",msg:"Hi! In the lobby of [hotel] with your order. The front desk can't accept deliveries — would you be able to come down? Happy to wait!",w:"Always announce from the lobby, not the room floor."},
+    {h:"Gated community, no code",msg:"Hi! At the gate but did not get a code with the order. Could you send it or buzz me in? Right here!",w:"Don't wait. Text immediately. Every minute at the gate is wasted."},
+    {h:"Customer seems upset at the door",msg:"I'm really sorry about that. Got here as fast as I could. I hope the rest of your evening is better!",w:"Don't defend yourself. Acknowledge, apologize briefly, wish them well, leave."},
+  ]},
 ];
 
-// ─── PLATFORM-SPECIFIC APPEAL LETTERS (DEFEND TAB) ────────────────────────────
-var APPEAL_TEMPLATES = {
-  spark: [ /* your original Spark appeals — unchanged */ ],
-  instacart: [ /* your original Instacart appeals — unchanged */ ],
+// ─── Defend Data ──────────────────────────────────────────────────────────────
+var PLATFORMS_DEFEND = [
+  {id:"doordash",  label:"DoorDash",  color:"#FF3008", e:"🔴"},
+  {id:"ubereats",  label:"Uber Eats", color:"#06C167", e:"🟢"},
+  {id:"spark",     label:"Spark",     color:"#0071CE", e:"🔵"},
+  {id:"instacart", label:"Instacart", color:"#43B02A", e:"🟩"},
+];
 
-  // ── NEW: Amazon Flex Appeals (with legal disclaimers) ──────────────────────
-  amazonflex: [
-    {e:"📦",t:"Missing or Damaged Package Complaint",urgency:"HIGH",color:"#F43F5E",
-     disclaimer:"⚠️ Only use this if you followed proper scanning, loading, and delivery procedures. Edit every detail to match your exact block.",
-     secs:[
-      {h:"Missing package dispute",
-       msg:"Hello Amazon Flex Support,\n\nI am writing to dispute a delivery complaint on block [BLOCK ID] from [DATE].\n\nI completed this block according to procedure:\n- All packages were properly scanned and loaded at the station\n- GPS data confirms I was at the delivery location\n- Delivery photo was taken where required by the app\n\nI respectfully request this complaint be reviewed against my delivery records and removed from my standing.\n\nThank you.",
-       w:"Points support to your scan + GPS records."}
-    ]},
-    {e:"🛡️",t:"Block Deactivation or Standing Issue",urgency:"HIGH",color:"#F43F5E",
-     disclaimer:"⚠️ Only use this if your block was completed correctly and you have evidence.",
-     secs:[
-      {h:"Request review of standing",
-       msg:"Hello Amazon Flex Support,\n\nI am requesting a review of my driver standing related to block [BLOCK ID] from [DATE].\n\nI completed the block following all procedures, and my records show:\n- All packages were scanned and delivered\n- GPS confirms delivery locations\n- No customer complaints were received through the app\n\nI respectfully ask for this to be reviewed so my standing can be restored.\n\nThank you.",
-       w:"Neutral request for review."}
-    ]}
-  ]
+var PLATFORM_HABITS = {
+  doordash:[
+    {e:"📸",t:"Photo every drop-off before you leave",why:"Your delivery photo is your #1 protection. DoorDash support checks it against your GPS location. A clear photo showing the food at the door with the address visible wins almost every false non-delivery case. Without it, you have no case. Make it a habit every single time — no exceptions.",urgent:true},
+    {e:"💬",t:"Text the customer on every order",why:"Your in-app message history is timestamped and visible to Dasher support. When a customer claims you never communicated, your message thread proves otherwise. Support agents check this on every dispute. One text per delivery protects you completely.",urgent:true},
+    {e:"📍",t:"Keep GPS on the entire shift",why:"DoorDash logs your GPS location throughout the delivery. If a customer reports non-delivery, support pulls your GPS track to confirm you were at their address. Without GPS data, your word means nothing. Location must stay on — always.",urgent:true},
+    {e:"🖼️",t:"Screenshot your delivery confirmation",why:"After the app shows delivery confirmed, screenshot it before moving on. This is the platform's own timestamped record that the order was completed. It's separate from your photo and equally important in a dispute."},
+    {e:"💎",t:"Doing your best always pays off",why:"Drivers who genuinely care — who handle every bag carefully, who treat every door like it matters — build a track record that compounds over time. Better ratings, better tips, better orders. Doing your best isn't just the right thing. It's the most profitable thing."},
+    {e:"📋",t:"Note the order number on any problem delivery",why:"If a restaurant has long wait times, a customer seems upset, or anything feels off — quickly note the DoorDash order number. This is what support agents use to pull your delivery record, and it makes any appeal far stronger."},
+  ],
+  ubereats:[
+    {e:"📸",t:"Photo the drop-off — Uber requires it",why:"Uber Eats requires a photo for contactless deliveries. That photo is timestamped, geotagged, and stored in Uber's system. In any dispute, support pulls it immediately. If you didn't take one, you have no evidence. Take it every time.",urgent:true},
+    {e:"💬",t:"Use in-app messaging only — never SMS",why:"Uber support can only see your in-app message history, not regular text messages. Always message through the Uber Eats app so every communication is logged. If a customer claims you ignored them, your in-app messages are your proof.",urgent:true},
+    {e:"📍",t:"GPS must stay on — Uber uses it heavily",why:"Uber's dispute system relies on GPS trip data more than any other platform. Agents check your GPS track in every delivery complaint review. If GPS was off, they can't verify your delivery and they typically side with the customer.",urgent:true},
+    {e:"🆔",t:"Screenshot your Trip ID on problem deliveries",why:"Uber identifies every delivery by a Trip ID. In any support appeal, you must include the Trip ID — without it agents can't find your record. Screenshot the trip summary screen after any delivery that felt off."},
+    {e:"⭐",t:"Your rating affects which trips you see",why:"Uber shows higher-paying trips to drivers with better ratings. A rating below 4.7 on Uber Eats starts to reduce your trip quality. Uber's policy allows removal of ratings that reflect restaurant errors, navigation failures, or factors outside your control — request it when this happens."},
+    {e:"🔄",t:"Document long restaurant waits with a message",why:"If you wait more than 10 minutes at a restaurant, send the customer an in-app message noting the delay. This creates a timestamped record that any wait time was the restaurant's fault, not yours — which matters if they leave a low rating about timing."},
+  ],
+  spark:[
+    {e:"📸",t:"Photo every drop-off — required for every order",why:"Walmart Spark requires a delivery photo on every order. That photo is your proof of delivery and your protection against false claims. Take a clear photo showing the bags at the door with the house number visible. Without it, Spark support will almost always side with the customer.",urgent:true},
+    {e:"📦",t:"Check and photograph the full order at the store",why:"Spark drivers are responsible for picking items. If an item is missing, customers can file a complaint against you. Before leaving the store, verify all items, note anything unavailable in the app, and photograph your cart on large orders. This documents that you fulfilled the order correctly.",urgent:true},
+    {e:"💬",t:"Message customers about every substitution",why:"When an item is unavailable and you substitute it, always message the customer through the Spark app before you leave the store. This shows you followed the substitution process. Spark agents check your message history in every substitution dispute.",urgent:true},
+    {e:"📍",t:"GPS must stay on the entire trip",why:"Spark uses GPS data to verify delivery location and timing. If your GPS confirms you were at their address, that is your strongest evidence. If GPS was off, you have no way to prove the delivery happened."},
+    {e:"🧾",t:"Screenshot your delivery summary",why:"After completing an order, the Spark app shows a summary of what was delivered including substitutions and unavailable items. Screenshot this every time. If a customer claims items were missing, this screen shows what the system recorded as delivered."},
+    {e:"⭐",t:"On-time rating is tracked separately",why:"Spark tracks your on-time delivery rate separately from your customer rating. Both affect your access to better batches. If a store delay makes you late, document it by messaging the customer and noting the wait. This gives you grounds to dispute a late delivery mark."},
+  ],
+  instacart:[
+    {e:"📸",t:"Photo every drop-off — no exceptions",why:"Instacart requires a delivery photo and uses it in every non-delivery dispute. The photo must show the items at the door with the address or house number visible. Support agents look at this first. Without it, you cannot win any non-delivery case.",urgent:true},
+    {e:"🛒",t:"Scan every item at the store",why:"Instacart tracks which items you scanned. If a customer says an item was missing and you scanned it, that scan record is your proof. If you didn't scan it, the system has no record you ever had it. Scan every single item, every time.",urgent:true},
+    {e:"💬",t:"Message customers about every replacement",why:"When an item is out of stock and you make a replacement, always message the customer through the Instacart app before you check out. If they dispute the replacement later, your message shows you followed the right process.",urgent:true},
+    {e:"📋",t:"Note your Batch ID on any problem order",why:"Instacart support identifies orders by Batch ID. For any delivery where something goes wrong, note or screenshot the Batch ID immediately. You cannot file an effective appeal without it."},
+    {e:"⭐",t:"4.7 rating is the key number to protect",why:"Instacart shoppers rated below 4.7 see fewer and lower-paying batches. Some high-paying batches are only available above 4.8. Rating removal is possible for complaints caused by out-of-stock items, store errors, or app issues — but you must request it and frame it correctly."},
+    {e:"🔄",t:"Document difficult customers before they complain",why:"If a customer is rude or makes unreasonable demands, note it in the Instacart app's feedback right away. This creates a record before any dispute is filed. It signals to support that the customer has a history — and that helps you if they later file a false complaint."},
+  ],
 };
 
-// ─── PLATFORM CHECKLISTS ──────────────────────────────────────────────────────
-var PLATFORM_CHECKLISTS = {
-  doordash: [ /* your original DoorDash checklist */ ],
-  ubereats: [ /* your original Uber Eats checklist */ ],
-  spark: [ /* your original Spark checklist */ ],
-  instacart: [ /* your original Instacart checklist */ ],
+var PLATFORM_APPEALS = {
+  doordash:[
+    {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can trigger deactivation",color:"#F43F5E",secs:[
+      {h:"Standard non-delivery dispute",msg:"Hello Dasher Support,\n\nI am writing to dispute a false non-delivery complaint on Dasher order #[ORDER ID] from [DATE].\n\nThis delivery was completed successfully. My documentation:\n- Delivery photo showing the order placed at [ADDRESS] with the door visible\n- GPS data confirming my location at [ADDRESS] at [TIME]\n- App delivery confirmation timestamp\n\nThe customer's claim is inaccurate. I am requesting:\n1. This complaint be reviewed against my delivery photo and GPS data\n2. Any negative impact on my completion rate or Dasher standing be reversed\n3. The customer's account be reviewed if this is part of a pattern\n\nThank you.",w:"'Dasher order #' is the exact term DoorDash support uses to pull your record. List each piece of evidence as a separate bullet — agents check each one individually."},
+      {h:"Same address filing multiple complaints",msg:"Hello Dasher Support,\n\nI am writing about a pattern of false complaints I believe is coming from the same location.\n\nComplaints from [ADDRESS]:\n- Order #[ORDER ID 1] on [DATE 1] — I have delivery photo proof\n- Order #[ORDER ID 2] on [DATE 2] — I have delivery photo proof\n\nI believe this customer is repeatedly filing false non-delivery complaints to receive refunds. I am asking for:\n1. A review of all complaints from this address against my delivery evidence\n2. This address to be flagged in DoorDash's system if a pattern is confirmed\n3. All negative effects on my account to be reversed\n\nThank you.",w:"The phrase 'pattern of false complaints' moves your ticket from an individual review to a fraud investigation — handled differently and more seriously."},
+    ]},
+    {e:"⭐",t:"Unfair Customer Rating",urgency:"MEDIUM — Affects order access and Top Dasher",color:"#F5A623",secs:[
+      {h:"Rating caused by restaurant error",msg:"Hello Dasher Support,\n\nI am requesting removal of a 1-star rating on order #[ORDER ID] from [DATE].\n\nThis rating was caused by a restaurant error, not my performance:\n- I received a sealed bag from the restaurant\n- I had no ability to inspect or verify the contents\n- My delivery was completed correctly and on time\n\nDoorDash policy allows removal of ratings that reflect factors outside the Dasher's control. A restaurant packing error falls directly within that policy. My rating before this was [X stars].\n\nPlease review and remove this rating.\n\nThank you.",w:"'Factors outside the Dasher's control' is the exact language in DoorDash's internal rating review policy. Using it gives the agent the justification to approve the removal."},
+      {h:"Rating caused by wait time",msg:"Hello Dasher Support,\n\nI am requesting removal of a rating on order #[ORDER ID] from [DATE].\n\nThe customer left a low rating due to delivery time. I want to note:\n- The order was not ready at the restaurant until [TIME]\n- I waited [X] minutes at [restaurant name] before the order was ready\n- I delivered the order as quickly as possible once I had it\n\nRestaurant preparation delays are outside a Dasher's control per DoorDash policy. I am asking for this rating to be removed.\n\nThank you.",w:"DoorDash can see your pickup timestamp versus the order ready time. Naming the restaurant and the wait time gives the agent something concrete to verify."},
+    ]},
+    {e:"📉",t:"Completion Rate Wrongly Affected",urgency:"HIGH — Impacts Dasher tier and access",color:"#F43F5E",secs:[
+      {h:"Completion rate dispute",msg:"Hello Dasher Support,\n\nMy completion rate has been negatively affected by a complaint on order #[ORDER ID] from [DATE] that I believe is incorrect.\n\nProof of successful delivery:\n- Delivery photo at [ADDRESS]\n- GPS data confirming I was at the address at [TIME]\n- App delivery confirmation\n\nMy completion rate directly affects my Dasher status and access to Top Dasher benefits and priority orders. I am asking that this complaint be reviewed and reversed if it is not supported by the evidence.\n\nThank you.",w:"Naming 'Dasher status,' 'Top Dasher,' and 'priority orders' shows the agent this has a real financial impact on you. That makes them more likely to escalate a reversal."},
+    ]},
+    {e:"🔄",t:"Escalation — Appeal Was Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
+      {h:"Second appeal to senior agent",msg:"Hello,\n\nI am following up on a previous Dasher support request regarding order #[ORDER ID] from [DATE].\n\nMy original appeal was not resolved to my satisfaction. I am requesting escalation to a senior Dasher account specialist because:\n- My delivery photo evidence was not properly reviewed\n- The complaint directly contradicts my GPS track, photo timestamp, and app delivery record\n- This complaint is continuing to impact my account standing and income\n\nI have been an active Dasher since [DATE] with a strong record. I am asking for a thorough senior review.\n\nThank you.",w:"Asking for a 'senior Dasher account specialist' routes your ticket to a different tier of review. Most drivers don't know to ask for this. It significantly improves your odds."},
+    ]},
+  ],
+  ubereats:[
+    {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can affect your account standing",color:"#F43F5E",secs:[
+      {h:"Standard non-delivery dispute",msg:"Hello Uber Eats Support,\n\nI am writing to dispute a non-delivery complaint on trip #[TRIP ID] from [DATE].\n\nI completed this delivery successfully. My documentation:\n- Delivery photo taken at [ADDRESS] at [TIME] — geotagged and timestamped\n- GPS trip data showing my location at the delivery address\n- In-app delivery confirmation record\n\nI am requesting:\n1. This complaint be reviewed against my photo and GPS trip data\n2. Any negative effect on my account or completion rate be reversed\n3. A review of this customer's complaint history if this is a pattern\n\nThank you.",w:"Uber support works from Trip IDs — include it in the first line. 'Geotagged and timestamped' tells the agent exactly what to look for in your photo record."},
+      {h:"Contactless delivery — no knock requested",msg:"Hello Uber Eats Support,\n\nI am disputing a complaint on trip #[TRIP ID] from [DATE].\n\nThe customer selected contactless delivery. Here is what happened:\n1. I arrived at [ADDRESS] at [TIME]\n2. I placed the order at the door as instructed — no knock or ring per the customer's preference\n3. I took and submitted a delivery photo\n4. The app confirmed delivery and a notification was sent\n\nI followed the customer's exact delivery instructions. Please review and remove this complaint.\n\nThank you.",w:"Uber Eats has a specific policy protecting drivers who follow contactless delivery instructions. Framing your appeal around 'the customer's delivery preference' invokes that policy directly."},
+    ]},
+    {e:"⭐",t:"Unfair Rating",urgency:"MEDIUM — Affects trip quality and earnings",color:"#F5A623",secs:[
+      {h:"Rating caused by restaurant issue",msg:"Hello Uber Eats Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nThis rating does not reflect my service. The customer was dissatisfied with [missing item / food quality / wait time], which was caused by the restaurant, not by me.\n\nI picked up a sealed order from [RESTAURANT NAME]. I had no way to inspect or modify the contents. My delivery was completed correctly.\n\nUber policy allows removal of ratings caused by factors outside the delivery partner's control. My rating before this was [X]. Please review and remove this rating.\n\nThank you.",w:"'Factors outside the delivery partner's control' mirrors Uber's internal review language. Naming the restaurant specifically gives the agent something to verify independently."},
+    ]},
+    {e:"🔄",t:"Escalation — First Appeal Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
+      {h:"Escalate to senior specialist",msg:"Hello,\n\nI am following up on a previous request about Uber Eats trip #[TRIP ID] from [DATE].\n\nMy initial appeal was not resolved. I am requesting escalation to a senior account specialist for a full review because:\n- My photo and GPS evidence were not properly evaluated\n- The complaint contradicts my documented delivery record\n- This is continuing to affect my account and income\n\nI have been an Uber delivery partner since [DATE] with a strong track record. I am asking for a thorough review.\n\nThank you.",w:"Asking for 'senior account specialist' by name triggers a routing change. Most drivers exhaust themselves on first-tier agents — this one request often gets a different result."},
+    ]},
+  ],
+  spark:[
+    {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can affect Spark Driver standing",color:"#F43F5E",secs:[
+      {h:"Standard non-delivery dispute",msg:"Hello Spark Driver Support,\n\nI am writing to dispute a non-delivery complaint on delivery #[DELIVERY ID] from [DATE].\n\nThis delivery was completed successfully. My documentation:\n- Delivery photo showing the order placed at [ADDRESS]\n- GPS data confirming my location at the delivery address at [TIME]\n- App delivery confirmation timestamp\n\nI am requesting:\n1. This complaint be reviewed against my delivery photo and GPS record\n2. Any negative impact on my driver rating or standing be reversed\n\nThank you.",w:"Spark support uses Delivery IDs to pull records. Include it in the first line. Spark's team is smaller than DoorDash's — follow up after 48 hours if you don't hear back."},
+    ]},
+    {e:"📦",t:"Missing or Substituted Item Dispute",urgency:"HIGH — Common Spark-specific complaint",color:"#F43F5E",secs:[
+      {h:"Item was out of stock — you followed protocol",msg:"Hello Spark Driver Support,\n\nI am writing to dispute a complaint about a missing item on delivery #[DELIVERY ID] from [DATE].\n\nThe item [ITEM NAME] was not available at the Walmart store. I handled this correctly:\n- Marked the item as unavailable in the Spark app\n- Selected an approved substitution / notified the customer of unavailability\n- Messaged the customer through the app before checking out\n\nI followed Spark's out-of-stock protocol exactly. Please review my in-app actions for this batch and remove this complaint.\n\nThank you.",w:"Spark agents can see exactly what you did in the app — when you marked items unavailable, when you messaged the customer, when you checked out. This appeal points them directly to that record."},
+    ]},
+    {e:"🔄",t:"Escalation — Appeal Was Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
+      {h:"Escalate to senior review",msg:"Hello,\n\nI am following up on a previous Spark Driver support request about delivery #[DELIVERY ID] from [DATE].\n\nMy initial request was denied. I am requesting a senior review because:\n- My delivery photo and GPS record were not properly evaluated\n- My in-app actions for this batch were not reviewed against the complaint\n- This complaint is unfairly affecting my driver rating and access to batches\n\nI have been a Spark Driver since [DATE] with a positive record. I am asking for a full review.\n\nThank you.",w:"Following up with a senior review request — and citing your tenure — often breaks through the first-tier denial cycle."},
+    ]},
+  ],
+  instacart:[
+    {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can affect Shopper access",color:"#F43F5E",secs:[
+      {h:"Standard non-delivery dispute",msg:"Hello Instacart Support,\n\nI am writing to dispute a non-delivery complaint on batch #[BATCH ID] from [DATE].\n\nI completed this delivery successfully. My evidence:\n- Delivery photo showing the bags at [ADDRESS]\n- GPS data confirming I was at the delivery location at [TIME]\n- App delivery confirmation record\n- All items in this batch were scanned and verified\n\nI am requesting:\n1. This complaint be reviewed against my delivery photo and GPS data\n2. Any impact on my Shopper rating or standing be reversed\n\nThank you.",w:"'Batch ID' is the Instacart-specific term. Including 'all items were scanned' adds a data point agents can verify against the scan record — unique to Instacart and very strong evidence."},
+    ]},
+    {e:"📦",t:"Missing Item or Wrong Item Dispute",urgency:"HIGH — Most common Instacart complaint",color:"#F43F5E",secs:[
+      {h:"Item was out of stock — you followed protocol",msg:"Hello Instacart Support,\n\nI am disputing a complaint about a missing item on batch #[BATCH ID] from [DATE].\n\nThe item [ITEM NAME] was not available at [STORE NAME]. I handled this correctly:\n- Marked the item as out of stock in the Instacart app at [TIME]\n- Selected an approved replacement / left the item unfulfilled per the customer's preference\n- Messaged the customer through the app before checking out\n\nMy in-app actions for this batch show I followed Instacart's out-of-stock protocol exactly. Please review my batch activity and remove this complaint.\n\nThank you.",w:"Instacart's batch activity log shows every action you took. This appeal directs the agent to that log, which is far more convincing than a verbal account."},
+    ]},
+    {e:"🔄",t:"Escalation — First Appeal Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
+      {h:"Senior review request",msg:"Hello,\n\nI am following up on a previous Instacart support request about batch #[BATCH ID] from [DATE].\n\nMy first appeal was denied. I am requesting escalation to a senior Shopper support specialist because:\n- My delivery photo and batch activity log were not fully reviewed\n- The complaint contradicts my documented in-app actions\n- This is continuing to affect my Shopper rating and batch access\n\nI have been an active Instacart Shopper since [DATE] with a strong record. I am asking for a complete review.\n\nThank you.",w:"Requesting a 'senior Shopper support specialist' by that title moves your ticket past first-tier agents who use scripted responses."},
+    ]},
+  ],
+};
 
-  // ── NEW: Amazon Flex Checklist ─────────────────────────────────────────────
-  amazonflex: [
-    {e:"📸",t:"Delivery photo taken when required by app"},
-    {e:"📍",t:"GPS was active the entire block"},
-    {e:"📦",t:"All packages scanned and accounted for at the station"},
-    {e:"🚪",t:"Packages left safely at door or designated spot"},
-    {e:"📋",t:"Block marked completed in the Amazon Flex app"},
-    {e:"🧾",t:"Block summary and earnings screenshot saved"}
-  ]
+var PLATFORM_CHECKLISTS = {
+  doordash:[
+    {e:"📸",t:"Delivery photo taken — door and bags visible"},
+    {e:"💬",t:"Customer messaged through DoorDash app"},
+    {e:"📍",t:"GPS was active the entire delivery"},
+    {e:"📋",t:"Order marked delivered in the app"},
+    {e:"🖼️",t:"Delivery confirmation screen screenshotted"},
+    {e:"📝",t:"Order number noted if anything felt off"},
+  ],
+  ubereats:[
+    {e:"📸",t:"Photo submitted through Uber Eats app"},
+    {e:"💬",t:"Customer messaged in-app (not SMS)"},
+    {e:"📍",t:"GPS active for the full trip"},
+    {e:"🆔",t:"Trip ID screenshotted if anything went wrong"},
+    {e:"📋",t:"Delivery confirmed in the Uber Eats app"},
+    {e:"⏱️",t:"Long restaurant wait documented with a customer message"},
+  ],
+  spark:[
+    {e:"📸",t:"Delivery photo taken showing all bags at door"},
+    {e:"💬",t:"Customer messaged via Spark app about any changes"},
+    {e:"📍",t:"GPS active throughout the trip"},
+    {e:"📋",t:"Delivery confirmed in the Spark app"},
+    {e:"🛒",t:"Any out-of-stock items marked in app before checkout"},
+    {e:"🧾",t:"Delivery summary screenshotted after completion"},
+  ],
+  instacart:[
+    {e:"📸",t:"Delivery photo submitted in the Instacart app"},
+    {e:"🛒",t:"All available items scanned in store"},
+    {e:"💬",t:"Customer messaged in-app about any substitutions"},
+    {e:"📍",t:"GPS active throughout the entire batch"},
+    {e:"📋",t:"Batch confirmed complete in the app"},
+    {e:"🧾",t:"Batch summary screenshotted after delivery"},
+  ],
 };
 
 // ─── Beginner Content ─────────────────────────────────────────────────────────
 var BASICS_CATS = [
-  /* All your original BASICS_CATS sections (Starting Out, Your Phone, During a Delivery, Getting Paid, DoorDash, Uber Eats, Spark, Instacart) — kept exactly as you originally had them */,
-
-  // ── NEW: Amazon Flex — The Basics ──────────────────────────────────────────
   {
-    e:"📦", t:"Amazon Flex — The Basics", sub:"Package delivery explained simply",
+    e:"🚀", t:"Starting Out", sub:"What you need to know before your first delivery",
     secs:[
-      {h:"What Amazon Flex actually is", body:"Amazon Flex lets you deliver packages (not food) using your own car. You accept 'blocks' — scheduled shifts where you pick up packages from an Amazon warehouse or station and deliver them to customers' doors. You get paid per block, plus any tips that come through the app."},
-      {h:"How blocks work", body:"You choose a block time in the app. At the start time you drive to the station, scan and load every package into your car, then deliver them one by one. The app gives you the route. When you're done you mark the block complete. Most blocks are 2–4 hours."},
-      {h:"Your rating and standing", body:"Amazon tracks your delivery success rate, on-time rate, and customer feedback. If your standing drops too low you may lose access to blocks. Aim to keep everything above 95%."},
-      {h:"What to do if something goes wrong", body:"Missing package? Damaged box? Customer not home? Always take a photo, note it in the app, and follow the on-screen instructions. Never leave a package in an unsafe spot."},
-      {h:"Getting paid", body:"Pay is deposited weekly. You can see your earnings in the app after each block. Some blocks have bonuses for peak times or difficult deliveries."}
+      {h:"What these apps actually are", body:"DoorDash, Uber Eats, Spark, and Instacart are apps that pay you to pick up orders and drop them off. A customer orders food or groceries on their phone. The app finds a driver nearby — that's you. You pick it up and deliver it. Simple as that. You work when you want, stop when you want. Nobody is your boss."},
+      {h:"How you make money", body:"You earn a base pay for each delivery — the app sets this. On top of that, customers can add a tip. Tips are usually where the real money comes from. The better your service, the more tips you earn. Some apps also offer extra bonuses for delivering during busy times. These are called 'boosts' or 'surges' and they're worth taking advantage of."},
+      {h:"What a rating is and why it matters", body:"After every delivery, customers can rate you from 1 to 5 stars. 5 stars is perfect. 1 star is the worst. Your average rating across all deliveries is your score. This matters a lot — if your rating gets too low, the app will give you fewer orders, worse orders, or even remove you. Aim for 4.7 or higher on every platform. That's the safe zone."},
+      {h:"How to accept an order", body:"When an order comes in, your phone will buzz and a screen will pop up showing you the details — where to pick up, where to drop off, and how much it pays. You have a short window to accept or decline. If you accept, follow the map to the restaurant, then to the customer. If you decline too many in a row, some apps may temporarily pause your ability to receive orders."},
+      {h:"What happens if you make a mistake", body:"Everyone makes mistakes — wrong address, late delivery, dropped item. The most important thing is to stay calm and communicate. Text the customer right away. Be honest and apologize briefly. Don't overthink it. Most customers are understanding when you reach out. The ones who aren't — support can often reverse a bad rating if you have evidence you did your best."},
     ]
-  }
+  },
+  {
+    e:"📱", t:"Your Phone", sub:"The tech stuff made simple",
+    secs:[
+      {h:"Why GPS must stay on — and how to turn it on", body:"GPS is what tells the app where you are. Every platform tracks your location during a delivery to confirm you went to the right address. If GPS is off and a customer claims you never arrived, you have no way to prove them wrong. To turn GPS on: go to your phone Settings, find Location, and make sure it's turned ON. Set it to 'Always' or 'While Using App' for delivery apps."},
+      {h:"How to keep your battery alive on a long shift", body:"Running GPS and maps all day drains your battery fast. Before your shift: charge your phone to 100%. Bring a car charger — this is not optional, it's essential. In your phone settings, lower the screen brightness a little. Close any apps you're not using. If your battery hits 20%, plug it in immediately. A dead phone mid-delivery is one of the most stressful things that can happen."},
+      {h:"How to switch between the delivery app and maps", body:"You'll often need to flip between your delivery app and Google Maps or Waze for directions. To switch: tap the little square or circle button at the bottom of your phone (this shows all open apps). Tap the one you need. Your place in the delivery app stays exactly where it was — nothing resets. Practice this a few times before your first shift so it feels natural."},
+      {h:"What to do if the app freezes or crashes", body:"It happens to every driver. If the app freezes: press the home button, wait 5 seconds, then tap the app again to reopen it. If it crashes completely: close it fully (swipe it away in your recent apps), then reopen it. Your delivery will still be there. If the app is completely broken and you can't reopen it, call support immediately — their number is in the app or on the platform website."},
+      {h:"Notifications — make sure they're turned on", body:"Your phone needs to be able to buzz and ring when a new order comes in. If notifications are turned off, you'll miss orders completely. Go to your phone Settings, find Notifications, find the delivery app, and make sure everything is switched ON. Also make sure your phone is NOT on silent mode during your shift. Many drivers lose dozens of orders just because their phone was on silent."},
+    ]
+  },
+  {
+    e:"🏃", t:"During a Delivery", sub:"What to do from start to finish",
+    secs:[
+      {h:"Step by step — your first delivery", body:"1. Accept the order when it pops up. 2. Drive to the restaurant — the app shows you the address and gives you a map. 3. Go inside, give them your name or show your phone, and wait for the order. 4. Pick up the bag — handle it carefully, keep drinks upright. 5. Drive to the customer's address. 6. Hand off the food or leave it at the door as instructed. 7. Take a photo. 8. Mark it as delivered in the app. That's it."},
+      {h:"What 'Leave at Door' means", body:"Many customers choose contactless delivery. This means they do NOT want you to knock or ring the bell. They want you to leave the food at their door quietly. When you see 'Leave at Door': place the bag neatly at the door, take a clear photo showing the bag AND the door number, then mark it delivered in the app. Do not knock. Do not ring. Just leave it clean and move on."},
+      {h:"Taking the delivery photo", body:"This is one of the most important habits you can build. After every delivery, take a photo before you walk away. Your photo should show the bag sitting at the door with the door number or address visible. This photo is your proof that you delivered. If a customer ever says they didn't get their order, this photo is what saves you. Take it every single time — rain, dark, fast or slow."},
+      {h:"What to do if you can't find the address", body:"Don't panic and don't just leave. First: double-check the address in the app — make sure you're on the right street. Second: call the customer using the in-app call button. Third: if no answer, send a text through the app saying where you are and asking for help. Give them 2-3 minutes to respond. If they still don't answer, contact support through the app before leaving. Never just abandon an order without trying first."},
+      {h:"What to do if the restaurant doesn't have your order", body:"This is more common than you'd think. Stay calm. Show the restaurant your app screen with the order details. Ask them to check under the customer's name or order number. If they truly don't have it, contact support through the app immediately — do not leave without notifying support. Support will either send you to a different location or cancel the order. You should not be penalized for a restaurant error."},
+    ]
+  },
+  {
+    e:"💸", t:"Getting Paid", sub:"How the money actually works",
+    secs:[
+      {h:"How and when you get paid", body:"Most platforms pay once a week, automatically deposited to your bank account. You can also cash out early (sometimes instantly, sometimes for a small fee) through a feature called Fast Pay or Instant Pay. To set this up: go to your app's Earnings section and add your bank account or debit card. Make sure your information is correct — wrong account details mean delayed payments."},
+      {h:"What a boost or surge means", body:"During busy times — lunch, dinner, weekends, bad weather — apps offer extra money per delivery. This might show up as 'Peak Pay,' 'Surge,' or a dollar amount added on top of regular pay. These times are worth working if you can. You don't have to do anything special to earn it — just be logged in and accepting orders during the boost window. The app will tell you when one is active."},
+      {h:"Why some orders pay more than others", body:"Longer distance = more pay. Harder deliveries (like a long drive or a big grocery order) = more pay. Busy times = more pay. Some orders also have bigger tips already added by the customer before you even accept. Over time you'll start to spot good orders quickly. A good rule of thumb: if the pay is less than $1 per mile, it may not be worth taking — but decide based on your own costs and situation."},
+      {h:"Tips — when they show up and why they vary", body:"Some tips appear immediately after delivery. Others show up hours later because customers add them after they receive the food. Don't be alarmed if a tip isn't there right away. If a customer said they'd tip and it never appeared, there's nothing you can do — platforms don't force tipping. The best way to earn more tips is to focus on every delivery: warm greeting, careful handling, confirmation text. It compounds over time."},
+    ]
+  },
+  {
+    e:"🔴", t:"DoorDash — The Basics", sub:"Platform-specific things every DoorDash driver needs to know",
+    secs:[
+      {h:"How DoorDash orders work", body:"When an order comes in, you see the pickup restaurant, the drop-off address, the pay, and the distance. You have about 45 seconds to accept or decline. After you accept: drive to the restaurant, tap 'Arrived at Store' in the app, pick up the order, tap 'Picked Up,' then drive to the customer. When you arrive, tap 'Arrived at Customer,' complete the delivery, take your photo, and tap 'Delivered.' Every tap matters — they track your timing."},
+      {h:"The DoorDash rating system", body:"DoorDash shows you your last 100 deliveries. Your score is based on those. A score below 4.2 puts you at risk of deactivation. A score above 4.7 keeps you in good standing. You can see your rating in the app under your profile. If you get a bad rating that wasn't your fault — restaurant error, wrong item in the bag — you can contact support and request a review."},
+      {h:"Completion rate — what it is and why it matters", body:"Your completion rate is the percentage of orders you accept and then actually complete. If you accept an order and then unassign yourself from it, your completion rate goes down. DoorDash requires a minimum of 80% completion. To protect it: only accept orders you're sure you can complete, and if something goes wrong mid-delivery, contact support before unassigning."},
+      {h:"Top Dasher — what it means", body:"Top Dasher is a status DoorDash gives to drivers who meet certain standards: 4.7+ rating, 95%+ acceptance rate, 95%+ completion rate, 100+ deliveries in the month, and at least 200 total deliveries. Top Dashers get to dash anytime without scheduling in advance. It's worth working toward once you're comfortable with the basics."},
+    ]
+  },
+  {
+    e:"🟢", t:"Uber Eats — The Basics", sub:"Platform-specific things every Uber Eats driver needs to know",
+    secs:[
+      {h:"How Uber Eats orders work", body:"Go online in the app and orders will start coming to you. When one arrives: you see the restaurant, the drop-off, and the fare. Accept it and head to the restaurant. When you arrive, tap 'I'm here' so the customer knows you're waiting. Pick up the order when it's ready. Follow the map to the customer. For contactless: leave it at the door, take a photo through the app, and confirm delivery. Uber requires the in-app photo — not your camera app."},
+      {h:"Your Uber Eats rating", body:"Customers rate you after each delivery. Your rating shows as an average out of 5. Uber requires drivers to maintain a 4.7 or higher rating. Below that, you may see fewer high-paying trips. Uber does allow you to request removal of ratings caused by things outside your control — restaurant errors, navigation problems, long wait times that weren't your fault."},
+      {h:"Trip ID — what it is and why you need it", body:"Every delivery on Uber Eats has a Trip ID — a unique code for that specific order. You can find it in your earnings history after a delivery. If you ever need to dispute something with support — bad rating, false complaint, missing payment — you must include the Trip ID. Without it, support agents can't find your record. Screenshot it any time a delivery feels off."},
+      {h:"Uber Pro — levels and what they mean", body:"Uber has a tier system: Blue, Gold, Platinum, Diamond. Higher tiers unlock better benefits like priority support and cash back on gas. You move up by completing deliveries with a high rating. The Diamond tier requires a 4.85+ rating and 100 trips in a quarter. Don't stress about tiers when you're starting — focus on good service first and the levels will follow."},
+    ]
+  },
+  {
+    e:"🔵", t:"Spark — The Basics", sub:"Platform-specific things every Spark driver needs to know",
+    secs:[
+      {h:"What makes Spark different from food delivery", body:"Spark is Walmart's delivery service. Instead of picking up food from a restaurant, you go to a Walmart store and shop for a customer's grocery order. You scan each item as you pick it up, then deliver the bags to the customer's home. Because you're choosing the actual products, the customer is rating your shopping ability as much as your delivery. Handle items carefully — fragile items, cold items, heavy items all need attention."},
+      {h:"How to handle out-of-stock items", body:"Sometimes an item a customer ordered isn't on the shelf. Don't just skip it. Open the Spark app, find the item, and mark it as unavailable. The app will give you options to substitute it with something similar. Always message the customer through the app before you check out to let them know. This protects you if they complain later — your message history shows you communicated."},
+      {h:"Scanning every item — why it's critical", body:"Spark tracks which items you scanned. If a customer says an item is missing and your scan record shows you scanned it at the store, that's your proof. If you didn't scan it, there's no record you ever had it. Scan every single item, every time, no exceptions. It takes a few extra seconds per item and it protects you completely from missing item complaints."},
+      {h:"Your Spark driver rating", body:"Customers rate you after delivery. Spark tracks both your customer rating and your on-time rate separately. Both affect which batches (orders) you can access. Better ratings = access to bigger, better-paying batches. If you get a low rating for something that was the store's fault — out-of-stock items, produce quality — you can request a review through support."},
+    ]
+  },
+  {
+    e:"🟩", t:"Instacart — The Basics", sub:"Platform-specific things every Instacart shopper needs to know",
+    secs:[
+      {h:"What Instacart shoppers actually do", body:"Instacart pays you to shop for customers at grocery stores, then deliver the bags to their home. You get a list of items, you find them in the store, scan them, check out, and deliver. The customer set up their order in advance and chose whether to allow substitutions. You are both the shopper and the delivery driver. The whole thing — shopping and delivering — is called a 'batch.'"},
+      {h:"How to handle replacements", body:"If an item isn't available, the Instacart app will show you approved replacements or let you suggest one. Before you check out, always message the customer to let them know what you're substituting. Something simple like 'Hi! The brand you ordered is out of stock — I'm grabbing [this one] instead, hope that works!' Most customers appreciate the heads up and it protects your rating if they're not happy with the sub."},
+      {h:"Your Batch ID — always note it", body:"Every Instacart order has a Batch ID. This is what support uses to find your record if anything goes wrong. Any time a delivery feels off — unhappy customer, wrong items, difficulty finding the address — take a screenshot of the Batch ID before you move on. You cannot file a useful support request without it."},
+      {h:"The 4.7 rating — why it's the key number", body:"Instacart shoppers rated below 4.7 see fewer batches and lower-paying ones. Above 4.7 keeps you in good standing. Above 4.8 unlocks premium batches. Your rating is based on your last 100 deliveries. Bad ratings caused by store conditions, out-of-stock items, or app errors can sometimes be removed — but you need to ask support and explain clearly what happened."},
+    ]
+  },
 ];
