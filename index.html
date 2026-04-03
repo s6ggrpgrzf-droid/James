@@ -170,7 +170,6 @@ const PLATFORMS_DEFEND = [
 {id:“ubereats”,  label:“Uber Eats”, color:”#06C167”, e:“🟢”},
 {id:“spark”,     label:“Spark”,     color:”#0071CE”, e:“🔵”},
 {id:“instacart”, label:“Instacart”, color:”#43B02A”, e:“🟩”},
-{id:“flex”,      label:“Amazon Flex”, color:”#FF9900”, e:“🟠”},
 ];
 
 const PLATFORM_HABITS = {
@@ -259,19 +258,6 @@ instacart:[
 {h:“Senior review request”,msg:“Hello,\n\nI am following up on a previous Instacart support request about batch #[BATCH ID] from [DATE].\n\nMy first appeal was denied. I am requesting escalation to a senior Shopper support specialist because:\n- My delivery photo and batch activity log were not fully reviewed\n- The complaint contradicts my documented in-app actions\n- This is continuing to affect my Shopper rating and batch access\n\nI have been an active Instacart Shopper since [DATE] with a strong record. I am asking for a complete review.\n\nThank you.”,w:“Requesting a ‘senior Shopper support specialist’ by that title moves your ticket past first-tier agents who use scripted responses.”},
 ]},
 ],
-flex:[
-{e:“🚫”,t:“Delivered Not Received (DNR) Complaint”,urgency:“HIGH — Directly impacts your standing score”,color:”#F43F5E”,secs:[
-{h:“Standard DNR dispute”,msg:“Hello Amazon Flex Support,\n\nI am writing to dispute a Delivered Not Received complaint on block [BLOCK ID] from [DATE].\n\nThis package was successfully delivered. My documentation:\n- Delivery photo showing the package at [ADDRESS] with the door clearly visible\n- GPS data confirming my location at [ADDRESS] at [TIME]\n- Route completion record showing all packages delivered\n\nI am requesting:\n1. This DNR complaint be reviewed against my delivery photo and GPS data\n2. Any negative impact on my standing score be reversed\n3. This complaint be flagged if a pattern exists at this address\n\nThank you.”,w:“Amazon Flex support works from Block IDs — include it in every appeal. Delivery photo, GPS data, and route completion record are the three pieces of evidence their review team checks. Name all three explicitly.”},
-{h:“DNR at a location with no safe drop spot”,msg:“Hello Amazon Flex Support,\n\nI am writing to dispute a DNR complaint on block [BLOCK ID] from [DATE].\n\nThis delivery was completed under difficult conditions:\n- The address had no covered or secure drop location\n- I placed the package in the safest available spot and photographed it\n- My GPS confirms I was at the address at [TIME]\n- The delivery photo shows exactly where the package was left\n\nI followed Flex delivery protocol correctly given the conditions at this address. Please review my photo and GPS data and reverse this complaint.\n\nThank you.”,w:“Mentioning no secure drop location shifts the context. Amazon’s review team knows certain addresses are problematic. This framing often triggers a closer look at the customer’s complaint history rather than your delivery record.”},
-]},
-{e:“📉”,t:“Standing Score Drop Dispute”,urgency:“HIGH — Affects your access to blocks”,color:”#F43F5E”,secs:[
-{h:“Standing drop caused by DNR complaints”,msg:“Hello Amazon Flex Support,\n\nMy standing score has dropped due to Delivered Not Received complaints that I believe are incorrect.\n\nFor each disputed delivery I have:\n- A delivery photo showing the package at the correct address\n- GPS data confirming my presence at the delivery location\n- Route completion records for each affected block\n\nAffected blocks:\n- Block [ID] on [DATE]\n- Block [ID] on [DATE]\n\nMy standing directly affects my ability to access blocks and earn income. I am asking for a full review of these complaints against my delivery evidence and a correction to my standing score.\n\nThank you.”,w:“Listing multiple affected blocks together is more powerful than appealing one at a time. It signals a pattern of false complaints rather than a single dispute, which Amazon handles differently in their review process.”},
-{h:“Standing drop caused by a late delivery”,msg:“Hello Amazon Flex Support,\n\nI am disputing a standing score impact from a late delivery on block [BLOCK ID] from [DATE].\n\nThe delay was caused by [severe traffic / access issue at the delivery address / incorrect address information / delay at the delivery station during pickup].\n\nThis factor was outside my control as a delivery partner. I completed my route as quickly as conditions allowed.\n\nI am requesting this standing impact be reviewed and reversed.\n\nThank you.”,w:“Amazon’s policy allows standing reversals for delays caused by factors outside driver control. Naming the specific cause and being precise gives the reviewer something concrete to verify against route data.”},
-]},
-{e:“🔄”,t:“Escalation — First Appeal Denied”,urgency:“USE AFTER A FIRST DENIAL”,color:”#8B5CF6”,secs:[
-{h:“Escalate to senior review”,msg:“Hello,\n\nI am following up on a previous Amazon Flex support request about block [BLOCK ID] from [DATE].\n\nMy first appeal was not resolved. I am requesting escalation to a senior Flex account specialist for a complete review because:\n- My delivery photo and GPS data were not properly evaluated\n- The complaint directly contradicts my route completion record\n- This is continuing to impact my standing score and block access\n\nI have been an active Flex delivery partner since [DATE] with a strong delivery record. I am asking for a thorough senior review of all evidence.\n\nThank you.”,w:“Amazon Flex support has multiple tiers. Asking specifically for a senior Flex account specialist moves your ticket out of the standard response queue. Most drivers give up after the first denial — this follow-up often changes the outcome.”},
-]},
-],
 };
 
 const PLATFORM_CHECKLISTS = {
@@ -306,14 +292,6 @@ instacart:[
 {e:“📍”,t:“GPS active throughout the entire batch”},
 {e:“📋”,t:“Batch confirmed complete in the app”},
 {e:“🧾”,t:“Batch summary screenshotted after delivery”},
-],
-flex:[
-{e:“📸”,t:“Delivery photo taken at every single stop”},
-{e:“📍”,t:“GPS active for the entire route”},
-{e:“🖼️”,t:“Route completion screenshot saved after block ends”},
-{e:“⏰”,t:“Arrived at delivery station on time or early”},
-{e:“📦”,t:“Package count verified at station before leaving”},
-{e:“📋”,t:“Block ID noted if any stop had a problem”},
 ],
 };
 
@@ -1220,10 +1198,8 @@ return(
           const open=tipOpen===i;
           const fav=favTips.has(i);
           return(
-            <div key={i} style={{position:"relative"}}>
-            {(!pro&&i>=3)&&<div onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{position:"absolute",inset:0,zIndex:9,borderRadius:16,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer"}}><span style={{fontSize:12,fontWeight:800,color:"#F5A623",background:"rgba(7,8,10,0.92)",border:"1px solid rgba(245,166,35,0.5)",borderRadius:8,padding:"6px 14px"}}>{"🔒 Elite — Tap to Unlock"}</span></div>}
-            <div className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(pro||i<3)?setTipOpen(open?null:i):null}
-              style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",filter:(!pro&&i>=3)?"blur(5px)":"none",pointerEvents:(!pro&&i>=3)?"none":"auto",transition:"filter 0.15s"}}>
+            <div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(pro||i<3)?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
+              style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",opacity:(pro||i<3)?1:0.55,transition:"opacity 0.15s"}}>
               <div style={{display:"flex",alignItems:"center",gap:12}}>
                 <div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
                 <div style={{flex:1,minWidth:0}}>
@@ -1247,7 +1223,6 @@ return(
                 </div>
               )}
             </div>
-          </div>
           );
         })}
 
@@ -2086,7 +2061,7 @@ return(
                 <span style={{fontSize:24,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
               </div>
               <div style={{display:"flex",flexDirection:"column",gap:9}}>
-                {[["💬","30 message scripts — one tap to copy, ready to send"],["🛡️","Appeal letters for false complaints & unfair ratings"],["🎓","6 training videos on psychology & what actually earns tips"],["📖","Full beginner guide — all 5 platforms explained simply"],["🧠","Deeper learning — tip science, de-escalation & more"],["📊","Shift tracker, pre-shift checklist & shift journal"]].map(([e,f],i)=>(
+                {[["💬","30 message scripts — one tap to copy, ready to send"],["🛡️","Appeal letters for false complaints & unfair ratings"],["🎓","6 training videos on psychology & what actually earns tips"],["📖","Full beginner guide — all 4 platforms explained simply"],["🧠","Deeper learning — tip science, de-escalation & more"],["📊","Shift tracker, pre-shift checklist & shift journal"]].map(([e,f],i)=>(
                   <div key={i} style={{display:"flex",alignItems:"center",gap:10,fontSize:13,color:C.text2}}>
                     <span style={{fontSize:15,flexShrink:0}}>{e}</span>{f}
                   </div>
