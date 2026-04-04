@@ -69,6 +69,7 @@
 <body>
   <div id="root"></div>
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+  <script src="data.js"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,8 +77,8 @@
 const {useState,useEffect,useCallback,useRef}=React;
 const LATEST_UPDATE_ID="2025-01-001";
 const UPDATES=[{id:"2025-01-001",date:"Jan 2025",title:"Backup & Restore + Secure Paywall",items:["Download a backup of your data any time from Settings","Restore your data on a new device in seconds","Paywall is now more secure — unlock code can no longer be found in DevTools","Settings now has a visible gear button in the top right"]}];
-async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
-async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch(e){return fb;}}
+async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 const ELITE_HASH="9967509c09c9247fa513abbf2e330af4874242c92d0a0f8ddd1082894c45d0b3";
 async function hashCode(s){const b=new TextEncoder().encode(s.trim().toUpperCase());const h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,"0")).join("");}
 const C={bg:"#07080A",s1:"#0D0F13",s2:"#12151A",s3:"#1A1E26",border:"rgba(255,255,255,0.08)",amber:"#F5A623",amberD:"#C8820A",amberL:"#ffc84a",green:"#10B981",teal:"#06B6D4",blue:"#3B82F6",red:"#F43F5E",purple:"#8B5CF6",text:"#EDF0F7",text2:"#8B95A8",text3:"#6B7A8D",sans:"'Outfit',system-ui,sans-serif",mono:"'JetBrains Mono','Courier New',monospace"};
@@ -563,25 +564,27 @@ const BASICS_CATS=[
 {h:"The 4.7 rating — why it's the key number",body:"Instacart shoppers rated below 4.7 see fewer batches and lower-paying ones. Above 4.7 keeps you in good standing. Above 4.8 unlocks premium batches. Your rating is based on your last 100 deliveries. Bad ratings caused by store conditions, out-of-stock items, or app errors can sometimes be removed — but you need to ask support and explain clearly what happened."},
 ]},
 ];
-class ErrorBoundary extends React.Component {
-  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
-  static getDerivedStateFromError(error) { return { hasError: true, error }; }
-  componentDidCatch(error, info) { console.error("DropPilot crash:", error, info); }
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{background:"#07080A",minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:24,fontFamily:"'Outfit',sans-serif",color:"#EDF0F7"}}>
-          <div style={{fontSize:48,marginBottom:16}}>⚠️</div>
-          <div style={{fontSize:20,fontWeight:800,marginBottom:12,color:"#F5A623"}}>Something went wrong</div>
-          <div style={{fontSize:13,color:"#8B95A8",marginBottom:24,textAlign:"center",lineHeight:1.7,maxWidth:320}}>DropPilot hit an error. Try clearing your browser cache or tap below to reset.</div>
-          <button onClick={()=>{localStorage.clear();window.location.reload();}} style={{background:"#F5A623",border:"none",borderRadius:12,padding:"14px 28px",fontSize:15,fontWeight:800,cursor:"pointer",color:"#000"}}>Reset & Reload</button>
-          <div style={{marginTop:16,fontSize:11,color:"#6B7A8D",maxWidth:320,textAlign:"center"}}>{this.state.error&&this.state.error.toString()}</div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
+function ErrorBoundary(props){
+  React.Component.call(this,props);
+  this.state={hasError:false,error:null};
 }
+ErrorBoundary.prototype=Object.create(React.Component.prototype);
+ErrorBoundary.prototype.constructor=ErrorBoundary;
+ErrorBoundary.getDerivedStateFromError=function(error){return{hasError:true,error:error};};
+ErrorBoundary.prototype.componentDidCatch=function(error,info){console.error("DropPilot crash:",error,info);};
+ErrorBoundary.prototype.render=function(){
+  if(this.state.hasError){
+    const err=this.state.error;
+    return React.createElement("div",{style:{background:"#07080A",minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:24,fontFamily:"'Outfit',sans-serif",color:"#EDF0F7"}},
+      React.createElement("div",{style:{fontSize:48,marginBottom:16}},"⚠️"),
+      React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:12,color:"#F5A623"}},"Something went wrong"),
+      React.createElement("div",{style:{fontSize:13,color:"#8B95A8",marginBottom:24,textAlign:"center",lineHeight:1.7,maxWidth:320}},"DropPilot hit an error. Tap below to reset."),
+      React.createElement("button",{onClick:function(){localStorage.clear();window.location.reload();},style:{background:"#F5A623",border:"none",borderRadius:12,padding:"14px 28px",fontSize:15,fontWeight:800,cursor:"pointer",color:"#000"}},"Reset & Reload"),
+      React.createElement("div",{style:{marginTop:16,fontSize:11,color:"#6B7A8D",maxWidth:320,textAlign:"center"}},err&&err.toString())
+    );
+  }
+  return this.props.children;
+};
 
 function App(){
 const[tab,setTab]=useState(“tips”);
@@ -659,7 +662,7 @@ function toggleFavTemplate(key){const next=new Set(favTemplates);next.has(key)?n
 function addNote(){if(!noteInput.trim())return;const newNote={text:noteInput.trim(),date:new Date().toLocaleDateString()};const updated=[newNote,…notes].slice(0,50);setNotes(updated);save(“dp3-notes”,updated);setNoteInput(””);}
 function deleteNote(i){const updated=notes.filter((_,idx)=>idx!==i);setNotes(updated);save(“dp3-notes”,updated);}
 function backupData(){const keys=[“dp3-cfg”,“dp3-elite”,“dp3-intro-seen”,“dp3-fav-tips”,“dp3-fav-tpl”,“dp3-notes”,“dp3-shifts”,“dp3-journal”,“dp3-preshift”,“dp3-checks-doordash”,“dp3-checks-ubereats”,“dp3-checks-spark”,“dp3-checks-instacart”];const backup={version:1,date:new Date().toISOString(),data:{}};keys.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)backup.data[k]=v;});const blob=new Blob([JSON.stringify(backup,null,2)],{type:“application/json”});const url=URL.createObjectURL(blob);const a=document.createElement(“a”);a.href=url;a.download=`droppilot-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);showToast(“Backup downloaded!”);}
-function restoreData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const backup=JSON.parse(ev.target.result);if(!backup.data)throw new Error(“Invalid backup file”);Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));showToast(“Backup restored! Reloading…”);setTimeout(()=>window.location.reload(),1200);}catch{showToast(“Could not read that file.”);}};reader.readAsText(file);e.target.value=””;}
+function restoreData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const backup=JSON.parse(ev.target.result);if(!backup.data)throw new Error(“Invalid backup file”);Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));showToast(“Backup restored! Reloading…”);setTimeout(()=>window.location.reload(),1200);}catch(e){showToast(“Could not read that file.”);}};reader.readAsText(file);e.target.value=””;}
 const filteredCats=templateSearch.trim()?MSG_CATS.map(cat=>({…cat,secs:cat.secs.filter(s=>s.h.toLowerCase().includes(templateSearch.toLowerCase())||s.msg.toLowerCase().includes(templateSearch.toLowerCase()))})).filter(cat=>cat.secs.length>0):MSG_CATS;
 if(!loaded)return(<div style={{background:C.bg,height:“100vh”,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,gap:16,fontFamily:C.sans}}><div style={{fontSize:52,animation:“floatY 2s ease-in-out infinite”}}>🚗</div><div style={{color:C.amber,fontSize:17,fontWeight:800}}>Loading DropPilot…</div></div>);
 if(showIntro)return <IntroAnimation onDone={()=>{setShowIntro(false);save(“dp3-intro-seen”,true);}}/>;
