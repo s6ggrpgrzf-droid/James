@@ -69,7 +69,6 @@
 <body>
   <div id="root"></div>
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-  <script src="data.js"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -564,23 +563,43 @@ const BASICS_CATS=[
 {h:"The 4.7 rating — why it's the key number",body:"Instacart shoppers rated below 4.7 see fewer batches and lower-paying ones. Above 4.7 keeps you in good standing. Above 4.8 unlocks premium batches. Your rating is based on your last 100 deliveries. Bad ratings caused by store conditions, out-of-stock items, or app errors can sometimes be removed — but you need to ask support and explain clearly what happened."},
 ]},
 ];
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
+  static getDerivedStateFromError(error) { return { hasError: true, error }; }
+  componentDidCatch(error, info) { console.error("DropPilot crash:", error, info); }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{background:"#07080A",minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:24,fontFamily:"'Outfit',sans-serif",color:"#EDF0F7"}}>
+          <div style={{fontSize:48,marginBottom:16}}>⚠️</div>
+          <div style={{fontSize:20,fontWeight:800,marginBottom:12,color:"#F5A623"}}>Something went wrong</div>
+          <div style={{fontSize:13,color:"#8B95A8",marginBottom:24,textAlign:"center",lineHeight:1.7,maxWidth:320}}>DropPilot hit an error. Try clearing your browser cache or tap below to reset.</div>
+          <button onClick={()=>{localStorage.clear();window.location.reload();}} style={{background:"#F5A623",border:"none",borderRadius:12,padding:"14px 28px",fontSize:15,fontWeight:800,cursor:"pointer",color:"#000"}}>Reset & Reload</button>
+          <div style={{marginTop:16,fontSize:11,color:"#6B7A8D",maxWidth:320,textAlign:"center"}}>{this.state.error&&this.state.error.toString()}</div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function App(){
-const[tab,setTab]=useState("tips");
+const[tab,setTab]=useState(“tips”);
 const[navPop,setNavPop]=useState(null);
 function changeTab(id){setNavPop(id);setTab(id);setTimeout(()=>setNavPop(null),400);}
-const[cfg,setCfg_]=useState({name:""});
+const[cfg,setCfg_]=useState({name:””});
 const[pro,setPro]=useState(false);
 const[loaded,setLoaded]=useState(false);
 const[showIntro,setShowIntro]=useState(false);
 const[showUpdate,setShowUpdate]=useState(false);
 const[toast,setToast]=useState(null);
 const[showPay,setShowPay]=useState(false);
-const[payStep,setPayStep]=useState("offer");
-const[codeIn,setCodeIn]=useState("");
-const[codeErr,setCodeErr]=useState("");
+const[payStep,setPayStep]=useState(“offer”);
+const[codeIn,setCodeIn]=useState(””);
+const[codeErr,setCodeErr]=useState(””);
 const[showCfg,setShowCfg]=useState(false);
-const[restoreEmail,setRestoreEmail]=useState("");
-const[restoreMsg,setRestoreMsg]=useState("");
+const[restoreEmail,setRestoreEmail]=useState(””);
+const[restoreMsg,setRestoreMsg]=useState(””);
 const tapCount=useRef(0);
 const tapTimer=useRef(null);
 const[tipOpen,setTipOpen]=useState(null);
@@ -592,59 +611,60 @@ const[basicsSub,setBasicsSub]=useState(null);
 const[msgOpen,setMsgOpen]=useState(null);
 const[subOpen,setSubOpen]=useState(null);
 const[copied,setCopied]=useState(null);
-const[templateSearch,setTemplateSearch]=useState("");
+const[templateSearch,setTemplateSearch]=useState(””);
 const[favTemplates,setFavTemplates]=useState(new Set());
 const[activeVideo,setActiveVideo]=useState(0);
 const[defPlatform,setDefPlatform]=useState(null);
-const[defSection,setDefSection]=useState("habits");
+const[defSection,setDefSection]=useState(“habits”);
 const[appealOpen,setAppealOpen]=useState(null);
 const[appealSub,setAppealSub]=useState(null);
 const[checks,setChecks]=useState([]);
-const[noteInput,setNoteInput]=useState("");
+const[noteInput,setNoteInput]=useState(””);
 const[notes,setNotes]=useState([]);
 const[shifts,setShifts]=useState([]);
-const[shiftInput,setShiftInput]=useState({tips:"",rating:"",deliveries:"",note:""});
-const[shiftView,setShiftView]=useState("log");
-const[journalInput,setJournalInput]=useState("");
+const[shiftInput,setShiftInput]=useState({tips:””,rating:””,deliveries:””,note:””});
+const[shiftView,setShiftView]=useState(“log”);
+const[journalInput,setJournalInput]=useState(””);
 const[journal,setJournal]=useState([]);
 const[preShift,setPreShift]=useState([]);
-const STRIPE_LINK="https://buy.stripe.com/5kQeVd8XofwO78v8ZU48001";
+const STRIPE_LINK=“https://buy.stripe.com/5kQeVd8XofwO78v8ZU48001”;
 useEffect(()=>{
 Promise.all([
-load("dp3-cfg",{name:""}),load("dp3-elite",false),load("dp3-intro-seen",false),load("dp3-update-seen",""),load("dp3-fav-tips",[]),load("dp3-fav-tpl",[]),load("dp3-notes",[]),load("dp3-shifts",[]),load("dp3-journal",[]),
-load("dp3-preshift",[{e:"🔋",t:"Phone charged to 100%",done:false},{e:"🔌",t:"Car charger packed",done:false},{e:"📍",t:"GPS turned on",done:false},{e:"🎒",t:"Delivery bag / hot bag ready",done:false},{e:"💧",t:"Water bottle packed",done:false},{e:"📱",t:"Delivery app logged in and working",done:false},{e:"🧾",t:"Gas tank not on empty",done:false}]),
+load(“dp3-cfg”,{name:””}),load(“dp3-elite”,false),load(“dp3-intro-seen”,false),load(“dp3-update-seen”,””),load(“dp3-fav-tips”,[]),load(“dp3-fav-tpl”,[]),load(“dp3-notes”,[]),load(“dp3-shifts”,[]),load(“dp3-journal”,[]),
+load(“dp3-preshift”,[{e:“🔋”,t:“Phone charged to 100%”,done:false},{e:“🔌”,t:“Car charger packed”,done:false},{e:“📍”,t:“GPS turned on”,done:false},{e:“🎒”,t:“Delivery bag / hot bag ready”,done:false},{e:“💧”,t:“Water bottle packed”,done:false},{e:“📱”,t:“Delivery app logged in and working”,done:false},{e:“🧾”,t:“Gas tank not on empty”,done:false}]),
 ]).then(([c,p,seen,updateSeen,ft,ftpl,n,sh,jn,ps])=>{
 setCfg_(c);setPro(!!p);setLoaded(true);
 setFavTips(new Set(ft));setFavTemplates(new Set(ftpl));setNotes(n);setShifts(sh);setJournal(jn);setPreShift(ps);
 if(!seen){setShowIntro(true);}else if(updateSeen!==LATEST_UPDATE_ID){setShowUpdate(true);}
 });
 },[]);
-const setCfg=useCallback(d=>{setCfg_(d);save("dp3-cfg",d);},[]);
+const setCfg=useCallback(d=>{setCfg_(d);save(“dp3-cfg”,d);},[]);
 function showToast(msg){setToast(msg);}
-async function tryCode(){if(!codeIn.trim()){setCodeErr("Please enter your unlock code.");return;}const h=await hashCode(codeIn);if(h===ELITE_HASH){setPro(true);save("dp3-elite",true);setPayStep("done");}else{setCodeErr("That code isn't correct. Check your receipt email from Stripe.");}}
-function copyMsg(text,key){if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{setCopied(key);showToast("Copied to clipboard!");});}else{setCopied(key);showToast("Copied to clipboard!");}}
-function logShift(){if(!shiftInput.tips&&!shiftInput.rating&&!shiftInput.deliveries)return;const entry={date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"}),time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),tips:parseFloat(shiftInput.tips)||0,rating:parseFloat(shiftInput.rating)||0,deliveries:parseInt(shiftInput.deliveries)||0,note:shiftInput.note.trim()};const updated=[entry,...shifts].slice(0,90);setShifts(updated);save("dp3-shifts",updated);setShiftInput({tips:"",rating:"",deliveries:"",note:""});showToast("Shift logged!");}
-function addJournal(){if(!journalInput.trim())return;const entry={text:journalInput.trim(),date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),time:new Date().toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})};const updated=[entry,...journal].slice(0,200);setJournal(updated);save("dp3-journal",updated);setJournalInput("");showToast("Entry saved!");}
-function togglePreShift(i){const updated=preShift.map((item,idx)=>idx===i?{...item,done:!item.done}:item);setPreShift(updated);save("dp3-preshift",updated);}
-function resetPreShift(){const updated=preShift.map(item=>({...item,done:false}));setPreShift(updated);save("dp3-preshift",updated);}
+async function tryCode(){if(!codeIn.trim()){setCodeErr(“Please enter your unlock code.”);return;}const h=await hashCode(codeIn);if(h===ELITE_HASH){setPro(true);save(“dp3-elite”,true);setPayStep(“done”);}else{setCodeErr(“That code isn’t correct. Check your receipt email from Stripe.”);}}
+function copyMsg(text,key){if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{setCopied(key);showToast(“Copied to clipboard!”);});}else{setCopied(key);showToast(“Copied to clipboard!”);}}
+function logShift(){if(!shiftInput.tips&&!shiftInput.rating&&!shiftInput.deliveries)return;const entry={date:new Date().toLocaleDateString(“en-US”,{month:“short”,day:“numeric”}),time:new Date().toLocaleTimeString(“en-US”,{hour:“numeric”,minute:“2-digit”}),tips:parseFloat(shiftInput.tips)||0,rating:parseFloat(shiftInput.rating)||0,deliveries:parseInt(shiftInput.deliveries)||0,note:shiftInput.note.trim()};const updated=[entry,…shifts].slice(0,90);setShifts(updated);save(“dp3-shifts”,updated);setShiftInput({tips:””,rating:””,deliveries:””,note:””});showToast(“Shift logged!”);}
+function addJournal(){if(!journalInput.trim())return;const entry={text:journalInput.trim(),date:new Date().toLocaleDateString(“en-US”,{month:“short”,day:“numeric”,year:“numeric”}),time:new Date().toLocaleTimeString(“en-US”,{hour:“numeric”,minute:“2-digit”})};const updated=[entry,…journal].slice(0,200);setJournal(updated);save(“dp3-journal”,updated);setJournalInput(””);showToast(“Entry saved!”);}
+function togglePreShift(i){const updated=preShift.map((item,idx)=>idx===i?{…item,done:!item.done}:item);setPreShift(updated);save(“dp3-preshift”,updated);}
+function resetPreShift(){const updated=preShift.map(item=>({…item,done:false}));setPreShift(updated);save(“dp3-preshift”,updated);}
 const trackLast7=shifts.slice(0,7);
 const trackAvgTips=trackLast7.length?(trackLast7.reduce((a,s)=>a+s.tips,0)/trackLast7.length).toFixed(2):null;
 const trackRated=trackLast7.filter(s=>s.rating>0);
 const trackAvgRating=trackRated.length?(trackRated.reduce((a,s)=>a+s.rating,0)/trackRated.length).toFixed(2):null;
 const trackDeliveries=trackLast7.reduce((a,s)=>a+s.deliveries,0);
 const trackTrendUp=shifts.length>=6&&(shifts.slice(0,3).reduce((a,s)=>a+s.tips,0)/3)>(shifts.slice(3,6).reduce((a,s)=>a+s.tips,0)/3);
-function toggleCheck(i){const updated=checks.map((c,idx)=>idx===i?{...c,done:!c.done}:c);setChecks(updated);if(defPlatform)save(`dp3-checks-${defPlatform}`,updated);}
-function selectPlatform(id){if(defPlatform===id){setDefPlatform(null);return;}setDefPlatform(id);setDefSection("habits");setAppealOpen(null);setAppealSub(null);load(`dp3-checks-${id}`,(PLATFORM_CHECKLISTS[id]||[]).map(c=>({...c,done:false}))).then(saved=>{setChecks(saved);});}
-function toggleFavTip(i){const next=new Set(favTips);next.has(i)?next.delete(i):next.add(i);setFavTips(next);save("dp3-fav-tips",[...next]);}
-function toggleFavTemplate(key){const next=new Set(favTemplates);next.has(key)?next.delete(key):next.add(key);setFavTemplates(next);save("dp3-fav-tpl",[...next]);}
-function addNote(){if(!noteInput.trim())return;const newNote={text:noteInput.trim(),date:new Date().toLocaleDateString()};const updated=[newNote,...notes].slice(0,50);setNotes(updated);save("dp3-notes",updated);setNoteInput("");}
-function deleteNote(i){const updated=notes.filter((_,idx)=>idx!==i);setNotes(updated);save("dp3-notes",updated);}
-function backupData(){const keys=["dp3-cfg","dp3-elite","dp3-intro-seen","dp3-fav-tips","dp3-fav-tpl","dp3-notes","dp3-shifts","dp3-journal","dp3-preshift","dp3-checks-doordash","dp3-checks-ubereats","dp3-checks-spark","dp3-checks-instacart"];const backup={version:1,date:new Date().toISOString(),data:{}};keys.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)backup.data[k]=v;});const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=`droppilot-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);showToast("Backup downloaded!");}
-function restoreData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const backup=JSON.parse(ev.target.result);if(!backup.data)throw new Error("Invalid backup file");Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));showToast("Backup restored! Reloading...");setTimeout(()=>window.location.reload(),1200);}catch{showToast("Could not read that file.");}};reader.readAsText(file);e.target.value="";}
-const filteredCats=templateSearch.trim()?MSG_CATS.map(cat=>({...cat,secs:cat.secs.filter(s=>s.h.toLowerCase().includes(templateSearch.toLowerCase())||s.msg.toLowerCase().includes(templateSearch.toLowerCase()))})).filter(cat=>cat.secs.length>0):MSG_CATS;
-if(!loaded)return(<div style={{background:C.bg,height:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,fontFamily:C.sans}}><div style={{fontSize:52,animation:"floatY 2s ease-in-out infinite"}}>🚗</div><div style={{color:C.amber,fontSize:17,fontWeight:800}}>Loading DropPilot...</div></div>);
-if(showIntro)return <IntroAnimation onDone={()=>{setShowIntro(false);save("dp3-intro-seen",true);}}/>;
+function toggleCheck(i){const updated=checks.map((c,idx)=>idx===i?{…c,done:!c.done}:c);setChecks(updated);if(defPlatform)save(`dp3-checks-${defPlatform}`,updated);}
+function selectPlatform(id){if(defPlatform===id){setDefPlatform(null);return;}setDefPlatform(id);setDefSection(“habits”);setAppealOpen(null);setAppealSub(null);load(`dp3-checks-${id}`,(PLATFORM_CHECKLISTS[id]||[]).map(c=>({…c,done:false}))).then(saved=>{setChecks(saved);});}
+function toggleFavTip(i){const next=new Set(favTips);next.has(i)?next.delete(i):next.add(i);setFavTips(next);save(“dp3-fav-tips”,[…next]);}
+function toggleFavTemplate(key){const next=new Set(favTemplates);next.has(key)?next.delete(key):next.add(key);setFavTemplates(next);save(“dp3-fav-tpl”,[…next]);}
+function addNote(){if(!noteInput.trim())return;const newNote={text:noteInput.trim(),date:new Date().toLocaleDateString()};const updated=[newNote,…notes].slice(0,50);setNotes(updated);save(“dp3-notes”,updated);setNoteInput(””);}
+function deleteNote(i){const updated=notes.filter((_,idx)=>idx!==i);setNotes(updated);save(“dp3-notes”,updated);}
+function backupData(){const keys=[“dp3-cfg”,“dp3-elite”,“dp3-intro-seen”,“dp3-fav-tips”,“dp3-fav-tpl”,“dp3-notes”,“dp3-shifts”,“dp3-journal”,“dp3-preshift”,“dp3-checks-doordash”,“dp3-checks-ubereats”,“dp3-checks-spark”,“dp3-checks-instacart”];const backup={version:1,date:new Date().toISOString(),data:{}};keys.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)backup.data[k]=v;});const blob=new Blob([JSON.stringify(backup,null,2)],{type:“application/json”});const url=URL.createObjectURL(blob);const a=document.createElement(“a”);a.href=url;a.download=`droppilot-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);showToast(“Backup downloaded!”);}
+function restoreData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const backup=JSON.parse(ev.target.result);if(!backup.data)throw new Error(“Invalid backup file”);Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));showToast(“Backup restored! Reloading…”);setTimeout(()=>window.location.reload(),1200);}catch{showToast(“Could not read that file.”);}};reader.readAsText(file);e.target.value=””;}
+const filteredCats=templateSearch.trim()?MSG_CATS.map(cat=>({…cat,secs:cat.secs.filter(s=>s.h.toLowerCase().includes(templateSearch.toLowerCase())||s.msg.toLowerCase().includes(templateSearch.toLowerCase()))})).filter(cat=>cat.secs.length>0):MSG_CATS;
+if(!loaded)return(<div style={{background:C.bg,height:“100vh”,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,gap:16,fontFamily:C.sans}}><div style={{fontSize:52,animation:“floatY 2s ease-in-out infinite”}}>🚗</div><div style={{color:C.amber,fontSize:17,fontWeight:800}}>Loading DropPilot…</div></div>);
+if(showIntro)return <IntroAnimation onDone={()=>{setShowIntro(false);save(“dp3-intro-seen”,true);}}/>;
 return(
+
 <div style={{background:C.bg,minHeight:"100vh",maxWidth:430,margin:"0 auto",fontFamily:C.sans,color:C.text,display:"flex",flexDirection:"column"}}>
 {toast&&<Toast msg={toast} onDone={()=>setToast(null)}/>}
 <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:60}}>
@@ -1036,7 +1056,7 @@ return(<button key={n.id} onClick={()=>changeTab(n.id)} aria-label={n.l} aria-cu
 </div>
 );
 }
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(ErrorBoundary,null,React.createElement(App)));
   </script>
 <script>
 if("serviceWorker" in navigator){
