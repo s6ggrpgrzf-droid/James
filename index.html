@@ -73,7 +73,24 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel" data-presets="react,env">
+  <script>
+    // Error trap - shows any JS/Babel errors visually instead of black screen
+    window.onerror = function(msg, src, line, col, err) {
+      document.getElementById('root').innerHTML = 
+        '<div style="background:#07080A;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;font-family:sans-serif;color:#EDF0F7;">' +
+        '<div style="font-size:40px;margin-bottom:16px;">⚠️</div>' +
+        '<div style="font-size:18px;font-weight:800;margin-bottom:12px;color:#F5A623;">JS Error</div>' +
+        '<div style="font-size:12px;color:#8B95A8;word-break:break-all;max-width:340px;text-align:center;line-height:1.6;">' + 
+        String(msg).slice(0,300) + '<br/><br/>Line: ' + line + '</div>' +
+        '<button onclick="localStorage.clear();location.reload()" style="margin-top:20px;background:#F5A623;border:none;border-radius:10px;padding:12px 24px;font-size:14px;font-weight:800;cursor:pointer;color:#000;">Reset & Reload</button>' +
+        '</div>';
+      return true;
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      window.onerror(e.reason, '', 0, 0, e.reason);
+    });
+  </script>
+  <script type="text/babel" data-presets="react">
 const {useState,useEffect,useCallback,useRef}=React;
 const LATEST_UPDATE_ID="2025-01-001";
 const UPDATES=[{id:"2025-01-001",date:"Jan 2025",title:"Backup & Restore + Secure Paywall",items:["Download a backup of your data any time from Settings","Restore your data on a new device in seconds","Paywall is now more secure — unlock code can no longer be found in DevTools","Settings now has a visible gear button in the top right"]}];
