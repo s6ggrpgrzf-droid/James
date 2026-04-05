@@ -90,27 +90,46 @@
       window.onerror(e.reason, '', 0, 0, e.reason);
     });
   </script>
-  <script type="text/babel" data-presets="react,env">
+    <script>
+var ELITE_HASH = "9967509c09c9247fa513abbf2e330af4874242c92d0a0f8ddd1082894c45d0b3";
+function load(k, fb) {
+  return Promise.resolve().then(function() {
+    try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; }
+    catch(e) { return fb; }
+  });
+}
+function save(k, v) {
+  try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {}
+}
+function hashCode(s) {
+  var b = new TextEncoder().encode(s.trim().toUpperCase());
+  return crypto.subtle.digest("SHA-256", b).then(function(h) {
+    return Array.from(new Uint8Array(h)).map(function(x){ return x.toString(16).padStart(2,"0"); }).join("");
+  });
+}
+  </script>
+<script type="text/babel" data-presets="react">
+
 // Error display setup - runs first
 (function() {
-  window.__dp_errors = [];
-  var origOnError = window.onerror;
-  window.onerror = function(msg, src, line, col, err) {
-    var root = document.getElementById('root');
-    if (root) {
-      root.innerHTML = '<div style="background:#07080A;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;font-family:sans-serif;color:white;">' +
-        '<div style="font-size:40px;margin-bottom:16px">⚠️</div>' +
-        '<div style="font-size:16px;font-weight:800;color:#F5A623;margin-bottom:12px">Runtime Error</div>' +
-        '<pre style="font-size:11px;color:#aaa;max-width:340px;white-space:pre-wrap;word-break:break-all;text-align:left">' +
-        String(msg) + '\nLine: ' + line + '\nSrc: ' + String(src).slice(-60) + 
-        '\nStack: ' + (err && err.stack ? String(err.stack).slice(0,300) : 'none') +
-        '</pre>' +
-        '<button onclick="localStorage.clear();location.reload()" style="margin-top:16px;background:#F5A623;border:none;border-radius:10px;padding:12px 24px;font-weight:800;cursor:pointer">Reset</button>' +
-        '</div>';
-    }
-    if (origOnError) return origOnError.apply(this, arguments);
-    return true;
-  };
+window.__dp_errors = [];
+var origOnError = window.onerror;
+window.onerror = function(msg, src, line, col, err) {
+var root = document.getElementById(‘root’);
+if (root) {
+root.innerHTML = ‘<div style="background:#07080A;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;font-family:sans-serif;color:white;">’ +
+‘<div style="font-size:40px;margin-bottom:16px">⚠️</div>’ +
+‘<div style="font-size:16px;font-weight:800;color:#F5A623;margin-bottom:12px">Runtime Error</div>’ +
+‘<pre style="font-size:11px;color:#aaa;max-width:340px;white-space:pre-wrap;word-break:break-all;text-align:left">’ +
+String(msg) + ’\nLine: ’ + line + ’\nSrc: ’ + String(src).slice(-60) +
+’\nStack: ’ + (err && err.stack ? String(err.stack).slice(0,300) : ‘none’) +
+‘</pre>’ +
+‘<button onclick="localStorage.clear();location.reload()" style="margin-top:16px;background:#F5A623;border:none;border-radius:10px;padding:12px 24px;font-weight:800;cursor:pointer">Reset</button>’ +
+‘</div>’;
+}
+if (origOnError) return origOnError.apply(this, arguments);
+return true;
+};
 })();
 
 // Sanity checks - these alert us if data.js didn’t load
@@ -316,6 +335,8 @@ return(
 <div style={{flex:1,background:"rgba(255,255,255,0.07)",borderRadius:99,height:4,overflow:"hidden",marginLeft:2}}><div style={{height:"100%",width:`${progress}%`,background:`linear-gradient(90deg,${vc},#fff)`,borderRadius:99,transition:"width 0.1s linear"}}/></div>
 </div></div></div>);
 }
+</script>
+<script type="text/babel" data-presets="react">
 function App(){
 const[tab,setTab]=useState("tips");
 const[navPop,setNavPop]=useState(null);
@@ -789,7 +810,8 @@ return(<button key={n.id} onClick={()=>changeTab(n.id)} aria-label={n.l} aria-cu
 );
 }
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(ErrorBoundary,null,React.createElement(App)));
-  </script>
+
+</script>
 <script>
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
