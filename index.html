@@ -1,121 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DropPilot</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DropPilot</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet"/>
 
-  <style>
-    body {
-      margin: 0;
-      background: #07080A;
-      color: #fff;
-      font-family: "Outfit", sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-    }
+<style>
+body {
+  margin:0;
+  background:#07080A;
+  color:#fff;
+  font-family:"Outfit",sans-serif;
+}
 
-    .card {
-      padding: 30px;
-      border-radius: 16px;
-      background: #111317;
-      box-shadow: 0 0 30px rgba(0,0,0,0.5);
-      max-width: 400px;
-      width: 90%;
-    }
+.container {
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+}
 
-    h1 {
-      margin: 10px 0;
-    }
+.card {
+  background:#111317;
+  padding:20px;
+  border-radius:14px;
+  margin-top:15px;
+}
 
-    button {
-      margin-top: 20px;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 10px;
-      background: #F5A623;
-      color: #000;
-      font-weight: 600;
-      cursor: pointer;
-    }
+input, textarea {
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+  border:none;
+}
 
-    input {
-      margin-top: 15px;
-      padding: 10px;
-      width: 100%;
-      border-radius: 8px;
-      border: none;
-    }
-  </style>
+button {
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#F5A623;
+  color:#000;
+  font-weight:600;
+}
+
+.tabs {
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+}
+
+.tab {
+  flex:1;
+  text-align:center;
+  padding:10px;
+  cursor:pointer;
+  opacity:.6;
+}
+
+.active {
+  opacity:1;
+  border-bottom:2px solid #F5A623;
+}
+</style>
 </head>
 
 <body>
-  <div id="root"></div>
+<div id="root"></div>
 
-  <!-- React (no Babel needed) -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-  <script>
-    const e = React.createElement;
-    const { useState, useEffect } = React;
+<script>
+const e = React.createElement;
+const { useState, useEffect } = React;
 
-    function App() {
-      const [loaded, setLoaded] = useState(false);
-      const [code, setCode] = useState("");
-      const [unlocked, setUnlocked] = useState(false);
-      const [error, setError] = useState("");
+const ACCESS_CODE = "DROP123";
 
-      const ACCESS_CODE = "DROP123"; // change this
+const TIPS = [
+  "Stack orders during peak hours",
+  "Avoid low-tip zones",
+  "Track your best times to drive",
+  "Be polite in messages = better tips"
+];
 
-      useEffect(() => {
-        setLoaded(true);
-      }, []);
+function App() {
+  const [code,setCode] = useState("");
+  const [unlocked,setUnlocked] = useState(false);
+  const [tab,setTab] = useState("learn");
 
-      function handleUnlock() {
-        if (code.trim() === ACCESS_CODE) {
-          setUnlocked(true);
-          setError("");
-        } else {
-          setError("Invalid code");
-        }
-      }
+  const [notes,setNotes] = useState([]);
+  const [noteInput,setNoteInput] = useState("");
 
-      if (!loaded) {
-        return e("div", null, "Loading...");
-      }
+  const [journal,setJournal] = useState("");
+  const [backup,setBackup] = useState("");
 
-      if (!unlocked) {
-        return e("div", { className: "card" },
-          e("div", { style: { fontSize: 40 } }, "🚗"),
-          e("h1", null, "DropPilot"),
-          e("p", null, "Enter access code"),
-          e("input", {
-            value: code,
-            onChange: (ev) => setCode(ev.target.value),
-            placeholder: "Enter code"
-          }),
-          error && e("p", { style: { color: "red" } }, error),
-          e("button", { onClick: handleUnlock }, "Unlock")
-        );
-      }
+  // Load saved data
+  useEffect(()=>{
+    const savedNotes = localStorage.getItem("notes");
+    const savedJournal = localStorage.getItem("journal");
 
-      return e("div", { className: "card" },
-        e("div", { style: { fontSize: 40 } }, "🚗"),
-        e("h1", null, "DropPilot"),
-        e("p", null, "App is running successfully."),
-        e("button", {
-          onClick: () => alert("Next step: adding your full features back cleanly.")
-        }, "Continue")
-      );
+    if(savedNotes) setNotes(JSON.parse(savedNotes));
+    if(savedJournal) setJournal(savedJournal);
+  },[]);
+
+  // Save data
+  useEffect(()=>{
+    localStorage.setItem("notes",JSON.stringify(notes));
+  },[notes]);
+
+  useEffect(()=>{
+    localStorage.setItem("journal",journal);
+  },[journal]);
+
+  function unlock(){
+    if(code === ACCESS_CODE){
+      setUnlocked(true);
+    } else {
+      alert("Invalid code");
     }
+  }
 
-    ReactDOM.createRoot(document.getElementById("root")).render(e(App));
-  </script>
+  function addNote(){
+    if(!noteInput) return;
+    setNotes([...notes,noteInput]);
+    setNoteInput("");
+  }
+
+  function exportData(){
+    const data = JSON.stringify({notes,journal});
+    setBackup(data);
+  }
+
+  function importData(){
+    try{
+      const parsed = JSON.parse(backup);
+      setNotes(parsed.notes || []);
+      setJournal(parsed.journal || "");
+      alert("Restored!");
+    }catch{
+      alert("Invalid backup");
+    }
+  }
+
+  if(!unlocked){
+    return e("div",{className:"container"},
+      e("div",{className:"card"},
+        e("h2",null,"🚗 DropPilot"),
+        e("p",null,"Enter access code"),
+        e("input",{value:code,onChange:(v)=>setCode(v.target.value)}),
+        e("button",{onClick:unlock},"Unlock")
+      )
+    );
+  }
+
+  return e("div",{className:"container"},
+
+    // Tabs
+    e("div",{className:"tabs"},
+      ["learn","scripts","track","settings"].map(t=>
+        e("div",{
+          className:"tab "+(tab===t?"active":""),
+          onClick:()=>setTab(t)
+        },t.toUpperCase())
+      )
+    ),
+
+    // LEARN
+    tab==="learn" && e("div",{className:"card"},
+      e("h3",null,"Tips"),
+      TIPS.map(t=>e("p",{key:t},"• "+t))
+    ),
+
+    // SCRIPTS
+    tab==="scripts" && e("div",{className:"card"},
+      e("h3",null,"Messages"),
+      e("p",null,"Hey! I'm on the way with your order 🚗"),
+      e("p",null,"Just dropped it off — enjoy! 🙌"),
+      e("p",null,"Restaurant is a bit busy, thanks for your patience!")
+    ),
+
+    // TRACK
+    tab==="track" && e("div",{className:"card"},
+      e("h3",null,"Notes"),
+      e("input",{
+        value:noteInput,
+        onChange:(v)=>setNoteInput(v.target.value),
+        placeholder:"Add note"
+      }),
+      e("button",{onClick:addNote},"Add"),
+      notes.map((n,i)=>e("p",{key:i},"• "+n)),
+
+      e("h3",null,"Journal"),
+      e("textarea",{
+        value:journal,
+        onChange:(v)=>setJournal(v.target.value),
+        rows:5
+      })
+    ),
+
+    // SETTINGS
+    tab==="settings" && e("div",{className:"card"},
+      e("h3",null,"Backup"),
+      e("button",{onClick:exportData},"Export"),
+      e("textarea",{value:backup,onChange:(v)=>setBackup(v.target.value)}),
+      e("button",{onClick:importData},"Import")
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(e(App));
+</script>
 </body>
 </html>
