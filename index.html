@@ -1,217 +1,965 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DropPilot</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet"/>
-
-<style>
-body {
-  margin:0;
-  background:#07080A;
-  color:#fff;
-  font-family:"Outfit",sans-serif;
-}
-
-.container {
-  max-width:500px;
-  margin:auto;
-  padding:20px;
-}
-
-.card {
-  background:#111317;
-  padding:20px;
-  border-radius:14px;
-  margin-top:15px;
-}
-
-input, textarea {
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  border:none;
-}
-
-button {
-  margin-top:10px;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  background:#F5A623;
-  color:#000;
-  font-weight:600;
-}
-
-.tabs {
-  display:flex;
-  justify-content:space-between;
-  margin-top:20px;
-}
-
-.tab {
-  flex:1;
-  text-align:center;
-  padding:10px;
-  cursor:pointer;
-  opacity:.6;
-}
-
-.active {
-  opacity:1;
-  border-bottom:2px solid #F5A623;
-}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="theme-color" content="#07080A"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icon-192.png"/>
+  <title>DropPilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
+  <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body,#root{height:100%;background:#07080A;}
+body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;width:100%;}
+#root{width:100%;}
+input,textarea{font-family:inherit;}
+input::placeholder{color:#6B7A8D;}
+input:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 3px rgba(245,166,35,0.15);}
+textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 3px rgba(245,166,35,0.15);}
+::-webkit-scrollbar{display:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 18px rgba(245,166,35,0.3)}50%{box-shadow:0 0 36px rgba(245,166,35,0.65)}}
+@keyframes borderPulse{0%,100%{border-color:rgba(245,166,35,0.35)}50%{border-color:rgba(245,166,35,0.8)}}
+@keyframes iUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes iPop{from{opacity:0;transform:scale(0.65)}to{opacity:1;transform:scale(1)}}
+@keyframes vUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes vPop{from{opacity:0;transform:scale(0.65)}to{opacity:1;transform:scale(1)}}
+@keyframes vFade{from{opacity:0}to{opacity:1}}
+@keyframes trainPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0)}50%{box-shadow:0 0 0 8px rgba(245,166,35,0.2),0 0 28px rgba(245,166,35,0.4)}}
+@keyframes trainFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,-50%) scale(0.85)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes toastOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(0.85)}}
+@keyframes tabSlide{from{opacity:0;transform:translateY(18px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmerSlide{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes navPop{0%{transform:scale(1)}40%{transform:scale(1.28)}70%{transform:scale(0.92)}100%{transform:scale(1)}}
+@keyframes lockShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes defenderPulse{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0)}50%{box-shadow:0 0 0 10px rgba(139,92,246,0.18),0 0 32px rgba(139,92,246,0.35)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+.page{animation:tabSlide 0.28s cubic-bezier(0.16,1,0.3,1) forwards;}
+.float{animation:floatY 3.5s ease-in-out infinite;}
+.glow{animation:glowPulse 3s ease-in-out infinite;}
+.border-pulse{animation:borderPulse 3s ease-in-out infinite;}
+.iup{animation:iUp 0.5s cubic-bezier(0.16,1,0.3,1) both;}
+.ipop{animation:iPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;}
+.id1{animation-delay:0.15s;opacity:0;}.id2{animation-delay:0.35s;opacity:0;}.id3{animation-delay:0.55s;opacity:0;}
+.card-in{animation:cardIn 0.35s cubic-bezier(0.16,1,0.3,1) both;}
+.c0{animation-delay:0.04s;opacity:0}.c1{animation-delay:0.10s;opacity:0}.c2{animation-delay:0.16s;opacity:0}.c3{animation-delay:0.22s;opacity:0}.c4{animation-delay:0.28s;opacity:0}.c5{animation-delay:0.34s;opacity:0}.c6{animation-delay:0.40s;opacity:0}.c7{animation-delay:0.46s;opacity:0}.c8{animation-delay:0.52s;opacity:0}.c9{animation-delay:0.58s;opacity:0}
+button{transition:all 0.14s cubic-bezier(0.16,1,0.3,1);}
+button:active{opacity:0.82;transform:scale(0.96);}
+.tip{transition:border-color 0.18s,transform 0.14s;}
+.tip:active{transform:scale(0.99);}
+.train-pulse{animation:trainPulse 2.2s ease-in-out infinite;}
+.train-float{animation:trainFloat 3s ease-in-out infinite;}
+.nav-pop{animation:navPop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+.lock-shake{animation:lockShake 0.5s ease;}
+.defender-pulse{animation:defenderPulse 2.4s ease-in-out infinite;}
+.shimmer-locked{background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,0.04) 50%,transparent 70%);background-size:200% 100%;animation:shimmerSlide 2.2s ease-in-out infinite;}
+  </style>
 </head>
-
 <body>
-<div id="root"></div>
+  <div id="root"></div>
+  <script src="data.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" data-presets="react,env">
+const {useState,useEffect,useCallback,useRef}=React;
 
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+const LATEST_UPDATE_ID=“2025-02-001”;
+const UPDATES=[{id:“2025-02-001”,date:“Feb 2025”,title:“Track Tab + Backup & Restore”,items:[
+“New Track tab — log shifts, tips, and ratings to see your progress”,
+“Pre-shift checklist — make sure you’re ready before every shift”,
+“Shift journal — record what worked and what didn’t”,
+“Backup & restore your data any time from Settings”,
+]}];
+
+// FIXED: catch(e) not catch{} — Babel standalone requires the error param
+async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch(e){return fb;}}
+async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+
+function Toast({msg,onDone}){
+const[out,setOut]=useState(false);
+useEffect(()=>{
+const t1=setTimeout(()=>setOut(true),1600);
+const t2=setTimeout(()=>onDone(),2000);
+return()=>{clearTimeout(t1);clearTimeout(t2);};
+},[]);
+return(
+<div style={{position:“fixed”,top:“50%”,left:“50%”,transform:“translate(-50%,-50%)”,zIndex:999,pointerEvents:“none”,
+background:“rgba(16,185,129,0.95)”,borderRadius:16,padding:“14px 24px”,
+fontSize:14,fontWeight:800,color:”#000”,fontFamily:C.sans,
+animation:out?“toastOut 0.4s ease forwards”:“toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards”,
+boxShadow:“0 8px 32px rgba(16,185,129,0.5)”,whiteSpace:“nowrap”}}>
+✓ {msg}
+</div>
+);
+}
+
+function IntroAnimation({onDone}){
+const[scene,setScene]=useState(0);
+const[progress,setProgress]=useState(0);
+const TOTAL=32000;
+const SCENES=[{id:0,start:0},{id:1,start:4500},{id:2,start:9500},{id:3,start:14500},{id:4,start:19000},{id:5,start:23500},{id:6,start:28000}];
+useEffect(()=>{
+const t0=Date.now();
+const tick=()=>{
+const elapsed=Date.now()-t0;
+setProgress(Math.min(elapsed/TOTAL*100,100));
+for(let i=SCENES.length-1;i>=0;i–){if(elapsed>=SCENES[i].start){setScene(SCENES[i].id);break;}}
+if(elapsed<TOTAL){requestAnimationFrame(tick);}else{setTimeout(onDone,400);}
+};
+requestAnimationFrame(tick);
+},[]);
+const A=C.amber,G=C.green,B=C.blue,T=C.teal,P=C.purple;
+const ss=(n)=>({position:“absolute”,inset:0,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,padding:“36px 28px”,opacity:scene===n?1:0,transition:“opacity 0.5s ease”,pointerEvents:scene===n?“auto”:“none”});
+const Divider=({color=A})=><div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${color},#fff)`,margin:“0 auto 16px”,opacity:0,animation:“iUp 0.4s 0.35s cubic-bezier(0.16,1,0.3,1) both”}}/>;
+return(
+<div style={{position:“fixed”,inset:0,background:C.bg,zIndex:999,fontFamily:C.sans,color:C.text,overflow:“hidden”,maxWidth:430,margin:“0 auto”}}>
+<div style={{position:“absolute”,top:0,left:0,height:3,width:`${progress}%`,background:`linear-gradient(90deg,${A},#ffd280)`,boxShadow:`0 0 10px rgba(245,166,35,0.7)`,transition:“width 0.08s linear”,zIndex:10}}/>
+<button onClick={onDone} style={{position:“absolute”,top:16,right:16,background:“rgba(255,255,255,0.07)”,border:“1px solid rgba(255,255,255,0.09)”,borderRadius:20,padding:“6px 14px”,color:“rgba(255,255,255,0.35)”,fontSize:13,fontWeight:700,cursor:“pointer”,zIndex:10,fontFamily:C.sans}}>Skip</button>
+<div style={ss(0)}>
+<div style={{position:“absolute”,top:-60,right:-40,width:240,height:240,borderRadius:“50%”,background:“radial-gradient(circle,rgba(245,166,35,0.15),transparent 68%)”,pointerEvents:“none”}}/>
+<div className=“ipop” style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:38,marginBottom:22,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
+<div className=“iup id1” style={{fontSize:40,fontWeight:900,letterSpacing:”-2px”,background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:6,textAlign:“center”}}>DropPilot</div>
+<div className=“iup id1” style={{fontSize:12,color:“rgba(255,255,255,0.3)”,letterSpacing:“4px”,fontWeight:700,textTransform:“uppercase”,marginBottom:24}}>Driver Command Center</div>
+<Divider/>
+<div className=“iup id2” style={{fontSize:16,color:“rgba(255,255,255,0.6)”,textAlign:“center”,lineHeight:1.8,fontWeight:500}}>Everything you need to earn more,<br/>protect your account, and deliver<br/>with confidence — every shift.</div>
+</div>
+<div style={ss(1)}>
+<div className=“iup” style={{fontSize:12,fontWeight:800,color:“rgba(245,166,35,0.7)”,letterSpacing:2.5,textTransform:“uppercase”,marginBottom:18}}>the gap most drivers never close</div>
+<div className=“iup id1” style={{fontSize:30,fontWeight:900,lineHeight:1.2,textAlign:“center”,letterSpacing:”-0.8px”,background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:20}}>Driving well<br/>doesn’t automatically<br/>mean earning well.</div>
+<Divider/>
+<div className=“iup id2” style={{display:“flex”,flexDirection:“column”,gap:10,width:“100%”}}>
+{[[“Your rating decides which orders you even see.”,“rgba(244,63,94,0.1)”,“rgba(244,63,94,0.28)”],[“Tips are won or lost in the last 10 seconds at the door.”,“rgba(245,166,35,0.08)”,“rgba(245,166,35,0.25)”],[“One complaint — real or false — can cost you your account.”,“rgba(244,63,94,0.1)”,“rgba(244,63,94,0.28)”]].map(([t,bg,border],i)=>(
+<div key={i} className=“iup” style={{padding:“12px 15px”,background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.3+i*0.14}s`,opacity:0}}>
+<div style={{fontSize:13,color:“rgba(255,255,255,0.8)”,lineHeight:1.55,fontWeight:600}}>{t}</div>
+</div>
+))}
+</div>
+</div>
+<div style={ss(2)}>
+<div className=“iup” style={{fontSize:12,fontWeight:800,color:“rgba(245,166,35,0.7)”,letterSpacing:2.5,textTransform:“uppercase”,marginBottom:18}}>six sections. one toolkit.</div>
+<div className=“iup id1” style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:“center”,letterSpacing:”-0.6px”,background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:20}}>Everything you need<br/>to earn more on<br/>every single shift.</div>
+<Divider/>
+<div className=“iup id2” style={{display:“flex”,flexDirection:“column”,gap:8,width:“100%”}}>
+{[[“⭐”,A,“Earn”,“Tips, psychology, and habits that raise your rating”],[“💬”,B,“Scripts”,“Word-for-word messages for every situation”],[“📊”,G,“Track”,“Log tips, ratings, and shifts — see your progress”],[“📖”,T,“Basics”,“New to gig work? Everything explained from scratch”],[“🛡️”,P,“Defend”,“Protect your account when things go wrong”],[“🎓”,A,“Training”,“Short videos on what actually earns more money”]].map(([e,col,label,desc],i)=>(
+<div key={i} className=“iup” style={{display:“flex”,alignItems:“center”,gap:12,padding:“10px 14px”,background:“rgba(255,255,255,0.04)”,border:“1px solid rgba(255,255,255,0.07)”,borderRadius:12,animationDelay:`${0.25+i*0.1}s`,opacity:0}}>
+<div style={{width:32,height:32,borderRadius:9,background:`${col}15`,border:`1px solid ${col}30`,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:16,flexShrink:0}}>{e}</div>
+<div style={{flex:1,minWidth:0}}><div style={{fontSize:13,fontWeight:800,color:col,marginBottom:1}}>{label}</div><div style={{fontSize:11,color:“rgba(255,255,255,0.45)”,lineHeight:1.3}}>{desc}</div></div>
+</div>
+))}
+</div>
+</div>
+<div style={ss(3)}>
+<div className=“iup” style={{fontSize:12,fontWeight:800,color:“rgba(6,182,212,0.7)”,letterSpacing:2.5,textTransform:“uppercase”,marginBottom:18}}>built for every driver</div>
+<div className=“iup id1” style={{fontSize:28,fontWeight:900,lineHeight:1.25,textAlign:“center”,letterSpacing:”-0.8px”,background:`linear-gradient(135deg,#fff 35%,${T})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:20}}>Whether you’ve been<br/>doing this for years<br/>or just got started.</div>
+<Divider color={T}/>
+<div className=“iup id2” style={{display:“flex”,flexDirection:“column”,gap:9,width:“100%”}}>
+{[[“🧓”,“New to gig work”,“The Basics section explains everything from scratch. No experience needed.”,“rgba(6,182,212,0.08)”,“rgba(6,182,212,0.22)”],[“🚗”,“Already delivering”,“Sharpen your habits, earn more tips, protect your account.”,“rgba(245,166,35,0.08)”,“rgba(245,166,35,0.22)”],[“💪”,“Top earner”,“Use the deep psychology and science sections to stay elite.”,“rgba(16,185,129,0.08)”,“rgba(16,185,129,0.22)”]].map(([e,title,desc,bg,border],i)=>(
+<div key={i} className=“iup” style={{display:“flex”,alignItems:“flex-start”,gap:12,padding:“12px 14px”,background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
+<span style={{fontSize:20,flexShrink:0}}>{e}</span>
+<div><div style={{fontSize:13,fontWeight:800,color:C.text,marginBottom:2}}>{title}</div><div style={{fontSize:12,color:“rgba(255,255,255,0.5)”,lineHeight:1.55}}>{desc}</div></div>
+</div>
+))}
+</div>
+</div>
+<div style={ss(4)}>
+<div className=“iup” style={{fontSize:12,fontWeight:800,color:“rgba(245,166,35,0.7)”,letterSpacing:2.5,textTransform:“uppercase”,marginBottom:18}}>elite access — $10 one time</div>
+<div className=“iup id1” style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:“center”,letterSpacing:”-0.8px”,background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
+<Divider color={G}/>
+<div className=“iup id2” style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:8,width:“100%”}}>
+{[[“📖”,T,“Basics Guide”],[“💬”,B,“30+ Scripts”],[“📊”,G,“Tip Tracker”],[“🛡️”,P,“Appeal Letters”],[“🎓”,A,“Training Videos”],[“🧠”,G,“Psychology”]].map(([e,col,label],i)=>(
+<div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:“11px 12px”,display:“flex”,alignItems:“center”,gap:8}}>
+<span style={{fontSize:18}}>{e}</span><span style={{fontSize:12,fontWeight:700,color:col}}>{label}</span>
+</div>
+))}
+</div>
+</div>
+<div style={ss(5)}>
+<div className=“iup” style={{fontSize:12,fontWeight:800,color:“rgba(16,185,129,0.7)”,letterSpacing:2.5,textTransform:“uppercase”,marginBottom:18}}>the result</div>
+<div className=“ipop” style={{fontSize:52,marginBottom:16,display:“block”,textAlign:“center”}}>⭐</div>
+<div className=“iup id1” style={{fontSize:30,fontWeight:900,lineHeight:1.15,textAlign:“center”,letterSpacing:”-1px”,background:`linear-gradient(135deg,#fff 30%,${G})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:20}}>Higher ratings.<br/>Bigger tips.<br/>A protected account.<br/>More money.</div>
+<Divider color={G}/>
+<div className=“iup id2” style={{display:“grid”,gridTemplateColumns:“1fr 1fr”,gap:8,width:“100%”}}>
+{[[“⭐”,“Better Rating”,G],[“💰”,“More Tips”,A],[“🛡️”,“Account Safe”,P],[“📈”,“More Income”,G]].map(([e,t,col],i)=>(
+<div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:“12px 10px”,textAlign:“center”}}>
+<div style={{fontSize:22,marginBottom:4}}>{e}</div><div style={{fontSize:12,fontWeight:700,color:col}}>{t}</div>
+</div>
+))}
+</div>
+</div>
+<div style={ss(6)}>
+<div style={{position:“absolute”,top:-80,left:“50%”,transform:“translateX(-50%)”,width:300,height:300,borderRadius:“50%”,background:`radial-gradient(circle,rgba(245,166,35,0.18),transparent 65%)`,pointerEvents:“none”}}/>
+<div style={{position:“absolute”,top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${A}70,transparent)`}}/>
+<div style={{position:“relative”,zIndex:1,textAlign:“center”,width:“100%”}}>
+<div className=“ipop” style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:38,margin:“0 auto 18px”,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
+<div className=“iup id1” style={{fontSize:40,fontWeight:900,letterSpacing:”-2px”,background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,marginBottom:4,textAlign:“center”}}>DropPilot</div>
+<div className=“iup id1” style={{fontSize:12,color:“rgba(255,255,255,0.28)”,letterSpacing:“4px”,fontWeight:700,textTransform:“uppercase”,marginBottom:22}}>Driver Command Center</div>
+<div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:“0 auto 22px”,animation:“iUp 0.4s 0.28s both”,opacity:0}}/>
+<div className=“iup id2” style={{display:“flex”,flexDirection:“column”,gap:7,marginBottom:26,width:“100%”}}>
+{[[“⭐”,“Earn”,A,“Free”],[“💬”,“Scripts”,B,“Elite”],[“📊”,“Track”,G,“Elite”],[“📖”,“Basics”,T,“Elite”],[“🛡️”,“Defend”,P,“Elite”],[“🎓”,“Training”,A,“Elite”]].map(([e,t,col,badge],i)=>(
+<div key={i} className=“iup” style={{display:“flex”,alignItems:“center”,gap:12,padding:“9px 14px”,background:“rgba(255,255,255,0.04)”,borderRadius:12,border:“1px solid rgba(255,255,255,0.07)”,animationDelay:`${0.25+i*0.09}s`,opacity:0}}>
+<span style={{fontSize:16,flexShrink:0}}>{e}</span>
+<span style={{fontSize:13,color:“rgba(255,255,255,0.75)”,fontWeight:600,flex:1}}>{t}</span>
+<span style={{fontSize:11,fontWeight:800,padding:“3px 9px”,borderRadius:6,background:badge===“Free”?“rgba(16,185,129,0.15)”:“rgba(245,166,35,0.12)”,color:badge===“Free”?G:A,border:`1px solid ${badge==="Free"?"rgba(16,185,129,0.3)":"rgba(245,166,35,0.25)"}`}}>{badge}</span>
+</div>
+))}
+</div>
+<div className="iup id3">
+<button onClick={onDone} style={{background:`linear-gradient(135deg,${A},#C8820A)`,border:“none”,borderRadius:50,padding:“15px 44px”,fontSize:16,fontWeight:900,color:”#000”,cursor:“pointer”,fontFamily:C.sans,boxShadow:`0 10px 34px rgba(245,166,35,0.5)`,letterSpacing:”-0.3px”}}>Let’s Go →</button>
+</div>
+<div className=“iup” style={{fontSize:12,color:“rgba(255,255,255,0.2)”,marginTop:14,animationDelay:“0.75s”,opacity:0}}>Free to explore · Elite access $10 · Lifetime · Free updates forever</div>
+</div>
+</div>
+</div>
+);
+}
+
+function VideoPlayer({video}){
+const[scene,setScene]=useState(0);
+const[progress,setProgress]=useState(0);
+const[playing,setPlaying]=useState(false);
+const elapsed=useRef(0);
+const rafRef=useRef(null);
+const t0Ref=useRef(null);
+useEffect(()=>{restart(false);return()=>{if(rafRef.current)cancelAnimationFrame(rafRef.current);};},[video.id]);
+function restart(autoplay=true){
+if(rafRef.current)cancelAnimationFrame(rafRef.current);
+elapsed.current=0;t0Ref.current=null;
+setScene(0);setProgress(0);setPlaying(autoplay);
+if(autoplay)rafRef.current=requestAnimationFrame(tick);
+}
+function tick(ts){
+if(!t0Ref.current)t0Ref.current=ts;
+elapsed.current=ts-t0Ref.current;
+setProgress(Math.min(elapsed.current/video.dur*100,100));
+let sc=0;
+for(let i=video.scenes.length-1;i>=0;i–){if(elapsed.current>=video.scenes[i].t){sc=i;break;}}
+setScene(sc);
+if(elapsed.current<video.dur){rafRef.current=requestAnimationFrame(tick);}else{setPlaying(false);}
+}
+function togglePlay(){
+if(!playing&&elapsed.current>=video.dur){restart(true);return;}
+if(playing){cancelAnimationFrame(rafRef.current);setPlaying(false);}
+else{const saved=elapsed.current;t0Ref.current=null;rafRef.current=requestAnimationFrame(ts=>{t0Ref.current=ts-saved;tick(ts);});setPlaying(true);}
+}
+function jumpToScene(si){
+if(rafRef.current)cancelAnimationFrame(rafRef.current);
+const targetMs=video.scenes[si].t;
+elapsed.current=targetMs;t0Ref.current=null;
+setScene(si);setProgress(targetMs/video.dur*100);
+const saved=targetMs;
+rafRef.current=requestAnimationFrame(ts=>{t0Ref.current=ts-saved;tick(ts);});
+setPlaying(true);
+}
+const sc=video.scenes[scene];const vc=video.color;const A=”#F5A623”,G=”#10B981”,R=”#F43F5E”;
+return(
+<div style={{position:“relative”,borderRadius:22,overflow:“hidden”,background:”#07080A”,border:`1px solid ${vc}30`}}>
+<div style={{position:“absolute”,top:0,left:0,height:3,width:`${progress}%`,background:`linear-gradient(90deg,${vc},#fff)`,boxShadow:`0 0 8px ${vc}`,transition:“width 0.1s linear”,zIndex:10}}/>
+<div style={{minHeight:320,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,padding:“28px 22px”,position:“relative”,overflow:“hidden”}}>
+<div style={{position:“absolute”,top:-40,right:-30,width:180,height:180,borderRadius:“50%”,background:`radial-gradient(circle,${vc}20,transparent 65%)`,pointerEvents:“none”}}/>
+<div style={{position:“absolute”,bottom:-40,left:-20,width:140,height:140,borderRadius:“50%”,background:`radial-gradient(circle,${vc}15,transparent 65%)`,pointerEvents:“none”}}/>
+<div key={`${video.id}-${scene}`} style={{position:“relative”,zIndex:1,width:“100%”,display:“flex”,flexDirection:“column”,alignItems:“center”,gap:10}}>
+{sc.tag&&<div style={{fontSize:12,fontWeight:800,color:`${vc}CC`,letterSpacing:2,textTransform:“uppercase”,animation:“vUp 0.4s cubic-bezier(0.16,1,0.3,1) both”}}>{sc.tag}</div>}
+{sc.emoji&&!sc.stat&&<div style={{fontSize:sc.hed?48:64,animation:“vPop 0.4s 0.1s cubic-bezier(0.34,1.56,0.64,1) both”,opacity:0}}>{sc.emoji}</div>}
+{sc.stat&&<div style={{fontSize:72,fontWeight:900,letterSpacing:”-3px”,color:G,lineHeight:1,animation:“vPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both”}}>{sc.stat}</div>}
+{sc.statSub&&<div style={{fontSize:18,fontWeight:800,color:“rgba(255,255,255,0.8)”,animation:“vUp 0.4s 0.15s both”,opacity:0}}>{sc.statSub}</div>}
+{sc.hed&&<div style={{fontSize:sc.hed.length>30?24:30,fontWeight:900,lineHeight:1.2,textAlign:“center”,letterSpacing:”-0.8px”,background:`linear-gradient(135deg,#fff 30%,${vc})`,WebkitBackgroundClip:“text”,WebkitTextFillColor:“transparent”,whiteSpace:“pre-line”,animation:“vUp 0.5s 0.15s cubic-bezier(0.16,1,0.3,1) both”,opacity:0}}>{sc.hed}</div>}
+<div style={{width:32,height:2,borderRadius:99,background:`linear-gradient(90deg,${vc},#fff)`,animation:“vFade 0.4s 0.3s both”,opacity:0}}/>
+{sc.sub&&<div style={{fontSize:12,color:“rgba(255,255,255,0.55)”,textAlign:“center”,lineHeight:1.75,animation:“vUp 0.5s 0.3s both”,opacity:0}} dangerouslySetInnerHTML={{__html:sc.sub.replace(/\n/g,”<br/>”)}}/>}
+{sc.hi&&<div style={{width:“100%”,background:`${sc.hi.color}10`,border:`1px solid ${sc.hi.color}40`,borderRadius:12,padding:“11px 14px”,animation:“vUp 0.5s 0.45s both”,opacity:0}}><div style={{fontSize:12,fontWeight:700,color:sc.hi.color,lineHeight:1.7,whiteSpace:“pre-line”}}>{sc.hi.text}</div></div>}
+{sc.cite&&<div style={{fontSize:12,color:“rgba(255,255,255,0.25)”,fontStyle:“italic”,textAlign:“center”,animation:“vFade 0.4s 0.6s both”,opacity:0}}>{sc.cite}</div>}
+{sc.vs&&<div style={{display:“flex”,gap:8,width:“100%”,animation:“vUp 0.5s 0.3s both”,opacity:0}}>
+<div style={{flex:1,background:`${R}10`,border:`1px solid ${R}30`,borderRadius:12,padding:12,textAlign:“center”}}><div style={{fontSize:12,fontWeight:800,color:R,letterSpacing:1,textTransform:“uppercase”,marginBottom:6}}>{sc.vs.bad[0]}</div><div style={{fontSize:13,color:“rgba(255,255,255,0.5)”,fontStyle:“italic”,lineHeight:1.5}}>{sc.vs.bad[1]}</div></div>
+<div style={{flex:1,background:`${G}10`,border:`1px solid ${G}30`,borderRadius:12,padding:12,textAlign:“center”}}><div style={{fontSize:12,fontWeight:800,color:G,letterSpacing:1,textTransform:“uppercase”,marginBottom:6}}>{sc.vs.good[0]}</div><div style={{fontSize:13,color:“rgba(255,255,255,0.7)”,fontStyle:“italic”,lineHeight:1.5}}>{sc.vs.good[1]}</div></div>
+</div>}
+{sc.why&&<div style={{width:“100%”,background:`${sc.why.color}10`,border:`1px solid ${sc.why.color}35`,borderRadius:12,padding:“11px 14px”,animation:“vUp 0.5s 0.45s both”,opacity:0}}><div style={{fontSize:12,fontWeight:700,color:sc.why.color,lineHeight:1.7}}>{sc.why.text}</div></div>}
+{sc.vs2&&<div style={{display:“flex”,flexDirection:“column”,gap:8,width:“100%”,animation:“vUp 0.5s 0.3s both”,opacity:0}}>{sc.vs2.map(([e,label,txt,col],i)=>(<div key={i} style={{display:“flex”,alignItems:“center”,gap:12,padding:“10px 14px”,background:`${col}10`,border:`1px solid ${col}25`,borderRadius:12}}><span style={{fontSize:22,flexShrink:0}}>{e}</span><div style={{flex:1}}><div style={{fontSize:13,fontWeight:800,color:col,marginBottom:3}}>{label}</div><div style={{fontSize:13,color:“rgba(255,255,255,0.55)”,lineHeight:1.5}}>{txt}</div></div></div>))}</div>}
+{sc.math&&<div style={{display:“flex”,flexDirection:“column”,gap:7,width:“100%”,animation:“vUp 0.5s 0.3s both”,opacity:0}}>{sc.math.map(([label,val,big],i)=>(<div key={i} style={{display:“flex”,justifyContent:“space-between”,alignItems:“center”,background:big?“rgba(245,166,35,0.1)”:“rgba(255,255,255,0.04)”,borderRadius:12,padding:“10px 14px”,border:big?“1px solid rgba(245,166,35,0.3)”:“1px solid rgba(255,255,255,0.07)”}}><span style={{fontSize:12,color:big?“rgba(255,255,255,0.8)”:“rgba(255,255,255,0.5)”,fontWeight:big?700:400}}>{label}</span><span style={{fontSize:big?20:15,fontWeight:900,color:A}}>{val}</span></div>))}</div>}
+{sc.listBad&&<div style={{display:“flex”,flexDirection:“column”,gap:7,width:“100%”,animation:“vUp 0.5s 0.2s both”,opacity:0}}>{sc.listBad.map((t,i)=>(<div key={i} style={{display:“flex”,alignItems:“center”,gap:10,padding:“9px 12px”,background:`${R}10`,border:`1px solid ${R}25`,borderRadius:12}}><span style={{color:R,fontWeight:900,fontSize:14}}>✗</span><span style={{fontSize:12,color:“rgba(255,255,255,0.6)”}}>{t}</span></div>))}</div>}
+{sc.listGood&&<div style={{display:“flex”,flexDirection:“column”,gap:7,width:“100%”,animation:“vUp 0.5s 0.2s both”,opacity:0}}>{sc.listGood.map(([e,t],i)=>(<div key={i} style={{display:“flex”,alignItems:“center”,gap:10,padding:“9px 12px”,background:`${G}10`,border:`1px solid ${G}25`,borderRadius:12}}><span style={{fontSize:18,flexShrink:0}}>{e}</span><span style={{fontSize:12,color:“rgba(255,255,255,0.8)”,fontWeight:600}}>{t}</span></div>))}</div>}
+{sc.bars&&<div style={{width:“100%”,animation:“vUp 0.5s 0.3s both”,opacity:0}}>{sc.bars.map(([label,stars,pct,col],i)=>(<div key={i} style={{marginBottom:i<sc.bars.length-1?14:0}}><div style={{display:“flex”,justifyContent:“space-between”,fontSize:13,color:“rgba(255,255,255,0.45)”,marginBottom:6}}><span>{label}</span><span>{stars}</span></div><div style={{background:“rgba(255,255,255,0.07)”,borderRadius:99,height:9,overflow:“hidden”}}><div style={{height:“100%”,width:`${pct}%`,background:`linear-gradient(90deg,${col},${col}CC)`,borderRadius:99}}/></div></div>))}</div>}
+{sc.cta&&<div style={{textAlign:“center”,animation:“vUp 0.5s 0.45s both”,opacity:0}}><div style={{background:“rgba(245,166,35,0.12)”,border:“2px solid rgba(245,166,35,0.5)”,borderRadius:14,padding:“11px 20px”,display:“inline-block”}}><div style={{fontSize:13,fontWeight:800,color:A}}>Free to explore — droppilot.app</div><div style={{fontSize:12,color:“rgba(255,255,255,0.35)”,marginTop:2}}>Full access — $10 one time</div></div></div>}
+</div>
+</div>
+<div style={{padding:“10px 16px 4px”,borderTop:`1px solid ${vc}20`}}>
+<div style={{display:“flex”,alignItems:“center”,justifyContent:“center”,gap:6,marginBottom:10}}>{video.scenes.map((_,si)=>(<button key={si} onClick={()=>jumpToScene(si)} style={{width:si===scene?20:8,height:8,borderRadius:99,background:si===scene?vc:“rgba(255,255,255,0.15)”,border:“none”,cursor:“pointer”,padding:0,transition:“all 0.2s”}}/>))}</div>
+<div style={{display:“flex”,alignItems:“center”,gap:10,paddingBottom:14}}>
+<button onClick={togglePlay} style={{background:`${vc}18`,border:`1px solid ${vc}40`,borderRadius:20,padding:“7px 16px”,fontSize:13,fontWeight:700,cursor:“pointer”,color:vc,fontFamily:”‘Outfit’,sans-serif”}}>{playing?“⏸ Pause”:elapsed.current>=video.dur?“↺ Replay”:“▶ Play”}</button>
+<button onClick={()=>restart(false)} style={{background:“rgba(255,255,255,0.06)”,border:“1px solid rgba(255,255,255,0.1)”,borderRadius:20,padding:“7px 14px”,fontSize:13,fontWeight:700,cursor:“pointer”,color:“rgba(255,255,255,0.5)”,fontFamily:”‘Outfit’,sans-serif”}}>↺ Restart</button>
+<div style={{flex:1,background:“rgba(255,255,255,0.07)”,borderRadius:99,height:4,overflow:“hidden”,marginLeft:4}}><div style={{height:“100%”,width:`${progress}%`,background:`linear-gradient(90deg,${vc},#fff)`,borderRadius:99,transition:“width 0.1s linear”}}/></div>
+</div>
+</div>
+</div>
+);
+}
+
+function App(){
+const[tab,setTab]=useState(“tips”);
+const[navPop,setNavPop]=useState(null);
+function changeTab(id){setNavPop(id);setTab(id);setTimeout(()=>setNavPop(null),400);}
+const[cfg,setCfg_]=useState({name:””,unlockCode:“DROP2026”});
+const[pro,setPro]=useState(false);
+const[loaded,setLoaded]=useState(false);
+const[showIntro,setShowIntro]=useState(false);
+const[showUpdate,setShowUpdate]=useState(false);
+const[toast,setToast]=useState(null);
+const[showPay,setShowPay]=useState(false);
+const[payStep,setPayStep]=useState(“offer”);
+const[codeIn,setCodeIn]=useState(””);
+const[codeErr,setCodeErr]=useState(””);
+const[showCfg,setShowCfg]=useState(false);
+const[restoreEmail,setRestoreEmail]=useState(””);
+const[restoreMsg,setRestoreMsg]=useState(””);
+const tapCount=useRef(0);
+const tapTimer=useRef(null);
+function handleSecretTap(){tapCount.current+=1;if(tapTimer.current)clearTimeout(tapTimer.current);if(tapCount.current>=5){tapCount.current=0;setShowCfg(o=>!o);}else{tapTimer.current=setTimeout(()=>{tapCount.current=0;},1500);}}
+const[tipOpen,setTipOpen]=useState(null);
+const[learnOpen,setLearnOpen]=useState(null);
+const[learnSub,setLearnSub]=useState(null);
+const[favTips,setFavTips]=useState(new Set());
+const[basicsOpen,setBasicsOpen]=useState(null);
+const[basicsSub,setBasicsSub]=useState(null);
+const[msgOpen,setMsgOpen]=useState(null);
+const[subOpen,setSubOpen]=useState(null);
+const[copied,setCopied]=useState(null);
+const[templateSearch,setTemplateSearch]=useState(””);
+const[favTemplates,setFavTemplates]=useState(new Set());
+const[activeVideo,setActiveVideo]=useState(0);
+const[defPlatform,setDefPlatform]=useState(null);
+const[defSection,setDefSection]=useState(“habits”);
+const[appealOpen,setAppealOpen]=useState(null);
+const[appealSub,setAppealSub]=useState(null);
+const[checks,setChecks]=useState([]);
+const[noteInput,setNoteInput]=useState(””);
+const[notes,setNotes]=useState([]);
+// Track tab state
+const[shifts,setShifts]=useState([]);
+const[shiftInput,setShiftInput]=useState({tips:””,rating:””,deliveries:””,note:””});
+const[shiftView,setShiftView]=useState(“log”);
+const[journalInput,setJournalInput]=useState(””);
+const[journal,setJournal]=useState([]);
+const[preShift,setPreShift]=useState([]);
+
+const STRIPE_LINK=“https://buy.stripe.com/cNieVd2z0acu3Wjfoi48000”;
+
+useEffect(()=>{
+Promise.all([
+load(“dp3-cfg”,{name:””,unlockCode:“DROP2026”}),
+load(“dp3-elite”,false),
+load(“dp3-intro-seen”,false),
+load(“dp3-update-seen”,””),
+load(“dp3-fav-tips”,[]),
+load(“dp3-fav-tpl”,[]),
+load(“dp3-notes”,[]),
+load(“dp3-shifts”,[]),
+load(“dp3-journal”,[]),
+load(“dp3-preshift”,[
+{e:“🔋”,t:“Phone charged to 100%”,done:false},
+{e:“🔌”,t:“Car charger packed”,done:false},
+{e:“📍”,t:“GPS turned on”,done:false},
+{e:“🎒”,t:“Delivery bag / hot bag ready”,done:false},
+{e:“💧”,t:“Water bottle packed”,done:false},
+{e:“📱”,t:“Delivery app logged in and working”,done:false},
+{e:“🧾”,t:“Gas tank not on empty”,done:false},
+]),
+]).then(([c,p,seen,updateSeen,ft,ftpl,n,sh,jn,ps])=>{
+setCfg_(c);setPro(!!p);setLoaded(true);
+setFavTips(new Set(ft));setFavTemplates(new Set(ftpl));setNotes(n);
+setShifts(sh);setJournal(jn);setPreShift(ps);
+if(!seen){setShowIntro(true);}
+else if(updateSeen!==LATEST_UPDATE_ID){setShowUpdate(true);}
+});
+},[]);
+
+const setCfg=useCallback(d=>{setCfg_(d);save(“dp3-cfg”,d);},[]);
+function showToast(msg){setToast(msg);}
+
+function tryCode(){
+if(!codeIn.trim()){setCodeErr(“Please enter your unlock code.”);return;}
+if(cfg.unlockCode&&codeIn.trim().toUpperCase()===cfg.unlockCode.trim().toUpperCase()){
+setPro(true);save(“dp3-elite”,true);setPayStep(“done”);
+}else{setCodeErr(“That code isn’t correct. Check your receipt email from Stripe.”);}
+}
+
+function handleRestore(){
+if(!restoreEmail.trim()){setRestoreMsg(“Please enter your email.”);return;}
+setRestoreMsg(“If that email matches a purchase, you’ll receive your code shortly. Check your inbox.”);
+}
+
+function copyMsg(text,key){
+if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{setCopied(key);showToast(“Copied to clipboard!”);});}
+else{setCopied(key);showToast(“Copied to clipboard!”);}
+}
+
+// Track functions
+function logShift(){
+if(!shiftInput.tips&&!shiftInput.rating&&!shiftInput.deliveries)return;
+const entry={
+date:new Date().toLocaleDateString(“en-US”,{month:“short”,day:“numeric”}),
+time:new Date().toLocaleTimeString(“en-US”,{hour:“numeric”,minute:“2-digit”}),
+tips:parseFloat(shiftInput.tips)||0,
+rating:parseFloat(shiftInput.rating)||0,
+deliveries:parseInt(shiftInput.deliveries)||0,
+note:shiftInput.note.trim(),
+};
+const updated=[entry,…shifts].slice(0,90);
+setShifts(updated);save(“dp3-shifts”,updated);
+setShiftInput({tips:””,rating:””,deliveries:””,note:””});
+showToast(“Shift logged!”);
+}
+function addJournal(){
+if(!journalInput.trim())return;
+const entry={text:journalInput.trim(),date:new Date().toLocaleDateString(“en-US”,{month:“short”,day:“numeric”,year:“numeric”}),time:new Date().toLocaleTimeString(“en-US”,{hour:“numeric”,minute:“2-digit”})};
+const updated=[entry,…journal].slice(0,200);
+setJournal(updated);save(“dp3-journal”,updated);setJournalInput(””);showToast(“Entry saved!”);
+}
+function togglePreShift(i){
+const updated=preShift.map((item,idx)=>idx===i?{…item,done:!item.done}:item);
+setPreShift(updated);save(“dp3-preshift”,updated);
+}
+function resetPreShift(){
+const updated=preShift.map(item=>({…item,done:false}));
+setPreShift(updated);save(“dp3-preshift”,updated);
+}
+
+const trackLast7=shifts.slice(0,7);
+const trackAvgTips=trackLast7.length?(trackLast7.reduce((a,s)=>a+s.tips,0)/trackLast7.length).toFixed(2):null;
+const trackRated=trackLast7.filter(s=>s.rating>0);
+const trackAvgRating=trackRated.length?(trackRated.reduce((a,s)=>a+s.rating,0)/trackRated.length).toFixed(2):null;
+const trackDeliveries=trackLast7.reduce((a,s)=>a+s.deliveries,0);
+const trackTrendUp=shifts.length>=6&&(shifts.slice(0,3).reduce((a,s)=>a+s.tips,0)/3)>(shifts.slice(3,6).reduce((a,s)=>a+s.tips,0)/3);
+
+function toggleCheck(i){
+const updated=checks.map((c,idx)=>idx===i?{…c,done:!c.done}:c);
+setChecks(updated);if(defPlatform)save(`dp3-checks-${defPlatform}`,updated);
+}
+function selectPlatform(id){
+if(defPlatform===id){setDefPlatform(null);return;}
+setDefPlatform(id);setDefSection(“habits”);setAppealOpen(null);setAppealSub(null);
+load(`dp3-checks-${id}`,(PLATFORM_CHECKLISTS[id]||[]).map(c=>({…c,done:false}))).then(saved=>{setChecks(saved);});
+}
+function toggleFavTip(i){const next=new Set(favTips);next.has(i)?next.delete(i):next.add(i);setFavTips(next);save(“dp3-fav-tips”,[…next]);}
+function toggleFavTemplate(key){const next=new Set(favTemplates);next.has(key)?next.delete(key):next.add(key);setFavTemplates(next);save(“dp3-fav-tpl”,[…next]);}
+function addNote(){if(!noteInput.trim())return;const newNote={text:noteInput.trim(),date:new Date().toLocaleDateString()};const updated=[newNote,…notes].slice(0,50);setNotes(updated);save(“dp3-notes”,updated);setNoteInput(””);}
+function deleteNote(i){const updated=notes.filter((_,idx)=>idx!==i);setNotes(updated);save(“dp3-notes”,updated);}
+
+function backupData(){
+const keys=[“dp3-cfg”,“dp3-elite”,“dp3-intro-seen”,“dp3-fav-tips”,“dp3-fav-tpl”,“dp3-notes”,“dp3-shifts”,“dp3-journal”,“dp3-preshift”,“dp3-checks-doordash”,“dp3-checks-ubereats”,“dp3-checks-spark”,“dp3-checks-instacart”,“dp3-checks-amazonflex”];
+const backup={version:1,date:new Date().toISOString(),data:{}};
+keys.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)backup.data[k]=v;});
+const blob=new Blob([JSON.stringify(backup,null,2)],{type:“application/json”});
+const url=URL.createObjectURL(blob);const a=document.createElement(“a”);
+a.href=url;a.download=`droppilot-backup-${new Date().toISOString().slice(0,10)}.json`;
+a.click();URL.revokeObjectURL(url);showToast(“Backup downloaded!”);
+}
+function restoreData(e){
+const file=e.target.files[0];if(!file)return;
+const reader=new FileReader();
+reader.onload=ev=>{
+try{
+const backup=JSON.parse(ev.target.result);
+if(!backup.data)throw new Error(“Invalid”);
+Object.entries(backup.data).forEach(([k,v])=>localStorage.setItem(k,v));
+showToast(“Restored! Reloading…”);setTimeout(()=>window.location.reload(),1200);
+}catch(e){showToast(“Could not read that file.”);}
+};
+reader.readAsText(file);e.target.value=””;
+}
+
+const filteredCats=templateSearch.trim()
+?MSG_CATS.map(cat=>({…cat,secs:cat.secs.filter(s=>s.h.toLowerCase().includes(templateSearch.toLowerCase())||s.msg.toLowerCase().includes(templateSearch.toLowerCase()))})).filter(cat=>cat.secs.length>0)
+:MSG_CATS;
+
+if(!loaded)return(<div style={{background:C.bg,height:“100vh”,display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,gap:16,fontFamily:C.sans}}><div style={{fontSize:52,animation:“floatY 2s ease-in-out infinite”}}>🚗</div><div style={{color:C.amber,fontSize:17,fontWeight:800}}>Loading DropPilot…</div></div>);
+if(showIntro)return <IntroAnimation onDone={()=>{setShowIntro(false);save(“dp3-intro-seen”,true);}}/>;
+
+return(
+<div style={{background:C.bg,minHeight:“100vh”,maxWidth:430,margin:“0 auto”,fontFamily:C.sans,color:C.text,display:“flex”,flexDirection:“column”}}>
+{toast&&<Toast msg={toast} onDone={()=>setToast(null)}/>}
+
+```
+  {/* ── Header ── */}
+  <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:60}}>
+    <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default"}}>
+      <div className="glow" style={{width:38,height:38,borderRadius:12,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🚗</div>
+      <div>
+        <div style={{fontSize:18,fontWeight:900,letterSpacing:"-0.5px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
+        <div style={{fontSize:12,color:C.text3,letterSpacing:"1.5px",fontWeight:700}}>DRIVER COMMAND CENTER</div>
+      </div>
+    </div>
+    <button onClick={()=>setShowCfg(o=>!o)} aria-label="Settings" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0}}>⚙️</button>
+  </div>
+
+  {/* ── Settings Panel ── */}
+  {showCfg&&(
+    <div style={{background:C.s2,borderBottom:"1px solid rgba(255,255,255,0.07)",padding:18}}>
+      <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>⚙ Settings</div>
+      <div style={{marginBottom:12}}>
+        <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Your Name</div>
+        <input value={cfg.name||""} onChange={e=>setCfg({...cfg,name:e.target.value})} placeholder="e.g. James" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
+      </div>
+      <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+        <div style={{fontSize:12,fontWeight:800,color:C.amber,marginBottom:10}}>💳 Access</div>
+        <div style={{background:pro?"rgba(16,185,129,0.07)":"rgba(255,255,255,0.03)",border:`1px solid ${pro?"rgba(16,185,129,0.2)":"rgba(255,255,255,0.07)"}`,borderRadius:11,padding:"11px 13px",display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
+          <span style={{fontSize:17}}>{pro?"✅":"🔒"}</span>
+          <div><div style={{fontSize:13,fontWeight:700,color:pro?C.green:C.text2}}>{pro?"Elite Access Active":"Free Plan"}</div></div>
+        </div>
+        <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Unlock Code</div>
+        <input value={cfg.unlockCode||""} onChange={e=>setCfg({...cfg,unlockCode:e.target.value})} placeholder="e.g. DROP2026" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
+      </div>
+      <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+        <button onClick={()=>{setShowUpdate(true);setShowCfg(false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>🆕 What's New</button>
+        <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
+        {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>Reset Elite Access</button>}
+      </div>
+      <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
+        <div style={{fontSize:12,fontWeight:800,color:C.teal,marginBottom:10}}>💾 Your Data</div>
+        <div style={{fontSize:12,color:C.text3,lineHeight:1.6,marginBottom:10}}>Back up your shifts, journal, notes and settings. Restore any time — on this device or a new one.</div>
+        <button onClick={backupData} style={{background:"rgba(6,182,212,0.08)",border:"1px solid rgba(6,182,212,0.2)",borderRadius:11,padding:"11px 12px",color:C.teal,fontSize:13,fontWeight:700,width:"100%",cursor:"pointer",marginBottom:8}}>⬇ Download Backup</button>
+        <label style={{display:"block",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,fontWeight:700,width:"100%",cursor:"pointer",textAlign:"center",boxSizing:"border-box"}}>
+          ⬆ Restore from Backup
+          <input type="file" accept=".json" onChange={restoreData} style={{display:"none"}}/>
+        </label>
+      </div>
+      <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
+    </div>
+  )}
+
+  <div style={{flex:1,overflowY:"auto",paddingBottom:80}}>
+```
+
+{tab===“tips”&&(
+
+<div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+<div style={{textAlign:"center",padding:"8px 0 4px"}}>
+  <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Earn More</div>
+  <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Earn More Every Shift</div>
+  <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Proven habits, psychology, and strategies — all in plain English.</div>
+</div>
+<div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
+{ALL_TIPS.map((tip,i)=>{
+const open=tipOpen===i;const fav=favTips.has(i);
+return(<div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(pro||i<3)?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
+style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",opacity:(pro||i<3)?1:0.55,transition:"opacity 0.15s"}}>
+<div style={{display:"flex",alignItems:"center",gap:12}}>
+<div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
+<div style={{flex:1,minWidth:0}}><div style={{fontSize:15,fontWeight:700,color:C.text,marginBottom:3}}>{tip.t}</div><div style={{fontSize:13,color:C.text2,lineHeight:1.5}}>{tip.s}</div></div>
+{pro?(<button onClick={e=>{e.stopPropagation();toggleFavTip(i);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"4px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>{fav?"★":"☆"}</button>):i<3?(<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>):(<span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>)}
+{pro&&<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>}
+</div>
+{open&&(<div style={{marginTop:14,paddingTop:14,borderTop:"1px solid rgba(255,255,255,0.07)"}}><p style={{fontSize:13,color:C.text2,lineHeight:1.8,margin:0}}>{tip.d}</p></div>)}
+</div>);})}
+<div style={{fontSize:13,fontWeight:800,color:C.text2,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2,marginTop:4}}>🎓 Deeper Learning</div>
+{LEARN_CATS.map((cat,ci)=>{
+const catOpen=learnOpen===ci;
+return(<div key={ci} style={{background:C.s1,border:`1px solid ${catOpen?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden",opacity:pro?1:0.55,transition:"opacity 0.15s"}}>
+<div onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setLearnOpen(catOpen?null:ci);setLearnSub(null);}} style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+<div style={{width:44,height:44,borderRadius:13,background:catOpen?"rgba(59,130,246,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{cat.e}</div>
+<div style={{flex:1}}><div style={{fontSize:15,fontWeight:700}}>{cat.t}</div><div style={{fontSize:13,color:C.text2,marginTop:2}}>{cat.sub}</div></div>
+{!pro?<span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>:<div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>}
+</div>
+{catOpen&&pro&&(<div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
+{cat.secs.map((sec,si)=>{const key=`l${ci}-${si}`;const open2=learnSub===key;return(<div key={si} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.06)",borderRadius:14,overflow:"hidden"}}>
+<div onClick={()=>setLearnSub(open2?null:key)} style={{padding:"12px 14px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}>
+<span style={{fontSize:13,fontWeight:700}}>{sec.h}</span><div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:open2?"rotate(180deg)":"none",flexShrink:0}}>▾</div></div>
+{open2&&(<div style={{padding:"0 14px 14px"}}><p style={{fontSize:13,color:C.text2,lineHeight:1.8,margin:"0 0 12px"}}>{sec.body}</p>
+<div style={{background:"rgba(245,166,35,0.07)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:10,padding:"10px 12px",display:"flex",alignItems:"flex-start",gap:8}}>
+<span style={{fontSize:14,flexShrink:0}}>💡</span><span style={{fontSize:12,color:C.amber,lineHeight:1.6,fontWeight:600}}>{sec.tip}</span></div></div>)}
+</div>);})}
+</div>)}
+</div>);})}
+{pro&&favTips.size>0&&(<div style={{background:C.s1,border:"1px solid rgba(245,166,35,0.2)",borderRadius:18,padding:14}}><div style={{fontSize:12,fontWeight:800,color:C.amber,marginBottom:10}}>★ Your Saved Tips</div><div style={{display:"flex",flexDirection:"column",gap:10}}>{[...favTips].filter(i=>ALL_TIPS[i]).map(i=>(<div key={i} style={{fontSize:13,color:C.text2,display:"flex",gap:8,alignItems:"center"}}><span>{ALL_TIPS[i].e}</span><span style={{fontWeight:600,color:C.text}}>{ALL_TIPS[i].t}</span></div>))}</div></div>)}
+{!pro&&(<div style={{position:"relative"}}>
+<div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+{[["🧠","Reading People","Simple psychology you can use right now"],["🔥","Handling Difficult Situations","What to say when things go wrong"],["💰","The Science of Tipping","Why people tip — and how to make it happen"],["📋","Recovery Scripts","Exactly what to say when there's a problem"],["🗺️","Know Your Delivery","Different situations need different approaches"],["🏆","Staying Sharp","How to keep earning more over the long run"]].map(([e,t,s],i)=>(<div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"16px 18px",marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:12}}><div style={{width:44,height:44,borderRadius:13,background:"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{e}</div><div style={{flex:1}}><div style={{fontSize:15,fontWeight:700}}>{t}</div><div style={{fontSize:13,color:C.text2,marginTop:2}}>{s}</div></div><div style={{color:C.text3,fontSize:13}}>▾</div></div></div>))}
+</div>
+<div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.6) 20%,rgba(7,8,10,0.97) 40%)",borderRadius:16,padding:"20px 16px"}}>
+<div className="border-pulse" style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#0f0d00,#0d0f13)",border:"1px solid rgba(245,166,35,0.35)",width:"100%",position:"relative"}}>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
+<div style={{fontSize:44,marginBottom:12}}>🎓</div>
+<div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Unlock Deeper Learning</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>The free tips are just the start. Elite unlocks the full psychology playbook — why people tip, how to handle upset customers, what top earners do differently, and science-backed scripts for every moment.</div>
+{[["🧠","Reading people — psychology you can use at every door"],["🔥","De-escalation — exactly what to say when someone's upset"],["💰","Tip science — the research behind what makes people tip"],["📋","Recovery scripts — cold food, missing items, your mistakes"],["🗺️","Delivery situations — apartments, hotels, grocery vs food"],["🏆","Staying sharp — burnout, mindset, long-term consistency"]].map(([e,f],i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(245,166,35,0.06)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(245,166,35,0.12)",marginBottom:7}}><span style={{fontSize:14,flexShrink:0}}>{e}</span><span style={{fontSize:12,color:C.text2}}>{f}</span></div>))}
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",marginTop:4}}>Unlock Elite Access — $7</button>
+<div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
+</div></div></div>)}
+</div>
+)}
+{tab==="templates"&&(
+<div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+<div style={{textAlign:"center",padding:"8px 0 4px"}}>
+  <div style={{fontSize:13,fontWeight:800,color:C.blue,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Message Templates</div>
+  <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>What to Say & When</div>
+  <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Ready-to-send messages for every situation.</div>
+</div>
+{!pro?(<div style={{position:"relative"}}>
+<div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+{MSG_CATS.map((cat,i)=>(<div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"14px 16px",marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:12}}><div style={{width:40,height:40,borderRadius:12,background:"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{cat.e}</div><div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{cat.t}</div><div style={{fontSize:13,color:C.text2,marginTop:1}}>{cat.sub}</div></div></div></div>))}
+</div>
+<div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.6) 18%,rgba(7,8,10,0.97) 38%)",borderRadius:16,padding:"20px 16px"}}>
+<div style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#030c1a,#0d0f13)",border:`1px solid rgba(59,130,246,0.35)`,width:"100%",position:"relative",animation:"defenderPulse 2.4s ease-in-out infinite"}}>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.blue},transparent)`}}/>
+<div style={{fontSize:44,marginBottom:12}}>💬</div>
+<div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.blue})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>30 Ready-to-Send Scripts</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Stop guessing what to say. Every situation you'll face — from running late to gate codes to upset customers — has a proven script ready for you.</div>
+{[["📲","Arrival texts that get 5-star ratings before you knock"],["⏰","Late delivery messages that flip frustration into forgiveness"],["🚨","Problem scripts — wrong address, gate codes, no answer"],["⭐","What to say (and never say) to earn better tips"],["🏢","Scripts for hotels, gated communities & offices"]].map(([e,f],i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(59,130,246,0.07)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(59,130,246,0.13)",marginBottom:7}}><span style={{fontSize:14,flexShrink:0}}>{e}</span><span style={{fontSize:12,color:C.text2}}>{f}</span></div>))}
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(59,130,246,0.45)",marginTop:4}}>Unlock Elite Access — $7</button>
+<div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
+</div></div></div>):(<div style={{display:"flex",flexDirection:"column",gap:20}}>
+<div style={{position:"relative"}}><span style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",fontSize:14,color:C.text3,pointerEvents:"none"}}>🔍</span><input value={templateSearch} onChange={e=>{setTemplateSearch(e.target.value);setMsgOpen(null);setSubOpen(null);}} placeholder="Search templates..." style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"11px 12px 11px 36px",color:C.text,fontSize:13,width:"100%"}}/>{templateSearch&&<button onClick={()=>setTemplateSearch("")} style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:16}}>✕</button>}</div>
+{favTemplates.size>0&&!templateSearch&&(<div style={{background:C.s1,border:"1px solid rgba(245,166,35,0.2)",borderRadius:14,padding:"12px 14px"}}><div style={{fontSize:13,fontWeight:800,color:C.amber,marginBottom:8}}>★ Saved Templates</div><div style={{display:"flex",flexWrap:"wrap",gap:6}}>{[...favTemplates].map(key=>{const[ci,si]=key.split("-").map(Number);const sec=MSG_CATS[ci]?.secs[si];if(!sec)return null;return(<button key={key} onClick={()=>{setMsgOpen(ci);setSubOpen(key);setTemplateSearch("");}} style={{background:"rgba(245,166,35,0.08)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:8,padding:"5px 10px",fontSize:13,fontWeight:600,color:C.amber,cursor:"pointer"}}>{sec.h}</button>);})}</div></div>)}
+{filteredCats.length===0&&(<div style={{textAlign:"center",padding:"32px 16px",color:C.text3,fontSize:13}}>No templates match "{templateSearch}"</div>)}
+{filteredCats.map((cat,ci)=>{
+const realCi=MSG_CATS.indexOf(cat);const catOpen=msgOpen===realCi||!!templateSearch;
+return(<div key={ci} style={{background:C.s1,border:`1px solid ${catOpen&&!templateSearch?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden"}}>
+<div onClick={()=>{if(!templateSearch){setMsgOpen(catOpen?null:realCi);setSubOpen(null);}}} style={{padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+<div style={{width:40,height:40,borderRadius:12,background:catOpen?"rgba(59,130,246,0.12)":"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{cat.e}</div>
+<div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{cat.t}</div><div style={{fontSize:13,color:C.text2,marginTop:1}}>{cat.sub}</div></div>
+{!templateSearch&&<div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>}
+</div>
+{catOpen&&(<div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
+{cat.secs.map((sec,si)=>{
+const realSi=MSG_CATS[realCi]?.secs?.indexOf(sec);const subKey=`${realCi}-${realSi}`;
+const subOpen2=subOpen===subKey;const fav=favTemplates.has(subKey);
+return(<div key={si} style={{background:sec.caution?"rgba(244,63,94,0.06)":C.s2,border:`1px solid ${sec.caution?"rgba(244,63,94,0.2)":"rgba(255,255,255,0.06)"}`,borderRadius:14,overflow:"hidden"}}>
+<div onClick={()=>setSubOpen(subOpen2?null:subKey)} style={{padding:"12px 14px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}>
+<div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>{sec.caution&&<span style={{fontSize:13}}>⚠️</span>}<span style={{fontSize:13,fontWeight:700,color:sec.caution?C.red:C.text}}>{sec.h}</span></div>
+<button onClick={e=>{e.stopPropagation();toggleFavTemplate(subKey);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,padding:"2px 6px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>{fav?"★":"☆"}</button>
+<div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:subOpen2?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
+</div>
+{subOpen2&&(<div style={{padding:"0 14px 14px"}}>
+<div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"11px 13px",marginBottom:10,fontSize:12,color:sec.caution?C.red:C.text,lineHeight:1.65,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{sec.msg}</div>
+{!sec.caution&&(<button onClick={()=>copyMsg(sec.msg,subKey)} style={{background:C.green,border:"none",borderRadius:10,padding:"10px 14px",fontSize:12,fontWeight:700,cursor:"pointer",color:"#000",width:"100%",marginBottom:8}}>Copy Message</button>)}
+<div style={{fontSize:13,color:C.text3,lineHeight:1.6,background:"rgba(59,130,246,0.06)",borderRadius:8,padding:"8px 10px",borderLeft:"2px solid rgba(59,130,246,0.3)"}}>{sec.w}</div>
+</div>)}
+</div>);})}
+</div>)}
+</div>);})}
+</div>)}
+</div>
+)}
+{tab==="defend"&&(
+<div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+<div style={{textAlign:"center",padding:"8px 0 4px"}}>
+  <div style={{fontSize:13,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Account Defense</div>
+  <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Protect Your Account</div>
+  <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Habits, appeal scripts, checklists, and notes — by platform.</div>
+</div>
+{!pro?(<div style={{position:"relative"}}>
+<div style={{filter:"blur(6px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:16}}>{PLATFORMS_DEFEND.map(p=>(<div key={p.id} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"13px 10px",display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:20}}>{p.e}</span><span style={{fontSize:14,fontWeight:700,color:C.text}}>{p.label}</span></div>))}</div>
+{[{e:"📸",t:"Photo every drop-off before you leave",urgent:true},{e:"💬",t:"Text the customer on every order",urgent:true},{e:"📍",t:"Keep GPS on the entire shift",urgent:true},{e:"🖼️",t:"Screenshot your delivery confirmation"},{e:"💎",t:"Doing your best always pays off"},{e:"📋",t:"Note the order number on problem deliveries"}].map((h,i)=>(<div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"15px 16px",marginBottom:12}}><div style={{display:"flex",alignItems:"flex-start",gap:12}}><div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div><div style={{flex:1}}>{h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>CRITICAL</span>}<div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div><div style={{height:10,background:"rgba(255,255,255,0.06)",borderRadius:6,width:"85%",marginBottom:6}}/><div style={{height:10,background:"rgba(255,255,255,0.04)",borderRadius:6,width:"60%"}}/></div></div></div>))}
+</div>
+<div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.7) 25%,rgba(7,8,10,0.97) 50%)",borderRadius:16,padding:"24px 20px"}}>
+<div className="defender-pulse" style={{borderRadius:22,overflow:"hidden",padding:"26px 22px",textAlign:"center",background:"linear-gradient(160deg,#0e0a1a,#0d0f13)",border:"1px solid rgba(139,92,246,0.35)",width:"100%",position:"relative"}}>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.purple},transparent)`}}/>
+<div style={{fontSize:52,marginBottom:14}}>🛡️</div>
+<div style={{fontSize:21,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.purple})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Protect Your Account</div>
+<div style={{fontSize:14,color:C.text2,lineHeight:1.8,marginBottom:20}}>False complaints, unfair ratings, and deactivation threats are real. This section gives you the exact habits, scripts, and appeal letters to fight back — by platform.</div>
+{[["🛡️","Critical habits for DoorDash, Uber Eats, Spark & Instacart"],["📋","Word-for-word appeal scripts written for support agents"],["✅","Per-delivery checklists saved per platform"],["📝","Private notes log for problem addresses & customers"]].map(([e,f],i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(139,92,246,0.07)",borderRadius:10,padding:"10px 13px",border:"1px solid rgba(139,92,246,0.15)",marginBottom:8}}><span style={{fontSize:16,flexShrink:0}}>{e}</span><span style={{fontSize:13,color:C.text2}}>{f}</span></div>))}
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(139,92,246,0.45)",marginTop:4}}>Unlock Elite Access — $7</button>
+<div style={{fontSize:12,color:C.text3,marginTop:10}}>Lifetime access · Free updates forever</div>
+</div></div></div>):(<div style={{display:"flex",flexDirection:"column",gap:20}}>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+{PLATFORMS_DEFEND.map((p,pi)=>{const active=defPlatform===p.id;return(<button key={p.id} className={`card-in c${pi}`} onClick={()=>selectPlatform(p.id)} style={{background:active?`${p.color}15`:C.s1,border:`1px solid ${active?p.color:C.border}`,borderRadius:14,padding:"13px 10px",display:"flex",alignItems:"center",gap:8,cursor:"pointer",transition:"all 0.18s",boxShadow:active?`0 0 18px ${p.color}30`:"none"}}><span style={{fontSize:20}}>{p.e}</span><span style={{fontSize:14,fontWeight:700,color:active?p.color:C.text}}>{p.label}</span></button>);})}
+</div>
+{defPlatform&&(()=>{
+const plat=PLATFORMS_DEFEND.find(p=>p.id===defPlatform);
+const habits=PLATFORM_HABITS[defPlatform]||[];
+const appeals=PLATFORM_APPEALS[defPlatform]||[];
+return(<div style={{display:"flex",flexDirection:"column",gap:12,animation:"slideUp 0.3s cubic-bezier(0.16,1,0.3,1)"}}>
+<div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
+{[["habits","🛡️ Habits"],["appeals","📋 Appeals"],["checklist","✅ Checklist"],["notes","📝 Notes"]].map(([id,label])=>(<button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:9,padding:"9px 2px",fontSize:12,fontWeight:700,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.18s",boxShadow:defSection===id?`0 0 12px ${plat.color}50`:"none"}}>{label}</button>))}
+</div>
+{defSection==="habits"&&habits.map((h,i)=>(<div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:h.urgent?"rgba(244,63,94,0.06)":C.s1,border:`1px solid ${h.urgent?"rgba(244,63,94,0.2)":C.border}`,borderRadius:14,padding:"15px 16px"}}><div style={{display:"flex",alignItems:"flex-start",gap:12}}><div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div><div style={{flex:1}}>{h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>CRITICAL</span>}<div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div><p style={{fontSize:13,color:C.text2,lineHeight:1.75,margin:0}}>{h.why}</p></div></div></div>))}
+{defSection==="appeals"&&appeals.map((ap,ai)=>{const apOpen=appealOpen===ai;return(<div key={ai} className={`card-in c${Math.min(ai,9)}`} style={{background:C.s1,border:`1px solid ${apOpen?ap.color+"50":C.border}`,borderRadius:16,overflow:"hidden",transition:"border-color 0.18s"}}>
+<div onClick={()=>{setAppealOpen(apOpen?null:ai);setAppealSub(null);}} style={{padding:"15px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}><span style={{fontSize:22}}>{ap.e}</span><div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{ap.t}</div><div style={{fontSize:12,fontWeight:700,color:ap.color,marginTop:3}}>{ap.urgency}</div></div><div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:apOpen?"rotate(180deg)":"none"}}>▾</div></div>
+{apOpen&&(<div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.16,1,0.3,1)"}}>
+{ap.secs.map((sec,si)=>{const subKey=`ap${ai}-${si}`;const subOpen2=appealSub===subKey;return(<div key={si} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.06)",borderRadius:12,overflow:"hidden"}}>
+<div onClick={()=>setAppealSub(subOpen2?null:subKey)} style={{padding:"13px 14px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"}}><span style={{fontSize:13,fontWeight:700}}>{sec.h}</span><div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:subOpen2?"rotate(180deg)":"none",flexShrink:0}}>▾</div></div>
+{subOpen2&&(<div style={{padding:"0 14px 14px",animation:"slideUp 0.2s cubic-bezier(0.16,1,0.3,1)"}}>
+<div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"12px 13px",marginBottom:10,fontSize:12,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{sec.msg}</div>
+<button onClick={()=>copyMsg(sec.msg,subKey)} style={{background:C.green,border:"none",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:"#000",width:"100%",marginBottom:8}}>Copy Appeal Script</button>
+<div style={{fontSize:12,color:C.text3,lineHeight:1.6,background:`${ap.color}08`,borderRadius:8,padding:"9px 11px",borderLeft:`2px solid ${ap.color}40`}}>{sec.w}</div>
+</div>)}
+</div>);})}
+</div>)}
+</div>);})}
+{defSection==="checklist"&&(<div style={{display:"flex",flexDirection:"column",gap:10}}>
+<div style={{fontSize:13,color:C.text2,textAlign:"center",marginBottom:4,lineHeight:1.6}}>Check these off after every delivery. Your progress is saved per platform.</div>
+{checks.map((item,i)=>(<button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>toggleCheck(i)} style={{background:item.done?"rgba(16,185,129,0.08)":C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"background 0.18s,border 0.18s",boxShadow:item.done?"0 0 14px rgba(16,185,129,0.2)":"none"}}><div style={{width:26,height:26,borderRadius:8,border:`2px solid ${item.done?C.green:"rgba(255,255,255,0.15)"}`,background:item.done?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>{item.done&&<span style={{color:"#000",fontSize:14,fontWeight:900}}>✓</span>}</div><span style={{fontSize:14,fontWeight:600,color:item.done?C.green:C.text,flex:1}}>{item.e} {item.t}</span></button>))}
+{checks.length>0&&(<button onClick={()=>{const reset=checks.map(c=>({...c,done:false}));setChecks(reset);if(defPlatform)save(`dp3-checks-${defPlatform}`,reset);}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text3,marginTop:4}}>Reset Checklist</button>)}
+</div>)}
+{defSection==="notes"&&(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.6}}>Log problem addresses, difficult customers, or anything worth remembering. Private to you.</div>
+<textarea value={noteInput} onChange={e=>setNoteInput(e.target.value)} placeholder="e.g. 123 Main St — gate code never works, always text ahead..." rows={3} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.6,width:"100%"}}/>
+<button onClick={addNote} style={{background:C.purple,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 4px 16px rgba(139,92,246,0.35)"}}>Add Note</button>
+{notes.length===0&&<div style={{textAlign:"center",padding:"20px",color:C.text3,fontSize:13}}>No notes yet. Add your first one above.</div>}
+{notes.map((note,i)=>(<div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,padding:"13px 15px",display:"flex",gap:10}}><div style={{flex:1}}><div style={{fontSize:13,color:C.text,lineHeight:1.65}}>{note.text}</div><div style={{fontSize:12,color:C.text3,marginTop:5}}>{note.date}</div></div><button onClick={()=>deleteNote(i)} style={{background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:16,padding:"0 4px",flexShrink:0}}>✕</button></div>))}
+</div>)}
+</div>);
+})()}
+</div>)}
+</div>
+)}
+{tab==="train"&&(
+<div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+<div style={{textAlign:"center",padding:"8px 0 4px"}}>
+  <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Training Series</div>
+  <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>The DropPilot Method</div>
+  <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Six training videos on what drives ratings and income.</div>
+</div>
+{pro?(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{display:"flex",flexDirection:"column",gap:6}}>{VIDEOS.map((v,i)=>(<button key={i} onClick={()=>setActiveVideo(i)} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}><div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{v.icon}</div><div style={{flex:1,minWidth:0}}><div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div><div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div></div></button>))}</div>
+<VideoPlayer video={VIDEOS[activeVideo]}/>
+</div>):(<div style={{position:"relative"}}>
+<div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+{VIDEOS.map((v,i)=>(<div key={i} style={{position:"relative",borderRadius:18,overflow:"hidden",border:`1px solid ${v.color}35`,background:`linear-gradient(135deg,${v.color}08,rgba(7,8,10,0.9))`,marginBottom:12}}><div style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:14}}><div style={{width:46,height:46,borderRadius:14,background:`${v.color}20`,border:`1px solid ${v.color}50`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{v.icon}</div><div style={{flex:1}}><div style={{fontSize:13,fontWeight:800,color:v.color,marginBottom:4}}>{v.title}</div><div style={{fontSize:13,color:C.text3,lineHeight:1.4}}>{v.desc}</div></div></div></div>))}
+</div>
+<div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.6) 18%,rgba(7,8,10,0.97) 38%)",borderRadius:16,padding:"20px 16px"}}>
+<div className="train-pulse" style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#1a0f00,#0e0a16,#07080A)",border:"2px solid rgba(245,166,35,0.4)",width:"100%",position:"relative"}}>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
+<div className="train-float" style={{fontSize:44,marginBottom:12,display:"block"}}>🎓</div>
+<div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>6 Training Videos</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Short videos on the psychology and science behind what makes customers tip more and rate higher. Not theory — real research applied to real deliveries.</div>
+{[["📈","Why customer service makes you more money — with the math"],["💬","The exact words that earn tips — phrase by phrase"],["🏆","What top earners do differently — the 60-second habit gap"],["🙏","Please, thank you, you're welcome — proven to increase tips 23%"],["🚪","The door — good vs bad: same delivery, two very different outcomes"],["⚠️","When things go wrong — wrong address, upset customer, running late"]].map(([e,f],i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(245,166,35,0.06)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(245,166,35,0.12)",marginBottom:7}}><span style={{fontSize:14,flexShrink:0}}>{e}</span><span style={{fontSize:12,color:C.text2}}>{f}</span></div>))}
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",marginTop:4}}>Unlock Elite Access — $7</button>
+<div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
+</div></div></div>)}
+</div>
+)}
+{tab==="basics"&&(
+<div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+<div style={{textAlign:"center",padding:"8px 0 4px"}}>
+  <div style={{fontSize:13,fontWeight:800,color:C.teal,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>New to This?</div>
+  <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Start Here</div>
+  <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Everything explained in plain English — no experience needed.</div>
+</div>
+{!pro?(<div style={{position:"relative"}}>
+<div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+{BASICS_CATS.map((cat,i)=>(<div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"16px 18px",marginBottom:12}}><div style={{display:"flex",alignItems:"center",gap:12}}><div style={{width:44,height:44,borderRadius:13,background:"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{cat.e}</div><div style={{flex:1}}><div style={{fontSize:15,fontWeight:700}}>{cat.t}</div><div style={{fontSize:13,color:C.text2,marginTop:2}}>{cat.sub}</div></div><div style={{color:C.text3,fontSize:13}}>▾</div></div></div>))}
+</div>
+<div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.6) 15%,rgba(7,8,10,0.97) 33%)",borderRadius:16,padding:"20px 16px"}}>
+<div style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#071418,#0d0f13)",border:`1px solid rgba(6,182,212,0.35)`,width:"100%",position:"relative",animation:"defenderPulse 2.4s ease-in-out infinite"}}>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.teal},transparent)`}}/>
+<div style={{fontSize:44,marginBottom:12}}>🤝</div>
+<div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.teal})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>New to Gig Work?</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Everything explained from scratch. Whether you just started or have questions no one ever answered — no jargon, no assumptions, just plain English.</div>
+{[["🚀","How gig delivery works — pay, ratings, accepting orders"],["📱","Phone basics — GPS, battery, what to do when it crashes"],["🏃","Step-by-step walkthrough of your very first delivery"],["💸","How you get paid, what boosts mean, why tips vary"],["🔴","DoorDash — ratings, completion rate, Top Dasher"],["🟢","Uber Eats — Trip IDs, ratings, Uber Pro levels"],["🔵","Spark — scanning items, substitutions, on-time rate"],["🟩","Instacart — batch IDs, replacements, the 4.7 rating"]].map(([e,f],i)=>(<div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(6,182,212,0.07)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(6,182,212,0.13)",marginBottom:7}}><span style={{fontSize:14,flexShrink:0}}>{e}</span><span style={{fontSize:12,color:C.text2}}>{f}</span></div>))}
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(6,182,212,0.4)",marginTop:4}}>Unlock Elite Access — $7</button>
+<div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
+</div></div></div>):(<div style={{display:"flex",flexDirection:"column",gap:14}}>
+<div style={{background:"rgba(6,182,212,0.07)",border:"1px solid rgba(6,182,212,0.2)",borderRadius:14,padding:"13px 16px",display:"flex",gap:12,alignItems:"flex-start"}}><span style={{fontSize:20,flexShrink:0}}>💡</span><div style={{fontSize:13,color:C.text2,lineHeight:1.7}}>This section covers everything from scratch. Whether you're brand new or just need a refresher — start wherever makes sense for you.</div></div>
+{BASICS_CATS.map((cat,ci)=>{const catOpen=basicsOpen===ci;return(<div key={ci} className={`card-in c${Math.min(ci,9)}`} style={{background:C.s1,border:`1px solid ${catOpen?"rgba(6,182,212,0.4)":C.border}`,borderRadius:18,overflow:"hidden",transition:"border-color 0.18s"}}>
+<div onClick={()=>{setBasicsOpen(catOpen?null:ci);setBasicsSub(null);}} style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+<div style={{width:44,height:44,borderRadius:13,background:catOpen?"rgba(6,182,212,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{cat.e}</div>
+<div style={{flex:1}}><div style={{fontSize:15,fontWeight:700}}>{cat.t}</div><div style={{fontSize:13,color:C.text2,marginTop:2}}>{cat.sub}</div></div>
+<div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>
+</div>
+{catOpen&&(<div style={{padding:"0 14px 14px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.16,1,0.3,1)"}}>
+{cat.secs.map((sec,si)=>{const key=`b${ci}-${si}`;const open2=basicsSub===key;return(<div key={si} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.06)",borderRadius:14,overflow:"hidden"}}>
+<div onClick={()=>setBasicsSub(open2?null:key)} style={{padding:"13px 15px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}><span style={{fontSize:14,fontWeight:700,flex:1}}>{sec.h}</span><div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:open2?"rotate(180deg)":"none",flexShrink:0}}>▾</div></div>
+{open2&&(<div style={{padding:"0 15px 15px",animation:"slideUp 0.2s cubic-bezier(0.16,1,0.3,1)"}}><p style={{fontSize:14,color:C.text2,lineHeight:1.85,margin:0}}>{sec.body}</p></div>)}
+</div>);})}
+</div>)}
+</div>);})}
+</div>)}
+</div>
+)}
+{tab==="track"&&(
+<div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
+<div style={{textAlign:"center",padding:"8px 0 4px"}}>
+  <div style={{fontSize:13,fontWeight:800,color:C.green,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Track</div>
+  <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Your Progress</div>
+  <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Log shifts, track tips, and see if the app is working.</div>
+</div>
+<div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
+{[["log","📊 Tips & Ratings"],["preshift","✅ Pre-Shift"],["journal","📓 Journal"]].map(([id,label])=>(<button key={id} onClick={()=>setShiftView(id)} style={{flex:1,background:shiftView===id?C.green:"transparent",border:"none",borderRadius:9,padding:"9px 4px",fontSize:11,fontWeight:700,cursor:"pointer",color:shiftView===id?"#000":C.text3,transition:"all 0.18s",boxShadow:shiftView===id?`0 0 12px ${C.green}50`:"none"}}>{label}</button>))}
+</div>
+{shiftView==="log"&&(<div style={{display:"flex",flexDirection:"column",gap:16}}>
+{shifts.length>0&&(<div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8}}>{[["Avg Tips","$"+(trackAvgTips||"—"),C.green,trackAvgTips?"last 7 shifts":"no data"],["Avg Rating",trackAvgRating||"—",C.amber,trackAvgRating?"last 7 shifts":"no ratings yet"],["Deliveries",trackDeliveries||"—",C.blue,"last 7 shifts"]].map(([label,val,col,sub],i)=>(<div key={i} style={{background:C.s1,border:`1px solid ${col}20`,borderRadius:14,padding:"12px 10px",textAlign:"center"}}><div style={{fontSize:11,color:C.text3,fontWeight:600,marginBottom:4}}>{label}</div><div style={{fontSize:20,fontWeight:900,color:col,letterSpacing:"-0.5px"}}>{val}</div><div style={{fontSize:10,color:C.text3,marginTop:3}}>{sub}</div></div>))}</div>)}
+{shifts.length>=6&&(<div style={{background:trackTrendUp?"rgba(16,185,129,0.08)":"rgba(244,63,94,0.08)",border:`1px solid ${trackTrendUp?"rgba(16,185,129,0.25)":"rgba(244,63,94,0.25)"}`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:20}}>{trackTrendUp?"📈":"📉"}</span><div><div style={{fontSize:13,fontWeight:700,color:trackTrendUp?C.green:C.red}}>{trackTrendUp?"Your tips are trending up":"Your tips have dipped recently"}</div><div style={{fontSize:12,color:C.text2,marginTop:2}}>{trackTrendUp?"Keep doing what you're doing — it's working.":"Review the Earn tab for habits that help."}</div></div></div>)}
+<div style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:18}}>
+<div style={{fontSize:14,fontWeight:800,marginBottom:14}}>Log a Shift</div>
+<div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:10,marginBottom:12}}>
+{[["tips","Tips Earned","$0.00"],["rating","Star Rating","4.9"],["deliveries","Deliveries","0"]].map(([field,label,placeholder])=>(<div key={field}><div style={{fontSize:11,fontWeight:700,color:C.text2,marginBottom:5}}>{label}</div><input type="number" inputMode="decimal" placeholder={placeholder} value={shiftInput[field]} onChange={e=>setShiftInput({...shiftInput,[field]:e.target.value})} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"10px 10px",color:C.text,fontSize:14,width:"100%",fontWeight:700}}/></div>))}
+</div>
+<input placeholder="Quick note (optional)" value={shiftInput.note} onChange={e=>setShiftInput({...shiftInput,note:e.target.value})} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"10px 12px",color:C.text,fontSize:13,width:"100%",marginBottom:12}}/>
+<button onClick={logShift} style={{background:`linear-gradient(135deg,${C.green},#059669)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 4px 16px rgba(16,185,129,0.35)"}}>Log This Shift</button>
+</div>
+{shifts.length===0&&(<div style={{textAlign:"center",padding:"28px 16px",color:C.text3,fontSize:13,background:C.s1,borderRadius:16}}><div style={{fontSize:32,marginBottom:10}}>📊</div><div style={{fontWeight:700,color:C.text2,marginBottom:4}}>No shifts logged yet</div><div>Log your first shift above to start tracking your progress.</div></div>)}
+{shifts.length>0&&(<div style={{display:"flex",flexDirection:"column",gap:10}}><div style={{fontSize:13,fontWeight:800,color:C.text2}}>Shift History</div>{shifts.map((s,i)=>(<div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"13px 15px"}}><div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:s.note?8:0}}><div><div style={{fontSize:12,color:C.text3,marginBottom:3}}>{s.date} · {s.time}</div><div style={{display:"flex",gap:12,alignItems:"center"}}>{s.tips>0&&<span style={{fontSize:15,fontWeight:900,color:C.green}}>${s.tips.toFixed(2)}</span>}{s.rating>0&&<span style={{fontSize:13,fontWeight:700,color:C.amber}}>⭐ {s.rating}</span>}{s.deliveries>0&&<span style={{fontSize:13,color:C.text2}}>{s.deliveries} deliveries</span>}</div></div><button onClick={()=>{const u=shifts.filter((_,idx)=>idx!==i);setShifts(u);save("dp3-shifts",u);}} style={{background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:16,padding:"4px"}}>✕</button></div>{s.note&&<div style={{fontSize:12,color:C.text2,lineHeight:1.5,paddingTop:8,borderTop:"1px solid rgba(255,255,255,0.06)"}}>{s.note}</div>}</div>))}</div>)}
+</div>)}
+{shiftView==="preshift"&&(<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{background:"rgba(16,185,129,0.07)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}><span style={{fontSize:18,flexShrink:0}}>💡</span><div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>Check these off before every shift. A prepared driver earns more — and stresses less.</div></div>
+{preShift.map((item,i)=>(<button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>togglePreShift(i)} style={{background:item.done?"rgba(16,185,129,0.08)":C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.18s",boxShadow:item.done?"0 0 14px rgba(16,185,129,0.18)":"none"}}><div style={{width:26,height:26,borderRadius:8,border:`2px solid ${item.done?C.green:"rgba(255,255,255,0.15)"}`,background:item.done?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>{item.done&&<span style={{color:"#000",fontSize:14,fontWeight:900}}>✓</span>}</div><span style={{fontSize:14,fontWeight:600,color:item.done?C.green:C.text,flex:1}}>{item.e} {item.t}</span></button>))}
+<div style={{display:"flex",gap:8,marginTop:4}}>
+<button onClick={resetPreShift} style={{flex:1,background:"transparent",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text3}}>Reset for Next Shift</button>
+{preShift.filter(i=>i.done).length===preShift.length&&preShift.length>0&&(<div style={{flex:1,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:12,padding:"12px",textAlign:"center",fontSize:13,fontWeight:800,color:C.green}}>🚀 Ready to roll!</div>)}
+</div>
+</div>)}
+{shiftView==="journal"&&(<div style={{display:"flex",flexDirection:"column",gap:14}}>
+<div style={{background:"rgba(59,130,246,0.07)",border:"1px solid rgba(59,130,246,0.2)",borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}><span style={{fontSize:18,flexShrink:0}}>📓</span><div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>Record how your shifts go. What worked, what didn't, anything worth remembering. Only you can see this.</div></div>
+<textarea value={journalInput} onChange={e=>setJournalInput(e.target.value)} placeholder="e.g. Good shift tonight — the arrival text trick worked on almost every delivery..." rows={4} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.7,width:"100%"}}/>
+<button onClick={addJournal} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 4px 16px rgba(59,130,246,0.3)"}}>Save Entry</button>
+{journal.length===0&&(<div style={{textAlign:"center",padding:"28px 16px",color:C.text3,fontSize:13,background:C.s1,borderRadius:16}}><div style={{fontSize:32,marginBottom:10}}>📓</div><div style={{fontWeight:700,color:C.text2,marginBottom:4}}>No entries yet</div><div>Write your first entry above. Even one sentence per shift makes a difference.</div></div>)}
+{journal.map((entry,i)=>(<div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:14,padding:"13px 15px"}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}><div style={{fontSize:11,color:C.text3,fontWeight:600}}>{entry.date} · {entry.time}</div><button onClick={()=>{const u=journal.filter((_,idx)=>idx!==i);setJournal(u);save("dp3-journal",u);}} style={{background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:15,padding:"0 2px"}}>✕</button></div><div style={{fontSize:13,color:C.text,lineHeight:1.75}}>{entry.text}</div></div>))}
+</div>)}
+</div>
+)}
+</div>
+{pro&&(<div style={{position:"fixed",bottom:56,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,zIndex:49,pointerEvents:"none"}}><div style={{margin:"0 16px",background:"rgba(7,8,10,0.85)",backdropFilter:"blur(8px)",WebkitBackdropFilter:"blur(8px)",borderTop:"1px solid rgba(255,255,255,0.05)",padding:"5px 16px",display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{fontSize:10,color:"rgba(255,255,255,0.18)",fontWeight:700,letterSpacing:"0.5px"}}>🔒 Elite content · For your personal use only · Please do not share</span></div></div>)}
+
+```
+  </div>
+
+  {/* ── Bottom Nav ── */}
+  <nav role="navigation" aria-label="Main navigation" style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
+    {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"track",l:"Track",e:"📊",ac:C.green},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
+      const active=tab===n.id;const popping=navPop===n.id;
+      return(
+        <button key={n.id} onClick={()=>changeTab(n.id)} aria-label={n.l} aria-current={active?"page":undefined} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"5px 0 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
+          {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac}`}}/>}
+          <div className={popping?"nav-pop":""} style={{width:36,height:26,borderRadius:9,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
+            <span style={{fontSize:active?16:14,transition:"font-size 0.18s"}}>{n.e}</span>
+          </div>
+          <span style={{fontSize:9,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px"}}>{n.l}</span>
+        </button>
+      );
+    })}
+  </nav>
+
+  {/* ── What's New Modal ── */}
+  {showUpdate&&(
+    <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+      <div onClick={()=>{setShowUpdate(false);save("dp3-update-seen",LATEST_UPDATE_ID);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
+      <div style={{position:"relative",background:`linear-gradient(180deg,${C.s2},${C.s1})`,borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:24,paddingBottom:44,width:"100%",maxWidth:430,zIndex:1,maxHeight:"80vh",overflowY:"auto"}}>
+        <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 22px"}}/>
+        <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20}}>
+          <div style={{width:44,height:44,borderRadius:13,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>🚗</div>
+          <div><div style={{fontSize:11,fontWeight:800,color:C.amber,letterSpacing:"2px",textTransform:"uppercase",marginBottom:2}}>What's New</div><div style={{fontSize:20,fontWeight:900,letterSpacing:"-0.5px"}}>DropPilot Update</div></div>
+        </div>
+        {UPDATES.map((u,ui)=>(
+          <div key={ui} style={{marginBottom:ui<UPDATES.length-1?22:0}}>
+            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:12}}>
+              <div style={{fontSize:11,fontWeight:800,color:C.text3,letterSpacing:"1.5px",textTransform:"uppercase"}}>{u.date}</div>
+              <div style={{flex:1,height:1,background:"rgba(255,255,255,0.06)"}}/>
+            </div>
+            <div style={{fontSize:15,fontWeight:800,marginBottom:10,color:C.text}}>{u.title}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:7}}>
+              {u.items.map((item,ii)=>(<div key={ii} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"10px 12px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:11}}><div style={{width:6,height:6,borderRadius:"50%",background:C.amber,flexShrink:0,marginTop:5}}/><div style={{fontSize:13,color:C.text2,lineHeight:1.55}}>{item}</div></div>))}
+            </div>
+          </div>
+        ))}
+        <button onClick={()=>{setShowUpdate(false);save("dp3-update-seen",LATEST_UPDATE_ID);}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginTop:22}}>Got it →</button>
+      </div>
+    </div>
+  )}
+
+  {showPay&&(
+    <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+      <div onClick={()=>{setShowPay(false);setPayStep("offer");setCodeIn("");setCodeErr("");setRestoreEmail("");setRestoreMsg("");}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
+      <div style={{position:"relative",background:"linear-gradient(180deg,#12151a,#0d0f13)",borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:24,paddingBottom:40,width:"100%",maxWidth:430,zIndex:1,maxHeight:"88vh",overflowY:"auto"}}>
+        <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 22px"}}/>
+        {payStep==="offer"&&(
+          <div>
+            <div style={{textAlign:"center",marginBottom:22}}>
+              <div style={{fontSize:44,marginBottom:10}}>🔒</div>
+              <div style={{fontSize:22,fontWeight:900,marginBottom:6}}>Become Elite</div>
+              <div style={{fontSize:14,color:C.text2,lineHeight:1.7}}>Everything you need to earn more, protect your account, and stay sharp.</div>
+            </div>
+            <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:20}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:12,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
+                <span style={{fontSize:15,fontWeight:700}}>Elite Access</span>
+                <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$10</span>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:9}}>
+                {["All 10 tips with full explanations","7 deep-dive psychology sections","30 message templates with one-tap copy","4 training videos — backed by real research","Platform habits & appeal scripts for 5 platforms","Track tab — log shifts, tips, ratings, journal","Notes log for problem addresses & customers"].map((f,i)=>(
+                  <div key={i} style={{display:"flex",alignItems:"center",gap:8,fontSize:12,color:C.text2}}>
+                    <span style={{color:C.green,fontWeight:900,fontSize:13}}>✓</span>{f}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <button onClick={()=>{window.open(STRIPE_LINK,"_blank");setPayStep("code");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
+              <span style={{fontSize:20}}>💳</span>
+              <div style={{textAlign:"left"}}><div>Become Elite — $10</div><div style={{fontSize:13,fontWeight:500,opacity:0.75,marginTop:2}}>Opens secure Stripe checkout</div></div>
+            </button>
+            <div style={{textAlign:"center",fontSize:13,color:C.text3,marginBottom:20}}>Lifetime access · Free updates forever</div>
+            <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:16}}>
+              <div style={{fontSize:13,color:C.text3,marginBottom:10}}>Already paid? Enter your unlock code:</div>
+              <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter code from your receipt..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"13px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
+              {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
+              <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:12,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:12}}>Unlock with Code</button>
+              <button onClick={()=>setPayStep("restore")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:12,width:"100%",padding:"4px"}}>Lost your code? Restore purchase</button>
+            </div>
+          </div>
+        )}
+        {payStep==="code"&&(
+          <div>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontSize:44,marginBottom:10}}>💳</div>
+              <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Finish Your Payment</div>
+              <div style={{fontSize:13,color:C.text2,lineHeight:1.7,marginBottom:16}}>Stripe opened in a new tab. After paying, Stripe emails you a receipt with your unlock code.</div>
+              <button onClick={()=>window.open(STRIPE_LINK,"_blank")} style={{background:"rgba(59,130,246,0.12)",border:"1px solid rgba(59,130,246,0.3)",borderRadius:12,padding:"10px 20px",color:C.blue,cursor:"pointer",fontSize:13,fontWeight:700,marginBottom:20}}>Reopen Stripe</button>
+            </div>
+            <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter unlock code from receipt..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"14px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
+            {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
+            <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:10}}>Unlock Full Access</button>
+            <button onClick={()=>setPayStep("offer")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,width:"100%",padding:"8px"}}>← Go back</button>
+          </div>
+        )}
+        {payStep==="restore"&&(
+          <div>
+            <div style={{textAlign:"center",marginBottom:20}}>
+              <div style={{fontSize:44,marginBottom:10}}>📧</div>
+              <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Restore Your Purchase</div>
+              <div style={{fontSize:13,color:C.text2,lineHeight:1.7}}>Enter the email you used when you paid. We'll resend your unlock code.</div>
+            </div>
+            <input value={restoreEmail} onChange={e=>{setRestoreEmail(e.target.value);setRestoreMsg("");}} placeholder="your@email.com" style={{background:"rgba(0,0,0,0.3)",border:"1.5px solid rgba(255,255,255,0.1)",borderRadius:12,padding:"14px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
+            {restoreMsg&&<div style={{fontSize:12,color:restoreMsg.includes("If")?C.green:C.red,marginBottom:8,lineHeight:1.5}}>{restoreMsg}</div>}
+            <button onClick={handleRestore} style={{background:C.blue,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",marginBottom:10}}>Send My Code</button>
+            <button onClick={()=>setPayStep("offer")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,width:"100%",padding:"8px"}}>← Go back</button>
+          </div>
+        )}
+        {payStep==="done"&&(
+          <div style={{textAlign:"center",padding:"10px 0"}}>
+            <div style={{fontSize:64,marginBottom:16}}>🎉</div>
+            <div style={{fontSize:24,fontWeight:900,marginBottom:8}}>You're Elite.</div>
+            <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training video, and every update we ship. Yours forever.</div>
+            <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 6px 24px rgba(245,166,35,0.4)",marginBottom:10}}>Go to Scripts</button>
+            <button onClick={()=>{setShowPay(false);setPayStep("offer");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>Explore the App</button>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</div>
+```
+
+);
+}
+
+ReactDOM.createRoot(document.getElementById(“root”)).render(React.createElement(App));
+</script>
 
 <script>
-const e = React.createElement;
-const { useState, useEffect } = React;
-
-const ACCESS_CODE = "DROP123";
-
-const TIPS = [
-  "Stack orders during peak hours",
-  "Avoid low-tip zones",
-  "Track your best times to drive",
-  "Be polite in messages = better tips"
-];
-
-function App() {
-  const [code,setCode] = useState("");
-  const [unlocked,setUnlocked] = useState(false);
-  const [tab,setTab] = useState("learn");
-
-  const [notes,setNotes] = useState([]);
-  const [noteInput,setNoteInput] = useState("");
-
-  const [journal,setJournal] = useState("");
-  const [backup,setBackup] = useState("");
-
-  // Load saved data
-  useEffect(()=>{
-    const savedNotes = localStorage.getItem("notes");
-    const savedJournal = localStorage.getItem("journal");
-
-    if(savedNotes) setNotes(JSON.parse(savedNotes));
-    if(savedJournal) setJournal(savedJournal);
-  },[]);
-
-  // Save data
-  useEffect(()=>{
-    localStorage.setItem("notes",JSON.stringify(notes));
-  },[notes]);
-
-  useEffect(()=>{
-    localStorage.setItem("journal",journal);
-  },[journal]);
-
-  function unlock(){
-    if(code === ACCESS_CODE){
-      setUnlocked(true);
-    } else {
-      alert("Invalid code");
-    }
-  }
-
-  function addNote(){
-    if(!noteInput) return;
-    setNotes([...notes,noteInput]);
-    setNoteInput("");
-  }
-
-  function exportData(){
-    const data = JSON.stringify({notes,journal});
-    setBackup(data);
-  }
-
-  function importData(){
-    try{
-      const parsed = JSON.parse(backup);
-      setNotes(parsed.notes || []);
-      setJournal(parsed.journal || "");
-      alert("Restored!");
-    }catch{
-      alert("Invalid backup");
-    }
-  }
-
-  if(!unlocked){
-    return e("div",{className:"container"},
-      e("div",{className:"card"},
-        e("h2",null,"🚗 DropPilot"),
-        e("p",null,"Enter access code"),
-        e("input",{value:code,onChange:(v)=>setCode(v.target.value)}),
-        e("button",{onClick:unlock},"Unlock")
-      )
-    );
-  }
-
-  return e("div",{className:"container"},
-
-    // Tabs
-    e("div",{className:"tabs"},
-      ["learn","scripts","track","settings"].map(t=>
-        e("div",{
-          className:"tab "+(tab===t?"active":""),
-          onClick:()=>setTab(t)
-        },t.toUpperCase())
-      )
-    ),
-
-    // LEARN
-    tab==="learn" && e("div",{className:"card"},
-      e("h3",null,"Tips"),
-      TIPS.map(t=>e("p",{key:t},"• "+t))
-    ),
-
-    // SCRIPTS
-    tab==="scripts" && e("div",{className:"card"},
-      e("h3",null,"Messages"),
-      e("p",null,"Hey! I'm on the way with your order 🚗"),
-      e("p",null,"Just dropped it off — enjoy! 🙌"),
-      e("p",null,"Restaurant is a bit busy, thanks for your patience!")
-    ),
-
-    // TRACK
-    tab==="track" && e("div",{className:"card"},
-      e("h3",null,"Notes"),
-      e("input",{
-        value:noteInput,
-        onChange:(v)=>setNoteInput(v.target.value),
-        placeholder:"Add note"
-      }),
-      e("button",{onClick:addNote},"Add"),
-      notes.map((n,i)=>e("p",{key:i},"• "+n)),
-
-      e("h3",null,"Journal"),
-      e("textarea",{
-        value:journal,
-        onChange:(v)=>setJournal(v.target.value),
-        rows:5
-      })
-    ),
-
-    // SETTINGS
-    tab==="settings" && e("div",{className:"card"},
-      e("h3",null,"Backup"),
-      e("button",{onClick:exportData},"Export"),
-      e("textarea",{value:backup,onChange:(v)=>setBackup(v.target.value)}),
-      e("button",{onClick:importData},"Import")
-    )
-  );
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
 }
-
-ReactDOM.createRoot(document.getElementById("root")).render(e(App));
 </script>
+
 </body>
 </html>
