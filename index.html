@@ -1415,14 +1415,14 @@ function App() {
               </div>
             ):(
               <div style={{display:"flex",flexDirection:"column",gap:20}}>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
                   {PLATFORMS_DEFEND.map((p,pi)=>{
                     const active=defPlatform===p.id;
                     return(
                       <button key={p.id} className={`card-in c${pi}`} onClick={()=>selectPlatform(p.id)}
-                        style={{background:active?`${p.color}15`:C.s1,border:`1px solid ${active?p.color:C.border}`,borderRadius:14,padding:"13px 10px",display:"flex",alignItems:"center",gap:8,cursor:"pointer",transition:"all 0.18s",boxShadow:active?`0 0 18px ${p.color}30`:"none"}}>
-                        <span style={{fontSize:20}}>{p.e}</span>
-                        <span style={{fontSize:14,fontWeight:700,color:active?p.color:C.text}}>{p.label}</span>
+                        style={{background:active?`${p.color}15`:C.s1,border:`2px solid ${active?p.color:"rgba(255,255,255,0.07)"}`,borderRadius:16,padding:"14px 12px",display:"flex",alignItems:"center",gap:10,cursor:"pointer",transition:"all 0.18s",boxShadow:active?`0 0 20px ${p.color}28`:"none"}}>
+                        <div style={{width:34,height:34,borderRadius:10,background:`${p.color}18`,border:`1px solid ${p.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>{p.e}</div>
+                        <span style={{fontSize:14,fontWeight:800,color:active?p.color:C.text,lineHeight:1.2}}>{p.label}</span>
                       </button>
                     );
                   })}
@@ -1433,18 +1433,20 @@ function App() {
                   const appeals=PLATFORM_APPEALS[defPlatform]||[];
                   return(
                     <div style={{display:"flex",flexDirection:"column",gap:12,animation:"slideUp 0.3s cubic-bezier(0.16,1,0.3,1)"}}>
-                      <div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
-                        {[["habits","🛡️ Habits"],["appeals","📋 Appeals"],["checklist","✅ Checklist"],["notes","📝 Notes"]].map(([id,label])=>(
-                          <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:9,padding:"9px 2px",fontSize:12,fontWeight:700,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.18s",boxShadow:defSection===id?`0 0 12px ${plat.color}50`:"none"}}>{label}</button>
+                      <div style={{display:"flex",gap:4,background:"rgba(255,255,255,0.04)",borderRadius:13,padding:4,border:"1px solid rgba(255,255,255,0.06)"}}>
+                        {[["habits","Habits"],["appeals","Appeals"],["checklist","Checklist"],["notes","Notes"]].map(([id,label])=>(
+                          <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:10,padding:"10px 4px",fontSize:12,fontWeight:800,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.18s",letterSpacing:"0.2px"}}>{label}</button>
                         ))}
                       </div>
                       {defSection==="habits"&&habits.map((h,i)=>(
-                        <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:h.urgent?"rgba(244,63,94,0.06)":C.s1,border:`1px solid ${h.urgent?"rgba(244,63,94,0.2)":C.border}`,borderRadius:14,padding:"15px 16px"}}>
-                          <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
-                            <div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
-                            <div style={{flex:1}}>
-                              {h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>CRITICAL</span>}
-                              <div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div>
+                        <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:h.urgent?"rgba(244,63,94,0.05)":C.s1,border:`1px solid ${h.urgent?"rgba(244,63,94,0.22)":C.border}`,borderRadius:16,padding:"16px"}}>
+                          <div style={{display:"flex",alignItems:"flex-start",gap:13}}>
+                            <div style={{width:42,height:42,borderRadius:13,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",border:`1px solid ${h.urgent?"rgba(244,63,94,0.2)":"rgba(255,255,255,0.07)"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
+                            <div style={{flex:1,minWidth:0}}>
+                              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:5}}>
+                                <div style={{fontSize:14,fontWeight:800,lineHeight:1.3}}>{h.t}</div>
+                                {h.urgent&&<span style={{fontSize:10,fontWeight:900,color:C.red,background:"rgba(244,63,94,0.12)",border:"1px solid rgba(244,63,94,0.25)",borderRadius:5,padding:"2px 7px",flexShrink:0,letterSpacing:"0.5px"}}>CRITICAL</span>}
+                              </div>
                               <p style={{fontSize:13,color:C.text2,lineHeight:1.75,margin:0}}>{h.why}</p>
                             </div>
                           </div>
@@ -1455,9 +1457,12 @@ function App() {
                         return(
                           <div key={ai} className={`card-in c${Math.min(ai,9)}`} style={{background:C.s1,border:`1px solid ${apOpen?ap.color+"50":C.border}`,borderRadius:16,overflow:"hidden",transition:"border-color 0.18s"}}>
                             <div onClick={()=>{setAppealOpen(apOpen?null:ai);setAppealSub(null);}} style={{padding:"15px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
-                              <span style={{fontSize:22}}>{ap.e}</span>
-                              <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{ap.t}</div><div style={{fontSize:12,fontWeight:700,color:ap.color,marginTop:3}}>{ap.urgency}</div></div>
-                              <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:apOpen?"rotate(180deg)":"none"}}>▾</div>
+                              <div style={{width:40,height:40,borderRadius:12,background:`${ap.color}14`,border:`1px solid ${ap.color}28`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:19,flexShrink:0}}>{ap.e}</div>
+                              <div style={{flex:1,minWidth:0}}>
+                                <div style={{fontSize:14,fontWeight:800,marginBottom:4}}>{ap.t}</div>
+                                <span style={{fontSize:10,fontWeight:800,color:ap.color,background:`${ap.color}12`,border:`1px solid ${ap.color}25`,borderRadius:5,padding:"2px 7px",letterSpacing:"0.3px"}}>{ap.urgency}</span>
+                              </div>
+                              <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:apOpen?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
                             </div>
                             {apOpen&&(
                               <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.16,1,0.3,1)"}}>
