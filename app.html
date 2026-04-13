@@ -24,7 +24,7 @@
   <div id="root">
     <div id="splash">
       <div class="s-icon">🚗</div>
-      <div class="s-msg">Loading DropPilot…</div>
+      <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -141,17 +141,6 @@ const LEARN_CATS = [
     ]
   },
   {
-    e:"🎭", t:"Difficult Customer Playbook", sub:"Real scripts for every hard moment", free:false,
-    secs:[
-      {h:"The Angry Door Opener", body:"They open the door already frustrated — before you've said a word. Do NOT apologize immediately (sounds hollow) or explain yourself (sounds defensive). Instead: hold eye contact for one second — don't look away. Slow your voice down. Say warmly: 'I'm really sorry about the wait. I hope the rest of your night is better.' Present the bag calmly and professionally. Leave without lingering. This takes 8 seconds. Customers who receive this almost never file complaints — even when genuinely frustrated.", tip:"Slow your voice before you slow your words. The tone tells them everything before you even speak."},
-      {h:"The 'I Ordered This Two Hours Ago' Customer", body:"This is always an exaggeration — arguing about the actual timing never helps. They're venting. Let them. Your response: 'I'm so sorry — I can only imagine how frustrating that wait has been. Here's your order.' Nothing more. Do not explain the delay, cite the app's timing, or say it wasn't your fault. Every explanation sounds like an excuse. An acknowledgment and the food is everything they need from you right now.", tip:"The customer knows it wasn't literally two hours. They're telling you how long it felt. Treat the feeling, not the fact."},
-      {h:"The 'This Isn't What I Ordered' Accusation", body:"You had a sealed bag from the restaurant. You cannot verify or take responsibility for its contents. Say: 'I'm really sorry — I picked up a sealed bag right from the restaurant. The fastest way to fix this is through [platform] support — they'll make it right quickly.' Do not inspect the bag with them. Do not suggest they may be mistaken. Do not promise anything. Redirect and leave politely. That is the professional move.", tip:"The sealed bag is your protection. State it simply, redirect to support, leave politely."},
-      {h:"The Customer Who Stands and Stares", body:"Some customers watch every move — standing in the doorway while you photograph the food, type in the app, etc. Don't let it rattle you. Acknowledge them with a small smile: 'Just taking the delivery photo — required for every drop-off!' This explains your behavior before they can misinterpret it, and turns what could feel like surveillance into a shared moment. Say goodbye warmly and leave.", tip:"Narrate what you're doing before they have to ask. Transparency disarms suspicion every time."},
-      {h:"The Customer Who Won't Come to the Door", body:"You've knocked, texted, and waited. Nothing. The right sequence: 1. Text immediately — 'Hi! At your door and knocked — will wait a couple minutes!' 2. Wait 2-3 minutes. 3. If no response: 'I've been at your door — leaving your order in a safe spot and taking a photo. Contact [platform] support if there's any issue.' 4. Leave in the safest visible spot. Take a clear photo showing the address. Your text timestamps protect you.", tip:"Two texts. Clear documentation. A clean photo. That's your protection if they file a complaint."},
-      {h:"When a Customer Gets Aggressive", body:"If a customer becomes verbally aggressive — raising their voice or using threatening language — do not engage. Say calmly: 'I want to help resolve this. Please contact [platform] support and they'll handle it right away.' Then leave. You do not have to absorb hostility. Your safety comes first. Document the interaction in the platform's support system as soon as you leave.", tip:"You can be professional and still leave. Walking away from aggression is the right move — not a failure."},
-    ]
-  },
-  {
     e:"💰", t:"The Science of Tips", sub:"Why people tip — and how to make it happen", free:false,
     secs:[
       {h:"The Two-Handed Handoff", body:"Research on service and tipping found that a brief, real moment of physical exchange during a transaction increases tips significantly. You can't manufacture extra contact at someone's door. But a two-handed bag presentation is the delivery version of this. When you use two hands to present the bag — facing the customer, at chest height — it creates a real exchange instead of a drop-off. Customers feel the difference without knowing why. Try it for one week straight and track your tips.", tip:"Two hands every time. It's not just about the bag staying level — it's about what it communicates."},
@@ -223,11 +212,11 @@ const MSG_CATS = [
 
 // ─── Defend Data ──────────────────────────────────────────────────────────────
 const PLATFORMS_DEFEND = [
-  {id:"doordash",   label:"DoorDash",    color:"#FF3008", abbr:"DD"},
-  {id:"ubereats",   label:"Uber Eats",   color:"#06C167", abbr:"UE"},
-  {id:"spark",      label:"Spark",       color:"#0071CE", abbr:"SP"},
-  {id:"instacart",  label:"Instacart",   color:"#43B02A", abbr:"IC"},
-  {id:"amazonflex", label:"Amazon Flex", color:"#FF9900", abbr:"AF"},
+  {id:"doordash",  label:"DoorDash",  color:"#FF3008", e:"🔴"},
+  {id:"ubereats",  label:"Uber Eats", color:"#06C167", e:"🟢"},
+  {id:"spark",     label:"Spark",     color:"#0071CE", e:"🔵"},
+  {id:"instacart", label:"Instacart", color:"#43B02A", e:"🟩"},
+  {id:"amazonflex", label:"Flex", color:"#FF9900", e:"📦"},
 ];
 
 const PLATFORM_HABITS = {
@@ -429,18 +418,22 @@ function IntroAnimation({onDone}) {
         <div style={{position:"absolute",top:-60,right:-40,width:240,height:240,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,166,35,0.15),transparent 68%)",pointerEvents:"none"}}/>
         <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,marginBottom:22,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
         <div className="iup id1" style={{fontSize:40,fontWeight:900,letterSpacing:"-2px",background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6,textAlign:"center"}}>DropPilot</div>
-        <div className="iup id1" style={{fontSize:12,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Driver Command Center</div>
+        <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Customer Service · Gig Edition</div>
         <Divider/>
-        <div className="iup id2" style={{fontSize:16,color:"rgba(255,255,255,0.6)",textAlign:"center",lineHeight:1.8,fontWeight:500}}>Everything you need to earn more,<br/>protect your account, and deliver<br/>with confidence — every shift.</div>
+        <div className="iup id2" style={{fontSize:15,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.9,fontWeight:500}}>The first customer service app<br/>built specifically for gig drivers.<br/>The delivery is the task.<br/>The service is the job.</div>
       </div>
 
-      {/* Scene 1: The real problem */}
+      {/* Scene 1: The Real Job */}
       <div style={ss(1)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the gap most drivers never close</div>
-        <div className="iup id1" style={{fontSize:30,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Driving well<br/>doesn't automatically<br/>mean earning well.</div>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>what your job actually is</div>
+        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>You don't get rated<br/>on speed.<br/>You get rated on<br/>how you made them feel.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:10,width:"100%"}}>
-          {[["Your rating decides which orders you even see.","rgba(244,63,94,0.1)","rgba(244,63,94,0.28)"],["Tips are won or lost in the last 10 seconds at the door.","rgba(245,166,35,0.08)","rgba(245,166,35,0.25)"],["One complaint — real or false — can cost you your account.","rgba(244,63,94,0.1)","rgba(244,63,94,0.28)"]].map(([t,bg,border],i)=>(
+          {[
+            ["Your rating is a customer service score — every delivery adds to it.","rgba(245,166,35,0.08)","rgba(245,166,35,0.25)"],
+            ["Tips are emotional, not logical. Customers tip how they felt, not how fast you were.","rgba(59,130,246,0.08)","rgba(59,130,246,0.25)"],
+            ["Drivers who master service earn significantly more. Same roads. Same apps.","rgba(16,185,129,0.08)","rgba(16,185,129,0.25)"]
+          ].map(([t,bg,border],i)=>(
             <div key={i} className="iup" style={{padding:"12px 15px",background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.3+i*0.14}s`,opacity:0}}>
               <div style={{fontSize:13,color:"rgba(255,255,255,0.8)",lineHeight:1.55,fontWeight:600}}>{t}</div>
             </div>
@@ -448,13 +441,38 @@ function IntroAnimation({onDone}) {
         </div>
       </div>
 
-      {/* Scene 2: Five sections */}
+      {/* Scene 2: The Craft */}
       <div style={ss(2)}>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(139,92,246,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the service gap</div>
+        <div className="iup id1" style={{fontSize:27,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${P})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Most gig drivers<br/>were never taught<br/>customer service.<br/>That's the gap.</div>
+        <Divider color={P}/>
+        <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
+          {[
+            ["🏨","Hospitality professionals train for months on the exact words, tone, and timing of every guest interaction."],
+            ["🎯","Great service isn't natural — it's trained. The right phrase at the door is worth more than a perfect route."],
+            ["🚗","DropPilot brings professional service standards to gig drivers. Practical. Proven. Built for the road."]
+          ].map(([e,t],i)=>(
+            <div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"rgba(139,92,246,0.06)",border:"1px solid rgba(139,92,246,0.18)",borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
+              <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{e}</span>
+              <div style={{fontSize:12.5,color:"rgba(255,255,255,0.72)",lineHeight:1.6,fontWeight:500}}>{t}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scene 3: Five sections */}
+      <div style={ss(3)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>five sections. one toolkit.</div>
-        <div className="iup id1" style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.6px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Everything you need<br/>to earn more on<br/>every single shift.</div>
+        <div className="iup id1" style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.6px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Scripts. Habits. Defense.<br/>Training. All built for<br/>the real job.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
-          {[["⭐",A,"Earn","Tips, psychology, and habits that raise your rating"],["💬",B,"Scripts","Word-for-word messages for every situation"],["📖",T,"Basics","New to gig work? Everything explained from scratch"],["🛡️",P,"Defend","Protect your account when things go wrong"],["🎓",A,"Training","Short videos on what actually earns more money"]].map(([e,col,label,desc],i)=>(
+          {[
+            ["⭐",A,"Earn","Service habits and psychology that raise your rating and tips"],
+            ["💬",B,"Scripts","Word-for-word messages for every customer situation"],
+            ["📖",T,"Basics","Platform rules, policies, and how gig work actually works"],
+            ["🛡️",P,"Defend","Protect your account when complaints and disputes happen"],
+            ["🎓",A,"Training","Customer service lessons backed by real research"]
+          ].map(([e,col,label,desc],i)=>(
             <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,animationDelay:`${0.25+i*0.1}s`,opacity:0}}>
               <div style={{width:32,height:32,borderRadius:9,background:`${col}15`,border:`1px solid ${col}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
               <div style={{flex:1,minWidth:0}}><div style={{fontSize:13,fontWeight:800,color:col,marginBottom:1}}>{label}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.45)",lineHeight:1.3}}>{desc}</div></div>
@@ -463,47 +481,37 @@ function IntroAnimation({onDone}) {
         </div>
       </div>
 
-      {/* Scene 3: Built for every driver */}
-      <div style={ss(3)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(6,182,212,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>built for every driver</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${T})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Whether you've been<br/>doing this for years<br/>or just got started.</div>
+      {/* Scene 4: Platforms */}
+      <div style={ss(4)}>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(6,182,212,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>built for every platform</div>
+        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${T})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>DoorDash. Uber Eats.<br/>Instacart. Lyft. Flex.</div>
         <Divider color={T}/>
-        <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
-          {[["🧓","New to gig work","The Basics section explains everything from scratch. No experience needed.","rgba(6,182,212,0.08)","rgba(6,182,212,0.22)"],["🚗","Already delivering","Sharpen your habits, earn more tips, protect your account.","rgba(245,166,35,0.08)","rgba(245,166,35,0.22)"],["💪","Top earner","Use the deep psychology and science sections to stay elite.","rgba(16,185,129,0.08)","rgba(16,185,129,0.22)"]].map(([e,title,desc,bg,border],i)=>(
-            <div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
-              <span style={{fontSize:20,flexShrink:0}}>{e}</span>
-              <div><div style={{fontSize:13,fontWeight:800,color:C.text,marginBottom:2}}>{title}</div><div style={{fontSize:12,color:"rgba(255,255,255,0.5)",lineHeight:1.55}}>{desc}</div></div>
+        <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
+          {[
+            ["🍔","#FF3008","DoorDash","Habits, scripts, and appeal letters built for DD drivers"],
+            ["🛵","#06C167","Uber Eats","Service tips, rating recovery, and dispute templates"],
+            ["🛒","#43B02A","Instacart","Shopper etiquette, substitution handling, and IC appeals"],
+            ["🚙","#FF00BF","Lyft","Passenger service, rating protection, and driver tips"],
+            ["📦","#FF9900","Flex","Block scheduling, standing protection, and TBA handling"]
+          ].map(([e,col,label,desc],i)=>(
+            <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",background:"rgba(6,182,212,0.05)",border:"1px solid rgba(6,182,212,0.15)",borderRadius:12,animationDelay:`${0.25+i*0.1}s`,opacity:0}}>
+              <div style={{width:32,height:32,borderRadius:9,background:`${col}18`,border:`1px solid ${col}35`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
+              <div style={{flex:1,minWidth:0}}><div style={{fontSize:13,fontWeight:800,color:"rgba(255,255,255,0.85)",marginBottom:1}}>{label}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.4)",lineHeight:1.3}}>{desc}</div></div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Scene 4: Elite access */}
-      <div style={ss(4)}>
+      {/* Scene 5: Elite access */}
+      <div style={ss(5)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $7 one time</div>
         <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["📖",T,"Basics Guide"],["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎬",A,"Animated Lessons"],["🧠",G,"Psychology"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
+          {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
             <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"11px 12px",display:"flex",alignItems:"center",gap:8}}>
               <span style={{fontSize:18}}>{e}</span>
               <span style={{fontSize:12,fontWeight:700,color:col}}>{label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Scene 5: The outcome */}
-      <div style={ss(5)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(16,185,129,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the result</div>
-        <div className="ipop" style={{fontSize:52,marginBottom:16,display:"block",textAlign:"center"}}>⭐</div>
-        <div className="iup id1" style={{fontSize:30,fontWeight:900,lineHeight:1.15,textAlign:"center",letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 30%,${G})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Higher ratings.<br/>Bigger tips.<br/>A protected account.<br/>More money.</div>
-        <Divider color={G}/>
-        <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["⭐","Better Rating",G],["💰","More Tips",A],["🛡️","Account Safe",P],["📈","More Income",G]].map(([e,t,col],i)=>(
-            <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"12px 10px",textAlign:"center"}}>
-              <div style={{fontSize:22,marginBottom:4}}>{e}</div>
-              <div style={{fontSize:12,fontWeight:700,color:col,letterSpacing:"0.3px"}}>{t}</div>
             </div>
           ))}
         </div>
@@ -516,7 +524,7 @@ function IntroAnimation({onDone}) {
         <div style={{position:"relative",zIndex:1,textAlign:"center",width:"100%"}}>
           <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,margin:"0 auto 18px",boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
           <div className="iup id1" style={{fontSize:40,fontWeight:900,letterSpacing:"-2px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4,textAlign:"center"}}>DropPilot</div>
-          <div className="iup id1" style={{fontSize:12,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Driver Command Center</div>
+          <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Customer Service · Gig Edition</div>
           <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
           <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:7,marginBottom:26,width:"100%"}}>
             {[["⭐","Earn",A,"Free"],["💬","Scripts",B,"Elite"],["📖","Basics",T,"Elite"],["🛡️","Defend",P,"Elite"],["🎓","Training",A,"Elite"]].map(([e,t,col,badge],i)=>(
@@ -575,60 +583,6 @@ const VIDEOS = [
       {t:27000,tag:"the most underused phrase",emoji:"💬",hed:'"You\'re welcome"\nvs\n"No problem."',sub:null,vs:{bad:["No problem","Implies it could have been a problem. Subtly weakens the interaction."],good:["You're welcome","Confirms something of value was given. Ends the exchange properly."]},why:{color:"#8B5CF6",text:"'You're welcome' tells the customer their delivery mattered. 'No problem' minimizes it. People tip more when they feel the delivery was meaningful."},cite:"Source: Lakoff — Language and Woman's Place"},
       {t:34000,tag:"three words. real results.",emoji:"✨",hed:"Please.\nThank you.\nYou're welcome.",sub:"Three simple phrases. Backed by decades of research. Drivers who use them earn more, rate higher, and keep their accounts longer.",hi:{color:"#10B981",text:"It's not about being soft. It's strategy. And the data proves it."}},
     ]},
-];
-
-// ─── Scenario Trainer Data ────────────────────────────────────────────────────
-const SCENARIOS = [
-  {
-    id:0, e:"😤", title:"The Frustrated Customer",
-    setup:"You arrive at the door and knock. The customer opens it visibly frustrated. Before you can say anything they say: 'Finally. It's been over an hour. The food is probably cold.'",
-    choices:[
-      {text:"Apologize and explain that traffic was terrible tonight",grade:"ok",why:"You're being human, but making excuses shifts focus to yourself instead of their feeling. Better to acknowledge their frustration and move on — no explanations needed."},
-      {text:"Say 'I'm really sorry you had to wait — I hope the rest of your night is better!' and hand over the bag",grade:"best",why:"Perfect. You acknowledged how they feel without making excuses or taking blame. Short, warm, and it ends the interaction on a positive note. This is exactly the right move."},
-      {text:"Smile and say nothing — just hand over the bag quickly",grade:"bad",why:"Silence reads as indifference to an already frustrated customer. Not acknowledging their feeling almost guarantees a lower rating here."},
-      {text:"Explain that the restaurant caused the delay, not you",grade:"bad",why:"Even if true, this sounds defensive and can start an argument. The customer doesn't care who's at fault — they want their frustration acknowledged. Pointing fingers just adds to the problem."},
-    ]
-  },
-  {
-    id:1, e:"🏢", title:"Lost in the Apartment Complex",
-    setup:"You've arrived at a large apartment complex and have been driving around for 4 minutes. You can't find Building C. The food is getting cold and your GPS led you to the wrong entrance.",
-    choices:[
-      {text:"Keep driving until you find it — you don't want to bother the customer",grade:"bad",why:"Every extra minute costs warmth and earns frustration. If they're watching the tracker, they see you circling. Text immediately — every second matters here."},
-      {text:"Text: 'Hi! In the [complex] parking area but having trouble finding Building C — could you help with which entrance to use? Almost there!'",grade:"best",why:"Perfect. Fast, specific, and gives them something actionable. Most customers respond in under 30 seconds when their food is outside. You stop the frustration clock the moment you send it."},
-      {text:"Call them right away",grade:"ok",why:"Calling works, but most people prefer a text first — many won't answer unknown numbers. Text first, then call if no response after 2 minutes."},
-      {text:"Leave the food at the main entrance and mark it delivered",grade:"bad",why:"This almost always leads to a complaint. You haven't done everything possible to reach them. Always text first — it's both the right thing to do and your protection if anything goes wrong."},
-    ]
-  },
-  {
-    id:2, e:"⏰", title:"Running 12 Minutes Late",
-    setup:"You're 12 minutes behind schedule due to unexpected construction. The customer just texted: 'Where is my order? It says you're still 10 minutes away.'",
-    choices:[
-      {text:"Don't respond — the app tracker shows your location anyway",grade:"bad",why:"This is the worst move. The customer texted because they want acknowledgment. Going silent turns a frustrated customer into an angry one. You'll likely lose a star just for not responding."},
-      {text:"Reply: 'Hi! Really sorry — hit unexpected construction. On my way and will be there in about 10 minutes. I appreciate your patience!'",grade:"best",why:"Excellent. You acknowledged them, gave a real ETA, and stated the cause plainly without whining about it. This often turns frustration into sympathy."},
-      {text:"Reply: 'Driving as fast as I can!'",grade:"ok",why:"Better than silence, but vague and slightly defensive. Give them an actual ETA — that's all they really want from you."},
-      {text:"Reply: 'Sorry, the app GPS is off — I'm actually closer than it shows'",grade:"bad",why:"This sounds like a cover story even if it's true. Never blame the app. Own the delay briefly and clearly — that's all it takes."},
-    ]
-  },
-  {
-    id:3, e:"📦", title:"The Missing Item Claim",
-    setup:"You completed a delivery 20 minutes ago. You just received an in-app message: 'My order is missing the large fries. This is unacceptable.'",
-    choices:[
-      {text:"Reply: 'I checked the bag when I picked it up and everything was in there.'",grade:"bad",why:"Never say this. The moment you claim you checked the bag, you've taken responsibility for its contents — and you can't prove what was in a sealed bag. This creates an argument you can't win."},
-      {text:"Reply: 'I'm so sorry about that. I picked up a sealed bag from the restaurant — for the fastest fix, please contact [platform] support and they'll sort it out right away.'",grade:"best",why:"Exactly right. You didn't admit fault, acknowledged their frustration, and gave them the fastest path to a solution. Support handles it — that's their job. Your rating stays protected."},
-      {text:"Apologize and offer to go back to the restaurant",grade:"bad",why:"Going back isn't how the delivery workflow operates, and offering something you can't deliver makes everything worse. Always redirect to platform support."},
-      {text:"Don't reply — they'll figure it out through the app",grade:"bad",why:"Staying silent after a complaint almost guarantees a 1-star rating. A quick, helpful reply keeps you in control of how this ends."},
-    ]
-  },
-  {
-    id:4, e:"🌧️", title:"Rainy Night, Big Impression",
-    setup:"It's raining hard. You've kept the bag dry under your jacket the whole way. You arrive at the door, slightly wet. The customer opens up.",
-    choices:[
-      {text:"Say nothing — just hand over the bag quickly",grade:"ok",why:"At least you delivered. But you missed an opportunity. The customer likely feels a little guilty watching you in the rain. One warm sentence turns that guilt into gratitude — and gratitude into a tip."},
-      {text:"Complain: 'Terrible night out there — I'm absolutely soaked!'",grade:"bad",why:"Complaining asks for sympathy, not gratitude. Customers may feel uncomfortable but not generous. Never complain about conditions."},
-      {text:"Say warmly: 'Kept it moving out there for you — hope you enjoy it!' with a smile, and hand over the bag",grade:"best",why:"Perfect. You acknowledged the effort without complaining. The customer hears: 'I worked hard so you could enjoy your meal.' That earns tips. Warmth under difficult conditions is the most memorable first impression you can make."},
-      {text:"Ask if they have a covered spot you could use next time",grade:"bad",why:"Never make the delivery about your comfort. Any comment that shifts the customer's attention from their food to your situation is a misstep."},
-    ]
-  },
 ];
 
 // ─── Video Player ─────────────────────────────────────────────────────────────
@@ -920,10 +874,6 @@ function App() {
 
   // Training
   const [activeVideo, setActiveVideo] = useState(0);
-  const [trainTab, setTrainTab] = useState("videos");
-  const [scenarioIdx, setScenarioIdx] = useState(0);
-  const [scenarioChoice, setScenarioChoice] = useState(null);
-  const [scenariosDone, setScenariosDone] = useState(new Set());
 
   // Defend
   const [defPlatform, setDefPlatform]   = useState(null);
@@ -1402,13 +1352,11 @@ function App() {
                 {/* Blurred content behind */}
                 <div style={{filter:"blur(6px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
                   {/* Platform buttons */}
-                  <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:16}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:16}}>
                     {PLATFORMS_DEFEND.map(p=>(
-                      <div key={p.id} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:16,padding:"13px 16px",display:"flex",alignItems:"center",gap:14}}>
-                        <div style={{width:40,height:40,borderRadius:12,background:`${p.color}18`,border:`1.5px solid ${p.color}30`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                          <span style={{fontSize:12,fontWeight:900,color:p.color,letterSpacing:"0.3px"}}>{p.abbr}</span>
-                        </div>
-                        <span style={{fontSize:15,fontWeight:800,color:C.text}}>{p.label}</span>
+                      <div key={p.id} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"13px 10px",display:"flex",alignItems:"center",gap:8}}>
+                        <span style={{fontSize:20}}>{p.e}</span>
+                        <span style={{fontSize:14,fontWeight:700,color:C.text}}>{p.label}</span>
                       </div>
                     ))}
                   </div>
@@ -1460,19 +1408,14 @@ function App() {
               </div>
             ):(
               <div style={{display:"flex",flexDirection:"column",gap:20}}>
-                <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
                   {PLATFORMS_DEFEND.map((p,pi)=>{
                     const active=defPlatform===p.id;
                     return(
                       <button key={p.id} className={`card-in c${pi}`} onClick={()=>selectPlatform(p.id)}
-                        style={{background:active?`${p.color}12`:C.s1,border:`1.5px solid ${active?p.color:"rgba(255,255,255,0.07)"}`,borderRadius:16,padding:"13px 16px",display:"flex",alignItems:"center",gap:14,cursor:"pointer",transition:"all 0.18s",textAlign:"left",boxShadow:active?`0 0 18px ${p.color}22`:"none"}}>
-                        <div style={{width:42,height:42,borderRadius:13,background:`${p.color}18`,border:`1.5px solid ${active?p.color+"60":p.color+"28"}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"border-color 0.18s"}}>
-                          <span style={{fontSize:12,fontWeight:900,color:p.color,letterSpacing:"0.5px"}}>{p.abbr}</span>
-                        </div>
-                        <span style={{flex:1,fontSize:15,fontWeight:800,color:active?p.color:C.text,transition:"color 0.18s"}}>{p.label}</span>
-                        <div style={{width:22,height:22,borderRadius:99,background:active?p.color:"rgba(255,255,255,0.05)",border:active?"none":"1px solid rgba(255,255,255,0.09)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>
-                          <span style={{fontSize:12,color:active?"#000":C.text3,fontWeight:900,lineHeight:1}}>›</span>
-                        </div>
+                        style={{background:active?`${p.color}15`:C.s1,border:`1px solid ${active?p.color:C.border}`,borderRadius:14,padding:"13px 10px",display:"flex",alignItems:"center",gap:8,cursor:"pointer",transition:"all 0.18s",boxShadow:active?`0 0 18px ${p.color}30`:"none"}}>
+                        <span style={{fontSize:20}}>{p.e}</span>
+                        <span style={{fontSize:14,fontWeight:700,color:active?p.color:C.text}}>{p.label}</span>
                       </button>
                     );
                   })}
@@ -1483,20 +1426,18 @@ function App() {
                   const appeals=PLATFORM_APPEALS[defPlatform]||[];
                   return(
                     <div style={{display:"flex",flexDirection:"column",gap:12,animation:"slideUp 0.3s cubic-bezier(0.16,1,0.3,1)"}}>
-                      <div style={{display:"flex",gap:4,background:"rgba(255,255,255,0.04)",borderRadius:13,padding:4,border:"1px solid rgba(255,255,255,0.06)"}}>
-                        {[["habits","Habits"],["appeals","Appeals"],["checklist","Checklist"],["notes","Notes"]].map(([id,label])=>(
-                          <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:10,padding:"10px 4px",fontSize:12,fontWeight:800,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.18s",letterSpacing:"0.2px"}}>{label}</button>
+                      <div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
+                        {[["habits","🛡️ Habits"],["appeals","📋 Appeals"],["checklist","✅ Checklist"],["notes","📝 Notes"]].map(([id,label])=>(
+                          <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:9,padding:"9px 2px",fontSize:12,fontWeight:700,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.18s",boxShadow:defSection===id?`0 0 12px ${plat.color}50`:"none"}}>{label}</button>
                         ))}
                       </div>
                       {defSection==="habits"&&habits.map((h,i)=>(
-                        <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:h.urgent?"rgba(244,63,94,0.05)":C.s1,border:`1px solid ${h.urgent?"rgba(244,63,94,0.22)":C.border}`,borderRadius:16,padding:"16px"}}>
-                          <div style={{display:"flex",alignItems:"flex-start",gap:13}}>
-                            <div style={{width:42,height:42,borderRadius:13,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",border:`1px solid ${h.urgent?"rgba(244,63,94,0.2)":"rgba(255,255,255,0.07)"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
-                            <div style={{flex:1,minWidth:0}}>
-                              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:5}}>
-                                <div style={{fontSize:14,fontWeight:800,lineHeight:1.3}}>{h.t}</div>
-                                {h.urgent&&<span style={{fontSize:10,fontWeight:900,color:C.red,background:"rgba(244,63,94,0.12)",border:"1px solid rgba(244,63,94,0.25)",borderRadius:5,padding:"2px 7px",flexShrink:0,letterSpacing:"0.5px"}}>CRITICAL</span>}
-                              </div>
+                        <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:h.urgent?"rgba(244,63,94,0.06)":C.s1,border:`1px solid ${h.urgent?"rgba(244,63,94,0.2)":C.border}`,borderRadius:14,padding:"15px 16px"}}>
+                          <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
+                            <div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
+                            <div style={{flex:1}}>
+                              {h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>CRITICAL</span>}
+                              <div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div>
                               <p style={{fontSize:13,color:C.text2,lineHeight:1.75,margin:0}}>{h.why}</p>
                             </div>
                           </div>
@@ -1507,12 +1448,9 @@ function App() {
                         return(
                           <div key={ai} className={`card-in c${Math.min(ai,9)}`} style={{background:C.s1,border:`1px solid ${apOpen?ap.color+"50":C.border}`,borderRadius:16,overflow:"hidden",transition:"border-color 0.18s"}}>
                             <div onClick={()=>{setAppealOpen(apOpen?null:ai);setAppealSub(null);}} style={{padding:"15px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:12}}>
-                              <div style={{width:40,height:40,borderRadius:12,background:`${ap.color}14`,border:`1px solid ${ap.color}28`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:19,flexShrink:0}}>{ap.e}</div>
-                              <div style={{flex:1,minWidth:0}}>
-                                <div style={{fontSize:14,fontWeight:800,marginBottom:4}}>{ap.t}</div>
-                                <span style={{fontSize:10,fontWeight:800,color:ap.color,background:`${ap.color}12`,border:`1px solid ${ap.color}25`,borderRadius:5,padding:"2px 7px",letterSpacing:"0.3px"}}>{ap.urgency}</span>
-                              </div>
-                              <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:apOpen?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
+                              <span style={{fontSize:22}}>{ap.e}</span>
+                              <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{ap.t}</div><div style={{fontSize:12,fontWeight:700,color:ap.color,marginTop:3}}>{ap.urgency}</div></div>
+                              <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:apOpen?"rotate(180deg)":"none"}}>▾</div>
                             </div>
                             {apOpen&&(
                               <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.16,1,0.3,1)"}}>
@@ -1603,107 +1541,35 @@ function App() {
         {tab==="train"&&(
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
-              <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Elite Training</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>4 Animated Lessons</div>
-              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>~40 seconds each · The psychology and science behind earning more — shown, not just told.</div>
+              <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Training Series</div>
+              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>The DropPilot Method</div>
+              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Four short training videos on what actually drives ratings and income.</div>
             </div>
 
-            {pro?(
+            {(pro||activeVideo===0||true)?(
               <div style={{display:"flex",flexDirection:"column",gap:12}}>
-                {/* ── Tab switcher ── */}
-                <div style={{display:"flex",gap:5,background:"rgba(255,255,255,0.04)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)"}}>
-                  {[{id:"videos",l:"🎬 Lessons"},{id:"scenarios",l:"🎯 Scenarios"}].map(tt=>{
-                    const isActive=trainTab===tt.id;
+                {!pro&&(
+                  <div style={{background:"rgba(245,166,35,0.07)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}>
+                    <span style={{fontSize:16,flexShrink:0}}>🎓</span>
+                    <div style={{fontSize:12,color:C.text2,lineHeight:1.6}}><span style={{color:C.amber,fontWeight:800}}>Free preview:</span> Watch the first video free. Upgrade to Elite to unlock all 4.</div>
+                  </div>
+                )}
+                <div style={{display:"flex",flexDirection:"column",gap:6}}>
+                  {VIDEOS.map((v,i)=>{
+                    const locked=!pro&&i>0;
                     return(
-                      <button key={tt.id} onClick={()=>{setTrainTab(tt.id);if(tt.id==="scenarios"){setScenarioChoice(null);}}} style={{flex:1,background:isActive?"rgba(245,166,35,0.14)":"transparent",border:isActive?"1px solid rgba(245,166,35,0.32)":"1px solid transparent",borderRadius:11,padding:"9px 4px",fontSize:13,fontWeight:800,cursor:"pointer",color:isActive?C.amber:C.text3,transition:"all 0.15s"}}>
-                        {tt.l}
+                      <button key={i} onClick={()=>{if(locked){setShowPay(true);setPayStep("offer");return;}setActiveVideo(i);}} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s",opacity:locked?0.5:1}}>
+                        <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{locked?"🔒":v.icon}</div>
+                        <div style={{flex:1,minWidth:0}}>
+                          <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
+                          <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
+                        </div>
+                        {locked&&<span style={{fontSize:11,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"2px 7px",flexShrink:0}}>Elite</span>}
                       </button>
                     );
                   })}
                 </div>
-                {trainTab==="scenarios"&&(()=>{
-                  const sc=SCENARIOS[scenarioIdx];
-                  const gradeColor={best:"#10B981",ok:"#F5A623",bad:"#F43F5E"};
-                  const gradeLabel={best:"Best Response ✓",ok:"Decent — But Not Ideal",bad:"Avoid This"};
-                  return(
-                    <div style={{display:"flex",flexDirection:"column",gap:14}}>
-                      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingLeft:2}}>
-                        <div style={{fontSize:11,fontWeight:800,color:C.text3,letterSpacing:"1px",textTransform:"uppercase"}}>Scenario {scenarioIdx+1} of {SCENARIOS.length}</div>
-                        <div style={{display:"flex",gap:5}}>
-                          {SCENARIOS.map((_,i)=>(
-                            <div key={i} style={{width:26,height:6,borderRadius:99,background:scenariosDone.has(i)?"rgba(16,185,129,0.55)":i===scenarioIdx?"rgba(245,166,35,0.55)":"rgba(255,255,255,0.08)",transition:"background 0.22s"}}/>
-                          ))}
-                        </div>
-                      </div>
-                      <div style={{background:`linear-gradient(135deg,${C.s2},${C.s1})`,border:"1px solid rgba(255,255,255,0.09)",borderRadius:20,overflow:"hidden"}}>
-                        <div style={{background:"rgba(255,255,255,0.03)",padding:"15px 18px",borderBottom:"1px solid rgba(255,255,255,0.06)",display:"flex",alignItems:"center",gap:13}}>
-                          <div style={{fontSize:34,flexShrink:0}}>{sc.e}</div>
-                          <div>
-                            <div style={{fontSize:15,fontWeight:900,letterSpacing:"-0.3px"}}>{sc.title}</div>
-                            <div style={{fontSize:10,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginTop:2}}>What would you do?</div>
-                          </div>
-                        </div>
-                        <div style={{padding:"15px 18px"}}>
-                          <p style={{fontSize:13,color:C.text2,lineHeight:1.85,margin:0}}>{sc.setup}</p>
-                        </div>
-                      </div>
-                      <div style={{display:"flex",flexDirection:"column",gap:8}}>
-                        {sc.choices.map((ch,ci)=>{
-                          const isChosen=scenarioChoice===ci;
-                          const gc=gradeColor[ch.grade]||C.text2;
-                          const gl=gradeLabel[ch.grade]||"";
-                          const revealed=scenarioChoice!==null;
-                          const letter=["A","B","C","D"][ci];
-                          return(
-                            <button key={ci} onClick={()=>{if(scenarioChoice===null){setScenarioChoice(ci);setScenariosDone(prev=>{const n=new Set(prev);n.add(scenarioIdx);return n;});}}}
-                              style={{width:"100%",background:isChosen?`${gc}12`:revealed?"rgba(255,255,255,0.02)":"rgba(255,255,255,0.04)",border:`1.5px solid ${isChosen?gc:revealed?"rgba(255,255,255,0.08)":"rgba(255,255,255,0.18)"}`,borderRadius:14,padding:"13px 15px",cursor:scenarioChoice===null?"pointer":"default",textAlign:"left",transition:"all 0.18s",opacity:revealed&&!isChosen?0.35:1}}>
-                              <div style={{display:"flex",alignItems:"center",gap:11}}>
-                                <div style={{width:26,height:26,borderRadius:8,background:isChosen?`${gc}22`:"rgba(255,255,255,0.07)",border:`1px solid ${isChosen?gc:"rgba(255,255,255,0.18)"}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:11,fontWeight:900,color:isChosen?gc:C.text2}}>{letter}</div>
-                                <div style={{flex:1,fontSize:13,color:isChosen?C.text:C.text,fontWeight:isChosen?700:600,lineHeight:1.55}}>{ch.text}</div>
-                                {!revealed&&<div style={{color:"rgba(255,255,255,0.25)",fontSize:16,flexShrink:0}}>›</div>}
-                              </div>
-                              {isChosen&&(
-                                <div style={{marginTop:10,paddingTop:10,borderTop:`1px solid ${gc}30`}}>
-                                  <div style={{fontSize:10,fontWeight:900,color:gc,letterSpacing:"1px",textTransform:"uppercase",marginBottom:5}}>{gl}</div>
-                                  <p style={{fontSize:13,color:C.text2,margin:0,lineHeight:1.7}}>{ch.why}</p>
-                                </div>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-                      {scenarioChoice!==null&&(
-                        <div style={{display:"flex",gap:8}}>
-                          {scenarioIdx>0&&(
-                            <button onClick={()=>{setScenarioIdx(i=>i-1);setScenarioChoice(null);}} style={{flex:1,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text2}}>← Prev</button>
-                          )}
-                          {scenarioIdx<SCENARIOS.length-1?(
-                            <button onClick={()=>{setScenarioIdx(i=>i+1);setScenarioChoice(null);}} style={{flex:2,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:14,padding:"13px",fontSize:14,fontWeight:900,cursor:"pointer",color:"#000"}}>Next Scenario →</button>
-                          ):(
-                            <button onClick={()=>{setScenarioIdx(0);setScenarioChoice(null);setScenariosDone(new Set());}} style={{flex:2,background:`linear-gradient(135deg,${C.green},#059669)`,border:"none",borderRadius:14,padding:"13px",fontSize:14,fontWeight:900,cursor:"pointer",color:"#fff"}}>All done! Start over ↺</button>
-                          )}
-                        </div>
-                      )}
-                      {scenarioChoice===null&&<div style={{textAlign:"center",fontSize:12,color:C.text3,paddingBottom:2}}>Tap a response above to see feedback</div>}
-                    </div>
-                  );
-                })()}
-                {trainTab==="videos"&&(
-                <div style={{display:"flex",flexDirection:"column",gap:0}}>
-                <div style={{display:"flex",flexDirection:"column",gap:6}}>
-                  {VIDEOS.map((v,i)=>(
-                    <button key={i} onClick={()=>setActiveVideo(i)} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}>
-                      <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{v.icon}</div>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
-                        <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
                 <VideoPlayer video={VIDEOS[activeVideo]}/>
-                </div>
-                )}
               </div>
             ):(
               <div style={{position:"relative"}}>
@@ -1731,7 +1597,7 @@ function App() {
                   <div className="train-pulse" style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#1a0f00,#0e0a16,#07080A)",border:"2px solid rgba(245,166,35,0.4)",width:"100%",position:"relative"}}>
                     <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
                     <div className="train-float" style={{fontSize:44,marginBottom:12,display:"block"}}>🎓</div>
-                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Animated Lessons</div>
+                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Training Videos</div>
                     <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Short videos on the psychology and science behind what makes customers tip more and rate higher. Not theory — real research applied to real deliveries.</div>
                     <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
                       {[["📈","Why customer service makes you more money — with the math"],["💬","The exact words that earn tips — phrase by phrase"],["🏆","What top earners do differently — the 60-second habit gap"],["🙏","Please, thank you, you're welcome — proven to increase tips 23%"]].map(([e,f],i)=>(
