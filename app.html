@@ -88,7 +88,7 @@ button:active{opacity:0.82;transform:scale(0.96);}
 (function(){const s=document.createElement('style');s.textContent=CSS;document.head.appendChild(s);})();
 
 async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
-async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){console.warn("Save failed:",k,e);return false;}}
 
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
@@ -216,7 +216,7 @@ const PLATFORMS_DEFEND = [
   {id:"ubereats",  label:"Uber Eats", color:"#06C167", e:"🟢"},
   {id:"spark",     label:"Spark",     color:"#0071CE", e:"🔵"},
   {id:"instacart", label:"Instacart", color:"#43B02A", e:"🟩"},
-  {id:"amazonflex", label:"Amazon Flex", color:"#FF9900", e:"📦"},
+  {id:"amazonflex", label:"Flex", color:"#FF9900", e:"📦"},
 ];
 
 const PLATFORM_HABITS = {
@@ -252,8 +252,8 @@ const PLATFORM_HABITS = {
     {e:"⭐",t:"4.7 rating is the key number to protect",why:"Instacart shoppers rated below 4.7 see fewer and lower-paying batches. Some high-paying batches are only available above 4.8. Rating removal is possible for complaints caused by out-of-stock items, store errors, or app issues — but you must request it and frame it correctly."},
     {e:"🔄",t:"Document difficult customers before they complain",why:"If a customer is rude or makes unreasonable demands, note it in the Instacart app's feedback right away. This creates a record before any dispute is filed. It signals to support that the customer has a history — and that helps you if they later file a false complaint."},
   ],  amazonflex:[
-    {e:"📸",t:"Photo every single drop-off",why:"Amazon Flex relies heavily on delivery photos. Take a clear, well-lit photo showing the package(s) in their final location (porch, mailbox, etc.). This is your #1 protection against 'never received' complaints.",urgent:true},
-    {e:"📍",t:"Keep GPS on the entire block",why:"Amazon logs your GPS route. In any dispute, support checks your GPS track against the delivery address and timestamp.",urgent:true},
+    {e:"📸",t:"Photo every single drop-off",why:"Flex relies heavily on delivery photos. Take a clear, well-lit photo showing the package(s) in their final location (porch, mailbox, etc.). This is your #1 protection against 'never received' complaints.",urgent:true},
+    {e:"📍",t:"Keep GPS on the entire block",why:"The platform logs your GPS route. In any dispute, support checks your GPS track against the delivery address and timestamp.",urgent:true},
     {e:"🔢",t:"Scan one address at a time on multi-package stops",why:"This forces the app to prompt for a photo at every stop. Skipping this is a common reason drivers get dinged for missing packages.",urgent:true},
     {e:"🖼️",t:"Screenshot your delivery confirmation in the app",why:"After marking delivered, screenshot the confirmation screen immediately. It shows the exact time and TBA/package IDs."},
     {e:"🔄",t:"Return undeliverable packages with correct reason code",why:"Always use the app's undeliverable reason code at the location if you can't deliver. Bring them back to the station same day or by 10am next day."},
@@ -358,7 +358,7 @@ const PLATFORM_CHECKLISTS = {
     {e:"📋",t:"Batch confirmed complete in the app"},
     {e:"🧾",t:"Batch summary screenshotted after delivery"},
   ],  amazonflex:[
-    {e:"📸",t:"Delivery photo taken in the Amazon Flex app"},
+    {e:"📸",t:"Delivery photo taken in the Flex app"},
     {e:"📍",t:"GPS was active for the entire block"},
     {e:"🔢",t:"Scanned packages one address at a time (multi-stop blocks)"},
     {e:"🖼️",t:"Delivery confirmation screen screenshotted"},
@@ -376,7 +376,7 @@ function Toast({msg, onDone}) {
     return()=>{clearTimeout(t1);clearTimeout(t2);};
   },[]);
   return(
-    <div style={{position:"fixed",top:"50%",left:"50%",transform:"translate(-50%,-50%)",zIndex:999,pointerEvents:"none",
+    <div role="status" aria-live="polite" aria-atomic="true" style={{position:"fixed",top:"50%",left:"50%",transform:"translate(-50%,-50%)",zIndex:999,pointerEvents:"none",
       background:"rgba(16,185,129,0.95)",borderRadius:16,padding:"14px 24px",
       fontSize:14,fontWeight:800,color:"#000",fontFamily:C.sans,
       animation:out?"toastOut 0.4s ease forwards":"toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards",
@@ -791,6 +791,15 @@ const BASICS_CATS = [
       {h:"The 4.7 rating — why it's the key number", body:"Instacart shoppers rated below 4.7 see fewer batches and lower-paying ones. Above 4.7 keeps you in good standing. Above 4.8 unlocks premium batches. Your rating is based on your last 100 deliveries. Bad ratings caused by store conditions, out-of-stock items, or app errors can sometimes be removed — but you need to ask support and explain clearly what happened."},
     ]
   },
+  {
+    e:"📦", t:"Flex — The Basics", sub:"Platform-specific things every Flex driver needs to know",
+    secs:[
+      {h:"What Flex delivery actually is", body:"Flex is a package delivery service where you work independently. Instead of food or groceries, you deliver boxes and packages in bulk batches called 'blocks.' You claim a block in the app for a specific time window, pick up packages from a delivery station, and deliver them to the addresses on your list. It's different from food delivery — you're covering a whole neighborhood in one shift, not one order at a time."},
+      {h:"How blocks work and how to get them", body:"A 'block' is a scheduled delivery shift — usually 3 to 6 hours. You claim blocks in the Flex app ahead of time when they open up, or through 'instant offers' that appear last-minute. Popular blocks fill up fast, so check the app often. When you claim a block, you're committing to show up at the station at that time to pick up your packages. Missing a claimed block hurts your standing."},
+      {h:"TBA numbers — what they are and why they matter", body:"Every package in your block has a TBA number — a unique tracking ID. These are how packages are identified in the system. If you ever have a problem with a delivery (missing package complaint, wrong address), support needs the TBA number to find the record. Get in the habit of photographing your manifest or noting TBA numbers on any delivery that feels off before you move on."},
+      {h:"Your standing — what it means and how to protect it", body:"Flex tracks your reliability with a 'standing' system. Missing blocks, failing to return undeliverable packages, or receiving missing package complaints hurts your standing. Good standing keeps you eligible for better blocks. Poor standing can limit your access or lead to deactivation. The best protection: show up for every block you claim, photo every drop-off in the app, and return undeliverables the same day with the correct reason code."},
+    ]
+  },
 ];
 
 // ─── App ──────────────────────────────────────────────────────────────────────
@@ -857,6 +866,15 @@ function App() {
   const [notes, setNotes]               = useState([]);
 
   const STRIPE_LINK = "https://buy.stripe.com/5kQeVd8XofwO78v8ZU48001";
+  const searchDebounce = useRef(null);
+  const [searchDisplay, setSearchDisplay] = useState("");
+
+  // Escape key closes paywall modal
+  useEffect(()=>{
+    const h=e=>{if(e.key==="Escape"&&showPay){setShowPay(false);setPayStep("offer");setCodeIn("");setCodeErr("");}};
+    document.addEventListener("keydown",h);
+    return()=>document.removeEventListener("keydown",h);
+  },[showPay]);
 
   useEffect(()=>{
     Promise.all([
@@ -868,8 +886,8 @@ function App() {
       load("dp3-notes",[]),
     ]).then(([c,p,seen,ft,ftpl,n])=>{
       setCfg_(c); setPro(!!p); setLoaded(true);
-      setFavTips(new Set(ft));
-      setFavTemplates(new Set(ftpl));
+      setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
+      setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
       setNotes(n);
       if(!seen) setShowIntro(true);
     });
@@ -917,7 +935,7 @@ function App() {
 
   function toggleFavTip(i){
     const next=new Set(favTips);
-    next.has(i)?next.delete(i):next.add(i);
+    if(next.has(i)){next.delete(i);}else{next.add(i);if(next.size===1)showToast("Tip saved! Upgrade to Elite for full access.");}
     setFavTips(next);
     save("dp3-fav-tips",[...next]);
   }
@@ -933,6 +951,7 @@ function App() {
     if(!noteInput.trim()) return;
     const newNote={text:noteInput.trim(),date:new Date().toLocaleDateString()};
     const updated=[newNote,...notes].slice(0,50);
+    if(notes.length>=50) showToast("Note limit reached — oldest removed.");
     setNotes(updated);
     save("dp3-notes",updated);
     setNoteInput("");
@@ -942,6 +961,12 @@ function App() {
     const updated=notes.filter((_,idx)=>idx!==i);
     setNotes(updated);
     save("dp3-notes",updated);
+  }
+
+  function handleSearchChange(val){
+    setSearchDisplay(val);
+    if(searchDebounce.current) clearTimeout(searchDebounce.current);
+    searchDebounce.current=setTimeout(()=>setTemplateSearch(val),200);
   }
 
   // Filter templates by search
@@ -1020,8 +1045,8 @@ function App() {
               const open=tipOpen===i;
               const fav=favTips.has(i);
               return(
-                <div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>pro?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
-                  style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",opacity:pro?1:0.55,transition:"opacity 0.15s"}}>
+                <div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(i<4||pro)?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
+                  style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",transition:"opacity 0.15s"}}>
                   <div style={{display:"flex",alignItems:"center",gap:12}}>
                     <div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
                     <div style={{flex:1,minWidth:0}}>
@@ -1029,13 +1054,15 @@ function App() {
                       <div style={{fontSize:13,color:C.text2,lineHeight:1.5}}>{tip.s}</div>
                     </div>
                     {pro?(
-                      <button onClick={e=>{e.stopPropagation();toggleFavTip(i);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"4px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
+                      <button aria-label={fav?"Remove from favorites":"Save to favorites"} onClick={e=>{e.stopPropagation();toggleFavTip(i);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"4px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
                         {fav?"★":"☆"}
                       </button>
+                    ):i<4?(
+                      <span style={{fontSize:12,fontWeight:700,color:C.green,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Free</span>
                     ):(
                       <span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
                     )}
-                    {pro&&<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>}
+                    {(pro||i<4)&&<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>}
                   </div>
                   {open&&(
                     <div style={{marginTop:14,paddingTop:14,borderTop:"1px solid rgba(255,255,255,0.07)"}}>
@@ -1200,8 +1227,8 @@ function App() {
             {/* Search */}
             <div style={{position:"relative"}}>
               <span style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",fontSize:14,color:C.text3,pointerEvents:"none"}}>🔍</span>
-              <input value={templateSearch} onChange={e=>{setTemplateSearch(e.target.value);setMsgOpen(null);setSubOpen(null);}} placeholder="Search templates..." style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"11px 12px 11px 36px",color:C.text,fontSize:13,width:"100%"}}/>
-              {templateSearch&&<button onClick={()=>setTemplateSearch("")} style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:16}}>✕</button>}
+              <input value={searchDisplay} onChange={e=>{setMsgOpen(null);setSubOpen(null);handleSearchChange(e.target.value);}} placeholder="Search templates..." style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"11px 12px 11px 36px",color:C.text,fontSize:13,width:"100%"}}/>
+              {searchDisplay&&<button onClick={()=>{setSearchDisplay("");setTemplateSearch("");}} style={{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",background:"none",border:"none",color:C.text3,cursor:"pointer",fontSize:16}}>✕</button>}
             </div>
 
             {/* Saved favorites */}
@@ -1264,7 +1291,7 @@ function App() {
                                 {sec.caution&&<span style={{fontSize:13}}>⚠️</span>}
                                 <span style={{fontSize:13,fontWeight:700,color:sec.caution?C.red:C.text}}>{sec.h}</span>
                               </div>
-                              <button onClick={e=>{e.stopPropagation();toggleFavTemplate(subKey);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,padding:"2px 6px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
+                              <button aria-label={fav?"Remove from saved templates":"Save template"} onClick={e=>{e.stopPropagation();toggleFavTemplate(subKey);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,padding:"2px 6px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
                                 {fav?"★":"☆"}
                               </button>
                               <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:subOpen2?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
@@ -1345,9 +1372,9 @@ function App() {
                     <div style={{fontSize:21,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.purple})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Protect Your Account</div>
                     <div style={{fontSize:14,color:C.text2,lineHeight:1.8,marginBottom:20}}>False complaints, unfair ratings, and deactivation threats are real. This section gives you the exact habits, scripts, and appeal letters to fight back — by platform.</div>
                     
-                    {/* Updated preview with Amazon Flex */}
+                    {/* Platform preview */}
                     <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:22,textAlign:"left"}}>
-                      {[["🛡️","Critical habits for DoorDash, Uber Eats, Spark, Instacart & Amazon Flex"],["📋","Word-for-word appeal scripts written for support agents"],["✅","Per-delivery checklists saved per platform"],["📝","Private notes log for problem addresses & customers"]].map(([e,f],i)=>(
+                      {[["🛡️","Critical habits for DoorDash, Uber Eats, Spark, Instacart & Flex"],["📋","Word-for-word appeal scripts written for support agents"],["✅","Per-delivery checklists saved per platform"],["📝","Private notes log for problem addresses & customers"]].map(([e,f],i)=>(
                         <div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(139,92,246,0.07)",borderRadius:10,padding:"10px 13px",border:"1px solid rgba(139,92,246,0.15)"}}>
                           <span style={{fontSize:16,flexShrink:0}}>{e}</span>
                           <span style={{fontSize:13,color:C.text2}}>{f}</span>
@@ -1434,6 +1461,24 @@ function App() {
                       })}
                       {defSection==="checklist"&&(
                         <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                          {checks.length>0&&(()=>{
+                            const done=checks.filter(c=>c.done).length;
+                            const pct=Math.round(done/checks.length*100);
+                            const col=pct>=100?C.green:pct>=60?C.amber:C.red;
+                            return(
+                              <div style={{background:`${col}0D`,border:`1px solid ${col}30`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:14}}>
+                                <div style={{width:52,height:52,borderRadius:"50%",background:`conic-gradient(${col} ${pct*3.6}deg, rgba(255,255,255,0.06) 0deg)`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                                  <div style={{width:38,height:38,borderRadius:"50%",background:C.s1,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                                    <span style={{fontSize:13,fontWeight:900,color:col}}>{pct}%</span>
+                                  </div>
+                                </div>
+                                <div>
+                                  <div style={{fontSize:14,fontWeight:800,color:col}}>{pct>=100?"Fully Protected":"Safety Score"}</div>
+                                  <div style={{fontSize:12,color:C.text3,marginTop:2}}>{done} of {checks.length} habits done this delivery</div>
+                                </div>
+                              </div>
+                            );
+                          })()}
                           <div style={{fontSize:13,color:C.text2,textAlign:"center",marginBottom:4,lineHeight:1.6}}>Check these off after every delivery. Your progress is saved per platform.</div>
                           {checks.map((item,i)=>(
                             <button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>toggleCheck(i)} style={{background:item.done?"rgba(16,185,129,0.08)":C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"background 0.18s,border 0.18s",boxShadow:item.done?`0 0 14px rgba(16,185,129,0.2)`:"none"}}>
@@ -1482,18 +1527,28 @@ function App() {
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Four short training videos on what actually drives ratings and income.</div>
             </div>
 
-            {pro?(
+            {(pro||activeVideo===0||true)?(
               <div style={{display:"flex",flexDirection:"column",gap:12}}>
+                {!pro&&(
+                  <div style={{background:"rgba(245,166,35,0.07)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}>
+                    <span style={{fontSize:16,flexShrink:0}}>🎓</span>
+                    <div style={{fontSize:12,color:C.text2,lineHeight:1.6}}><span style={{color:C.amber,fontWeight:800}}>Free preview:</span> Watch the first video free. Upgrade to Elite to unlock all 4.</div>
+                  </div>
+                )}
                 <div style={{display:"flex",flexDirection:"column",gap:6}}>
-                  {VIDEOS.map((v,i)=>(
-                    <button key={i} onClick={()=>setActiveVideo(i)} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}>
-                      <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{v.icon}</div>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
-                        <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
-                      </div>
-                    </button>
-                  ))}
+                  {VIDEOS.map((v,i)=>{
+                    const locked=!pro&&i>0;
+                    return(
+                      <button key={i} onClick={()=>{if(locked){setShowPay(true);setPayStep("offer");return;}setActiveVideo(i);}} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s",opacity:locked?0.5:1}}>
+                        <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{locked?"🔒":v.icon}</div>
+                        <div style={{flex:1,minWidth:0}}>
+                          <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
+                          <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
+                        </div>
+                        {locked&&<span style={{fontSize:11,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"2px 7px",flexShrink:0}}>Elite</span>}
+                      </button>
+                    );
+                  })}
                 </div>
                 <VideoPlayer video={VIDEOS[activeVideo]}/>
               </div>
@@ -1570,7 +1625,7 @@ function App() {
                     <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.teal})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>New to Gig Work?</div>
                     <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Everything explained from scratch. Whether you just started or have questions no one ever answered — no jargon, no assumptions, just plain English.</div>
                     <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
-                      {[["🚀","How gig delivery works — pay, ratings, accepting orders"],["📱","Phone basics — GPS, battery, what to do when it crashes"],["🏃","Step-by-step walkthrough of your very first delivery"],["💸","How you get paid, what boosts mean, why tips vary"],["🔴","DoorDash — ratings, completion rate, Top Dasher"],["🟢","Uber Eats — Trip IDs, ratings, Uber Pro levels"],["🔵","Spark — scanning items, substitutions, on-time rate"],["🟩","Instacart — batch IDs, replacements, the 4.7 rating"]].map(([e,f],i)=>(
+                      {[["🚀","How gig delivery works — pay, ratings, accepting orders"],["📱","Phone basics — GPS, battery, what to do when it crashes"],["🏃","Step-by-step walkthrough of your very first delivery"],["💸","How you get paid, what boosts mean, why tips vary"],["🔴","DoorDash — ratings, completion rate, Top Dasher"],["🟢","Uber Eats — Trip IDs, ratings, Uber Pro levels"],["🔵","Spark — scanning items, substitutions, on-time rate"],["🟩","Instacart — batch IDs, replacements, the 4.7 rating"],["📦","Flex — blocks, TBA numbers, what standing means"]].map(([e,f],i)=>(
                         <div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(6,182,212,0.07)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(6,182,212,0.13)"}}>
                           <span style={{fontSize:14,flexShrink:0}}>{e}</span>
                           <span style={{fontSize:12,color:C.text2}}>{f}</span>
@@ -1657,39 +1712,48 @@ function App() {
 
             {payStep==="offer"&&(
               <div>
-                <div style={{textAlign:"center",marginBottom:22}}>
+                <div style={{textAlign:"center",marginBottom:18}}>
                   <div style={{fontSize:44,marginBottom:10}}>🔒</div>
                   <div style={{fontSize:22,fontWeight:900,marginBottom:6}}>Become Elite</div>
                   <div style={{fontSize:14,color:C.text2,lineHeight:1.7}}>Everything you need to earn more, protect your account, and stay sharp — all in one place.</div>
                 </div>
-                <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:20}}>
+
+                {/* Already have a code — shown first so returning customers find it instantly */}
+                <div style={{background:"rgba(16,185,129,0.06)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:14,padding:"14px 16px",marginBottom:16}}>
+                  <div style={{fontSize:13,fontWeight:800,color:C.green,marginBottom:8}}>✓ Already paid? Enter your code here</div>
+                  <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="e.g. DROP2026" style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(16,185,129,0.25)"}`,borderRadius:11,padding:"12px",color:C.text,fontSize:15,width:"100%",marginBottom:8,textTransform:"uppercase"}}/>
+                  {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
+                  <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:11,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:6}}>Unlock with Code</button>
+                  <button onClick={()=>setPayStep("restore")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:12,width:"100%",padding:"4px"}}>Lost your code? Restore purchase →</button>
+                </div>
+
+                <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
+                  <div style={{flex:1,height:1,background:"rgba(255,255,255,0.08)"}}/>
+                  <span style={{fontSize:12,color:C.text3,fontWeight:600}}>or purchase below</span>
+                  <div style={{flex:1,height:1,background:"rgba(255,255,255,0.08)"}}/>
+                </div>
+
+                <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:16}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:12,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
                     <span style={{fontSize:15,fontWeight:700}}>Elite Access</span>
                     <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
                   </div>
-                  <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                    {["10 quick tips with full explanations","7 in-depth learning sections on psychology, tipping science, de-escalation & more","30 message templates with one-tap copy","4 training videos — the science behind what earns more","Platform habits & appeal scripts for DoorDash, Uber Eats, Spark & Instacart","Per-delivery checklists that save your progress","Notes log for problem addresses and difficult customers"].map((f,i)=>(
-                      <div key={i} style={{display:"flex",alignItems:"center",gap:8,fontSize:12,color:C.text2}}>
-                        <span style={{color:C.green,fontWeight:900,fontSize:13}}>✓</span>{f}
+                  <div style={{display:"flex",flexDirection:"column",gap:9}}>
+                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","Training videos — the science behind what earns more","Platform habits & appeal scripts for DoorDash, Uber Eats, Spark, Instacart & Flex","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers"].map((f,i)=>(
+                      <div key={i} style={{display:"flex",alignItems:"flex-start",gap:8,fontSize:12,color:C.text2}}>
+                        <span style={{color:C.green,fontWeight:900,fontSize:13,flexShrink:0}}>✓</span>{f}
                       </div>
                     ))}
                   </div>
                 </div>
-                <button onClick={()=>{window.open(STRIPE_LINK,"_blank");setPayStep("code");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
+                <button onClick={()=>{const w=window.open(STRIPE_LINK,"_blank");if(!w){setCodeErr("Pop-ups are blocked. Please allow pop-ups, then tap again.");return;}setPayStep("code");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
                   <span style={{fontSize:20}}>💳</span>
                   <div style={{textAlign:"left"}}>
                     <div>Become Elite — $7</div>
                     <div style={{fontSize:13,fontWeight:500,opacity:0.75,marginTop:2}}>Opens secure Stripe checkout</div>
                   </div>
                 </button>
-                <div style={{textAlign:"center",fontSize:13,color:C.text3,marginBottom:20}}>Lifetime access · Free updates forever</div>
-                <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:16}}>
-                  <div style={{fontSize:13,color:C.text3,marginBottom:10}}>Already paid? Enter your unlock code:</div>
-                  <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter code from your receipt..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"13px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
-                  {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
-                  <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:12,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:12}}>Unlock with Code</button>
-                  <button onClick={()=>setPayStep("restore")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:12,width:"100%",padding:"4px"}}>Lost your code? Restore purchase →</button>
-                </div>
+                <div style={{textAlign:"center",fontSize:12,color:C.text3,marginBottom:4}}>One-time payment · Lifetime access · No recurring charges, ever</div>
               </div>
             )}
 
@@ -1699,7 +1763,7 @@ function App() {
                   <div style={{fontSize:44,marginBottom:10}}>💳</div>
                   <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Finish Your Payment</div>
                   <div style={{fontSize:13,color:C.text2,lineHeight:1.7,marginBottom:16}}>Stripe opened in a new tab. After paying, Stripe emails you a receipt with your unlock code.</div>
-                  <button onClick={()=>window.open(STRIPE_LINK,"_blank")} style={{background:"rgba(59,130,246,0.12)",border:"1px solid rgba(59,130,246,0.3)",borderRadius:12,padding:"10px 20px",color:C.blue,cursor:"pointer",fontSize:13,fontWeight:700,marginBottom:20}}>Reopen Stripe</button>
+                  <button onClick={()=>{const w=window.open(STRIPE_LINK,"_blank");if(!w)setCodeErr("Pop-ups are blocked. Please allow pop-ups in your browser settings.");}} style={{background:"rgba(59,130,246,0.12)",border:"1px solid rgba(59,130,246,0.3)",borderRadius:12,padding:"10px 20px",color:C.blue,cursor:"pointer",fontSize:13,fontWeight:700,marginBottom:20}}>Reopen Stripe</button>
                 </div>
                 <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter unlock code from receipt..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"14px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
                 {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
