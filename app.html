@@ -927,6 +927,7 @@ function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [notifOn, setNotifOn]   = useState(false);
   const [notifPerm, setNotifPerm] = useState(()=>typeof Notification!=="undefined"?Notification.permission:"unsupported");
+  const [faqOpen, setFaqOpen] = useState(null);
 
   // Defend
   const [defPlatform, setDefPlatform]   = useState(null);
@@ -1169,6 +1170,44 @@ function App() {
               <button onClick={toggleNotif} style={{background:notifOn?`${C.green}18`:"rgba(255,255,255,0.07)",border:`1px solid ${notifOn?`${C.green}40`:"rgba(255,255,255,0.12)"}`,borderRadius:99,padding:"7px 16px",fontSize:12,fontWeight:800,cursor:"pointer",color:notifOn?C.green:C.text3,flexShrink:0,transition:"all 0.15s"}}>
                 {notifOn?"On ✓":"Enable"}
               </button>
+            </div>
+          </div>
+
+          {/* FAQ */}
+          <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:10,textTransform:"uppercase",letterSpacing:"1px"}}>❓ FAQ</div>
+            <div style={{display:"flex",flexDirection:"column",gap:6}}>
+              {[
+                ["What's free and what's Elite?",
+                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship."],
+                ["I paid but I don't have my code. Where is it?",
+                 "Stripe emails your unlock code to the address you used at checkout. Check your spam folder first. If you still can't find it, tap 'Upgrade to Elite' → 'Enter Code', then use the restore email option at the bottom of that screen."],
+                ["How do I add DropPilot to my home screen?",
+                 "On iPhone: tap the Share button (the box with an arrow) in Safari, then tap 'Add to Home Screen.' On Android: tap the three-dot menu in Chrome, then 'Add to Home screen.' It'll sit on your home screen and open like a real app."],
+                ["Does the app work offline?",
+                 "Yes — once it's loaded, all the tips, scripts, and guides work without a connection. Your notes and checklist progress save locally on your phone. The only thing that needs internet is the initial load and the Stripe payment."],
+                ["Is my data saved if I clear my browser or get a new phone?",
+                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset — but your Elite access is tied to your unlock code, not your device. Just enter the code again to restore it."],
+                ["What platforms does DropPilot cover?",
+                 "DoorDash, Uber Eats, Instacart, Lyft, Walmart Spark, and Amazon Flex. Every platform has its own habits, appeal letter templates, checklist, and a dedicated section in the Basics guide."],
+                ["Can I use DropPilot on multiple devices?",
+                 "Yes. Your unlock code works on any device — just open the app, go to the paywall, and enter your code. Your notes and checklist progress are device-specific since they're stored locally, but your Elite access travels with the code."],
+                ["Something's not working. How do I get help?",
+                 "For payment or access issues, email the address on your Stripe receipt. For anything else, you can reach out through the same channel. Most issues are resolved same day."],
+              ].map(([q,a],i)=>{
+                const open=faqOpen===i;
+                return(
+                  <div key={i} style={{background:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.2)":"rgba(255,255,255,0.06)"}`,borderRadius:12,overflow:"hidden",transition:"border-color 0.18s"}}>
+                    <button onClick={()=>setFaqOpen(open?null:i)} style={{background:"none",border:"none",width:"100%",padding:"11px 13px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10,cursor:"pointer",fontFamily:C.sans}}>
+                      <span style={{fontSize:12,fontWeight:700,color:open?C.amber:C.text,textAlign:"left",lineHeight:1.4}}>{q}</span>
+                      <span style={{fontSize:14,color:open?C.amber:C.text3,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>⌄</span>
+                    </button>
+                    {open&&(
+                      <div style={{padding:"0 13px 12px",fontSize:12,color:C.text2,lineHeight:1.7}}>{a}</div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
