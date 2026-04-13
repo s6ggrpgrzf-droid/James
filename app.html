@@ -1608,22 +1608,20 @@ function App() {
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Four short training videos on what actually drives ratings and income.</div>
             </div>
 
-            {(pro||activeVideo===0||true)?(
+            {pro?(
               <div style={{display:"flex",flexDirection:"column",gap:12}}>
                 {/* ── Tab switcher ── */}
-                {pro&&(
-                  <div style={{display:"flex",gap:5,background:"rgba(255,255,255,0.04)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)"}}>
-                    {[{id:"videos",l:"📹 Videos"},{id:"scenarios",l:"🎯 Scenarios"}].map(tt=>{
-                      const isActive=trainTab===tt.id;
-                      return(
-                        <button key={tt.id} onClick={()=>{setTrainTab(tt.id);if(tt.id==="scenarios"){setScenarioChoice(null);}}} style={{flex:1,background:isActive?"rgba(245,166,35,0.14)":"transparent",border:isActive?"1px solid rgba(245,166,35,0.32)":"1px solid transparent",borderRadius:11,padding:"9px 4px",fontSize:13,fontWeight:800,cursor:"pointer",color:isActive?C.amber:C.text3,transition:"all 0.15s"}}>
-                          {tt.l}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                {pro&&trainTab==="scenarios"&&(()=>{
+                <div style={{display:"flex",gap:5,background:"rgba(255,255,255,0.04)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)"}}>
+                  {[{id:"videos",l:"📹 Videos"},{id:"scenarios",l:"🎯 Scenarios"}].map(tt=>{
+                    const isActive=trainTab===tt.id;
+                    return(
+                      <button key={tt.id} onClick={()=>{setTrainTab(tt.id);if(tt.id==="scenarios"){setScenarioChoice(null);}}} style={{flex:1,background:isActive?"rgba(245,166,35,0.14)":"transparent",border:isActive?"1px solid rgba(245,166,35,0.32)":"1px solid transparent",borderRadius:11,padding:"9px 4px",fontSize:13,fontWeight:800,cursor:"pointer",color:isActive?C.amber:C.text3,transition:"all 0.15s"}}>
+                        {tt.l}
+                      </button>
+                    );
+                  })}
+                </div>
+                {trainTab==="scenarios"&&(()=>{
                   const sc=SCENARIOS[scenarioIdx];
                   const gradeColor={best:"#10B981",ok:"#F5A623",bad:"#F43F5E"};
                   const gradeLabel={best:"Best Response ✓",ok:"Decent — But Not Ideal",bad:"Avoid This"};
@@ -1685,28 +1683,18 @@ function App() {
                     </div>
                   );
                 })()}
-                {(!pro||trainTab==="videos")&&(
+                {trainTab==="videos"&&(
                 <div style={{display:"flex",flexDirection:"column",gap:0}}>
-                {!pro&&(
-                  <div style={{background:"rgba(245,166,35,0.07)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:12,padding:"11px 14px",display:"flex",gap:10,alignItems:"flex-start"}}>
-                    <span style={{fontSize:16,flexShrink:0}}>🎓</span>
-                    <div style={{fontSize:12,color:C.text2,lineHeight:1.6}}><span style={{color:C.amber,fontWeight:800}}>Free preview:</span> Watch the first video free. Upgrade to Elite to unlock all 4.</div>
-                  </div>
-                )}
                 <div style={{display:"flex",flexDirection:"column",gap:6}}>
-                  {VIDEOS.map((v,i)=>{
-                    const locked=!pro&&i>0;
-                    return(
-                      <button key={i} onClick={()=>{if(locked){setShowPay(true);setPayStep("offer");return;}setActiveVideo(i);}} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s",opacity:locked?0.5:1}}>
-                        <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{locked?"🔒":v.icon}</div>
-                        <div style={{flex:1,minWidth:0}}>
-                          <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
-                          <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
-                        </div>
-                        {locked&&<span style={{fontSize:11,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"2px 7px",flexShrink:0}}>Elite</span>}
-                      </button>
-                    );
-                  })}
+                  {VIDEOS.map((v,i)=>(
+                    <button key={i} onClick={()=>setActiveVideo(i)} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}>
+                      <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{v.icon}</div>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
+                        <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
+                      </div>
+                    </button>
+                  ))}
                 </div>
                 <VideoPlayer video={VIDEOS[activeVideo]}/>
                 </div>
