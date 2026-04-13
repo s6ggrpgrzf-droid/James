@@ -1653,10 +1653,15 @@ function App() {
                           const gc=gradeColor[ch.grade]||C.text2;
                           const gl=gradeLabel[ch.grade]||"";
                           const revealed=scenarioChoice!==null;
+                          const letter=["A","B","C","D"][ci];
                           return(
                             <button key={ci} onClick={()=>{if(scenarioChoice===null){setScenarioChoice(ci);setScenariosDone(prev=>{const n=new Set(prev);n.add(scenarioIdx);return n;});}}}
-                              style={{width:"100%",background:isChosen?`${gc}12`:revealed?"rgba(255,255,255,0.02)":C.s2,border:`1.5px solid ${isChosen?gc:"rgba(255,255,255,0.08)"}`,borderRadius:14,padding:"13px 15px",cursor:scenarioChoice===null?"pointer":"default",textAlign:"left",transition:"all 0.18s",opacity:revealed&&!isChosen?0.4:1}}>
-                              <div style={{fontSize:13,color:isChosen?C.text:C.text2,fontWeight:isChosen?700:500,lineHeight:1.55}}>{ch.text}</div>
+                              style={{width:"100%",background:isChosen?`${gc}12`:revealed?"rgba(255,255,255,0.02)":"rgba(255,255,255,0.04)",border:`1.5px solid ${isChosen?gc:revealed?"rgba(255,255,255,0.08)":"rgba(255,255,255,0.18)"}`,borderRadius:14,padding:"13px 15px",cursor:scenarioChoice===null?"pointer":"default",textAlign:"left",transition:"all 0.18s",opacity:revealed&&!isChosen?0.35:1}}>
+                              <div style={{display:"flex",alignItems:"center",gap:11}}>
+                                <div style={{width:26,height:26,borderRadius:8,background:isChosen?`${gc}22`:"rgba(255,255,255,0.07)",border:`1px solid ${isChosen?gc:"rgba(255,255,255,0.18)"}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:11,fontWeight:900,color:isChosen?gc:C.text2}}>{letter}</div>
+                                <div style={{flex:1,fontSize:13,color:isChosen?C.text:C.text,fontWeight:isChosen?700:600,lineHeight:1.55}}>{ch.text}</div>
+                                {!revealed&&<div style={{color:"rgba(255,255,255,0.25)",fontSize:16,flexShrink:0}}>›</div>}
+                              </div>
                               {isChosen&&(
                                 <div style={{marginTop:10,paddingTop:10,borderTop:`1px solid ${gc}30`}}>
                                   <div style={{fontSize:10,fontWeight:900,color:gc,letterSpacing:"1px",textTransform:"uppercase",marginBottom:5}}>{gl}</div>
