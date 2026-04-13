@@ -892,7 +892,7 @@ function App() {
     setTab(id);
     setTimeout(()=>setNavPop(null), 400);
   }
-  const [cfg, setCfg_]          = useState({name:"",unlockCode:"DROP2026"});
+  const [cfg, setCfg_]          = useState({name:""});
   const [pro, setPro]           = useState(false);
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
@@ -901,11 +901,7 @@ function App() {
   // Modals
   const [showPay, setShowPay]   = useState(false);
   const [payStep, setPayStep]   = useState("offer");
-  const [codeIn, setCodeIn]     = useState("");
-  const [codeErr, setCodeErr]   = useState("");
   const [showCfg, setShowCfg]   = useState(false);
-  const [restoreEmail, setRestoreEmail] = useState("");
-  const [restoreMsg, setRestoreMsg]     = useState("");
 
   // Secret tap counter for settings
   const tapCount = useRef(0);
@@ -958,7 +954,7 @@ function App() {
 
   // Escape key closes paywall modal
   useEffect(()=>{
-    const h=e=>{if(e.key==="Escape"&&showPay){setShowPay(false);setPayStep("offer");setCodeIn("");setCodeErr("");}};
+    const h=e=>{if(e.key==="Escape"&&showPay){setShowPay(false);setPayStep("offer");}};
     document.addEventListener("keydown",h);
     return()=>document.removeEventListener("keydown",h);
   },[showPay]);
@@ -997,8 +993,14 @@ function App() {
   }
 
   useEffect(()=>{
+    const params = new URLSearchParams(window.location.search);
+    const fromStripe = params.get("dp3")==="elite";
+    if(fromStripe){
+      save("dp3-elite",true);
+      history.replaceState(null,"",window.location.pathname);
+    }
     Promise.all([
-      load("dp3-cfg",{name:"",unlockCode:"DROP2026"}),
+      load("dp3-cfg",{name:""}),
       load("dp3-elite",false),
       load("dp3-intro-seen",false),
       load("dp3-fav-tips",[]),
@@ -1006,32 +1008,17 @@ function App() {
       load("dp3-notes",[]),
       load("dp3-notif",false),
     ]).then(([c,p,seen,ft,ftpl,n,notif])=>{
-      setCfg_(c); setPro(!!p); setLoaded(true);
+      setCfg_(c); setPro(fromStripe||!!p); setLoaded(true);
       setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
       setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
       setNotes(n);
       setNotifOn(!!notif);
-      if(!seen) setShowIntro(true);
+      if(fromStripe){ setShowPay(true); setPayStep("done"); }
+      else if(!seen) setShowIntro(true);
     });
   },[]);
 
   const setCfg = useCallback(d=>{setCfg_(d); save("dp3-cfg",d);},[]);
-
-  function showToast(msg){setToast(msg);}
-
-  function tryCode(){
-    if(!codeIn.trim()){setCodeErr("Please enter your unlock code.");return;}
-    if(cfg.unlockCode&&codeIn.trim().toUpperCase()===cfg.unlockCode.trim().toUpperCase()){
-      setPro(true); save("dp3-elite",true); setPayStep("done");
-    } else {
-      setCodeErr("That code isn't correct. Check your receipt email from Stripe.");
-    }
-  }
-
-  function handleRestore(){
-    if(!restoreEmail.trim()){setRestoreMsg("Please enter your email.");return;}
-    setRestoreMsg("If that email matches a purchase, you'll receive your code shortly. Check your inbox.");
-  }
 
   function copyMsg(text,key){
     if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{setCopied(key);showToast("Copied to clipboard!");});}
@@ -1132,10 +1119,6 @@ function App() {
       {showCfg&&(
         <div style={{background:C.s2,borderBottom:"1px solid rgba(255,255,255,0.07)",padding:18}}>
           <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>⚙ Admin Settings</div>
-          <div style={{marginBottom:12}}>
-            <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Unlock Code</div>
-            <input value={cfg.unlockCode||""} onChange={e=>setCfg({...cfg,unlockCode:e.target.value})} placeholder="e.g. DROP2026" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
-          </div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
             {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Elite Access</button>}
@@ -1159,12 +1142,12 @@ function App() {
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:16}}>
             <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:10,textTransform:"uppercase",letterSpacing:"1px"}}>⭐ Access</div>
             {pro?(
-              <div style={{background:`${C.green}0D`,border:`1px solid ${C.green}30`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10}}>
+              <div style={{background:`${C.green}0D`,border:`1px solid ${C.green}30`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",gap:10}}>
+                <span style={{fontSize:18}}>⭐</span>
                 <div>
-                  <div style={{fontSize:13,fontWeight:800,color:C.green}}>✓ Elite Active</div>
-                  <div style={{fontSize:11,color:C.text3,marginTop:2,fontFamily:C.mono}}>{cfg.unlockCode||"DROP2026"}</div>
+                  <div style={{fontSize:13,fontWeight:800,color:C.green}}>Elite Active</div>
+                  <div style={{fontSize:11,color:C.text3,marginTop:2}}>Lifetime access — all features unlocked</div>
                 </div>
-                <button onClick={()=>{if(navigator.clipboard){navigator.clipboard.writeText(cfg.unlockCode||"DROP2026");}showToast("Unlock code copied!");}} style={{background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"7px 13px",color:C.text2,fontSize:12,fontWeight:800,cursor:"pointer",flexShrink:0}}>Copy Code</button>
               </div>
             ):(
               <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 6px 20px ${C.amber}30`}}>Upgrade to Elite — $7 one time</button>
@@ -1194,18 +1177,18 @@ function App() {
               {[
                 ["What's free and what's Elite?",
                  "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship."],
-                ["I paid but I don't have my code. Where is it?",
-                 "Stripe emails your unlock code to the address you used at checkout. Check your spam folder first. If you still can't find it, tap 'Upgrade to Elite' → 'Enter Code', then use the restore email option at the bottom of that screen."],
+                ["I paid but my access didn't unlock. What do I do?",
+                 "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
                 ["How do I add DropPilot to my home screen?",
                  "On iPhone: tap the Share button (the box with an arrow) in Safari, then tap 'Add to Home Screen.' On Android: tap the three-dot menu in Chrome, then 'Add to Home screen.' It'll sit on your home screen and open like a real app."],
                 ["Does the app work offline?",
                  "Yes — once it's loaded, all the tips, scripts, and guides work without a connection. Your notes and checklist progress save locally on your phone. The only thing that needs internet is the initial load and the Stripe payment."],
                 ["Is my data saved if I clear my browser or get a new phone?",
-                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset — but your Elite access is tied to your unlock code, not your device. Just enter the code again to restore it."],
+                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset. Elite access can be restored — contact support from your original Stripe receipt email and we'll sort it out same day."],
                 ["What platforms does DropPilot cover?",
                  "DoorDash, Uber Eats, Instacart, Lyft, Walmart Spark, and Amazon Flex. Every platform has its own habits, appeal letter templates, checklist, and a dedicated section in the Basics guide."],
                 ["Can I use DropPilot on multiple devices?",
-                 "Yes. Your unlock code works on any device — just open the app, go to the paywall, and enter your code. Your notes and checklist progress are device-specific since they're stored locally, but your Elite access travels with the code."],
+                 "Yes — just pay once and it's yours. Each device stores access locally, so if you set up a new phone just reach out with your original Stripe receipt and we'll get you restored. Notes and checklist progress are device-specific."],
                 ["Something's not working. How do I get help?",
                  "For payment or access issues, email the address on your Stripe receipt. For anything else, you can reach out through the same channel. Most issues are resolved same day."],
               ].map(([q,a],i)=>{
@@ -1912,7 +1895,7 @@ function App() {
       {/* ── Paywall Modal ────────────────────────────────────────────────────── */}
       {showPay&&(
         <div style={{position:"fixed",inset:0,zIndex:400,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
-          <div onClick={()=>{setShowPay(false);setPayStep("offer");setCodeIn("");setCodeErr("");setRestoreEmail("");setRestoreMsg("");}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
+          <div onClick={()=>{setShowPay(false);setPayStep("offer");}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
           <div style={{position:"relative",background:"linear-gradient(180deg,#12151a,#0d0f13)",borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:24,paddingBottom:40,width:"100%",maxWidth:430,zIndex:1,maxHeight:"88vh",overflowY:"auto"}}>
             <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 22px"}}/>
 
@@ -1924,71 +1907,27 @@ function App() {
                   <div style={{fontSize:14,color:C.text2,lineHeight:1.7}}>Everything you need to earn more, protect your account, and stay sharp — all in one place.</div>
                 </div>
 
-                {/* Already have a code — shown first so returning customers find it instantly */}
-                <div style={{background:"rgba(16,185,129,0.06)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:14,padding:"14px 16px",marginBottom:16}}>
-                  <div style={{fontSize:13,fontWeight:800,color:C.green,marginBottom:8}}>✓ Already paid? Enter your code here</div>
-                  <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="e.g. DROP2026" style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(16,185,129,0.25)"}`,borderRadius:11,padding:"12px",color:C.text,fontSize:15,width:"100%",marginBottom:8,textTransform:"uppercase"}}/>
-                  {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
-                  <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:11,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:6}}>Unlock with Code</button>
-                  <button onClick={()=>setPayStep("restore")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:12,width:"100%",padding:"4px"}}>Lost your code? Restore purchase →</button>
-                </div>
-
-                <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-                  <div style={{flex:1,height:1,background:"rgba(255,255,255,0.08)"}}/>
-                  <span style={{fontSize:12,color:C.text3,fontWeight:600}}>or purchase below</span>
-                  <div style={{flex:1,height:1,background:"rgba(255,255,255,0.08)"}}/>
-                </div>
-
                 <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:16}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:12,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
                     <span style={{fontSize:15,fontWeight:700}}>Elite Access</span>
                     <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:9}}>
-                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","Training videos — the science behind what earns more","Platform habits & appeal scripts for DoorDash, Uber Eats, Spark, Instacart & Flex","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers"].map((f,i)=>(
+                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","5 training videos — the science behind what earns more","Platform habits & appeal scripts for all 6 platforms","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers"].map((f,i)=>(
                       <div key={i} style={{display:"flex",alignItems:"flex-start",gap:8,fontSize:12,color:C.text2}}>
                         <span style={{color:C.green,fontWeight:900,fontSize:13,flexShrink:0}}>✓</span>{f}
                       </div>
                     ))}
                   </div>
                 </div>
-                <button onClick={()=>{const w=window.open(STRIPE_LINK,"_blank");if(!w){setCodeErr("Pop-ups are blocked. Please allow pop-ups, then tap again.");return;}setPayStep("code");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
+                <button onClick={()=>{ window.location.href=STRIPE_LINK; }} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
                   <span style={{fontSize:20}}>💳</span>
                   <div style={{textAlign:"left"}}>
                     <div>Become Elite — $7</div>
-                    <div style={{fontSize:13,fontWeight:500,opacity:0.75,marginTop:2}}>Opens secure Stripe checkout</div>
+                    <div style={{fontSize:13,fontWeight:500,opacity:0.75,marginTop:2}}>Secure Stripe checkout · unlocks instantly on return</div>
                   </div>
                 </button>
                 <div style={{textAlign:"center",fontSize:12,color:C.text3,marginBottom:4}}>One-time payment · Lifetime access · No recurring charges, ever</div>
-              </div>
-            )}
-
-            {payStep==="code"&&(
-              <div>
-                <div style={{textAlign:"center",marginBottom:20}}>
-                  <div style={{fontSize:44,marginBottom:10}}>💳</div>
-                  <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Finish Your Payment</div>
-                  <div style={{fontSize:13,color:C.text2,lineHeight:1.7,marginBottom:16}}>Stripe opened in a new tab. After paying, Stripe emails you a receipt with your unlock code.</div>
-                  <button onClick={()=>{const w=window.open(STRIPE_LINK,"_blank");if(!w)setCodeErr("Pop-ups are blocked. Please allow pop-ups in your browser settings.");}} style={{background:"rgba(59,130,246,0.12)",border:"1px solid rgba(59,130,246,0.3)",borderRadius:12,padding:"10px 20px",color:C.blue,cursor:"pointer",fontSize:13,fontWeight:700,marginBottom:20}}>Reopen Stripe</button>
-                </div>
-                <input value={codeIn} onChange={e=>{setCodeIn(e.target.value);setCodeErr("");}} placeholder="Enter unlock code from receipt..." style={{background:"rgba(0,0,0,0.3)",border:`1.5px solid ${codeErr?"rgba(244,63,94,0.6)":"rgba(255,255,255,0.1)"}`,borderRadius:12,padding:"14px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
-                {codeErr&&<div style={{fontSize:12,color:C.red,marginBottom:8}}>{codeErr}</div>}
-                <button onClick={tryCode} style={{background:C.green,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",marginBottom:10}}>Unlock Full Access</button>
-                <button onClick={()=>setPayStep("offer")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,width:"100%",padding:"8px"}}>← Go back</button>
-              </div>
-            )}
-
-            {payStep==="restore"&&(
-              <div>
-                <div style={{textAlign:"center",marginBottom:20}}>
-                  <div style={{fontSize:44,marginBottom:10}}>📧</div>
-                  <div style={{fontSize:20,fontWeight:900,marginBottom:8}}>Restore Your Purchase</div>
-                  <div style={{fontSize:13,color:C.text2,lineHeight:1.7}}>Enter the email you used when you paid. We'll resend your unlock code.</div>
-                </div>
-                <input value={restoreEmail} onChange={e=>{setRestoreEmail(e.target.value);setRestoreMsg("");}} placeholder="your@email.com" style={{background:"rgba(0,0,0,0.3)",border:"1.5px solid rgba(255,255,255,0.1)",borderRadius:12,padding:"14px",color:C.text,fontSize:15,width:"100%",marginBottom:8}}/>
-                {restoreMsg&&<div style={{fontSize:12,color:restoreMsg.includes("If")?C.green:C.red,marginBottom:8,lineHeight:1.5}}>{restoreMsg}</div>}
-                <button onClick={handleRestore} style={{background:C.blue,border:"none",borderRadius:14,padding:"15px",fontSize:15,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",marginBottom:10}}>Send My Code</button>
-                <button onClick={()=>setPayStep("offer")} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,width:"100%",padding:"8px"}}>← Go back</button>
               </div>
             )}
 
