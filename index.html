@@ -125,6 +125,17 @@ const LEARN_CATS = [
     ]
   },
   {
+    e:"🎭", t:"Difficult Customer Playbook", sub:"Real scripts for every hard moment", free:false,
+    secs:[
+      {h:"The Angry Door Opener", body:"They open the door already frustrated — before you've said a word. Do NOT apologize immediately (sounds hollow) or explain yourself (sounds defensive). Instead: hold eye contact for one second — don't look away. Slow your voice down. Say warmly: 'I'm really sorry about the wait. I hope the rest of your night is better.' Present the bag calmly and professionally. Leave without lingering. This takes 8 seconds. Customers who receive this almost never file complaints — even when genuinely frustrated.", tip:"Slow your voice before you slow your words. The tone tells them everything before you even speak."},
+      {h:"The 'I Ordered This Two Hours Ago' Customer", body:"This is always an exaggeration — arguing about the actual timing never helps. They're venting. Let them. Your response: 'I'm so sorry — I can only imagine how frustrating that wait has been. Here's your order.' Nothing more. Do not explain the delay, cite the app's timing, or say it wasn't your fault. Every explanation sounds like an excuse. An acknowledgment and the food is everything they need from you right now.", tip:"The customer knows it wasn't literally two hours. They're telling you how long it felt. Treat the feeling, not the fact."},
+      {h:"The 'This Isn't What I Ordered' Accusation", body:"You had a sealed bag from the restaurant. You cannot verify or take responsibility for its contents. Say: 'I'm really sorry — I picked up a sealed bag right from the restaurant. The fastest way to fix this is through [platform] support — they'll make it right quickly.' Do not inspect the bag with them. Do not suggest they may be mistaken. Do not promise anything. Redirect and leave politely. That is the professional move.", tip:"The sealed bag is your protection. State it simply, redirect to support, leave politely."},
+      {h:"The Customer Who Stands and Stares", body:"Some customers watch every move — standing in the doorway while you photograph the food, type in the app, etc. Don't let it rattle you. Acknowledge them with a small smile: 'Just taking the delivery photo — required for every drop-off!' This explains your behavior before they can misinterpret it, and turns what could feel like surveillance into a shared moment. Say goodbye warmly and leave.", tip:"Narrate what you're doing before they have to ask. Transparency disarms suspicion every time."},
+      {h:"The Customer Who Won't Come to the Door", body:"You've knocked, texted, and waited. Nothing. The right sequence: 1. Text immediately — 'Hi! At your door and knocked — will wait a couple minutes!' 2. Wait 2-3 minutes. 3. If no response: 'I've been at your door — leaving your order in a safe spot and taking a photo. Contact [platform] support if there's any issue.' 4. Leave in the safest visible spot. Take a clear photo showing the address. Your text timestamps protect you.", tip:"Two texts. Clear documentation. A clean photo. That's your protection if they file a complaint."},
+      {h:"When a Customer Gets Aggressive", body:"If a customer becomes verbally aggressive — raising their voice or using threatening language — do not engage. Say calmly: 'I want to help resolve this. Please contact [platform] support and they'll handle it right away.' Then leave. You do not have to absorb hostility. Your safety comes first. Document the interaction in the platform's support system as soon as you leave.", tip:"You can be professional and still leave. Walking away from aggression is the right move — not a failure."},
+    ]
+  },
+  {
     e:"💰", t:"The Science of Tips", sub:"Why people tip — and how to make it happen", free:false,
     secs:[
       {h:"The Two-Handed Handoff", body:"Research on service and tipping found that a brief, real moment of physical exchange during a transaction increases tips significantly. You can't manufacture extra contact at someone's door. But a two-handed bag presentation is the delivery version of this. When you use two hands to present the bag — facing the customer, at chest height — it creates a real exchange instead of a drop-off. Customers feel the difference without knowing why. Try it for one week straight and track your tips.", tip:"Two hands every time. It's not just about the bag staying level — it's about what it communicates."},
@@ -550,6 +561,60 @@ const VIDEOS = [
     ]},
 ];
 
+// ─── Scenario Trainer Data ────────────────────────────────────────────────────
+const SCENARIOS = [
+  {
+    id:0, e:"😤", title:"The Frustrated Customer",
+    setup:"You arrive at the door and knock. The customer opens it visibly frustrated. Before you can say anything they say: 'Finally. It's been over an hour. The food is probably cold.'",
+    choices:[
+      {text:"Apologize and explain that traffic was terrible tonight",grade:"ok",why:"You're being human, but making excuses shifts focus to yourself instead of their feeling. Better to acknowledge their frustration and move on — no explanations needed."},
+      {text:"Say 'I'm really sorry you had to wait — I hope the rest of your night is better!' and hand over the bag",grade:"best",why:"Perfect. You acknowledged how they feel without making excuses or taking blame. Short, warm, and it ends the interaction on a positive note. This is exactly the right move."},
+      {text:"Smile and say nothing — just hand over the bag quickly",grade:"bad",why:"Silence reads as indifference to an already frustrated customer. Not acknowledging their feeling almost guarantees a lower rating here."},
+      {text:"Explain that the restaurant caused the delay, not you",grade:"bad",why:"Even if true, this sounds defensive and can start an argument. The customer doesn't care who's at fault — they want their frustration acknowledged. Pointing fingers just adds to the problem."},
+    ]
+  },
+  {
+    id:1, e:"🏢", title:"Lost in the Apartment Complex",
+    setup:"You've arrived at a large apartment complex and have been driving around for 4 minutes. You can't find Building C. The food is getting cold and your GPS led you to the wrong entrance.",
+    choices:[
+      {text:"Keep driving until you find it — you don't want to bother the customer",grade:"bad",why:"Every extra minute costs warmth and earns frustration. If they're watching the tracker, they see you circling. Text immediately — every second matters here."},
+      {text:"Text: 'Hi! In the [complex] parking area but having trouble finding Building C — could you help with which entrance to use? Almost there!'",grade:"best",why:"Perfect. Fast, specific, and gives them something actionable. Most customers respond in under 30 seconds when their food is outside. You stop the frustration clock the moment you send it."},
+      {text:"Call them right away",grade:"ok",why:"Calling works, but most people prefer a text first — many won't answer unknown numbers. Text first, then call if no response after 2 minutes."},
+      {text:"Leave the food at the main entrance and mark it delivered",grade:"bad",why:"This almost always leads to a complaint. You haven't done everything possible to reach them. Always text first — it's both the right thing to do and your protection if anything goes wrong."},
+    ]
+  },
+  {
+    id:2, e:"⏰", title:"Running 12 Minutes Late",
+    setup:"You're 12 minutes behind schedule due to unexpected construction. The customer just texted: 'Where is my order? It says you're still 10 minutes away.'",
+    choices:[
+      {text:"Don't respond — the app tracker shows your location anyway",grade:"bad",why:"This is the worst move. The customer texted because they want acknowledgment. Going silent turns a frustrated customer into an angry one. You'll likely lose a star just for not responding."},
+      {text:"Reply: 'Hi! Really sorry — hit unexpected construction. On my way and will be there in about 10 minutes. I appreciate your patience!'",grade:"best",why:"Excellent. You acknowledged them, gave a real ETA, and stated the cause plainly without whining about it. This often turns frustration into sympathy."},
+      {text:"Reply: 'Driving as fast as I can!'",grade:"ok",why:"Better than silence, but vague and slightly defensive. Give them an actual ETA — that's all they really want from you."},
+      {text:"Reply: 'Sorry, the app GPS is off — I'm actually closer than it shows'",grade:"bad",why:"This sounds like a cover story even if it's true. Never blame the app. Own the delay briefly and clearly — that's all it takes."},
+    ]
+  },
+  {
+    id:3, e:"📦", title:"The Missing Item Claim",
+    setup:"You completed a delivery 20 minutes ago. You just received an in-app message: 'My order is missing the large fries. This is unacceptable.'",
+    choices:[
+      {text:"Reply: 'I checked the bag when I picked it up and everything was in there.'",grade:"bad",why:"Never say this. The moment you claim you checked the bag, you've taken responsibility for its contents — and you can't prove what was in a sealed bag. This creates an argument you can't win."},
+      {text:"Reply: 'I'm so sorry about that. I picked up a sealed bag from the restaurant — for the fastest fix, please contact [platform] support and they'll sort it out right away.'",grade:"best",why:"Exactly right. You didn't admit fault, acknowledged their frustration, and gave them the fastest path to a solution. Support handles it — that's their job. Your rating stays protected."},
+      {text:"Apologize and offer to go back to the restaurant",grade:"bad",why:"Going back isn't how the delivery workflow operates, and offering something you can't deliver makes everything worse. Always redirect to platform support."},
+      {text:"Don't reply — they'll figure it out through the app",grade:"bad",why:"Staying silent after a complaint almost guarantees a 1-star rating. A quick, helpful reply keeps you in control of how this ends."},
+    ]
+  },
+  {
+    id:4, e:"🌧️", title:"Rainy Night, Big Impression",
+    setup:"It's raining hard. You've kept the bag dry under your jacket the whole way. You arrive at the door, slightly wet. The customer opens up.",
+    choices:[
+      {text:"Say nothing — just hand over the bag quickly",grade:"ok",why:"At least you delivered. But you missed an opportunity. The customer likely feels a little guilty watching you in the rain. One warm sentence turns that guilt into gratitude — and gratitude into a tip."},
+      {text:"Complain: 'Terrible night out there — I'm absolutely soaked!'",grade:"bad",why:"Complaining asks for sympathy, not gratitude. Customers may feel uncomfortable but not generous. Never complain about conditions."},
+      {text:"Say warmly: 'Kept it moving out there for you — hope you enjoy it!' with a smile, and hand over the bag",grade:"best",why:"Perfect. You acknowledged the effort without complaining. The customer hears: 'I worked hard so you could enjoy your meal.' That earns tips. Warmth under difficult conditions is the most memorable first impression you can make."},
+      {text:"Ask if they have a covered spot you could use next time",grade:"bad",why:"Never make the delivery about your comfort. Any comment that shifts the customer's attention from their food to your situation is a misstep."},
+    ]
+  },
+];
+
 // ─── Video Player ─────────────────────────────────────────────────────────────
 function VideoPlayer({video}) {
   const [scene, setScene] = useState(0);
@@ -830,6 +895,10 @@ function App() {
 
   // Training
   const [activeVideo, setActiveVideo] = useState(0);
+  const [trainTab, setTrainTab] = useState("videos");
+  const [scenarioIdx, setScenarioIdx] = useState(0);
+  const [scenarioChoice, setScenarioChoice] = useState(null);
+  const [scenariosDone, setScenariosDone] = useState(new Set());
 
   // Defend
   const [defPlatform, setDefPlatform]   = useState(null);
@@ -1468,18 +1537,106 @@ function App() {
 
             {pro?(
               <div style={{display:"flex",flexDirection:"column",gap:12}}>
-                <div style={{display:"flex",flexDirection:"column",gap:6}}>
-                  {VIDEOS.map((v,i)=>(
-                    <button key={i} onClick={()=>setActiveVideo(i)} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}>
-                      <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{v.icon}</div>
-                      <div style={{flex:1,minWidth:0}}>
-                        <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
-                        <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
-                      </div>
-                    </button>
-                  ))}
+                {/* ── Tab switcher ── */}
+                <div style={{display:"flex",gap:5,background:"rgba(255,255,255,0.04)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)"}}>
+                  {[{id:"videos",l:"📹 Videos"},{id:"scenarios",l:"🎯 Scenarios"}].map(tt=>{
+                    const isActive=trainTab===tt.id;
+                    return(
+                      <button key={tt.id} onClick={()=>{setTrainTab(tt.id);if(tt.id==="scenarios"){setScenarioChoice(null);}}} style={{flex:1,background:isActive?"rgba(245,166,35,0.14)":"transparent",border:isActive?"1px solid rgba(245,166,35,0.32)":"1px solid transparent",borderRadius:11,padding:"9px 4px",fontSize:13,fontWeight:800,cursor:"pointer",color:isActive?C.amber:C.text3,transition:"all 0.15s"}}>
+                        {tt.l}
+                      </button>
+                    );
+                  })}
                 </div>
-                <VideoPlayer video={VIDEOS[activeVideo]}/>
+
+                {/* ── Videos tab ── */}
+                {trainTab==="videos"&&(
+                  <div style={{display:"flex",flexDirection:"column",gap:6}}>
+                    {VIDEOS.map((v,i)=>(
+                      <button key={i} onClick={()=>setActiveVideo(i)} style={{background:activeVideo===i?`${v.color}15`:C.s1,border:`1px solid ${activeVideo===i?v.color:C.border}`,borderRadius:14,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}>
+                        <div style={{width:38,height:38,borderRadius:11,background:`${v.color}15`,border:`1px solid ${v.color}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{v.icon}</div>
+                        <div style={{flex:1,minWidth:0}}>
+                          <div style={{fontSize:12,fontWeight:800,color:activeVideo===i?v.color:C.text,marginBottom:1}}>{v.title}</div>
+                          <div style={{fontSize:12,color:C.text3,lineHeight:1.3}}>{v.desc}</div>
+                        </div>
+                      </button>
+                    ))}
+                    <VideoPlayer video={VIDEOS[activeVideo]}/>
+                  </div>
+                )}
+
+                {/* ── Scenarios tab ── */}
+                {trainTab==="scenarios"&&(()=>{
+                  const sc=SCENARIOS[scenarioIdx];
+                  const gradeColor={best:"#10B981",ok:"#F5A623",bad:"#F43F5E"};
+                  const gradeLabel={best:"Best Response ✓",ok:"Decent — But Not Ideal",bad:"Avoid This"};
+                  return(
+                    <div style={{display:"flex",flexDirection:"column",gap:14}}>
+                      {/* Progress bar */}
+                      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",paddingLeft:2}}>
+                        <div style={{fontSize:11,fontWeight:800,color:C.text3,letterSpacing:"1px",textTransform:"uppercase"}}>Scenario {scenarioIdx+1} of {SCENARIOS.length}</div>
+                        <div style={{display:"flex",gap:5}}>
+                          {SCENARIOS.map((_,i)=>(
+                            <div key={i} style={{width:26,height:6,borderRadius:99,background:scenariosDone.has(i)?"rgba(16,185,129,0.55)":i===scenarioIdx?"rgba(245,166,35,0.55)":"rgba(255,255,255,0.08)",transition:"background 0.22s"}}/>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Scenario card */}
+                      <div style={{background:`linear-gradient(135deg,${C.s2},${C.s1})`,border:"1px solid rgba(255,255,255,0.09)",borderRadius:20,overflow:"hidden"}}>
+                        <div style={{background:"rgba(255,255,255,0.03)",padding:"15px 18px",borderBottom:"1px solid rgba(255,255,255,0.06)",display:"flex",alignItems:"center",gap:13}}>
+                          <div style={{fontSize:34,flexShrink:0}}>{sc.e}</div>
+                          <div>
+                            <div style={{fontSize:15,fontWeight:900,letterSpacing:"-0.3px"}}>{sc.title}</div>
+                            <div style={{fontSize:10,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginTop:2}}>What would you do?</div>
+                          </div>
+                        </div>
+                        <div style={{padding:"15px 18px"}}>
+                          <p style={{fontSize:13,color:C.text2,lineHeight:1.85,margin:0}}>{sc.setup}</p>
+                        </div>
+                      </div>
+
+                      {/* Choices */}
+                      <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                        {sc.choices.map((ch,ci)=>{
+                          const isChosen=scenarioChoice===ci;
+                          const gc=gradeColor[ch.grade]||C.text2;
+                          const gl=gradeLabel[ch.grade]||"";
+                          const revealed=scenarioChoice!==null;
+                          return(
+                            <button key={ci} onClick={()=>{if(scenarioChoice===null){setScenarioChoice(ci);setScenariosDone(prev=>{const n=new Set(prev);n.add(scenarioIdx);return n;});}}}
+                              style={{width:"100%",background:isChosen?`${gc}12`:revealed?"rgba(255,255,255,0.02)":C.s2,border:`1.5px solid ${isChosen?gc:"rgba(255,255,255,0.08)"}`,borderRadius:14,padding:"13px 15px",cursor:scenarioChoice===null?"pointer":"default",textAlign:"left",transition:"all 0.18s",opacity:revealed&&!isChosen?0.4:1}}>
+                              <div style={{fontSize:13,color:isChosen?C.text:C.text2,fontWeight:isChosen?700:500,lineHeight:1.55}}>{ch.text}</div>
+                              {isChosen&&(
+                                <div style={{marginTop:10,paddingTop:10,borderTop:`1px solid ${gc}30`}}>
+                                  <div style={{fontSize:10,fontWeight:900,color:gc,letterSpacing:"1px",textTransform:"uppercase",marginBottom:5}}>{gl}</div>
+                                  <p style={{fontSize:13,color:C.text2,margin:0,lineHeight:1.7}}>{ch.why}</p>
+                                </div>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Navigation */}
+                      {scenarioChoice!==null&&(
+                        <div style={{display:"flex",gap:8}}>
+                          {scenarioIdx>0&&(
+                            <button onClick={()=>{setScenarioIdx(i=>i-1);setScenarioChoice(null);}} style={{flex:1,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text2}}>← Prev</button>
+                          )}
+                          {scenarioIdx<SCENARIOS.length-1?(
+                            <button onClick={()=>{setScenarioIdx(i=>i+1);setScenarioChoice(null);}} style={{flex:2,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:14,padding:"13px",fontSize:14,fontWeight:900,cursor:"pointer",color:"#000"}}>Next Scenario →</button>
+                          ):(
+                            <button onClick={()=>{setScenarioIdx(0);setScenarioChoice(null);setScenariosDone(new Set());}} style={{flex:2,background:`linear-gradient(135deg,${C.green},#059669)`,border:"none",borderRadius:14,padding:"13px",fontSize:14,fontWeight:900,cursor:"pointer",color:"#fff"}}>All done! Start over ↺</button>
+                          )}
+                        </div>
+                      )}
+                      {scenarioChoice===null&&(
+                        <div style={{textAlign:"center",fontSize:12,color:C.text3,paddingBottom:2}}>Tap a response above to see feedback</div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             ):(
               <div style={{position:"relative"}}>
