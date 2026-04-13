@@ -24,7 +24,7 @@
   <div id="root">
     <div id="splash">
       <div class="s-icon">🚗</div>
-      <div class="s-msg">Loading DropPilot…</div>
+      <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -418,18 +418,22 @@ function IntroAnimation({onDone}) {
         <div style={{position:"absolute",top:-60,right:-40,width:240,height:240,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,166,35,0.15),transparent 68%)",pointerEvents:"none"}}/>
         <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,marginBottom:22,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
         <div className="iup id1" style={{fontSize:40,fontWeight:900,letterSpacing:"-2px",background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6,textAlign:"center"}}>DropPilot</div>
-        <div className="iup id1" style={{fontSize:12,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Driver Command Center</div>
+        <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Customer Service · Gig Edition</div>
         <Divider/>
-        <div className="iup id2" style={{fontSize:16,color:"rgba(255,255,255,0.6)",textAlign:"center",lineHeight:1.8,fontWeight:500}}>Everything you need to earn more,<br/>protect your account, and deliver<br/>with confidence — every shift.</div>
+        <div className="iup id2" style={{fontSize:15,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.9,fontWeight:500}}>The first customer service app<br/>built specifically for gig drivers.<br/>The delivery is the task.<br/>The service is the job.</div>
       </div>
 
-      {/* Scene 1: The real problem */}
+      {/* Scene 1: The Real Job */}
       <div style={ss(1)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the gap most drivers never close</div>
-        <div className="iup id1" style={{fontSize:30,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Driving well<br/>doesn't automatically<br/>mean earning well.</div>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>what your job actually is</div>
+        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>You don't get rated<br/>on speed.<br/>You get rated on<br/>how you made them feel.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:10,width:"100%"}}>
-          {[["Your rating decides which orders you even see.","rgba(244,63,94,0.1)","rgba(244,63,94,0.28)"],["Tips are won or lost in the last 10 seconds at the door.","rgba(245,166,35,0.08)","rgba(245,166,35,0.25)"],["One complaint — real or false — can cost you your account.","rgba(244,63,94,0.1)","rgba(244,63,94,0.28)"]].map(([t,bg,border],i)=>(
+          {[
+            ["Your rating is a customer service score — every delivery adds to it.","rgba(245,166,35,0.08)","rgba(245,166,35,0.25)"],
+            ["Tips are emotional, not logical. Customers tip how they felt, not how fast you were.","rgba(59,130,246,0.08)","rgba(59,130,246,0.25)"],
+            ["Drivers who master service earn significantly more. Same roads. Same apps.","rgba(16,185,129,0.08)","rgba(16,185,129,0.25)"]
+          ].map(([t,bg,border],i)=>(
             <div key={i} className="iup" style={{padding:"12px 15px",background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.3+i*0.14}s`,opacity:0}}>
               <div style={{fontSize:13,color:"rgba(255,255,255,0.8)",lineHeight:1.55,fontWeight:600}}>{t}</div>
             </div>
@@ -437,13 +441,38 @@ function IntroAnimation({onDone}) {
         </div>
       </div>
 
-      {/* Scene 2: Five sections */}
+      {/* Scene 2: The Craft */}
       <div style={ss(2)}>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(139,92,246,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the service gap</div>
+        <div className="iup id1" style={{fontSize:27,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${P})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Most gig drivers<br/>were never taught<br/>customer service.<br/>That's the gap.</div>
+        <Divider color={P}/>
+        <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
+          {[
+            ["🏨","Hospitality professionals train for months on the exact words, tone, and timing of every guest interaction."],
+            ["🎯","Great service isn't natural — it's trained. The right phrase at the door is worth more than a perfect route."],
+            ["🚗","DropPilot brings professional service standards to gig drivers. Practical. Proven. Built for the road."]
+          ].map(([e,t],i)=>(
+            <div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"rgba(139,92,246,0.06)",border:"1px solid rgba(139,92,246,0.18)",borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
+              <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{e}</span>
+              <div style={{fontSize:12.5,color:"rgba(255,255,255,0.72)",lineHeight:1.6,fontWeight:500}}>{t}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scene 3: Five sections */}
+      <div style={ss(3)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>five sections. one toolkit.</div>
-        <div className="iup id1" style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.6px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Everything you need<br/>to earn more on<br/>every single shift.</div>
+        <div className="iup id1" style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.6px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Scripts. Habits. Defense.<br/>Training. All built for<br/>the real job.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
-          {[["⭐",A,"Earn","Tips, psychology, and habits that raise your rating"],["💬",B,"Scripts","Word-for-word messages for every situation"],["📖",T,"Basics","New to gig work? Everything explained from scratch"],["🛡️",P,"Defend","Protect your account when things go wrong"],["🎓",A,"Training","Short videos on what actually earns more money"]].map(([e,col,label,desc],i)=>(
+          {[
+            ["⭐",A,"Earn","Service habits and psychology that raise your rating and tips"],
+            ["💬",B,"Scripts","Word-for-word messages for every customer situation"],
+            ["📖",T,"Basics","Platform rules, policies, and how gig work actually works"],
+            ["🛡️",P,"Defend","Protect your account when complaints and disputes happen"],
+            ["🎓",A,"Training","Customer service lessons backed by real research"]
+          ].map(([e,col,label,desc],i)=>(
             <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,animationDelay:`${0.25+i*0.1}s`,opacity:0}}>
               <div style={{width:32,height:32,borderRadius:9,background:`${col}15`,border:`1px solid ${col}30`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
               <div style={{flex:1,minWidth:0}}><div style={{fontSize:13,fontWeight:800,color:col,marginBottom:1}}>{label}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.45)",lineHeight:1.3}}>{desc}</div></div>
@@ -452,47 +481,37 @@ function IntroAnimation({onDone}) {
         </div>
       </div>
 
-      {/* Scene 3: Built for every driver */}
-      <div style={ss(3)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(6,182,212,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>built for every driver</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${T})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Whether you've been<br/>doing this for years<br/>or just got started.</div>
+      {/* Scene 4: Platforms */}
+      <div style={ss(4)}>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(6,182,212,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>built for every platform</div>
+        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${T})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>DoorDash. Uber Eats.<br/>Instacart. Lyft. Flex.</div>
         <Divider color={T}/>
-        <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
-          {[["🧓","New to gig work","The Basics section explains everything from scratch. No experience needed.","rgba(6,182,212,0.08)","rgba(6,182,212,0.22)"],["🚗","Already delivering","Sharpen your habits, earn more tips, protect your account.","rgba(245,166,35,0.08)","rgba(245,166,35,0.22)"],["💪","Top earner","Use the deep psychology and science sections to stay elite.","rgba(16,185,129,0.08)","rgba(16,185,129,0.22)"]].map(([e,title,desc,bg,border],i)=>(
-            <div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
-              <span style={{fontSize:20,flexShrink:0}}>{e}</span>
-              <div><div style={{fontSize:13,fontWeight:800,color:C.text,marginBottom:2}}>{title}</div><div style={{fontSize:12,color:"rgba(255,255,255,0.5)",lineHeight:1.55}}>{desc}</div></div>
+        <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
+          {[
+            ["🍔","#FF3008","DoorDash","Habits, scripts, and appeal letters built for DD drivers"],
+            ["🛵","#06C167","Uber Eats","Service tips, rating recovery, and dispute templates"],
+            ["🛒","#43B02A","Instacart","Shopper etiquette, substitution handling, and IC appeals"],
+            ["🚙","#FF00BF","Lyft","Passenger service, rating protection, and driver tips"],
+            ["📦","#FF9900","Flex","Block scheduling, standing protection, and TBA handling"]
+          ].map(([e,col,label,desc],i)=>(
+            <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",background:"rgba(6,182,212,0.05)",border:"1px solid rgba(6,182,212,0.15)",borderRadius:12,animationDelay:`${0.25+i*0.1}s`,opacity:0}}>
+              <div style={{width:32,height:32,borderRadius:9,background:`${col}18`,border:`1px solid ${col}35`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
+              <div style={{flex:1,minWidth:0}}><div style={{fontSize:13,fontWeight:800,color:"rgba(255,255,255,0.85)",marginBottom:1}}>{label}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.4)",lineHeight:1.3}}>{desc}</div></div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Scene 4: Elite access */}
-      <div style={ss(4)}>
+      {/* Scene 5: Elite access */}
+      <div style={ss(5)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $7 one time</div>
         <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["📖",T,"Basics Guide"],["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
+          {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
             <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"11px 12px",display:"flex",alignItems:"center",gap:8}}>
               <span style={{fontSize:18}}>{e}</span>
               <span style={{fontSize:12,fontWeight:700,color:col}}>{label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Scene 5: The outcome */}
-      <div style={ss(5)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(16,185,129,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the result</div>
-        <div className="ipop" style={{fontSize:52,marginBottom:16,display:"block",textAlign:"center"}}>⭐</div>
-        <div className="iup id1" style={{fontSize:30,fontWeight:900,lineHeight:1.15,textAlign:"center",letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 30%,${G})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Higher ratings.<br/>Bigger tips.<br/>A protected account.<br/>More money.</div>
-        <Divider color={G}/>
-        <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["⭐","Better Rating",G],["💰","More Tips",A],["🛡️","Account Safe",P],["📈","More Income",G]].map(([e,t,col],i)=>(
-            <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"12px 10px",textAlign:"center"}}>
-              <div style={{fontSize:22,marginBottom:4}}>{e}</div>
-              <div style={{fontSize:12,fontWeight:700,color:col,letterSpacing:"0.3px"}}>{t}</div>
             </div>
           ))}
         </div>
@@ -505,7 +524,7 @@ function IntroAnimation({onDone}) {
         <div style={{position:"relative",zIndex:1,textAlign:"center",width:"100%"}}>
           <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,margin:"0 auto 18px",boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
           <div className="iup id1" style={{fontSize:40,fontWeight:900,letterSpacing:"-2px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4,textAlign:"center"}}>DropPilot</div>
-          <div className="iup id1" style={{fontSize:12,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Driver Command Center</div>
+          <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Customer Service · Gig Edition</div>
           <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
           <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:7,marginBottom:26,width:"100%"}}>
             {[["⭐","Earn",A,"Free"],["💬","Scripts",B,"Elite"],["📖","Basics",T,"Elite"],["🛡️","Defend",P,"Elite"],["🎓","Training",A,"Elite"]].map(([e,t,col,badge],i)=>(
