@@ -923,6 +923,11 @@ function App() {
   // Training
   const [activeVideo, setActiveVideo] = useState(0);
 
+  // User profile panel
+  const [showProfile, setShowProfile] = useState(false);
+  const [notifOn, setNotifOn]   = useState(false);
+  const [notifPerm, setNotifPerm] = useState(()=>typeof Notification!=="undefined"?Notification.permission:"unsupported");
+
   // Defend
   const [defPlatform, setDefPlatform]   = useState(null);
   const [defSection, setDefSection]     = useState("habits");
@@ -943,6 +948,39 @@ function App() {
     return()=>document.removeEventListener("keydown",h);
   },[showPay]);
 
+  // Daily tip notification — fires once per day on app open if enabled + granted
+  useEffect(()=>{
+    if(!loaded||!notifOn) return;
+    if(typeof Notification==="undefined"||Notification.permission!=="granted") return;
+    const today=new Date().toDateString();
+    const last=localStorage.getItem("dp3-notif-last");
+    if(last===today) return;
+    const tip=ALL_TIPS[Math.floor(new Date().getDate()-1)%ALL_TIPS.length];
+    try{
+      new Notification("DropPilot — Tip of the Day",{body:`${tip.e} ${tip.t}: ${tip.s}`});
+      localStorage.setItem("dp3-notif-last",today);
+    }catch(e){}
+  },[loaded,notifOn]);
+
+  async function toggleNotif(){
+    if(typeof Notification==="undefined"){showToast("Notifications not supported on this browser.");return;}
+    if(!notifOn){
+      const perm=await Notification.requestPermission();
+      setNotifPerm(perm);
+      if(perm==="granted"){
+        setNotifOn(true); save("dp3-notif",true);
+        const tip=ALL_TIPS[0];
+        try{new Notification("DropPilot — Tip of the Day",{body:`${tip.e} ${tip.t}: ${tip.s}`});localStorage.setItem("dp3-notif-last",new Date().toDateString());}catch(e){}
+        showToast("Tip of the Day enabled!");
+      } else if(perm==="denied"){
+        showToast("Blocked — enable notifications in browser settings.");
+      }
+    } else {
+      setNotifOn(false); save("dp3-notif",false);
+      showToast("Tip of the Day turned off.");
+    }
+  }
+
   useEffect(()=>{
     Promise.all([
       load("dp3-cfg",{name:"",unlockCode:"DROP2026"}),
@@ -951,11 +989,13 @@ function App() {
       load("dp3-fav-tips",[]),
       load("dp3-fav-tpl",[]),
       load("dp3-notes",[]),
-    ]).then(([c,p,seen,ft,ftpl,n])=>{
+      load("dp3-notif",false),
+    ]).then(([c,p,seen,ft,ftpl,n,notif])=>{
       setCfg_(c); setPro(!!p); setLoaded(true);
       setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
       setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
       setNotes(n);
+      setNotifOn(!!notif);
       if(!seen) setShowIntro(true);
     });
   },[]);
@@ -1063,35 +1103,81 @@ function App() {
 
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",position:"sticky",top:0,zIndex:60}}>
-        <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default"}}>
+        <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default",flex:1}}>
           <div className="glow" style={{width:38,height:38,borderRadius:12,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🚗</div>
           <div>
             <div style={{fontSize:18,fontWeight:900,letterSpacing:"-0.5px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
-            <div style={{fontSize:12,color:C.text3,letterSpacing:"1.5px",fontWeight:700}}>DRIVER COMMAND CENTER</div>
+            <div style={{fontSize:10,color:C.text3,letterSpacing:"1.5px",fontWeight:700,textTransform:"uppercase"}}>Customer Service · Gig Edition</div>
           </div>
         </div>
+        <button onClick={()=>setShowProfile(o=>!o)} aria-label="Profile & Settings" style={{background:showProfile?`${C.amber}18`:"rgba(255,255,255,0.05)",border:`1px solid ${showProfile?`${C.amber}40`:"rgba(255,255,255,0.08)"}`,borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0,transition:"all 0.15s"}}>⚙️</button>
       </div>
 
-      {/* ── Settings Panel ──────────────────────────────────────────────────── */}
+      {/* ── Admin Settings Panel (secret 5-tap) ────────────────────────────── */}
       {showCfg&&(
         <div style={{background:C.s2,borderBottom:"1px solid rgba(255,255,255,0.07)",padding:18}}>
-          <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>⚙ Settings</div>
+          <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>⚙ Admin Settings</div>
           <div style={{marginBottom:12}}>
-            <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Your Name</div>
-            <input value={cfg.name||""} onChange={e=>setCfg({...cfg,name:e.target.value})} placeholder="e.g. James" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
-          </div>
-          <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
-            <div style={{fontSize:12,fontWeight:800,color:C.amber,marginBottom:10}}>💳 Access</div>
-            <div>
-              <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Unlock Code</div>
-              <input value={cfg.unlockCode||""} onChange={e=>setCfg({...cfg,unlockCode:e.target.value})} placeholder="e.g. DROP2026" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
-            </div>
+            <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:5}}>Unlock Code</div>
+            <input value={cfg.unlockCode||""} onChange={e=>setCfg({...cfg,unlockCode:e.target.value})} placeholder="e.g. DROP2026" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
           </div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
             {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Elite Access</button>}
           </div>
           <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
+        </div>
+      )}
+
+      {/* ── User Profile Panel (⚙️ button) ─────────────────────────────────── */}
+      {showProfile&&(
+        <div style={{background:C.s2,borderBottom:"1px solid rgba(255,255,255,0.07)",padding:18,animation:"slideUp 0.22s cubic-bezier(0.16,1,0.3,1)"}}>
+
+          {/* Name */}
+          <div style={{fontSize:14,fontWeight:800,color:C.text,marginBottom:14}}>👤 Your Profile</div>
+          <div style={{marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:5,textTransform:"uppercase",letterSpacing:"1px"}}>Your Name</div>
+            <input value={cfg.name||""} onChange={e=>setCfg({...cfg,name:e.target.value})} placeholder="e.g. James" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"11px 12px",color:C.text,fontSize:13,width:"100%"}}/>
+          </div>
+
+          {/* Access */}
+          <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:10,textTransform:"uppercase",letterSpacing:"1px"}}>⭐ Access</div>
+            {pro?(
+              <div style={{background:`${C.green}0D`,border:`1px solid ${C.green}30`,borderRadius:12,padding:"11px 14px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10}}>
+                <div>
+                  <div style={{fontSize:13,fontWeight:800,color:C.green}}>✓ Elite Active</div>
+                  <div style={{fontSize:11,color:C.text3,marginTop:2,fontFamily:C.mono}}>{cfg.unlockCode||"DROP2026"}</div>
+                </div>
+                <button onClick={()=>{if(navigator.clipboard){navigator.clipboard.writeText(cfg.unlockCode||"DROP2026");}showToast("Unlock code copied!");}} style={{background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"7px 13px",color:C.text2,fontSize:12,fontWeight:800,cursor:"pointer",flexShrink:0}}>Copy Code</button>
+              </div>
+            ):(
+              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 6px 20px ${C.amber}30`}}>Upgrade to Elite — $7 one time</button>
+            )}
+          </div>
+
+          {/* Notifications */}
+          <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:16}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:10,textTransform:"uppercase",letterSpacing:"1px"}}>🔔 Notifications</div>
+            <div style={{background:C.s1,border:`1px solid ${notifOn?`${C.green}35`:"rgba(255,255,255,0.08)"}`,borderRadius:12,padding:"12px 14px",display:"flex",alignItems:"center",gap:12,transition:"border-color 0.2s"}}>
+              <div style={{flex:1,minWidth:0}}>
+                <div style={{fontSize:13,fontWeight:700,color:C.text}}>Tip of the Day</div>
+                <div style={{fontSize:11,color:C.text3,marginTop:3,lineHeight:1.4}}>
+                  {notifPerm==="denied"?"Blocked — enable in your browser settings":notifOn?"Sends a fresh tip each time you open the app":"Get a customer service tip every day"}
+                </div>
+              </div>
+              <button onClick={toggleNotif} style={{background:notifOn?`${C.green}18`:"rgba(255,255,255,0.07)",border:`1px solid ${notifOn?`${C.green}40`:"rgba(255,255,255,0.12)"}`,borderRadius:99,padding:"7px 16px",fontSize:12,fontWeight:800,cursor:"pointer",color:notifOn?C.green:C.text3,flexShrink:0,transition:"all 0.15s"}}>
+                {notifOn?"On ✓":"Enable"}
+              </button>
+            </div>
+          </div>
+
+          {/* Replay intro */}
+          <div style={{marginBottom:14}}>
+            <button onClick={()=>{setShowProfile(false);setShowIntro(true);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"10px 12px",color:C.text3,fontSize:13,width:"100%",cursor:"pointer"}}>↺ Replay Intro</button>
+          </div>
+
+          <button onClick={()=>setShowProfile(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
         </div>
       )}
 
