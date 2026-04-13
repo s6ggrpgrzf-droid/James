@@ -484,7 +484,7 @@ function IntroAnimation({onDone}) {
         <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["📖",T,"Basics Guide"],["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
+          {[["📖",T,"Basics Guide"],["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎬",A,"Animated Lessons"],["🧠",G,"Psychology"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
             <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"11px 12px",display:"flex",alignItems:"center",gap:8}}>
               <span style={{fontSize:18}}>{e}</span>
               <span style={{fontSize:12,fontWeight:700,color:col}}>{label}</span>
@@ -1603,16 +1603,16 @@ function App() {
         {tab==="train"&&(
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
-              <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Training Series</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>The DropPilot Method</div>
-              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Four short training videos on what actually drives ratings and income.</div>
+              <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Elite Training</div>
+              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>4 Animated Lessons</div>
+              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>~40 seconds each · The psychology and science behind earning more — shown, not just told.</div>
             </div>
 
             {pro?(
               <div style={{display:"flex",flexDirection:"column",gap:12}}>
                 {/* ── Tab switcher ── */}
                 <div style={{display:"flex",gap:5,background:"rgba(255,255,255,0.04)",borderRadius:14,padding:4,border:"1px solid rgba(255,255,255,0.07)"}}>
-                  {[{id:"videos",l:"📹 Videos"},{id:"scenarios",l:"🎯 Scenarios"}].map(tt=>{
+                  {[{id:"videos",l:"🎬 Lessons"},{id:"scenarios",l:"🎯 Scenarios"}].map(tt=>{
                     const isActive=trainTab===tt.id;
                     return(
                       <button key={tt.id} onClick={()=>{setTrainTab(tt.id);if(tt.id==="scenarios"){setScenarioChoice(null);}}} style={{flex:1,background:isActive?"rgba(245,166,35,0.14)":"transparent",border:isActive?"1px solid rgba(245,166,35,0.32)":"1px solid transparent",borderRadius:11,padding:"9px 4px",fontSize:13,fontWeight:800,cursor:"pointer",color:isActive?C.amber:C.text3,transition:"all 0.15s"}}>
@@ -1726,7 +1726,7 @@ function App() {
                   <div className="train-pulse" style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#1a0f00,#0e0a16,#07080A)",border:"2px solid rgba(245,166,35,0.4)",width:"100%",position:"relative"}}>
                     <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
                     <div className="train-float" style={{fontSize:44,marginBottom:12,display:"block"}}>🎓</div>
-                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Training Videos</div>
+                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Animated Lessons</div>
                     <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Short videos on the psychology and science behind what makes customers tip more and rate higher. Not theory — real research applied to real deliveries.</div>
                     <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
                       {[["📈","Why customer service makes you more money — with the math"],["💬","The exact words that earn tips — phrase by phrase"],["🏆","What top earners do differently — the 60-second habit gap"],["🙏","Please, thank you, you're welcome — proven to increase tips 23%"]].map(([e,f],i)=>(
