@@ -84,6 +84,9 @@ button:active{opacity:0.82;transform:scale(0.96);}
 .shimmer-locked{background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,0.04) 50%,transparent 70%);background-size:200% 100%;animation:shimmerSlide 2.2s ease-in-out infinite;}
 `;
 
+// Inject CSS into the document immediately (required for all animation classes)
+(function(){const s=document.createElement('style');s.textContent=CSS;document.head.appendChild(s);})();
+
 async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
 async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 
