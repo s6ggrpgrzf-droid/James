@@ -208,6 +208,13 @@ const MSG_CATS = [
     {h:"Gated community, no code",msg:"Hi! At the gate but did not get a code with the order. Could you send it or buzz me in? Right here!",w:"Don't wait. Text immediately. Every minute at the gate is wasted."},
     {h:"Customer seems upset at the door",msg:"I'm really sorry about that. Got here as fast as I could. I hope the rest of your evening is better!",w:"Don't defend yourself. Acknowledge, apologize briefly, wish them well, leave."},
   ]},
+  {e:"🚙",t:"Lyft — Ride Messages",sub:"For pickups, no-shows, and tricky passenger situations",secs:[
+    {h:"On my way to your pickup",msg:"Hey! On my way — about 2-3 minutes out. I'll be in a [car color and model]. See you shortly!",w:"Passengers who know what car to look for find you faster, cutting wait time and reducing cancellations before you even arrive."},
+    {h:"At pickup — passenger not visible",msg:"Hi! I'm at your pickup location. I'm in a [car color and model] — let me know if you need me to pull up a bit!",w:"Send this instead of waiting silently or cancelling early. Most passengers respond in under a minute when they know you're there."},
+    {h:"Slight delay on the way to pickup",msg:"Hey! Running about [X] minutes late — slight [traffic / detour]. Still on my way and almost there!",w:"One honest heads-up almost always prevents a cancellation. Passengers who know you're coming rarely leave."},
+    {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Lyft app — you can claim it through your ride history under Lost Items. Hope you get it back!",w:"Always report lost items through Lyft's official lost and found — never arrange returns directly outside the app. This protects both you and the passenger."},
+    {h:"Passenger seems upset during the ride",msg:"I'm sorry you're having a rough time. Let me get you there as smoothly as I can.",w:"Short, calm, genuine. Don't ask what's wrong, don't over-explain, don't apologize for things you didn't do. Just acknowledge and refocus on the drive. Most passengers will settle down within 60 seconds."},
+  ]},
 ];
 
 // ─── Defend Data ──────────────────────────────────────────────────────────────
@@ -216,6 +223,7 @@ const PLATFORMS_DEFEND = [
   {id:"ubereats",  label:"Uber Eats", color:"#06C167", e:"🟢"},
   {id:"spark",     label:"Spark",     color:"#0071CE", e:"🔵"},
   {id:"instacart", label:"Instacart", color:"#43B02A", e:"🟩"},
+  {id:"lyft",      label:"Lyft",      color:"#FF00BF", e:"🚙"},
   {id:"amazonflex", label:"Flex", color:"#FF9900", e:"📦"},
 ];
 
@@ -258,6 +266,14 @@ const PLATFORM_HABITS = {
     {e:"🖼️",t:"Screenshot your delivery confirmation in the app",why:"After marking delivered, screenshot the confirmation screen immediately. It shows the exact time and TBA/package IDs."},
     {e:"🔄",t:"Return undeliverable packages with correct reason code",why:"Always use the app's undeliverable reason code at the location if you can't deliver. Bring them back to the station same day or by 10am next day."},
     {e:"📋",t:"Note the Block ID and TBA numbers on problem deliveries",why:"Support identifies your block by Block ID and individual packages by TBA. Screenshot or note them immediately if anything feels off."},
+  ],
+  lyft:[
+    {e:"🪪",t:"Confirm the passenger's name before they get in",why:"This is your #1 safety protection and Lyft's official policy. Before unlocking the door, ask 'What's your name?' and wait for them to tell you. Never say the name first — if someone gets in the wrong car, you could be held responsible. Name confirmation is your professional standard and your legal protection on every single ride.",urgent:true},
+    {e:"📋",t:"Screenshot your trip details if anything feels off",why:"Unlike delivery, Lyft uses Trip IDs to pull your record for any dispute. If a passenger is difficult, rude, or makes a complaint, the Trip ID is how Lyft support finds your ride. Get in the habit of screenshotting your trip summary after any uncomfortable ride — before the app resets to the next one.",urgent:true},
+    {e:"🔇",t:"Let the passenger set the conversation tone",why:"About 60% of Lyft passengers prefer quiet rides. Never start talking the moment they get in. Give them 15-20 seconds. If they speak first, follow their lead. If they're quiet, stay quiet and professional. Forcing conversation on a passenger who wants silence is one of the most common causes of low ratings. Quiet is professional, not cold.",urgent:true},
+    {e:"🚗",t:"Keep your car clean, neutral, and phone-charger ready",why:"Cleanliness is the most-cited factor in passenger ratings. No strong odors, a tidy interior, and a phone charger available (both iPhone and Android) add up to consistently better ratings. Detail your car regularly and restock charger cables weekly. Passengers mention the charger in positive reviews more than almost any other detail."},
+    {e:"⭐",t:"Rate your passenger 5 stars immediately after drop-off",why:"Passengers who see you rated them 5 stars are significantly more likely to rate you 5 stars back. Rate before they've had a chance to rate you. It's not just courtesy — it triggers a reciprocity response. Drivers who rate passengers first tend to have noticeably higher overall ratings."},
+    {e:"🎵",t:"Ask before playing music — keep volume low by default",why:"Music preference is personal. Never assume a passenger wants your playlist. If you play anything, keep it low and neutral. A simple 'Mind if I put something on?' shows respect and almost always gets a yes. Loud music, heavy bass, or aggressive lyrics are among the top five reasons passengers leave 3-star ratings. When in doubt: silence."},
   ],
 };
 
@@ -323,6 +339,21 @@ const PLATFORM_APPEALS = {
       {h:"Request senior review",msg:"Hello,\n\nI am following up on a previous appeal for Block [BLOCK ID] / TBA [TBA NUMBER].\n\nMy initial appeal was denied, but my delivery photo and GPS records clearly show the package was delivered. I request escalation to a senior specialist for full review.\n\nThank you.",w:"Asking for 'senior specialist' often gets a fresh set of eyes on your case."},
     ]},
   ],
+  lyft:[
+    {e:"⭐",t:"Unfair Low Rating",urgency:"HIGH — Affects ride access and priority",color:"#F43F5E",secs:[
+      {h:"Rating caused by factors outside your control",msg:"Hello Lyft Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nThis rating does not reflect my actual service. It appears to have been caused by [traffic delay / GPS navigation error / long pickup wait], which was outside my control as a driver.\n\nMy overall rating and driving history show consistent, professional service. Lyft's policy allows review of ratings caused by external factors. Please review and remove this rating.\n\nThank you.",w:"Always include the Trip ID — agents can't pull your record without it. 'Outside my control as a driver' is the exact framing Lyft's review team looks for when deciding whether to remove a rating."},
+      {h:"Rating caused by a false complaint",msg:"Hello Lyft Support,\n\nI am requesting review of a low rating and complaint on trip #[TRIP ID] from [DATE].\n\nThe complaint states [describe complaint briefly]. This did not happen. Here is what actually occurred:\n[Brief, factual account — where you picked up, route taken, drop-off location, how the ride felt]\n\nI have been a Lyft driver since [DATE] with a consistent record. This complaint is inaccurate and is affecting my standing unfairly. I am asking for a review of the trip GPS data and a removal of this rating.\n\nThank you.",w:"Keep your account brief and factual — no emotion. Lyft agents check GPS routes and timestamps, not narratives. A clean factual timeline is far more persuasive than a long explanation."},
+    ]},
+    {e:"🚨",t:"Passenger Misconduct Report",urgency:"FILE IMMEDIATELY — Protects your safety record",color:"#F43F5E",secs:[
+      {h:"Reporting harassment or threatening behavior",msg:"Hello Lyft Safety Team,\n\nI am filing a safety report regarding a passenger on trip #[TRIP ID] from [DATE].\n\nWhat happened:\n[Describe clearly — what was said or done, when in the ride it occurred, how you responded, and where you ended the ride if applicable]\n\nI am requesting:\n1. This incident be documented in the passenger's account\n2. A review of whether this passenger should be flagged for future rides\n3. Confirmation that this report will not negatively affect my standing\n\nThank you.",w:"File this the same day. Addressing it to 'Lyft Safety Team' routes it to a specialized department. Passenger misconduct reports are permanently noted and Lyft takes them seriously — but you must file promptly."},
+    ]},
+    {e:"❌",t:"Cancellation Dispute",urgency:"MEDIUM — Protects your cancellation rate",color:"#F5A623",secs:[
+      {h:"Cancellation fee not received — passenger was a no-show",msg:"Hello Lyft Support,\n\nI am requesting review of a missed cancellation fee on trip #[TRIP ID] from [DATE].\n\nI arrived at the pickup location at [TIME] and waited the required time before cancelling. The passenger did not appear and did not message me through the app.\n\nMy GPS confirms I was at [PICKUP ADDRESS] for the required wait period. I am requesting the appropriate cancellation fee be credited to my account.\n\nThank you.",w:"Lyft can verify your GPS arrival time and how long you waited. Most no-show cancellation disputes resolve in the driver's favor when your GPS confirms you were at the pin."},
+    ]},
+    {e:"🔄",t:"Escalation — Appeal Denied",urgency:"USE AFTER FIRST DENIAL",color:"#8B5CF6",secs:[
+      {h:"Request senior account review",msg:"Hello,\n\nI am following up on a previous Lyft support request about trip #[TRIP ID] from [DATE].\n\nMy initial request was not resolved. I am asking for escalation to a senior driver account specialist.\n\nThe original issue: [brief summary — one sentence]\n\nThis is continuing to affect my driver rating and income. I have been a Lyft driver since [DATE] with a strong record and I am asking for a complete, fair review.\n\nThank you.",w:"'Senior driver account specialist' routes your ticket past first-tier support. Most drivers give up after a first denial — this one follow-up often gets a different result."},
+    ]},
+  ],
 };
 
 const PLATFORM_CHECKLISTS = {
@@ -357,7 +388,15 @@ const PLATFORM_CHECKLISTS = {
     {e:"📍",t:"GPS active throughout the entire batch"},
     {e:"📋",t:"Batch confirmed complete in the app"},
     {e:"🧾",t:"Batch summary screenshotted after delivery"},
-  ],  amazonflex:[
+  ],  lyft:[
+    {e:"🪪",t:"Confirmed passenger's name before they entered the car"},
+    {e:"📱",t:"GPS active and phone mounted before the ride began"},
+    {e:"🚗",t:"Car was clean and free of strong odors"},
+    {e:"📋",t:"Trip ID screenshotted if anything felt off during the ride"},
+    {e:"⭐",t:"Passenger rated 5 stars immediately after drop-off"},
+    {e:"🔇",t:"Let the passenger set the conversation tone — no forced chat"},
+  ],
+  amazonflex:[
     {e:"📸",t:"Delivery photo taken in the Flex app"},
     {e:"📍",t:"GPS was active for the entire block"},
     {e:"🔢",t:"Scanned packages one address at a time (multi-stop blocks)"},
@@ -817,6 +856,15 @@ const BASICS_CATS = [
       {h:"How blocks work and how to get them", body:"A 'block' is a scheduled delivery shift — usually 3 to 6 hours. You claim blocks in the Flex app ahead of time when they open up, or through 'instant offers' that appear last-minute. Popular blocks fill up fast, so check the app often. When you claim a block, you're committing to show up at the station at that time to pick up your packages. Missing a claimed block hurts your standing."},
       {h:"TBA numbers — what they are and why they matter", body:"Every package in your block has a TBA number — a unique tracking ID. These are how packages are identified in the system. If you ever have a problem with a delivery (missing package complaint, wrong address), support needs the TBA number to find the record. Get in the habit of photographing your manifest or noting TBA numbers on any delivery that feels off before you move on."},
       {h:"Your standing — what it means and how to protect it", body:"Flex tracks your reliability with a 'standing' system. Missing blocks, failing to return undeliverable packages, or receiving missing package complaints hurts your standing. Good standing keeps you eligible for better blocks. Poor standing can limit your access or lead to deactivation. The best protection: show up for every block you claim, photo every drop-off in the app, and return undeliverables the same day with the correct reason code."},
+    ]
+  },
+  {
+    e:"🚙", t:"Lyft — The Basics", sub:"Platform-specific things every Lyft driver needs to know",
+    secs:[
+      {h:"How Lyft is different from delivery apps", body:"Lyft is a ride-share service — you carry people, not packages or food. A passenger requests a ride through the Lyft app, you drive to their pickup location, they get in, and you drive them to their destination. The biggest difference from delivery: customer service happens face-to-face, in your car, for the entire ride. Your vehicle is your workspace. How it looks, smells, and feels directly determines your rating and your income."},
+      {h:"The Lyft rating system for drivers", body:"After every ride, passengers rate you 1 to 5 stars. Your score is the average of your last 500 rides. Lyft requires drivers to maintain at least 4.6 stars — below that, you risk deactivation. Serious Lyft drivers target 4.85 or higher, which unlocks priority access to better rides and higher earnings. The three biggest rating drivers: car cleanliness, not forcing conversation, and confirming the passenger's name professionally at pickup."},
+      {h:"Confirming your passenger — and why you must always do it", body:"Before any passenger gets in your car, ask: 'What's your name?' and wait for them to answer. Do NOT say their name first — if you ask 'Are you Sarah?' a stranger could say yes and get in. This is both a safety rule and Lyft's official policy. If the name doesn't match, politely decline: 'I'm waiting for [correct name] — your driver might be just nearby.' This protects you, the real passenger, and your standing."},
+      {h:"Lyft tiers — what they are and how to reach them", body:"Lyft has driver tiers: Standard, Silver, Gold, Platinum, Elite. Higher tiers unlock better pay rates, priority for high-value rides like airport pickups, and dedicated support. Silver requires 200+ rides and a 4.7+ rating. Platinum (the most rewarding tier for regular drivers) requires 1,000+ rides and a 4.9+ rating. Don't stress about tiers early on — focus on clean service and consistent habits, and the tier will follow naturally."},
     ]
   },
 ];
