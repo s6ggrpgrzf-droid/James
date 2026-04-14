@@ -1120,31 +1120,48 @@ function App() {
   }
 
   useEffect(()=>{
+    const VERIFY_URL = "https://james-pi-one.vercel.app/api/verify";
     const params = new URLSearchParams(window.location.search);
-    const fromStripe = params.get("dp3")==="elite";
-    if(fromStripe){
-      save("dp3-elite",true);
+    const sessionId = params.get("session_id");
+
+    const doLoad = (verifiedPro) => {
+      Promise.all([
+        load("dp3-cfg",{name:""}),
+        load("dp3-elite",false),
+        load("dp3-intro-seen",false),
+        load("dp3-fav-tips",[]),
+        load("dp3-fav-tpl",[]),
+        load("dp3-notes",[]),
+        load("dp3-notif",false),
+        load("dp3-lang","en"),
+      ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
+        setCfg_(c); setPro(verifiedPro||!!p); setLoaded(true);
+        setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
+        setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
+        setNotes(n);
+        setNotifOn(!!notif);
+        setLang(l||"en");
+        if(verifiedPro){ setShowPay(true); setPayStep("done"); }
+        else if(!seen) setShowIntro(true);
+      });
+    };
+
+    if(sessionId){
       history.replaceState(null,"",window.location.pathname);
+      fetch(VERIFY_URL, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({session_id:sessionId}),
+      })
+      .then(r=>r.json())
+      .then(data=>{
+        if(data.valid){ save("dp3-elite",true); doLoad(true); }
+        else { doLoad(false); }
+      })
+      .catch(()=>doLoad(false));
+    } else {
+      doLoad(false);
     }
-    Promise.all([
-      load("dp3-cfg",{name:""}),
-      load("dp3-elite",false),
-      load("dp3-intro-seen",false),
-      load("dp3-fav-tips",[]),
-      load("dp3-fav-tpl",[]),
-      load("dp3-notes",[]),
-      load("dp3-notif",false),
-      load("dp3-lang","en"),
-    ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
-      setCfg_(c); setPro(fromStripe||!!p); setLoaded(true);
-      setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
-      setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
-      setNotes(n);
-      setNotifOn(!!notif);
-      setLang(l||"en");
-      if(fromStripe){ setShowPay(true); setPayStep("done"); }
-      else if(!seen) setShowIntro(true);
-    });
   },[]);
 
   const setCfg = useCallback(d=>{setCfg_(d); save("dp3-cfg",d);},[]);
