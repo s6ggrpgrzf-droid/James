@@ -569,7 +569,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 5: Elite access */}
       <div style={ss(5)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $7 one time</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
+        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>All feature<br/>updates included.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
           {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
@@ -1341,7 +1341,7 @@ function App() {
             <div style={{display:"flex",flexDirection:"column",gap:6}}>
               {[
                 ["What's free and what's Elite?",
-                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship."],
+                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and all future app feature updates."],
                 ["I paid but my access didn't unlock. What do I do?",
                  "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
                 ["How do I add DropPilot to my home screen?",
@@ -2384,7 +2384,7 @@ function App() {
               <div style={{textAlign:"center",padding:"10px 0"}}>
                 <div style={{fontSize:64,marginBottom:16}}>🎉</div>
                 <div style={{fontSize:24,fontWeight:900,marginBottom:8}}>You're Elite.</div>
-                <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training video, and every update we ship from here on. Yours forever.</div>
+                <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training video, and all future app feature updates. Yours forever.</div>
                 <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.purple,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 6px 20px rgba(139,92,246,0.4)",marginBottom:10}}>Go to Account Defense</button>
                 <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>See Message Templates</button>
               </div>
