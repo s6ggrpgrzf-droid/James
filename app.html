@@ -487,9 +487,9 @@ function IntroAnimation({onDone}) {
         <Divider color={P}/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
           {[
-            ["🏨","Hospitality professionals train for months on the exact words, tone, and timing of every guest interaction."],
-            ["🎯","Great service isn't natural — it's trained. The right phrase at the door is worth more than a perfect route."],
-            ["🚗","DropPilot brings professional service standards to gig drivers. Practical. Proven. Built for the road."]
+            ["📞","Built by someone who managed call center teams processing support tickets daily — who knows exactly how your appeals get read and what actually gets your account reinstated."],
+            ["🏨","Hotel front desk management means face-to-face de-escalation with guests who feel entitled. The customer scripts come directly from that experience — not from a textbook."],
+            ["🚗","DropPilot brings real professional service experience to gig drivers. The person who built this has managed both sides of the counter."]
           ].map(([e,t],i)=>(
             <div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"rgba(139,92,246,0.06)",border:"1px solid rgba(139,92,246,0.18)",borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
               <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{e}</span>
@@ -1439,6 +1439,24 @@ function App() {
                 <div style={{fontSize:13,color:C.text2,lineHeight:1.5}}>{t("Focus mode: checklist + scripts for your active platform.","Modo enfoque: lista + guiones para tu plataforma activa.")}</div>
               </div>
               <div style={{fontSize:24,color:C.amber,flexShrink:0}}>›</div>
+            </div>
+
+            {/* ── Built by Experience card ─────────────────────────────────── */}
+            <div style={{background:"rgba(59,130,246,0.06)",border:"1px solid rgba(59,130,246,0.18)",borderRadius:16,padding:"16px 18px"}}>
+              <div style={{fontSize:11,fontWeight:800,color:C.blue,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:8}}>{t("Why This Works","Por Qué Funciona")}</div>
+              <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{t("Built from real experience on both sides.","Creado desde experiencia real en ambos lados.")}</div>
+              <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{t(
+                "These scripts and tips come from managing call centers, hotel front desks, and retail operations — not a business course. The person who built this has managed the teams taking your support calls.",
+                "Estos guiones y consejos vienen de gestionar centros de llamadas, recepción de hoteles y tiendas — no de un curso. Quien creó esto ha gestionado los equipos que reciben tus llamadas de soporte."
+              )}</div>
+              <div style={{display:"flex",gap:8,marginTop:12,flexWrap:"wrap"}}>
+                {[["📞",t("Call Center","Centro de Llamadas")],["🏨",t("Hotel Mgmt","Gerencia Hotel")],["🛒",t("Retail","Tienda")]].map(([e,l])=>(
+                  <div key={l} style={{display:"flex",alignItems:"center",gap:5,background:"rgba(59,130,246,0.08)",border:"1px solid rgba(59,130,246,0.2)",borderRadius:8,padding:"4px 10px"}}>
+                    <span style={{fontSize:13}}>{e}</span>
+                    <span style={{fontSize:11,fontWeight:700,color:C.blue}}>{l}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* 10 Free Tips */}
