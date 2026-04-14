@@ -1285,6 +1285,9 @@ function App() {
             )}
           </div>
         </div>
+        {!shiftMode&&<button onClick={()=>setShowPlatformPicker(true)} aria-label="Start shift" style={{background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:13,flexShrink:0,marginRight:6,gap:5,WebkitTapHighlightColor:"transparent"}}>
+          <span>🚗</span><span style={{fontSize:11,fontWeight:800,color:C.amber,fontFamily:C.sans}}>Drive</span>
+        </button>}
         <button onClick={toggleLang} aria-label="Toggle language" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:11,fontWeight:800,color:C.text2,letterSpacing:"0.5px",flexShrink:0,marginRight:6,fontFamily:C.mono}}>{lang==="en"?"ES":"EN"}</button>
         <button onClick={()=>setShowProfile(o=>!o)} aria-label="Profile & Settings" style={{background:showProfile?`${C.amber}18`:"rgba(255,255,255,0.05)",border:`1px solid ${showProfile?`${C.amber}40`:"rgba(255,255,255,0.08)"}`,borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0,transition:"all 0.15s"}}>⚙️</button>
       </div>
@@ -1478,17 +1481,6 @@ function App() {
         {/* ══ TIPS ══════════════════════════════════════════════════════════════ */}
         {!shiftMode&&tab==="tips"&&(
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
-
-            {/* ── Start Shift Card ─────────────────────────────────────────── */}
-            <div onClick={()=>setShowPlatformPicker(true)}
-              style={{background:"linear-gradient(135deg,rgba(245,166,35,0.15) 0%,rgba(245,166,35,0.05) 100%)",border:"2px solid rgba(245,166,35,0.45)",borderRadius:20,padding:"18px 20px",cursor:"pointer",display:"flex",alignItems:"center",gap:16,WebkitTapHighlightColor:"transparent",transition:"opacity 0.15s"}}>
-              <div style={{width:52,height:52,borderRadius:16,background:"rgba(245,166,35,0.18)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:26,flexShrink:0}}>🚗</div>
-              <div style={{flex:1,minWidth:0}}>
-                <div style={{fontSize:16,fontWeight:800,color:C.amber,marginBottom:4}}>{t("I'm Driving","Estoy Manejando")}</div>
-                <div style={{fontSize:13,color:C.text2,lineHeight:1.5}}>{t("Focus mode: checklist + scripts for your active platform.","Modo enfoque: lista + guiones para tu plataforma activa.")}</div>
-              </div>
-              <div style={{fontSize:24,color:C.amber,flexShrink:0}}>›</div>
-            </div>
 
             {/* 10 Free Tips */}
             <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
