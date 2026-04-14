@@ -634,6 +634,76 @@ const VIDEOS = [
     ]},
 ];
 
+// ─── Spanish Tips ─────────────────────────────────────────────────────────────
+const ALL_TIPS_ES = [
+  {e:"👋",t:"Saluda con una sonrisa",s:"La primera impresión decide tu calificación.",d:"Haz un breve contacto visual y di algo simple — '¡Hola, aquí está tu pedido!' No necesitas hablar mucho. Solo sé amable. Los clientes califican mucho más alto a los repartidores que parecen personas reales que a los que entregan la bolsa en silencio y se van."},
+  {e:"🔔",t:"No toques en pedidos sin contacto",s:"Esta es una de las principales causas de calificaciones de 1 estrella inesperadas.",d:"Si el cliente eligió 'Dejar en la puerta', NO toques ni timbre. Deja la comida ordenadamente, toma una foto y marca como entregado. El cliente eligió sin contacto por una razón. Respetar esa decisión demuestra que leíste sus instrucciones — y eso te gana 5 estrellas."},
+  {e:"📸",t:"Toma una foto en cada entrega",s:"Tu foto es tu protección. Sin excepciones.",d:"Toma una foto clara que muestre la comida Y la puerta o número de casa juntos. Esto te protege si un cliente dice que nunca recibió su pedido. Conviértelo en hábito cada vez — buen tiempo, mal tiempo, de día o de noche."},
+  {e:"💬",t:"Envía un mensaje cuando estés a 3-4 minutos",s:"Este mensaje te gana más calificaciones de 5 estrellas que casi cualquier otra cosa.",d:"Un aviso rápido como '¡Hola! A unos 3 minutos con tu pedido!' establece un tono profesional antes de llegar. Los clientes que saben que estás llegando casi siempre califican más alto. Solo toma 10 segundos enviarlo."},
+  {e:"🌡️",t:"Maneja la comida como si fuera tuya",s:"Cómo cargas la bolsa les dice todo.",d:"La comida caliente debe llegar caliente. Las bolsas no deben estar aplastadas. Las bebidas deben estar derechas. Estos pequeños detalles le dicen al cliente si te importó. Los repartidores que tratan cada pedido con cuidado son los que reciben las mejores propinas."},
+  {e:"⚡",t:"Siempre verifica la dirección antes de acercarte",s:"La velocidad no sirve de nada si estás en la puerta equivocada.",d:"Una entrega a la dirección equivocada es una de las formas más rápidas de perder tu cuenta. Tómate 5 segundos para confirmar la dirección antes de salir del auto. Esos 5 segundos protegen toda tu permanencia en la plataforma."},
+  {e:"🤐",t:"Nunca te quejes con el cliente",s:"Tu mal día no es su problema.",d:"Larga espera en el restaurante, tráfico, problemas con la app — el cliente no causó ninguno de eso y no quiere escuchar sobre ello. Mantén cada interacción cálida y profesional sin importar cómo vaya el turno. Ellos solo están contentos de que su comida llegó."},
+  {e:"🎁",t:"Los pequeños extras generan mejores propinas",s:"Servilletas extra. Bolsa nivelada. Mano firme. Se acumula.",d:"Agarrar unas servilletas extra, mantener la bolsa nivelada, asegurarse de que las bebidas estén aseguradas — nada de esto toma más de unos segundos. Pero los clientes lo notan, y le dan propina a los repartidores que claramente prestaron atención."},
+  {e:"🚪",t:"Sin contacto significa cero contacto",s:"Sin tocar. Sin timbre. Solo entrega limpia.",d:"Dejar en la puerta significa exactamente eso. Deja la comida ordenadamente, toma tu foto y confirma la entrega. Un toque en un pedido sin contacto es una de las razones más comunes por las que buenos repartidores reciben calificaciones de 1 estrella inesperadas."},
+  {e:"📞",t:"Cuando algo sale mal, envía un mensaje primero",s:"Un mensaje proactivo previene una mala reseña.",d:"¿Código de acceso faltante? ¿No encuentras la unidad? ¿Nadie responde? Siempre envía un mensaje antes de llamar o salir. Un mensaje tranquilo y simple le da al cliente la oportunidad de ayudar — y demuestra que intentaste. Ese esfuerzo casi siempre protege tu calificación."},
+];
+
+// ─── Spanish Templates ────────────────────────────────────────────────────────
+const MSG_CATS_ES = [
+  {e:"📲",t:"Lo que decir cuando llegas",sub:"Mensajes que te ganan calificaciones de 5 estrellas",secs:[
+    {h:"Llegada estándar",msg:"¡Hola! Llegando ahora con tu pedido de [restaurante]. Lo dejaré en tu puerta. ¡Que lo disfrutes! 😊",w:"Establece expectativas antes de que abran la app. Los clientes a menudo te califican antes de ver la comida."},
+    {h:"A pocos minutos",msg:"¡Hola! Solo un aviso — estoy a unos 3-4 minutos con tu comida. ¡Hasta pronto!",w:"El aviso anticipado significa que te esperan en la puerta o están listos cuando llegas. También reduce tu tiempo de espera."},
+    {h:"Edificio de apartamentos",msg:"¡Hola! Estoy en la entrada principal con tu pedido. ¿Puedes abrirme la puerta o bajar al lobby? ¡Gracias!",w:"Siempre envía un mensaje antes de llamar en apartamentos. La mayoría de personas responden en menos de 30 segundos cuando su comida está afuera."},
+    {h:"Confirmación sin contacto",msg:"Tu pedido ha sido dejado en tu puerta. ¡Que lo disfrutes! 🍕",w:"Una confirmación rápida elimina casi por completo las quejas falsas de no entrega."},
+    {h:"Oficina o negocio",msg:"¡Hola! Estoy abajo en [edificio] con tu pedido. ¡Puedo dejarlo en recepción o puedes bajar a buscarlo!",w:"Ofrecer opciones demuestra profesionalismo y te ahorra un viaje en vano."},
+  ]},
+  {e:"⏰",t:"Cuando llegas tarde",sub:"Cómo convertir una mala situación en 5 estrellas",secs:[
+    {h:"El restaurante tarda demasiado",msg:"¡Hola! Tu pedido aún está siendo preparado en el restaurante. Estoy aquí y me dirigiré hacia ti en cuanto esté listo. ¡Disculpa la espera!",w:"Los clientes que no reciben noticias asumen que te olvidaste de ellos. Un mensaje cambia eso completamente."},
+    {h:"Atascado en tráfico",msg:"¡Hola! Llevo un poco de retraso por el tráfico. Voy en camino y llegaré lo antes posible — ¡gracias por tu paciencia!",w:"Nunca culpes a la app o al restaurante. Reconócelo brevemente y mantén una actitud positiva."},
+    {h:"Retraso significativo",msg:"¡Hola! De verdad lamento el retraso de esta noche. Tengo [tráfico / larga espera en el restaurante] y estaré allí en aproximadamente [X] minutos. De verdad aprecio tu paciencia.",w:"Los retrasos más grandes necesitan un reconocimiento mayor. Sé directo y da un tiempo estimado real."},
+    {h:"Seguimiento tras el retraso",msg:"Acabo de dejar tu pedido — de verdad lamento la espera de esta noche. ¡Espero que todo esté delicioso! Que tengas una buena noche.",w:"Casi ningún repartidor hace esto. Frecuentemente convierte una calificación de 3 estrellas en 5 estrellas."},
+  ]},
+  {e:"🚨",t:"Cuando algo sale mal",sub:"Mensajes que protegen tu calificación",secs:[
+    {h:"No encuentro la dirección",msg:"¡Hola! Tengo un poco de dificultad encontrándote. Estoy cerca de [referencia]. ¿Puedes ayudarme con indicaciones o un código de acceso?",w:"Siempre envía un mensaje antes de llamar. Dales algo específico con lo que trabajar."},
+    {h:"Necesito un código de acceso",msg:"¡Hola! Estoy en la entrada pero necesito un código para entrar. ¿Me lo puedes enviar? ¡Estoy aquí!",w:"La gente responde en segundos cuando su comida está justo afuera."},
+    {h:"Nadie abre la puerta",msg:"¡Hola! Estoy en tu puerta y toqué. Esperaré un par de minutos — si no recibo respuesta puede que necesite dejarla en la puerta. ¡Solo quiero asegurarme de que la recibas!",w:"Documenta tu intento y les da la oportunidad de responder."},
+    {h:"Entrega segura con foto",msg:"Tu pedido ha sido dejado en tu puerta. Tomé una foto como confirmación. ¡Que lo disfrutes!",w:"Mencionar la foto de forma casual te protege de quejas falsas."},
+    {h:"Complejo de apartamentos grande",msg:"¡Hola! Estoy en el estacionamiento de [nombre del complejo] pero tengo dificultad encontrando tu unidad. ¿Puedes ayudarme — qué número de edificio, entrada o escalera? ¡Ya casi llego!",w:"Pedir una referencia específica te da una respuesta útil rápidamente."},
+  ]},
+  {e:"⭐",t:"Cómo obtener mejores propinas y calificaciones",sub:"Qué decir — y qué nunca decir",secs:[
+    {h:"Despedida natural que genera propinas",msg:"¡Que disfrutes tu comida! Si algo llegara a pasar no dudes en contactarme por la app. ¡Que tengas una excelente noche! 😊",w:"Te posiciona como alguien que se preocupa — sin pedir nada a cambio."},
+    {h:"Cuando fuiste más allá",msg:"¡Gracias por el pedido! Me aseguré de mantener todo derecho y caliente en el camino. ¡Espero que lo disfrutes hasta el último bocado!",w:"Señalar tu cuidado hace que miren la bolsa con aprecio, no con sospecha."},
+    {h:"Cuando agregaste algo extra",msg:"¡Hola! La bolsa tenía pocas servilletas así que agarré unas extra. Todo lo demás está bien — ¡que lo disfrutes!",w:"Si no lo mencionas puede que no lo noten. Si lo dices, es memorable."},
+    {h:"Lo que NUNCA debes decir",caution:true,msg:"¡Por favor dame 5 estrellas! / De verdad necesito una buena calificación esta semana. / ¿Podrías agregar una propina? / Este pedido fue muy lejos.",w:"Pedir calificaciones o propinas va en contra de las reglas de la plataforma y hace sentir incómodos a los clientes. Casi siempre resulta en una peor calificación."},
+  ]},
+  {e:"🏢",t:"Situaciones de entrega difíciles",sub:"Mensajes palabra por palabra para las difíciles",secs:[
+    {h:"Entrega en hotel",msg:"¡Hola! Estoy en el lobby de [hotel] con tu pedido. La recepción no puede aceptar entregas — ¿podrías bajar? ¡Con gusto espero!",w:"Siempre anúnciate desde el lobby, no desde el piso de la habitación."},
+    {h:"Comunidad cerrada, sin código",msg:"¡Hola! Estoy en la entrada pero no recibí un código con el pedido. ¿Puedes enviarlo o abrirme? ¡Estoy aquí!",w:"No esperes. Envía un mensaje inmediatamente. Cada minuto en la entrada es tiempo perdido."},
+    {h:"El cliente parece molesto en la puerta",msg:"De verdad lo siento. Llegué lo más rápido que pude. ¡Espero que el resto de tu noche mejore!",w:"No te defiendas. Reconoce, discúlpate brevemente, deséales bien y vete."},
+  ]},
+  {e:"🚙",t:"Lyft — Mensajes para pasajeros",sub:"Para recogidas, no-shows y situaciones difíciles",secs:[
+    {h:"En camino a recogerte",msg:"¡Hola! En camino — a unos 2-3 minutos. Estaré en un [color y modelo del auto]. ¡Hasta pronto!",w:"Los pasajeros que saben qué auto buscar te encuentran más rápido, reduciendo tiempos de espera y cancelaciones."},
+    {h:"En el punto de recogida — pasajero no visible",msg:"¡Hola! Estoy en tu punto de recogida. Estoy en un [color y modelo del auto] — ¡avísame si necesitas que avance un poco!",w:"Envía esto en lugar de esperar en silencio o cancelar temprano. La mayoría de pasajeros responden en menos de un minuto."},
+    {h:"Ligero retraso en camino a la recogida",msg:"¡Hola! Llegaré unos [X] minutos tarde — [tráfico / desvío]. ¡Voy en camino y casi llego!",w:"Un aviso honesto casi siempre previene una cancelación. Los pasajeros que saben que vas rara vez se van."},
+    {h:"El pasajero dejó algo en tu auto",msg:"¡Hola! Parece que dejaste [objeto] en mi auto. Lo reporté a través de la app de Lyft — puedes reclamarlo en tu historial de viajes en Objetos Perdidos. ¡Espero que lo recuperes!",w:"Siempre reporta los objetos perdidos a través del sistema oficial de Lyft — nunca arregles devoluciones directamente fuera de la app."},
+    {h:"El pasajero parece molesto durante el viaje",msg:"Lamento que estés pasando por un momento difícil. Déjame llevarte lo más cómodamente posible.",w:"Breve, tranquilo, genuino. No preguntes qué pasa, no te sobreexpliques. Solo reconoce y vuelve a enfocarte en el manejo. La mayoría se calmarán en 60 segundos."},
+  ]},
+];
+
+// ─── Quick Help Situations ────────────────────────────────────────────────────
+const QUICK_SITUATIONS = [
+  {e:"📍",l:"Can't find address",le:"No encuentro la dirección",ci:2,si:0},
+  {e:"🔑",l:"Need gate code",le:"Necesito código de acceso",ci:2,si:1},
+  {e:"🚪",l:"No one answers",le:"Nadie abre la puerta",ci:2,si:2},
+  {e:"⏰",l:"Restaurant taking forever",le:"El restaurante tarda",ci:1,si:0},
+  {e:"🚗",l:"Stuck in traffic",le:"Atascado en tráfico",ci:1,si:1},
+  {e:"📸",l:"Confirm drop-off",le:"Confirmar entrega",ci:2,si:3},
+  {e:"🏢",l:"Apartment building",le:"Edificio de apartamentos",ci:0,si:2},
+  {e:"😤",l:"Customer upset",le:"Cliente molesto",ci:4,si:2},
+  {e:"🏨",l:"Hotel delivery",le:"Entrega en hotel",ci:4,si:0},
+  {e:"🌙",l:"Follow up after late",le:"Seguimiento tras retraso",ci:1,si:3},
+];
+
 // ─── Video Player ─────────────────────────────────────────────────────────────
 function VideoPlayer({video}) {
   const [scene, setScene] = useState(0);
@@ -933,6 +1003,19 @@ function App() {
   // Training
   const [activeVideo, setActiveVideo] = useState(0);
 
+  // Language
+  const [lang, setLang] = useState("en");
+  const t=(en,es)=>lang==="en"?en:es;
+
+  // Quick Help
+  const [showQuickHelp, setShowQuickHelp] = useState(false);
+  const [qhActive, setQhActive] = useState(null);
+  const [qhCopied, setQhCopied] = useState(false);
+
+  // Fill-in appeal letters
+  const [fillKey, setFillKey] = useState(null);
+  const [fillVals, setFillVals] = useState({});
+
   // User profile panel
   const [showProfile, setShowProfile] = useState(false);
   const [notifOn, setNotifOn]   = useState(false);
@@ -1007,12 +1090,14 @@ function App() {
       load("dp3-fav-tpl",[]),
       load("dp3-notes",[]),
       load("dp3-notif",false),
-    ]).then(([c,p,seen,ft,ftpl,n,notif])=>{
+      load("dp3-lang","en"),
+    ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
       setCfg_(c); setPro(fromStripe||!!p); setLoaded(true);
       setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
       setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
       setNotes(n);
       setNotifOn(!!notif);
+      setLang(l||"en");
       if(fromStripe){ setShowPay(true); setPayStep("done"); }
       else if(!seen) setShowIntro(true);
     });
@@ -1023,6 +1108,23 @@ function App() {
   function copyMsg(text,key){
     if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{setCopied(key);showToast("Copied to clipboard!");});}
     else{setCopied(key);showToast("Copied to clipboard!");}
+  }
+
+  function getPlaceholders(text){
+    const found=[],seen=new Set();
+    let m;const re=/\[([^\]]+)\]/g;
+    while((m=re.exec(text))!==null){if(!seen.has(m[1])){found.push(m[1]);seen.add(m[1]);}}
+    return found;
+  }
+
+  function applyFill(text,vals){
+    return text.replace(/\[([^\]]+)\]/g,(_,k)=>vals[k]||`[${k}]`);
+  }
+
+  function toggleLang(){
+    const nl=lang==="en"?"es":"en";
+    setLang(nl); save("dp3-lang",nl);
+    setMsgOpen(null); setSubOpen(null);
   }
 
   function toggleCheck(i){
@@ -1079,15 +1181,16 @@ function App() {
   }
 
   // Filter templates by search
+  const ACTIVE_MSG_CATS = lang==="en"?MSG_CATS:MSG_CATS_ES;
   const filteredCats = templateSearch.trim()
-    ? MSG_CATS.map(cat=>({
+    ? ACTIVE_MSG_CATS.map(cat=>({
         ...cat,
         secs: cat.secs.filter(s=>
           s.h.toLowerCase().includes(templateSearch.toLowerCase()) ||
           s.msg.toLowerCase().includes(templateSearch.toLowerCase())
         )
       })).filter(cat=>cat.secs.length>0)
-    : MSG_CATS;
+    : ACTIVE_MSG_CATS;
 
   if(!loaded) return(
     <div style={{background:C.bg,height:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,fontFamily:C.sans}}>
@@ -1112,6 +1215,7 @@ function App() {
             <div style={{fontSize:10,color:C.text3,letterSpacing:"1.5px",fontWeight:700,textTransform:"uppercase"}}>Customer Service · Gig Edition</div>
           </div>
         </div>
+        <button onClick={toggleLang} aria-label="Toggle language" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:11,fontWeight:800,color:C.text2,letterSpacing:"0.5px",flexShrink:0,marginRight:6,fontFamily:C.mono}}>{lang==="en"?"ES":"EN"}</button>
         <button onClick={()=>setShowProfile(o=>!o)} aria-label="Profile & Settings" style={{background:showProfile?`${C.amber}18`:"rgba(255,255,255,0.05)",border:`1px solid ${showProfile?`${C.amber}40`:"rgba(255,255,255,0.08)"}`,borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0,transition:"all 0.15s"}}>⚙️</button>
       </div>
 
@@ -1230,7 +1334,7 @@ function App() {
 
             {/* 10 Free Tips */}
             <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
-            {ALL_TIPS.map((tip,i)=>{
+            {(lang==="en"?ALL_TIPS:ALL_TIPS_ES).map((tip,i)=>{
               const open=tipOpen===i;
               const fav=favTips.has(i);
               return(
@@ -1313,11 +1417,11 @@ function App() {
               <div style={{background:C.s1,border:`1px solid rgba(245,166,35,0.2)`,borderRadius:18,padding:14}}>
                 <div style={{fontSize:12,fontWeight:800,color:C.amber,marginBottom:10}}>★ Your Saved Tips</div>
                 <div style={{display:"flex",flexDirection:"column",gap:10}}>
-                  {[...favTips].filter(i=>ALL_TIPS[i]).map(i=>(
+                  {[...favTips].filter(i=>(lang==="en"?ALL_TIPS:ALL_TIPS_ES)[i]).map(i=>{const tips2=lang==="en"?ALL_TIPS:ALL_TIPS_ES;return(
                     <div key={i} style={{fontSize:13,color:C.text2,display:"flex",gap:8,alignItems:"center"}}>
-                      <span>{ALL_TIPS[i].e}</span><span style={{fontWeight:600,color:C.text}}>{ALL_TIPS[i].t}</span>
+                      <span>{tips2[i].e}</span><span style={{fontWeight:600,color:C.text}}>{tips2[i].t}</span>
                     </div>
-                  ))}
+                  );})}
                 </div>
               </div>
             )}
@@ -1372,7 +1476,7 @@ function App() {
               <div style={{position:"relative"}}>
                 <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
                   <div style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"11px 12px 11px 36px",color:C.text3,fontSize:13,marginBottom:14}}>Search templates...</div>
-                  {MSG_CATS.map((cat,i)=>(
+                  {ACTIVE_MSG_CATS.map((cat,i)=>(
                     <div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"14px 16px",marginBottom:12}}>
                       <div style={{display:"flex",alignItems:"center",gap:12}}>
                         <div style={{width:40,height:40,borderRadius:12,background:"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{cat.e}</div>
@@ -1427,7 +1531,7 @@ function App() {
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                   {[...favTemplates].map(key=>{
                     const [ci,si]=key.split("-").map(Number);
-                    const sec=MSG_CATS[ci]?.secs[si];
+                    const sec=ACTIVE_MSG_CATS[ci]?.secs[si];
                     if(!sec) return null;
                     return(
                       <button key={key} onClick={()=>{setMsgOpen(ci);setSubOpen(key);setTemplateSearch("");}}
@@ -1633,13 +1737,39 @@ function App() {
                                         <span style={{fontSize:13,fontWeight:700}}>{sec.h}</span>
                                         <div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:subOpen2?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
                                       </div>
-                                      {subOpen2&&(
+                                      {subOpen2&&(()=>{
+                                        const isFilling=fillKey===subKey;
+                                        const phs=getPlaceholders(sec.msg);
+                                        const hasPhs=phs.length>0;
+                                        const preview=isFilling?applyFill(sec.msg,fillVals):sec.msg;
+                                        return(
                                         <div style={{padding:"0 14px 14px",animation:"slideUp 0.2s cubic-bezier(0.16,1,0.3,1)"}}>
-                                          <div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"12px 13px",marginBottom:10,fontSize:12,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{sec.msg}</div>
-                                          <button onClick={()=>copyMsg(sec.msg,subKey)} style={{background:C.green,border:"none",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:"#000",width:"100%",marginBottom:8}}>Copy Appeal Script</button>
+                                          <div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"12px 13px",marginBottom:10,fontSize:12,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{preview}</div>
+                                          {hasPhs&&!isFilling&&(
+                                            <button onClick={()=>{setFillKey(subKey);setFillVals({});}} style={{background:`${ap.color}15`,border:`1px solid ${ap.color}40`,borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:ap.color,width:"100%",marginBottom:8}}>✏️ Fill In & Copy</button>
+                                          )}
+                                          {hasPhs&&isFilling&&(
+                                            <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"14px",marginBottom:10}}>
+                                              <div style={{fontSize:12,fontWeight:800,color:C.text2,marginBottom:10,letterSpacing:"0.5px",textTransform:"uppercase"}}>Fill in your details</div>
+                                              <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                                                {phs.map(ph=>(
+                                                  <div key={ph}>
+                                                    <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:4}}>{ph}</div>
+                                                    <input value={fillVals[ph]||""} onChange={e=>setFillVals(v=>({...v,[ph]:e.target.value}))} placeholder={`Enter ${ph.toLowerCase()}...`} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"9px 11px",color:C.text,fontSize:13,width:"100%"}}/>
+                                                  </div>
+                                                ))}
+                                              </div>
+                                              <div style={{display:"flex",gap:8,marginTop:12}}>
+                                                <button onClick={()=>{copyMsg(applyFill(sec.msg,fillVals),subKey);setFillKey(null);}} style={{background:C.green,border:"none",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:"#000",flex:1}}>Copy Filled Letter</button>
+                                                <button onClick={()=>setFillKey(null)} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text3}}>✕</button>
+                                              </div>
+                                            </div>
+                                          )}
+                                          {(!hasPhs||!isFilling)&&<button onClick={()=>copyMsg(sec.msg,subKey)} style={{background:C.green,border:"none",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:"#000",width:"100%",marginBottom:8}}>{copied===subKey?"✓ Copied!":"Copy Appeal Script"}</button>}
                                           <div style={{fontSize:12,color:C.text3,lineHeight:1.6,background:`${ap.color}08`,borderRadius:8,padding:"9px 11px",borderLeft:`2px solid ${ap.color}40`}}>{sec.w}</div>
                                         </div>
-                                      )}
+                                        );
+                                      })()}
                                     </div>
                                   );
                                 })}
@@ -1874,6 +2004,72 @@ function App() {
         )}
 
       </div>
+
+      {/* ── Quick Help Floating Button ──────────────────────────────────────── */}
+      <button onClick={()=>{setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:76,right:"calc(50% - 210px + 12px)",zIndex:90,width:46,height:46,borderRadius:"50%",background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,boxShadow:"0 4px 18px rgba(59,130,246,0.5)",transition:"transform 0.15s"}} title={t("Quick scripts","Scripts rápidos")}>⚡</button>
+
+      {/* ── Quick Help Panel ────────────────────────────────────────────────── */}
+      {showQuickHelp&&(
+        <div style={{position:"fixed",inset:0,zIndex:500,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+          <div onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.75)"}}/>
+          <div style={{position:"relative",background:"linear-gradient(180deg,#12151a,#0d0f13)",borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:20,paddingBottom:36,width:"100%",maxWidth:430,zIndex:1,maxHeight:"80vh",overflowY:"auto"}}>
+            <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 18px"}}/>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
+              <div>
+                <div style={{fontSize:16,fontWeight:900}}>⚡ {t("Quick Scripts","Scripts Rápidos")}</div>
+                <div style={{fontSize:12,color:C.text3,marginTop:2}}>{t("What's happening right now?","¿Qué está pasando ahora?")}</div>
+              </div>
+              <button onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,width:32,height:32,cursor:"pointer",color:C.text3,fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
+            </div>
+
+            {qhActive===null?(
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+                {QUICK_SITUATIONS.map((s,i)=>{
+                  const cats=lang==="en"?MSG_CATS:MSG_CATS_ES;
+                  const sec=cats[s.ci]?.secs[s.si];
+                  if(!sec) return null;
+                  return(
+                    <button key={i} onClick={()=>setQhActive(i)} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"13px 12px",display:"flex",flexDirection:"column",alignItems:"flex-start",gap:6,cursor:"pointer",textAlign:"left",transition:"border-color 0.15s"}}>
+                      <span style={{fontSize:22}}>{s.e}</span>
+                      <span style={{fontSize:12,fontWeight:700,color:C.text,lineHeight:1.3}}>{lang==="en"?s.l:s.le}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ):(()=>{
+              const s=QUICK_SITUATIONS[qhActive];
+              const cats=lang==="en"?MSG_CATS:MSG_CATS_ES;
+              const sec=cats[s.ci]?.secs[s.si];
+              if(!sec) return null;
+              const phs=getPlaceholders(sec.msg);
+              const filled=applyFill(sec.msg,fillVals);
+              return(
+                <div>
+                  <button onClick={()=>{setQhActive(null);setFillVals({});setQhCopied(false);}} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,display:"flex",alignItems:"center",gap:5,marginBottom:14,padding:0}}>← {t("Back","Atrás")}</button>
+                  <div style={{fontSize:15,fontWeight:800,marginBottom:4}}>{s.e} {lang==="en"?s.l:s.le}</div>
+                  <div style={{background:"rgba(0,0,0,0.3)",borderRadius:12,padding:"13px 14px",marginBottom:12,fontSize:13,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{filled}</div>
+                  {phs.length>0&&(
+                    <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,padding:12,marginBottom:12}}>
+                      <div style={{fontSize:11,fontWeight:800,color:C.text3,marginBottom:8,textTransform:"uppercase",letterSpacing:"0.5px"}}>{t("Fill in details","Completa los detalles")}</div>
+                      <div style={{display:"flex",flexDirection:"column",gap:7}}>
+                        {phs.map(ph=>(
+                          <input key={ph} value={fillVals[ph]||""} onChange={e=>setFillVals(v=>({...v,[ph]:e.target.value}))} placeholder={ph} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"9px 11px",color:C.text,fontSize:13,width:"100%"}}/>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <button onClick={()=>{
+                    if(navigator.clipboard){navigator.clipboard.writeText(filled).then(()=>{setQhCopied(true);setTimeout(()=>{setShowQuickHelp(false);setQhActive(null);setFillVals({});setQhCopied(false);},800);});}
+                    else{setQhCopied(true);setTimeout(()=>{setShowQuickHelp(false);setQhActive(null);setFillVals({});setQhCopied(false);},800);}
+                  }} style={{background:qhCopied?C.green:C.blue,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:qhCopied?"#000":"#fff",width:"100%",transition:"background 0.2s",boxShadow:`0 4px 16px ${C.blue}40`}}>
+                    {qhCopied?t("✓ Copied!","✓ ¡Copiado!"):t("Copy & Close","Copiar y cerrar")}
+                  </button>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
 
       {/* ── Bottom Nav ──────────────────────────────────────────────────────── */}
       <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
