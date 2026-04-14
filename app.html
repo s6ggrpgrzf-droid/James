@@ -1755,7 +1755,7 @@ function App() {
                                                 {phs.map(ph=>(
                                                   <div key={ph}>
                                                     <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:4}}>{ph}</div>
-                                                    <input value={fillVals[ph]||""} onChange={e=>setFillVals(v=>({...v,[ph]:e.target.value}))} placeholder={`Enter ${ph.toLowerCase()}...`} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"9px 11px",color:C.text,fontSize:13,width:"100%"}}/>
+                                                    <input value={fillVals[ph]||""} onChange={e=>setFillVals(v=>({...v,[ph]:e.target.value}))} placeholder={`Enter ${ph.toLowerCase()}...`} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"12px 12px",color:C.text,fontSize:16,width:"100%"}}/>
                                                   </div>
                                                 ))}
                                               </div>
@@ -2006,7 +2006,7 @@ function App() {
       </div>
 
       {/* ── Quick Help Floating Button ──────────────────────────────────────── */}
-      <button onClick={()=>{setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:76,right:"calc(50% - 210px + 12px)",zIndex:90,width:46,height:46,borderRadius:"50%",background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,boxShadow:"0 4px 18px rgba(59,130,246,0.5)",transition:"transform 0.15s"}} title={t("Quick scripts","Scripts rápidos")}>⚡</button>
+      <button onClick={()=>{setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:"50%",background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 4px 20px rgba(59,130,246,0.55)",WebkitTapHighlightColor:"transparent"}}>⚡</button>
 
       {/* ── Quick Help Panel ────────────────────────────────────────────────── */}
       {showQuickHelp&&(
@@ -2029,7 +2029,7 @@ function App() {
                   const sec=cats[s.ci]?.secs[s.si];
                   if(!sec) return null;
                   return(
-                    <button key={i} onClick={()=>setQhActive(i)} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"13px 12px",display:"flex",flexDirection:"column",alignItems:"flex-start",gap:6,cursor:"pointer",textAlign:"left",transition:"border-color 0.15s"}}>
+                    <button key={i} onClick={()=>setQhActive(i)} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"14px 12px",minHeight:80,display:"flex",flexDirection:"column",alignItems:"flex-start",gap:6,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent"}}>
                       <span style={{fontSize:22}}>{s.e}</span>
                       <span style={{fontSize:12,fontWeight:700,color:C.text,lineHeight:1.3}}>{lang==="en"?s.l:s.le}</span>
                     </button>
@@ -2045,7 +2045,7 @@ function App() {
               const filled=applyFill(sec.msg,fillVals);
               return(
                 <div>
-                  <button onClick={()=>{setQhActive(null);setFillVals({});setQhCopied(false);}} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:13,display:"flex",alignItems:"center",gap:5,marginBottom:14,padding:0}}>← {t("Back","Atrás")}</button>
+                  <button onClick={()=>{setQhActive(null);setFillVals({});setQhCopied(false);}} style={{background:"transparent",border:"none",color:C.text3,cursor:"pointer",fontSize:14,display:"flex",alignItems:"center",gap:5,marginBottom:14,padding:"8px 0",WebkitTapHighlightColor:"transparent"}}>← {t("Back","Atrás")}</button>
                   <div style={{fontSize:15,fontWeight:800,marginBottom:4}}>{s.e} {lang==="en"?s.l:s.le}</div>
                   <div style={{background:"rgba(0,0,0,0.3)",borderRadius:12,padding:"13px 14px",marginBottom:12,fontSize:13,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{filled}</div>
                   {phs.length>0&&(
@@ -2053,7 +2053,7 @@ function App() {
                       <div style={{fontSize:11,fontWeight:800,color:C.text3,marginBottom:8,textTransform:"uppercase",letterSpacing:"0.5px"}}>{t("Fill in details","Completa los detalles")}</div>
                       <div style={{display:"flex",flexDirection:"column",gap:7}}>
                         {phs.map(ph=>(
-                          <input key={ph} value={fillVals[ph]||""} onChange={e=>setFillVals(v=>({...v,[ph]:e.target.value}))} placeholder={ph} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"9px 11px",color:C.text,fontSize:13,width:"100%"}}/>
+                          <input key={ph} value={fillVals[ph]||""} onChange={e=>setFillVals(v=>({...v,[ph]:e.target.value}))} placeholder={ph} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"12px 12px",color:C.text,fontSize:16,width:"100%"}}/>
                         ))}
                       </div>
                     </div>
