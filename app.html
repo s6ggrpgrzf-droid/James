@@ -1477,12 +1477,7 @@ function App() {
 
         {/* ══ TIPS ══════════════════════════════════════════════════════════════ */}
         {!shiftMode&&tab==="tips"&&(
-          <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
-            <div style={{textAlign:"center",padding:"8px 0 4px"}}>
-              <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Earn More</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Earn More Every Shift</div>
-              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Proven habits, psychology, and strategies — all in plain English.</div>
-            </div>
+          <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
 
             {/* ── Start Shift Card ─────────────────────────────────────────── */}
             <div onClick={()=>setShowPlatformPicker(true)}
@@ -1493,45 +1488,6 @@ function App() {
                 <div style={{fontSize:13,color:C.text2,lineHeight:1.5}}>{t("Focus mode: checklist + scripts for your active platform.","Modo enfoque: lista + guiones para tu plataforma activa.")}</div>
               </div>
               <div style={{fontSize:24,color:C.amber,flexShrink:0}}>›</div>
-            </div>
-
-            {/* ── Built by Experience card ─────────────────────────────────── */}
-            <div style={{background:"rgba(59,130,246,0.06)",border:"1px solid rgba(59,130,246,0.18)",borderRadius:16,padding:"16px 18px"}}>
-              <div style={{fontSize:11,fontWeight:800,color:C.blue,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:8}}>{t("Why This Works","Por Qué Funciona")}</div>
-              <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{t("Built from real experience on both sides.","Creado desde experiencia real en ambos lados.")}</div>
-              <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{t(
-                "These scripts and tips come from managing call centers, hotel front desks, and retail operations — not a business course. The person who built this has managed the teams taking your support calls.",
-                "Estos guiones y consejos vienen de gestionar centros de llamadas, recepción de hoteles y tiendas — no de un curso. Quien creó esto ha gestionado los equipos que reciben tus llamadas de soporte."
-              )}</div>
-              <div style={{display:"flex",gap:8,marginTop:12,flexWrap:"wrap"}}>
-                {[["📞",t("Call Center","Centro de Llamadas")],["🏨",t("Hotel Mgmt","Gerencia Hotel")],["🛒",t("Retail","Tienda")]].map(([e,l])=>(
-                  <div key={l} style={{display:"flex",alignItems:"center",gap:5,background:"rgba(59,130,246,0.08)",border:"1px solid rgba(59,130,246,0.2)",borderRadius:8,padding:"4px 10px"}}>
-                    <span style={{fontSize:13}}>{e}</span>
-                    <span style={{fontSize:11,fontWeight:700,color:C.blue}}>{l}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ── What's inside card ───────────────────────────────────────── */}
-            <div style={{background:"rgba(245,166,35,0.05)",border:"1px solid rgba(245,166,35,0.18)",borderRadius:16,padding:"16px 18px"}}>
-              <div style={{fontSize:11,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:10}}>{t("What's in This App","Qué hay en esta app")}</div>
-              <div style={{display:"flex",flexDirection:"column",gap:8}}>
-                {[
-                  ["⚡",t("Quick Help","Ayuda Rápida"),t("Tap the lightning bolt — instant scripts for any situation.","Toca el rayo — guiones instantáneos para cada situación.")],
-                  ["🚗",t("Shift Mode","Modo Turno"),t("Tap \"I'm Driving\" to enter focused mode for your platform.","Toca \"Estoy Manejando\" para entrar en modo enfocado.")],
-                  ["✏️",t("Fill-In Letters","Cartas Personalizables"),t("Appeal letters in Defend → tap a letter → fill in the blanks.","En Defender → toca una carta → completa los espacios.")],
-                  ["🌐",t("App in Spanish","App en Español"),t("Tap EN/ES in the top bar to switch the full app to Spanish.","Toca EN/ES en la barra superior para cambiar al español.")],
-                ].map(([e,label,desc])=>(
-                  <div key={label} style={{display:"flex",alignItems:"flex-start",gap:12}}>
-                    <div style={{width:32,height:32,borderRadius:9,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
-                    <div style={{flex:1,minWidth:0}}>
-                      <div style={{fontSize:13,fontWeight:700,color:C.amber,marginBottom:1}}>{label}</div>
-                      <div style={{fontSize:12,color:C.text2,lineHeight:1.5}}>{desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* 10 Free Tips */}
