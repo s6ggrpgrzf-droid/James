@@ -1146,7 +1146,12 @@ function App() {
       });
     };
 
-    if(sessionId){
+    const legacyUnlock = params.get("dp3")==="elite";
+    if(legacyUnlock){
+      save("dp3-elite",true);
+      history.replaceState(null,"",window.location.pathname);
+      doLoad(true);
+    } else if(sessionId){
       history.replaceState(null,"",window.location.pathname);
       fetch(VERIFY_URL, {
         method:"POST",
