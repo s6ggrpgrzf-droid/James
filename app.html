@@ -407,8 +407,6 @@ const PLATFORM_CHECKLISTS = {
 };
 
 // ─── Policy Watch ─────────────────────────────────────────────────────────────
-const STRIPE_WATCH_LINK = "https://buy.stripe.com/PLACEHOLDER_WATCH";
-
 const POLICY_WATCH = {
   month: "April 2026",
   lastUpdated: "April 14, 2026",
@@ -569,7 +567,7 @@ function IntroAnimation({onDone}) {
 
       {/* Scene 5: Elite access */}
       <div style={ss(5)}>
-        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $7 one time</div>
+        <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $10 one time</div>
         <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>All feature<br/>updates included.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
@@ -603,7 +601,7 @@ function IntroAnimation({onDone}) {
           <div className="iup id3">
             <button onClick={onDone} style={{background:`linear-gradient(135deg,${A},#C8820A)`,border:"none",borderRadius:50,padding:"15px 44px",fontSize:16,fontWeight:900,color:"#000",cursor:"pointer",fontFamily:C.sans,boxShadow:`0 10px 34px rgba(245,166,35,0.5)`,letterSpacing:"-0.3px"}}>Let's Go →</button>
           </div>
-          <div className="iup" style={{fontSize:12,color:"rgba(255,255,255,0.2)",marginTop:14,animationDelay:"0.75s",opacity:0}}>Free to explore · Elite access $7 · Lifetime · Free updates forever</div>
+          <div className="iup" style={{fontSize:12,color:"rgba(255,255,255,0.2)",marginTop:14,animationDelay:"0.75s",opacity:0}}>Free to explore · Elite access $10 · Lifetime · Free updates forever</div>
         </div>
       </div>
     </div>
@@ -853,7 +851,7 @@ function VideoPlayer({video}) {
           {sc.cta&&<div style={{textAlign:"center",animation:"vUp 0.5s 0.45s both",opacity:0}}>
             <div style={{background:"rgba(245,166,35,0.12)",border:"2px solid rgba(245,166,35,0.5)",borderRadius:14,padding:"11px 20px",display:"inline-block"}}>
               <div style={{fontSize:13,fontWeight:800,color:A}}>Free to explore — droppilot.app</div>
-              <div style={{fontSize:12,color:"rgba(255,255,255,0.35)",marginTop:2}}>Full access — $7 one time</div>
+              <div style={{fontSize:12,color:"rgba(255,255,255,0.35)",marginTop:2}}>Full access — $10 one time</div>
             </div>
           </div>}
         </div>
@@ -990,7 +988,6 @@ function App() {
   }
   const [cfg, setCfg_]          = useState({name:""});
   const [pro, setPro]           = useState(false);
-  const [watch, setWatch]       = useState(false);
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [toast, setToast]       = useState(null);
@@ -1125,14 +1122,8 @@ function App() {
   useEffect(()=>{
     const params = new URLSearchParams(window.location.search);
     const fromStripe = params.get("dp3")==="elite";
-    const fromStripeWatch = params.get("dp3")==="watch";
     if(fromStripe){
       save("dp3-elite",true);
-      history.replaceState(null,"",window.location.pathname);
-    }
-    if(fromStripeWatch){
-      const expires = Date.now() + 31*24*60*60*1000;
-      save("dp3-watch",{active:true,expires});
       history.replaceState(null,"",window.location.pathname);
     }
     Promise.all([
@@ -1144,18 +1135,14 @@ function App() {
       load("dp3-notes",[]),
       load("dp3-notif",false),
       load("dp3-lang","en"),
-      load("dp3-watch",null),
-    ]).then(([c,p,seen,ft,ftpl,n,notif,l,w])=>{
+    ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
       setCfg_(c); setPro(fromStripe||!!p); setLoaded(true);
       setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
       setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
       setNotes(n);
       setNotifOn(!!notif);
       setLang(l||"en");
-      const watchActive = fromStripeWatch || (w&&w.active&&w.expires>Date.now());
-      setWatch(!!watchActive);
       if(fromStripe){ setShowPay(true); setPayStep("done"); }
-      else if(fromStripeWatch){ showToast("📡 Policy Watch activated!"); }
       else if(!seen) setShowIntro(true);
     });
   },[]);
@@ -1287,7 +1274,6 @@ function App() {
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
             {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>Reset Elite Access</button>}
-            {watch&&<button onClick={()=>{setWatch(false);save("dp3-watch",null);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Policy Watch</button>}
           </div>
           <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
         </div>
@@ -1316,7 +1302,7 @@ function App() {
                 </div>
               </div>
             ):(
-              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 6px 20px ${C.amber}30`}}>Upgrade to Elite — $7 one time</button>
+              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 6px 20px ${C.amber}30`}}>Upgrade to Elite — $10 one time</button>
             )}
           </div>
 
@@ -1342,7 +1328,7 @@ function App() {
             <div style={{display:"flex",flexDirection:"column",gap:6}}>
               {[
                 ["What's free and what's Elite?",
-                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training lessons, and all future app feature updates."],
+                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($10 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training lessons, and all future app feature updates."],
                 ["I paid but my access didn't unlock. What do I do?",
                  "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
                 ["How do I add DropPilot to my home screen?",
@@ -1645,7 +1631,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)"}}>Unlock Elite Access — $7</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -1701,7 +1687,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(59,130,246,0.45)"}}>Unlock Elite Access — $7</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(59,130,246,0.45)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -1817,22 +1803,22 @@ function App() {
               const sevColor={high:C.red,medium:C.amber,low:C.green};
               const previewUpdate=POLICY_WATCH.updates[0];
               return(
-                <div style={{background:"rgba(139,92,246,0.06)",border:`1px solid ${watch?"rgba(139,92,246,0.35)":"rgba(139,92,246,0.18)"}`,borderRadius:18,overflow:"hidden"}}>
+                <div style={{background:"rgba(139,92,246,0.06)",border:`1px solid ${pro?"rgba(139,92,246,0.35)":"rgba(139,92,246,0.18)"}`,borderRadius:18,overflow:"hidden"}}>
                   {/* Header */}
                   <div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(139,92,246,0.12)"}}>
                     <div>
                       <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>📡 Policy Watch</div>
                       <div style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · Last updated {POLICY_WATCH.lastUpdated}</div>
                     </div>
-                    {watch?(
-                      <div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.green}}>Active</div>
+                    {pro?(
+                      <div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.green}}>Included</div>
                     ):(
-                      <div style={{background:"rgba(139,92,246,0.1)",border:"1px solid rgba(139,92,246,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.purple}}>$1.99/mo</div>
+                      <div style={{background:"rgba(139,92,246,0.1)",border:"1px solid rgba(139,92,246,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.purple}}>Elite</div>
                     )}
                   </div>
 
-                  {watch?(
-                    /* Subscribed — show all updates */
+                  {pro?(
+                    /* Elite — show all updates */
                     <div style={{display:"flex",flexDirection:"column",gap:0}}>
                       {POLICY_WATCH.updates.map((u,i)=>(
                         <div key={i} style={{padding:"14px 16px",borderBottom:i<POLICY_WATCH.updates.length-1?"1px solid rgba(139,92,246,0.08)":"none"}}>
@@ -1850,7 +1836,7 @@ function App() {
                       ))}
                     </div>
                   ):(
-                    /* Not subscribed — teaser + CTA */
+                    /* Not Elite — teaser + CTA */
                     <div>
                       <div style={{padding:"14px 16px",filter:"blur(4px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
                         <div style={{display:"flex",gap:6,marginBottom:8}}>
@@ -1864,11 +1850,11 @@ function App() {
                         <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{previewUpdate.body.substring(0,80)}...</div>
                       </div>
                       <div style={{padding:"14px 16px",borderTop:"1px solid rgba(139,92,246,0.12)"}}>
-                        <div style={{fontSize:13,color:C.text2,marginBottom:12,lineHeight:1.5}}>Platform policies change without warning. Policy Watch tells you what changed, what it means for your account, and what to do about it — updated every month.</div>
-                        <button onClick={()=>{ window.location.href=STRIPE_WATCH_LINK; }} style={{background:`linear-gradient(135deg,${C.purple},#6D28D9)`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",width:"100%",boxShadow:"0 6px 20px rgba(139,92,246,0.35)",WebkitTapHighlightColor:"transparent"}}>
-                          📡 Subscribe — $1.99/month
+                        <div style={{fontSize:13,color:C.text2,marginBottom:12,lineHeight:1.5}}>Platform policies change without warning. Policy Watch tracks what changed, what it means for your account, and what to do — updated every month. Included with Elite.</div>
+                        <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 6px 20px rgba(245,166,35,0.35)",WebkitTapHighlightColor:"transparent"}}>
+                          Unlock Elite — $10 one time
                         </button>
-                        <div style={{fontSize:11,color:C.text3,textAlign:"center",marginTop:8}}>Cancel anytime · Renews automatically · All platforms covered</div>
+                        <div style={{fontSize:11,color:C.text3,textAlign:"center",marginTop:8}}>One-time · Lifetime access · All platforms covered</div>
                       </div>
                     </div>
                   )}
@@ -1930,7 +1916,7 @@ function App() {
                       ))}
                     </div>
                     
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(139,92,246,0.45)"}}>Unlock Elite Access — $7</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(139,92,246,0.45)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:10}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2169,7 +2155,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)"}}>Unlock Elite Access — $7</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2213,7 +2199,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 8px 28px rgba(6,182,212,0.4)`}}>Unlock Elite Access — $7</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 8px 28px rgba(6,182,212,0.4)`}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2381,10 +2367,10 @@ function App() {
                 <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:16}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:12,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
                     <span style={{fontSize:15,fontWeight:700}}>Elite Access</span>
-                    <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
+                    <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$10</span>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:9}}>
-                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","5 training lessons — the science behind what earns more","Platform habits & appeal scripts for all 6 platforms","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers"].map((f,i)=>(
+                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","5 training lessons — the science behind what earns more","Platform habits & appeal scripts for all 6 platforms","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers","📡 Policy Watch — monthly platform policy updates"].map((f,i)=>(
                       <div key={i} style={{display:"flex",alignItems:"flex-start",gap:8,fontSize:12,color:C.text2}}>
                         <span style={{color:C.green,fontWeight:900,fontSize:13,flexShrink:0}}>✓</span>{f}
                       </div>
@@ -2394,7 +2380,7 @@ function App() {
                 <button onClick={()=>{ window.location.href=STRIPE_LINK; }} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
                   <span style={{fontSize:20}}>💳</span>
                   <div style={{textAlign:"left"}}>
-                    <div>Become Elite — $7</div>
+                    <div>Become Elite — $10</div>
                     <div style={{fontSize:13,fontWeight:500,opacity:0.75,marginTop:2}}>Secure Stripe checkout · unlocks instantly on return</div>
                   </div>
                 </button>
