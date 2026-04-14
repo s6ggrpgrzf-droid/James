@@ -474,7 +474,7 @@ function IntroAnimation({onDone}) {
   return(
     <div style={{position:"fixed",inset:0,background:C.bg,zIndex:999,fontFamily:C.sans,color:C.text,overflow:"hidden",maxWidth:430,margin:"0 auto"}}>
       <div style={{position:"absolute",top:0,left:0,height:3,width:`${progress}%`,background:`linear-gradient(90deg,${A},#ffd280)`,boxShadow:`0 0 10px rgba(245,166,35,0.7)`,transition:"width 0.08s linear",zIndex:10}}/>
-      <button onClick={onDone} style={{position:"absolute",top:16,right:16,background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:20,padding:"6px 14px",color:"rgba(255,255,255,0.35)",fontSize:13,fontWeight:700,cursor:"pointer",zIndex:10,fontFamily:C.sans}}>Skip</button>
+      <button onClick={onDone} style={{position:"absolute",top:16,right:16,background:"rgba(255,255,255,0.12)",border:"1px solid rgba(255,255,255,0.22)",borderRadius:20,padding:"7px 16px",color:"rgba(255,255,255,0.7)",fontSize:13,fontWeight:700,cursor:"pointer",zIndex:10,fontFamily:C.sans}}>Skip →</button>
 
       {/* Scene 0: Brand */}
       <div style={ss(0)}>
