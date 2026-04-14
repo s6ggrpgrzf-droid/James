@@ -406,6 +406,31 @@ const PLATFORM_CHECKLISTS = {
   ],
 };
 
+// ─── Policy Watch ─────────────────────────────────────────────────────────────
+const STRIPE_WATCH_LINK = "https://buy.stripe.com/PLACEHOLDER_WATCH";
+
+const POLICY_WATCH = {
+  month: "April 2026",
+  updates: [
+    {platform:"doordash",label:"DoorDash",color:"#FF3008",e:"🔴",
+     category:"Deactivation",severity:"high",
+     title:"DoorDash tightening 'Never Received' fraud detection",
+     body:"DoorDash has updated its fraud detection for non-delivery complaints. Drivers with GPS confirmation at the address and a clear delivery photo are now more protected. Drivers without a photo are being held to a stricter standard. Photo every single drop-off — this is no longer optional."},
+    {platform:"ubereats",label:"Uber Eats",color:"#06C167",e:"🟢",
+     category:"Ratings",severity:"medium",
+     title:"Uber Eats rating floor adjusted in select markets",
+     body:"Uber Eats has quietly raised the minimum rating floor in select markets from 4.5 to 4.6 before access is restricted. If your rating sits between 4.5–4.6 right now, treat every delivery like an audition. The end-of-delivery routine matters more than ever."},
+    {platform:"instacart",label:"Instacart",color:"#43B02A",e:"🟩",
+     category:"Policy",severity:"medium",
+     title:"Instacart tightening substitution documentation requirements",
+     body:"Following a spike in customer complaints about unauthorized swaps, Instacart now requires more specific substitution documentation. Message the customer through the app before checking out — always. Your in-app message timestamp is your primary protection if a substitution gets disputed."},
+    {platform:"amazonflex",label:"Amazon Flex",color:"#FF9900",e:"📦",
+     category:"Appeals",severity:"low",
+     title:"Flex extending appeal response window to 7 business days",
+     body:"Amazon Flex extended their standard appeal response time from 3 to 7 business days in most markets. Do not assume silence means denial — wait the full window before following up. Escalating too early can reset the clock on your review."},
+  ]
+};
+
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function Toast({msg, onDone}) {
   const [out, setOut] = useState(false);
@@ -964,6 +989,7 @@ function App() {
   }
   const [cfg, setCfg_]          = useState({name:""});
   const [pro, setPro]           = useState(false);
+  const [watch, setWatch]       = useState(false);
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [toast, setToast]       = useState(null);
@@ -1098,8 +1124,14 @@ function App() {
   useEffect(()=>{
     const params = new URLSearchParams(window.location.search);
     const fromStripe = params.get("dp3")==="elite";
+    const fromStripeWatch = params.get("dp3")==="watch";
     if(fromStripe){
       save("dp3-elite",true);
+      history.replaceState(null,"",window.location.pathname);
+    }
+    if(fromStripeWatch){
+      const expires = Date.now() + 31*24*60*60*1000;
+      save("dp3-watch",{active:true,expires});
       history.replaceState(null,"",window.location.pathname);
     }
     Promise.all([
@@ -1111,14 +1143,18 @@ function App() {
       load("dp3-notes",[]),
       load("dp3-notif",false),
       load("dp3-lang","en"),
-    ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
+      load("dp3-watch",null),
+    ]).then(([c,p,seen,ft,ftpl,n,notif,l,w])=>{
       setCfg_(c); setPro(fromStripe||!!p); setLoaded(true);
       setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
       setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
       setNotes(n);
       setNotifOn(!!notif);
       setLang(l||"en");
+      const watchActive = fromStripeWatch || (w&&w.active&&w.expires>Date.now());
+      setWatch(!!watchActive);
       if(fromStripe){ setShowPay(true); setPayStep("done"); }
+      else if(fromStripeWatch){ showToast("📡 Policy Watch activated!"); }
       else if(!seen) setShowIntro(true);
     });
   },[]);
@@ -1249,7 +1285,8 @@ function App() {
           <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>⚙ Admin Settings</div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
-            {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Elite Access</button>}
+            {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>Reset Elite Access</button>}
+            {watch&&<button onClick={()=>{setWatch(false);save("dp3-watch",null);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer"}}>Reset Policy Watch</button>}
           </div>
           <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
         </div>
@@ -1747,6 +1784,69 @@ function App() {
               <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Protect Your Account</div>
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Habits, appeal scripts, checklists, and notes — by platform.</div>
             </div>
+
+            {/* ── Policy Watch ─────────────────────────────────────────────── */}
+            {(()=>{
+              const sevColor={high:C.red,medium:C.amber,low:C.green};
+              const previewUpdate=POLICY_WATCH.updates[0];
+              return(
+                <div style={{background:"rgba(139,92,246,0.06)",border:`1px solid ${watch?"rgba(139,92,246,0.35)":"rgba(139,92,246,0.18)"}`,borderRadius:18,overflow:"hidden"}}>
+                  {/* Header */}
+                  <div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(139,92,246,0.12)"}}>
+                    <div>
+                      <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>📡 Policy Watch</div>
+                      <div style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · {POLICY_WATCH.updates.length} updates</div>
+                    </div>
+                    {watch?(
+                      <div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.green}}>Active</div>
+                    ):(
+                      <div style={{background:"rgba(139,92,246,0.1)",border:"1px solid rgba(139,92,246,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.purple}}>$4.99/mo</div>
+                    )}
+                  </div>
+
+                  {watch?(
+                    /* Subscribed — show all updates */
+                    <div style={{display:"flex",flexDirection:"column",gap:0}}>
+                      {POLICY_WATCH.updates.map((u,i)=>(
+                        <div key={i} style={{padding:"14px 16px",borderBottom:i<POLICY_WATCH.updates.length-1?"1px solid rgba(139,92,246,0.08)":"none"}}>
+                          <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                            <div style={{display:"flex",alignItems:"center",gap:4,background:`${u.color}12`,border:`1px solid ${u.color}30`,borderRadius:6,padding:"3px 8px"}}>
+                              <span style={{fontSize:11}}>{u.e}</span>
+                              <span style={{fontSize:11,fontWeight:700,color:u.color}}>{u.label}</span>
+                            </div>
+                            <div style={{background:`${sevColor[u.severity]}12`,border:`1px solid ${sevColor[u.severity]}30`,borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:700,color:sevColor[u.severity]}}>{u.category}</div>
+                          </div>
+                          <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{u.title}</div>
+                          <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{u.body}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ):(
+                    /* Not subscribed — teaser + CTA */
+                    <div>
+                      <div style={{padding:"14px 16px",filter:"blur(4px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                        <div style={{display:"flex",gap:6,marginBottom:8}}>
+                          <div style={{display:"flex",alignItems:"center",gap:4,background:`${previewUpdate.color}12`,border:`1px solid ${previewUpdate.color}30`,borderRadius:6,padding:"3px 8px"}}>
+                            <span style={{fontSize:11}}>{previewUpdate.e}</span>
+                            <span style={{fontSize:11,fontWeight:700,color:previewUpdate.color}}>{previewUpdate.label}</span>
+                          </div>
+                          <div style={{background:`${sevColor[previewUpdate.severity]}12`,border:`1px solid ${sevColor[previewUpdate.severity]}30`,borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:700,color:sevColor[previewUpdate.severity]}}>{previewUpdate.category}</div>
+                        </div>
+                        <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{previewUpdate.title}</div>
+                        <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{previewUpdate.body.substring(0,80)}...</div>
+                      </div>
+                      <div style={{padding:"14px 16px",borderTop:"1px solid rgba(139,92,246,0.12)"}}>
+                        <div style={{fontSize:13,color:C.text2,marginBottom:12,lineHeight:1.5}}>Platform policies change without warning. Policy Watch tells you what changed, what it means for your account, and what to do about it — updated every month.</div>
+                        <button onClick={()=>{ window.location.href=STRIPE_WATCH_LINK; }} style={{background:`linear-gradient(135deg,${C.purple},#6D28D9)`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",width:"100%",boxShadow:"0 6px 20px rgba(139,92,246,0.35)",WebkitTapHighlightColor:"transparent"}}>
+                          📡 Subscribe — $4.99/month
+                        </button>
+                        <div style={{fontSize:11,color:C.text3,textAlign:"center",marginTop:8}}>Cancel anytime · Renews automatically · All platforms covered</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
             {!pro?(
               <div style={{position:"relative"}}>
