@@ -411,20 +411,21 @@ const STRIPE_WATCH_LINK = "https://buy.stripe.com/PLACEHOLDER_WATCH";
 
 const POLICY_WATCH = {
   month: "April 2026",
+  lastUpdated: "April 14, 2026",
   updates: [
-    {platform:"doordash",label:"DoorDash",color:"#FF3008",e:"🔴",
+    {platform:"doordash",label:"DoorDash",color:"#FF3008",e:"🔴",isNew:true,
      category:"Deactivation",severity:"high",
      title:"DoorDash tightening 'Never Received' fraud detection",
      body:"DoorDash has updated its fraud detection for non-delivery complaints. Drivers with GPS confirmation at the address and a clear delivery photo are now more protected. Drivers without a photo are being held to a stricter standard. Photo every single drop-off — this is no longer optional."},
-    {platform:"ubereats",label:"Uber Eats",color:"#06C167",e:"🟢",
+    {platform:"ubereats",label:"Uber Eats",color:"#06C167",e:"🟢",isNew:true,
      category:"Ratings",severity:"medium",
      title:"Uber Eats rating floor adjusted in select markets",
      body:"Uber Eats has quietly raised the minimum rating floor in select markets from 4.5 to 4.6 before access is restricted. If your rating sits between 4.5–4.6 right now, treat every delivery like an audition. The end-of-delivery routine matters more than ever."},
-    {platform:"instacart",label:"Instacart",color:"#43B02A",e:"🟩",
+    {platform:"instacart",label:"Instacart",color:"#43B02A",e:"🟩",isNew:true,
      category:"Policy",severity:"medium",
      title:"Instacart tightening substitution documentation requirements",
      body:"Following a spike in customer complaints about unauthorized swaps, Instacart now requires more specific substitution documentation. Message the customer through the app before checking out — always. Your in-app message timestamp is your primary protection if a substitution gets disputed."},
-    {platform:"amazonflex",label:"Amazon Flex",color:"#FF9900",e:"📦",
+    {platform:"amazonflex",label:"Amazon Flex",color:"#FF9900",e:"📦",isNew:true,
      category:"Appeals",severity:"low",
      title:"Flex extending appeal response window to 7 business days",
      body:"Amazon Flex extended their standard appeal response time from 3 to 7 business days in most markets. Do not assume silence means denial — wait the full window before following up. Escalating too early can reset the clock on your review."},
@@ -572,7 +573,7 @@ function IntroAnimation({onDone}) {
         <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>All feature<br/>updates included.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
-          {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Training Videos"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
+          {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Lessons"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
             <div key={i} style={{background:`${col}08`,border:`1px solid ${col}20`,borderRadius:12,padding:"11px 12px",display:"flex",alignItems:"center",gap:8}}>
               <span style={{fontSize:18}}>{e}</span>
               <span style={{fontSize:12,fontWeight:700,color:col}}>{label}</span>
@@ -609,7 +610,7 @@ function IntroAnimation({onDone}) {
   );
 }
 
-// ─── Training Videos Data ─────────────────────────────────────────────────────
+// ─── Training Lessons Data ─────────────────────────────────────────────────────
 const VIDEOS = [
   {id:0,title:"Why Customer Service Makes You More Money",dur:35000,icon:"📈",color:"#10B981",desc:"The simple math of one extra dollar per delivery adding up fast.",
     scenes:[
@@ -1341,7 +1342,7 @@ function App() {
             <div style={{display:"flex",flexDirection:"column",gap:6}}>
               {[
                 ["What's free and what's Elite?",
-                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and all future app feature updates."],
+                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($7 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training lessons, and all future app feature updates."],
                 ["I paid but my access didn't unlock. What do I do?",
                  "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
                 ["How do I add DropPilot to my home screen?",
@@ -1496,6 +1497,27 @@ function App() {
                   <div key={l} style={{display:"flex",alignItems:"center",gap:5,background:"rgba(59,130,246,0.08)",border:"1px solid rgba(59,130,246,0.2)",borderRadius:8,padding:"4px 10px"}}>
                     <span style={{fontSize:13}}>{e}</span>
                     <span style={{fontSize:11,fontWeight:700,color:C.blue}}>{l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── What's inside card ───────────────────────────────────────── */}
+            <div style={{background:"rgba(245,166,35,0.05)",border:"1px solid rgba(245,166,35,0.18)",borderRadius:16,padding:"16px 18px"}}>
+              <div style={{fontSize:11,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:10}}>{t("What's in This App","Qué hay en esta app")}</div>
+              <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                {[
+                  ["⚡",t("Quick Help","Ayuda Rápida"),t("Tap the lightning bolt — instant scripts for any situation.","Toca el rayo — guiones instantáneos para cada situación.")],
+                  ["🚗",t("Shift Mode","Modo Turno"),t("Tap \"I'm Driving\" to enter focused mode for your platform.","Toca \"Estoy Manejando\" para entrar en modo enfocado.")],
+                  ["✏️",t("Fill-In Letters","Cartas Personalizables"),t("Appeal letters in Defend → tap a letter → fill in the blanks.","En Defender → toca una carta → completa los espacios.")],
+                  ["🌐",t("App in Spanish","App en Español"),t("Tap EN/ES in the top bar to switch the full app to Spanish.","Toca EN/ES en la barra superior para cambiar al español.")],
+                ].map(([e,label,desc])=>(
+                  <div key={label} style={{display:"flex",alignItems:"flex-start",gap:12}}>
+                    <div style={{width:32,height:32,borderRadius:9,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:16,flexShrink:0}}>{e}</div>
+                    <div style={{flex:1,minWidth:0}}>
+                      <div style={{fontSize:13,fontWeight:700,color:C.amber,marginBottom:1}}>{label}</div>
+                      <div style={{fontSize:12,color:C.text2,lineHeight:1.5}}>{desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1800,7 +1822,7 @@ function App() {
                   <div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(139,92,246,0.12)"}}>
                     <div>
                       <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>📡 Policy Watch</div>
-                      <div style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · {POLICY_WATCH.updates.length} updates</div>
+                      <div style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · Last updated {POLICY_WATCH.lastUpdated}</div>
                     </div>
                     {watch?(
                       <div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.green}}>Active</div>
@@ -1820,6 +1842,7 @@ function App() {
                               <span style={{fontSize:11,fontWeight:700,color:u.color}}>{u.label}</span>
                             </div>
                             <div style={{background:`${sevColor[u.severity]}12`,border:`1px solid ${sevColor[u.severity]}30`,borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:700,color:sevColor[u.severity]}}>{u.category}</div>
+                            {u.isNew&&<div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:800,color:"#10B981"}}>New</div>}
                           </div>
                           <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{u.title}</div>
                           <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{u.body}</div>
@@ -2082,7 +2105,7 @@ function App() {
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
               <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Training Series</div>
               <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>The DropPilot Method</div>
-              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Five short training videos on customer service skills that drive ratings and income.</div>
+              <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Five short training lessons on customer service skills that drive ratings and income.</div>
             </div>
 
             {(pro||activeVideo===0||true)?(
@@ -2136,7 +2159,7 @@ function App() {
                   <div className="train-pulse" style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#1a0f00,#0e0a16,#07080A)",border:"2px solid rgba(245,166,35,0.4)",width:"100%",position:"relative"}}>
                     <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
                     <div className="train-float" style={{fontSize:44,marginBottom:12,display:"block"}}>🎓</div>
-                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Training Videos</div>
+                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Training Lessons</div>
                     <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Short videos on the psychology and science behind what makes customers tip more and rate higher. Not theory — real research applied to real deliveries.</div>
                     <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
                       {[["📈","Why customer service makes you more money — with the math"],["💬","The exact words that earn tips — phrase by phrase"],["🏆","What top earners do differently — the 60-second habit gap"],["🙏","Please, thank you, you're welcome — proven to increase tips 23%"]].map(([e,f],i)=>(
@@ -2361,7 +2384,7 @@ function App() {
                     <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$7</span>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:9}}>
-                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","5 training videos — the science behind what earns more","Platform habits & appeal scripts for all 6 platforms","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers"].map((f,i)=>(
+                    {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","5 training lessons — the science behind what earns more","Platform habits & appeal scripts for all 6 platforms","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers"].map((f,i)=>(
                       <div key={i} style={{display:"flex",alignItems:"flex-start",gap:8,fontSize:12,color:C.text2}}>
                         <span style={{color:C.green,fontWeight:900,fontSize:13,flexShrink:0}}>✓</span>{f}
                       </div>
@@ -2384,7 +2407,7 @@ function App() {
               <div style={{textAlign:"center",padding:"10px 0"}}>
                 <div style={{fontSize:64,marginBottom:16}}>🎉</div>
                 <div style={{fontSize:24,fontWeight:900,marginBottom:8}}>You're Elite.</div>
-                <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training video, and all future app feature updates. Yours forever.</div>
+                <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training lesson, and all future app feature updates. Yours forever.</div>
                 <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.purple,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 6px 20px rgba(139,92,246,0.4)",marginBottom:10}}>Go to Account Defense</button>
                 <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>See Message Templates</button>
               </div>
