@@ -92,7 +92,7 @@ async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return tr
 
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
-  border:"rgba(255,255,255,0.08)",
+  border:"rgba(255,255,255,0.11)",
   amber:"#F5A623", amberD:"#C8820A", amberL:"#ffc84a",
   green:"#10B981", teal:"#06B6D4", blue:"#3B82F6",
   red:"#F43F5E", purple:"#8B5CF6",
@@ -1556,7 +1556,7 @@ function App() {
         {!shiftMode&&<button onClick={()=>setShowPlatformPicker(true)} aria-label="Start shift" style={{background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:13,flexShrink:0,marginRight:6,gap:5,WebkitTapHighlightColor:"transparent"}}>
           <span>🚗</span><span style={{fontSize:11,fontWeight:800,color:C.amber,fontFamily:C.sans}}>Drive</span>
         </button>}
-        <button onClick={toggleLang} aria-label="Toggle language" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:11,fontWeight:800,color:C.text2,letterSpacing:"0.5px",flexShrink:0,marginRight:6,fontFamily:C.mono}}>{lang==="en"?"ES":"EN"}</button>
+        <button onClick={toggleLang} aria-label="Toggle language" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:11,fontWeight:800,color:C.text2,letterSpacing:"0.5px",flexShrink:0,marginRight:6,fontFamily:C.sans}}>{lang==="en"?"ES":"EN"}</button>
         <button onClick={()=>setShowProfile(o=>!o)} aria-label="Profile & Settings" style={{background:showProfile?`${C.amber}18`:"rgba(255,255,255,0.05)",border:`1px solid ${showProfile?`${C.amber}40`:"rgba(255,255,255,0.08)"}`,borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0,transition:"all 0.15s"}}>⚙️</button>
       </div>
 
@@ -2433,7 +2433,7 @@ function App() {
             </div>
 
             {/* ── What Not To Do ───────────────────────────────────────────── */}
-            <div style={{background:"rgba(244,63,94,0.04)",border:"1px solid rgba(244,63,94,0.15)",borderRadius:18,overflow:"hidden"}}>
+            <div style={{background:"rgba(244,63,94,0.06)",border:"1px solid rgba(244,63,94,0.18)",borderRadius:18,overflow:"hidden"}}>
               <div style={{padding:"14px 16px 12px",borderBottom:"1px solid rgba(244,63,94,0.1)",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                 <div>
                   <div style={{fontSize:11,fontWeight:800,color:C.red,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>🚫 What Not To Do</div>
@@ -2639,7 +2639,7 @@ function App() {
                 <div className={popping?"nav-pop":""} style={{width:40,height:28,borderRadius:10,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
                   <span style={{fontSize:active?18:15,transition:"font-size 0.18s"}}>{n.e}</span>
                 </div>
-                <span style={{fontSize:10,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px"}}>{n.l}</span>
+                <span style={{fontSize:11,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px"}}>{n.l}</span>
               </button>
             );
           })}
@@ -2664,7 +2664,7 @@ function App() {
                 <div style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:16,padding:16,marginBottom:16}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",paddingBottom:12,marginBottom:12,borderBottom:"1px solid rgba(255,255,255,0.07)"}}>
                     <span style={{fontSize:15,fontWeight:700}}>Elite Access</span>
-                    <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.mono}}>$10</span>
+                    <span style={{fontSize:22,fontWeight:900,color:C.amber,fontFamily:C.sans}}>$10</span>
                   </div>
                   <div style={{display:"flex",flexDirection:"column",gap:9}}>
                     {["4 free tips + 6 more with full psychology breakdowns","7 in-depth learning sections — psychology, tip science, de-escalation & more","30 message templates with one-tap copy","5 training lessons — the science behind what earns more","Platform habits & appeal scripts for all 6 platforms","Per-delivery checklists + safety score per platform","Notes log for problem addresses and difficult customers","📡 Policy Watch — monthly platform policy updates"].map((f,i)=>(
