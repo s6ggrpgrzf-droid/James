@@ -215,6 +215,13 @@ const MSG_CATS = [
     {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Lyft app — you can claim it through your ride history under Lost Items. Hope you get it back!",w:"Always report lost items through Lyft's official lost and found — never arrange returns directly outside the app. This protects both you and the passenger."},
     {h:"Passenger seems upset during the ride",msg:"I'm sorry you're having a rough time. Let me get you there as smoothly as I can.",w:"Short, calm, genuine. Don't ask what's wrong, don't over-explain, don't apologize for things you didn't do. Just acknowledge and refocus on the drive. Most passengers will settle down within 60 seconds."},
   ]},
+  {e:"🚗",t:"Uber — Ride Messages",sub:"For pickups, no-shows, and tricky passenger situations",secs:[
+    {h:"On my way to your pickup",msg:"Hey! On my way — about 2-3 minutes out. I'll be in a [car color and model]. See you shortly!",w:"Passengers who know what car to look for find you faster. It cuts wait time and reduces cancellations before you even arrive."},
+    {h:"At pickup — passenger not visible",msg:"Hi! I'm at your pickup location now. I'm in a [car color and model] — let me know if you need me to pull forward or if you're on your way out!",w:"Send this instead of waiting silently or cancelling early. Most passengers respond in under a minute when they know you're there."},
+    {h:"Slight delay on the way to pickup",msg:"Hey! Running about [X] minutes late — [traffic / slight detour]. Still on my way and almost there!",w:"One honest heads-up almost always prevents a cancellation. Passengers who know you're coming rarely leave."},
+    {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Uber app — you can claim it through your trip history under Lost Items. Hope you get it back!",w:"Always report through Uber's official lost and found — never arrange a direct return outside the app. This protects both you and the passenger."},
+    {h:"Passenger seems upset during the ride",msg:"I'm sorry you're having a rough time. Let me get you there as smoothly as I can.",w:"Short, calm, genuine. Don't ask what's wrong, don't over-explain. Just acknowledge and focus on the drive. Most passengers settle within 60 seconds."},
+  ]},
 ];
 
 // ─── Defend Data ──────────────────────────────────────────────────────────────
@@ -224,7 +231,9 @@ const PLATFORMS_DEFEND = [
   {id:"spark",     label:"Spark",     color:"#0071CE", e:"🔵"},
   {id:"instacart", label:"Instacart", color:"#43B02A", e:"🟩"},
   {id:"lyft",      label:"Lyft",      color:"#FF00BF", e:"🚙"},
-  {id:"amazonflex", label:"Flex", color:"#FF9900", e:"📦"},
+  {id:"amazonflex", label:"Flex",      color:"#FF9900", e:"📦"},
+  {id:"uber",      label:"Uber",      color:"#1D1D1D", e:"🚗"},
+  {id:"gopuff",    label:"GoPuff",    color:"#4338CA", e:"🟣"},
 ];
 
 const PLATFORM_HABITS = {
@@ -274,6 +283,21 @@ const PLATFORM_HABITS = {
     {e:"🚗",t:"Keep your car clean, neutral, and phone-charger ready",why:"Cleanliness is the most-cited factor in passenger ratings. No strong odors, a tidy interior, and a phone charger available (both iPhone and Android) add up to consistently better ratings. Detail your car regularly and restock charger cables weekly. Passengers mention the charger in positive reviews more than almost any other detail."},
     {e:"⭐",t:"Rate your passenger 5 stars immediately after drop-off",why:"Passengers who see you rated them 5 stars are significantly more likely to rate you 5 stars back. Rate before they've had a chance to rate you. It's not just courtesy — it triggers a reciprocity response. Drivers who rate passengers first tend to have noticeably higher overall ratings."},
     {e:"🎵",t:"Ask before playing music — keep volume low by default",why:"Music preference is personal. Never assume a passenger wants your playlist. If you play anything, keep it low and neutral. A simple 'Mind if I put something on?' shows respect and almost always gets a yes. Loud music, heavy bass, or aggressive lyrics are among the top five reasons passengers leave 3-star ratings. When in doubt: silence."},
+  ],
+  uber:[
+    {e:"🪪",t:"Confirm the passenger's name before they get in",why:"Ask 'What's your name?' before unlocking — never say the name first. If someone gets in the wrong car you could be held responsible. This is Uber's official policy and your legal protection on every ride.",urgent:true},
+    {e:"📋",t:"Screenshot your trip details if anything feels off",why:"Uber uses Trip IDs to find your record in any dispute. If a passenger is difficult or files a complaint, the Trip ID is how support locates the ride. Screenshot the trip summary immediately after any uncomfortable ride — before the app resets.",urgent:true},
+    {e:"🔇",t:"Let the passenger set the conversation tone",why:"Never start talking the moment they get in. Give them 15-20 seconds. If they speak first, follow their lead. If they stay quiet, stay quiet and professional. Forcing conversation on a passenger who wants silence is a common cause of low ratings.",urgent:true},
+    {e:"🚗",t:"Keep your car clean, neutral, and phone-charger ready",why:"Car cleanliness is the most-cited factor in passenger ratings. No strong odors, a tidy interior, and a phone charger ready (both iPhone and Android). Restock chargers regularly — passengers mention them in positive reviews more than almost any other single detail."},
+    {e:"⭐",t:"Rate your passenger 5 stars immediately after drop-off",why:"Passengers who see you rated them 5 stars are significantly more likely to rate you 5 stars back. Rate them before they've had time to rate you. Drivers who rate first consistently see higher overall ratings."},
+    {e:"📷",t:"Keep a dashcam active on every ride",why:"Uber's in-car video recording is available in all 50 states. A dashcam creates a record for any disputed complaint. It won't prevent false complaints, but it gives you documented evidence — and passengers often behave differently when they see a camera."},
+  ],
+  gopuff:[
+    {e:"📸",t:"Photo every drop-off — items at door with address visible",why:"Your delivery photo is your primary protection against false non-delivery complaints. Take a clear photo showing the items and the door number or house address. GoPuff's support team reviews these the same way all delivery platforms do.",urgent:true},
+    {e:"📦",t:"Verify your order count at the facility before you leave",why:"GoPuff orders are pre-packed, but errors happen. Before leaving the facility, confirm the bag or item count matches what the app shows. Leaving with a wrong or incomplete order creates a complaint you'll be responsible for.",urgent:true},
+    {e:"📍",t:"GPS active for the full delivery",why:"GoPuff uses GPS data to confirm your delivery location and timing. It's your primary documentation that you were at the address and when."},
+    {e:"💬",t:"Message the customer through the GoPuff app if any issue comes up",why:"Gate code needed, can't find the address, customer not responding — always message in-app first. Documented in-app messages show you made a good-faith effort, which protects you in any dispute."},
+    {e:"🏃",t:"Keep deliveries moving — GoPuff is a speed platform",why:"GoPuff's core promise to customers is quick delivery. Consistently slow delivery times affect your standing. Only accept runs you can realistically complete within the expected window."},
   ],
 };
 
@@ -354,6 +378,27 @@ const PLATFORM_APPEALS = {
       {h:"Request senior account review",msg:"Hello,\n\nI am following up on a previous Lyft support request about trip #[TRIP ID] from [DATE].\n\nMy initial request was not resolved. I am asking for escalation to a senior driver account specialist.\n\nThe original issue: [brief summary — one sentence]\n\nThis is continuing to affect my driver rating and income. I have been a Lyft driver since [DATE] with a strong record and I am asking for a complete, fair review.\n\nThank you.",w:"'Senior driver account specialist' routes your ticket past first-tier support. Most drivers give up after a first denial — this one follow-up often gets a different result."},
     ]},
   ],
+  uber:[
+    {e:"⭐",t:"Unfair Passenger Rating",urgency:"MEDIUM — Affects standing and Uber Pro tier",color:"#F5A623",secs:[
+      {h:"Rating caused by traffic, navigation, or price",msg:"Hello Uber Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nBased on the timing and any comments left, I believe the passenger rated me low due to [traffic delay / navigation issue / trip price] — none of which are within my control as a driver.\n\nUber's rating policy explicitly excludes ratings caused by traffic, navigation, pricing, and other factors outside driver control. I am asking for this rating to be reviewed and removed under that policy.\n\nThank you.",w:"Price complaints, traffic frustration, and navigation errors are explicitly listed in Uber's rating exclusion policy. Naming the specific category gives the agent a clear policy anchor to approve the removal."},
+      {h:"Rating from a passenger who consistently rates drivers low",msg:"Hello Uber Support,\n\nI am requesting a review of a low rating received on trip #[TRIP ID] from [DATE].\n\nI completed this trip professionally and safely. I am requesting review because I believe this rating may not reflect a genuine service issue.\n\nUber's policy allows exclusion of ratings from riders who consistently rate drivers low. Please review this passenger's rating history and consider removal if the pattern applies.\n\nMy rating before this was [X stars]. Thank you.",w:"Uber's system already automatically excludes some low ratings from frequent low-raters. This letter accelerates that review by surfacing the concern explicitly. Keep it brief and factual."},
+    ]},
+    {e:"🚫",t:"False Complaint from Passenger",urgency:"HIGH — Can affect account standing",color:"#F43F5E",secs:[
+      {h:"Dispute a passenger complaint",msg:"Hello Uber Support,\n\nI am writing to dispute a complaint filed against me on trip #[TRIP ID] from [DATE].\n\nI completed this trip professionally and safely. The complaint is inaccurate. Here is what I can document:\n- Passenger name was confirmed at pickup per Uber policy\n- GPS data confirms the correct route was taken\n- No incidents occurred during the trip\n\nI am requesting:\n1. A full review of this complaint against my trip record and GPS data\n2. Any negative impact on my account standing to be reversed\n3. A review of this passenger's complaint history if this is a pattern\n\nThank you.",w:"Lead with your documentation, not your denial. Agents review trip data, not arguments. Asking for a complaint history review signals that you understand the formal process — and that you're not going away after one response."},
+    ]},
+    {e:"🔄",t:"Escalation — First Appeal Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
+      {h:"Escalate to senior specialist",msg:"Hello,\n\nI am following up on a previous request about Uber trip #[TRIP ID] from [DATE].\n\nMy initial appeal was not resolved. I am requesting escalation to a senior account specialist because:\n- My GPS data and trip record were not properly reviewed\n- The complaint contradicts my documented trip history\n- This is continuing to affect my account standing and income\n\nI have been an Uber driver since [DATE] with a strong record. I am asking for a thorough review.\n\nThank you.",w:"Asking for 'senior account specialist' routes your ticket to a higher-tier review. Most drivers exhaust themselves on first-tier agents — this escalation request often gets a meaningfully different result."},
+    ]},
+  ],
+  gopuff:[
+    {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can affect account standing",color:"#F43F5E",secs:[
+      {h:"Standard non-delivery dispute",msg:"Hello GoPuff Driver Support,\n\nI am writing to dispute a non-delivery complaint on order #[ORDER ID] from [DATE].\n\nI completed this delivery successfully. My documentation:\n- Delivery photo taken at [ADDRESS] showing the items at the door\n- GPS data confirming my location at [ADDRESS] at [TIME]\n- In-app delivery confirmation\n\nI am requesting:\n1. This complaint be reviewed against my photo and GPS data\n2. Any negative impact on my driver account be reversed\n\nThank you.",w:"GoPuff support reviews photo and GPS data the same way other platforms do. Lead with your evidence — photo first, then GPS, then app confirmation. Keep it factual and brief."},
+    ]},
+    {e:"⛔",t:"Account Deactivation Appeal",urgency:"HIGH — Submit as soon as possible",color:"#F43F5E",secs:[
+      {h:"General deactivation appeal",msg:"Hello GoPuff Driver Support,\n\nI am writing to appeal the deactivation of my GoPuff driver account, which I received notice of on [DATE].\n\nI believe this deactivation was made in error. Here is my account of the situation:\n- [Describe what happened, factually and briefly]\n- I have always followed GoPuff's Community Guidelines regarding Safety, Respect, and Integrity\n- I have completed [X] deliveries on the platform with a clean record\n\nI am asking for a full review of my account history and the specific incident cited. I am committed to GoPuff's standards and would appreciate the opportunity to continue.\n\nThank you.",w:"GoPuff's stated deactivation grounds are violations of Safety, Respect, or Integrity. Frame your appeal around your compliance with those three categories. Note your delivery count — drivers with a long, clean record get more benefit of the doubt."},
+      {h:"Deactivation caused by a Checkr background check error",msg:"Hello GoPuff Driver Support,\n\nI am appealing my account deactivation, which I believe was triggered by an error in my Checkr background check.\n\nI have reviewed my results and believe the following item is inaccurate:\n- [Describe the specific item in dispute]\n\nI have submitted a dispute directly with Checkr at consumer.checkr.com. Under the Fair Credit Reporting Act, I have the right to dispute inaccurate background information.\n\nI am asking GoPuff to hold my deactivation pending the outcome of my Checkr dispute. I can provide documentation of my dispute submission upon request.\n\nThank you.",w:"Background check errors via Checkr are one of the most common causes of GoPuff deactivation. File the Checkr dispute first, then reference it in your GoPuff appeal. This creates a paper trail and gives the platform a reason to wait before making the deactivation permanent."},
+    ]},
+  ],
 };
 
 const PLATFORM_CHECKLISTS = {
@@ -403,6 +448,21 @@ const PLATFORM_CHECKLISTS = {
     {e:"🖼️",t:"Delivery confirmation screen screenshotted"},
     {e:"📋",t:"Block ID and TBA numbers noted if anything felt off"},
     {e:"🔄",t:"Any undeliverable packages returned with correct reason code"},
+  ],
+  uber:[
+    {e:"🪪",t:"Confirmed passenger's name before they entered the car"},
+    {e:"📱",t:"GPS active and phone mounted before the ride began"},
+    {e:"🚗",t:"Car was clean and free of strong odors"},
+    {e:"📋",t:"Trip ID screenshotted if anything felt off during the ride"},
+    {e:"⭐",t:"Passenger rated 5 stars immediately after drop-off"},
+    {e:"🔇",t:"Let the passenger set the conversation tone — no forced chat"},
+  ],
+  gopuff:[
+    {e:"📦",t:"Order count verified at the facility before leaving"},
+    {e:"📸",t:"Delivery photo taken — items at door with address visible"},
+    {e:"📍",t:"GPS active for the full delivery"},
+    {e:"💬",t:"Customer messaged through GoPuff app if any issue arose"},
+    {e:"📋",t:"Order ID noted if anything felt off during delivery"},
   ],
 };
 
@@ -974,6 +1034,25 @@ const BASICS_CATS = [
       {h:"The Lyft rating system for drivers", body:"After every ride, passengers rate you 1 to 5 stars. Your score is the average of your last 100 rides. Lyft requires drivers to maintain at least 4.6 stars — below that, you risk deactivation. Serious Lyft drivers target 4.85 or higher, which unlocks priority access to better rides and higher earnings. The three biggest rating drivers: car cleanliness, not forcing conversation, and confirming the passenger's name professionally at pickup."},
       {h:"Confirming your passenger — and why you must always do it", body:"Before any passenger gets in your car, ask: 'What's your name?' and wait for them to answer. Do NOT say their name first — if you ask 'Are you Sarah?' a stranger could say yes and get in. This is both a safety rule and Lyft's official policy. If the name doesn't match, politely decline: 'I'm waiting for [correct name] — your driver might be just nearby.' This protects you, the real passenger, and your standing."},
       {h:"Lyft tiers — what they are and how to reach them", body:"Lyft has a rewards program with four tiers: Silver, Gold, Platinum, and Elite. Tiers are based on Tier Points (earned as roughly $1 per dollar in ride earnings, with a multiplier up to 3x for high acceptance rates) and a Driving Score. Silver requires a 60% Driving Score minimum; Gold, Platinum, and Elite require 80%+. Elite is reserved for the top 5% of drivers and requires maintaining the status for 3 consecutive months. Higher tiers unlock priority airport queue access, bonus earnings, and dedicated support. Check the Lyft app for the exact point thresholds in your market — they vary by region."},
+    ]
+  },
+  {
+    e:"🚗", t:"Uber — The Basics", sub:"Platform-specific things every Uber rideshare driver needs to know",
+    secs:[
+      {h:"How Uber rideshare works", body:"Uber is a rideshare platform — you transport passengers, not packages or food. A passenger requests a ride through the Uber app, you see their pickup location and the upfront fare before you accept, then drive to pick them up and take them to their destination. Unlike delivery, customer service happens face-to-face for the full duration of the ride. Your vehicle — how it looks, smells, and feels — directly affects your rating and income."},
+      {h:"The Uber rating system", body:"Passengers rate you 1-5 stars after each ride. Uber does not publish a single official minimum rating, but the widely understood threshold is 4.6 stars — below that, you risk deactivation. Uber automatically excludes some low ratings caused by factors outside your control: traffic delays, navigation issues, price complaints, and ratings from passengers who consistently rate all drivers low. You can see your rating in the driver app under your profile."},
+      {h:"Upfront pricing and surge — how you get paid", body:"Uber shows both you and the passenger the full trip fare before the ride begins. Surge pricing appears during busy periods as colored zones on your map — the closer you are to a high-demand area, the higher the multiplier. Working surge zones during peak hours (lunch, dinner, late Friday/Saturday night, bad weather) is one of the most reliable ways to significantly increase hourly earnings. You don't need to do anything special — just be logged in and accepting in a surge zone."},
+      {h:"Confirming your passenger — always do this", body:"Before any passenger gets in your car, ask: 'What's your name?' and wait for them to answer. Never say the name first — if you ask 'Are you Mike?' a stranger could say yes and get in. This is both a safety practice and Uber's official policy. If the name doesn't match, politely decline: 'I'm waiting for [correct name].' This protects you, the real passenger, and your standing."},
+      {h:"Uber Pro — levels and what they unlock", body:"Uber Pro has four tiers: Blue (all drivers), Gold, Platinum, and Diamond. You move up by earning points on trips and maintaining a 4.85+ rating with a cancellation rate below 4%. Higher tiers unlock cash back on gas, priority airport queue access, Costco membership, ASU tuition coverage, and dedicated support. Blue is where everyone starts — focus on clean, professional service first and the tiers will follow. Check the Uber app for current point thresholds, as they vary by market."},
+    ]
+  },
+  {
+    e:"🟣", t:"GoPuff — The Basics", sub:"Platform-specific things every GoPuff driver needs to know",
+    secs:[
+      {h:"How GoPuff delivery works", body:"GoPuff is different from DoorDash or Uber Eats. You don't pick up from restaurants. Instead, you collect pre-packed orders from a GoPuff facility (called a micro-fulfillment center) and deliver them to customers nearby. GoPuff stocks convenience items — snacks, drinks, household supplies, and alcohol in some markets. Orders are almost always packed and ready when you arrive at the facility. Your job is pickup, delivery, and documentation."},
+      {h:"What to expect at the GoPuff facility", body:"When you arrive, check in through the app and collect the orders assigned to your run. Verify the bag or item count against what the app shows before you leave — GoPuff orders are pre-packed but errors happen, and a wrong or incomplete order creates complaints you'll be responsible for. GoPuff deliveries are typically short-distance (usually within a few miles of the facility), and you'll often complete multiple deliveries per run. Speed matters — GoPuff promises quick delivery."},
+      {h:"GoPuff's standing system — how it works", body:"GoPuff does not publish a specific star-rating threshold for deactivation. Standing is based on overall delivery performance and adherence to Community Guidelines, which cover three areas: Safety, Respect, and Integrity. Consistent customer complaints, failed or incomplete deliveries, or violations of those guidelines are the main deactivation triggers. Photo every drop-off and keep GPS active — those are your core protection on every delivery."},
+      {h:"Deactivation — causes and what to do", body:"The most common GoPuff deactivation causes are: background check errors (processed through Checkr), repeated customer complaints, or Community Guidelines violations. If your account is deactivated, contact GoPuff driver support and request a formal review, citing your delivery history and the specific situation. California drivers have a formal appeal right included in the deactivation email. If your deactivation was caused by a Checkr background check error, dispute it directly at consumer.checkr.com and reference that dispute in your GoPuff appeal — this creates a paper trail and gives the platform a reason to pause before making it permanent."},
     ]
   },
 ];
