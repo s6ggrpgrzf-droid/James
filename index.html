@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="description" content="DropPilot — the customer service app for gig drivers. Scripts, habits, account defense, and training for DoorDash, Uber Eats, Instacart, Lyft, and Flex drivers."/>
+<meta name="description" content="DropPilot — the customer service app for gig drivers. Scripts, habits, account defense, and training for DoorDash, Uber Eats, Uber, Instacart, Lyft, Spark, Flex, and GoPuff drivers."/>
 <title>DropPilot — Customer Service for Gig Drivers</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
@@ -261,6 +261,20 @@ footer{
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
+/* ── Stakes section ── */
+.stakes{padding:64px 24px;max-width:900px;margin:0 auto;}
+.stakes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:40px;}
+.stake-card{
+  background:var(--s2);border-radius:20px;padding:24px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.stake-card.red{border:1px solid rgba(244,63,94,0.3);}
+.stake-card.amber{border:1px solid rgba(245,166,35,0.3);}
+.stake-card.blue{border:1px solid rgba(59,130,246,0.3);}
+.stake-icon{font-size:28px;}
+.stake-title{font-size:15px;font-weight:800;color:var(--text);}
+.stake-body{font-size:13px;color:var(--text2);line-height:1.7;}
+
 /* ── Mobile ── */
 @media(max-width:600px){
   .stat{min-width:50%;}
@@ -287,7 +301,7 @@ footer{
   <div class="hero-orb orb-2"></div>
   <div class="hero-eyebrow">Customer Service · Gig Edition</div>
   <h1 class="hero-headline">Service<br/>Is The<br/><span>Job.</span></h1>
-  <p class="hero-sub">Low ratings, unfair deactivations, customers who don't tip — DropPilot gives you the exact words and tools to handle all of it. Built by someone who's managed the teams taking your support calls.</p>
+  <p class="hero-sub">One false complaint can trigger an account warning. One bad rating can cut your access to better orders. DropPilot gives you the exact words, scripts, and appeal letters to protect yourself and earn more — every shift.</p>
   <div class="hero-actions">
     <a href="app.html" class="btn-primary">Start for Free →</a>
     <div class="hero-note">Free to use · Elite access $10 one-time</div>
@@ -334,20 +348,43 @@ footer{
 <!-- Stats -->
 <div class="stats">
   <div class="stat reveal">
-    <div class="stat-num">5</div>
-    <div class="stat-label">Sections in the app</div>
+    <div class="stat-num">10</div>
+    <div class="stat-label">Free tips to start — no account needed</div>
   </div>
   <div class="stat reveal">
     <div class="stat-num">30+</div>
     <div class="stat-label">Ready-to-send scripts</div>
   </div>
   <div class="stat reveal">
-    <div class="stat-num">6</div>
+    <div class="stat-num">8</div>
     <div class="stat-label">Platforms covered</div>
   </div>
   <div class="stat reveal">
     <div class="stat-num">$10</div>
     <div class="stat-label">Lifetime Elite access</div>
+  </div>
+</div>
+
+<!-- What's at Stake -->
+<div class="stakes">
+  <div class="section-label reveal" style="text-align:center;">What's actually at stake</div>
+  <h2 class="section-title reveal" style="text-align:center;">These are real<br/>situations.</h2>
+  <div class="stakes-grid">
+    <div class="stake-card red reveal">
+      <div class="stake-icon">🚨</div>
+      <div class="stake-title">The false complaint</div>
+      <div class="stake-body">A customer claims non-delivery. Your account gets flagged. Most drivers don't know they can appeal it — or what to say.</div>
+    </div>
+    <div class="stake-card amber reveal">
+      <div class="stake-icon">💸</div>
+      <div class="stake-title">The invisible tip gap</div>
+      <div class="stake-body">You're doing the same work as the driver earning 30% more in tips. The difference isn't luck. It's knowing exactly what to say at the door.</div>
+    </div>
+    <div class="stake-card blue reveal">
+      <div class="stake-icon">⭐</div>
+      <div class="stake-title">The 1-star you didn't earn</div>
+      <div class="stake-body">You texted ahead. You took the photo. The bag was warm. You still got a 1-star. Without documentation and the right response, it sticks.</div>
+    </div>
   </div>
 </div>
 
@@ -373,19 +410,19 @@ footer{
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(139,92,246,0.1);">🧠</div>
       <div class="feat-title">Service Psychology</div>
-      <div class="feat-desc">Deep guides on reading customers, the science of tips, handling difficult situations, and the habits that separate top earners — backed by real research.</div>
+      <div class="feat-desc">Seven research-backed guides on reading customers, why people tip, de-escalation, and the habits that separate drivers earning $18/hr from drivers earning $26/hr.</div>
       <div class="feat-badge badge-elite">ELITE</div>
     </div>
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(139,92,246,0.1);">🛡️</div>
       <div class="feat-title">Account Defense</div>
-      <div class="feat-desc">Platform-specific habits that protect your standing. Pre-written appeal letters for false complaints, unfair ratings, and deactivation threats.</div>
+      <div class="feat-desc">False complaints, unfair ratings, deactivation threats — platform-specific appeal letters written around how support agents actually process tickets. Fill in the blanks and send.</div>
       <div class="feat-badge badge-elite">ELITE</div>
     </div>
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(6,182,212,0.1);">📖</div>
       <div class="feat-title">Platform Basics</div>
-      <div class="feat-desc">New to gig work? Everything explained simply — DoorDash, Uber Eats, Instacart, Lyft, Spark, and Flex. Ratings, payouts, policies, and how to protect your standing.</div>
+      <div class="feat-desc">New to gig work? Everything explained simply — DoorDash, Uber Eats, Uber, Instacart, Lyft, Spark, Flex, and GoPuff. Ratings, payouts, policies, and how to protect your standing.</div>
       <div class="feat-badge badge-elite">ELITE</div>
     </div>
     <div class="feat reveal">
@@ -416,10 +453,12 @@ footer{
   <div class="platforms reveal">
     <div class="platform">🍔 DoorDash</div>
     <div class="platform">🛵 Uber Eats</div>
+    <div class="platform">🚗 Uber</div>
     <div class="platform">🟩 Instacart</div>
     <div class="platform">🚙 Lyft</div>
     <div class="platform">🔵 Spark</div>
     <div class="platform">📦 Flex</div>
+    <div class="platform">🟣 GoPuff</div>
   </div>
 </section>
 
@@ -486,32 +525,32 @@ footer{
 <!-- Built by Experience -->
 <section style="padding-top:0;">
   <div class="section-label reveal">Why this is different</div>
-  <h2 class="section-title reveal">Built by someone<br/>who's been on<br/>both sides.</h2>
-  <p class="section-body reveal">The scripts, habits, and appeal letters here aren't from a business book. They come from years managing the people who take your calls and handle your complaints.</p>
+  <h2 class="section-title reveal">Here's what went<br/>into building this.</h2>
+  <p class="section-body reveal">The scripts, habits, and appeal letters here aren't from a business book. They come from years of customer-facing work — on both sides of the counter. A lot of it also comes down to reading people — what's actually going on before someone says anything, and how to steer a conversation before it goes sideways. That's woven into everything here.</p>
 
   <div class="features" style="margin-top:32px;">
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(245,166,35,0.1);">📞</div>
-      <div class="feat-title">Call Center Management</div>
-      <div class="feat-desc">Managed teams processing hundreds of support tickets daily. The appeal letters are structured the way they are because I know exactly how agents read them — what gets escalated and what gets auto-closed.</div>
+      <div class="feat-title">Customer Service Operations</div>
+      <div class="feat-desc">Managed customer service teams handling corporate client accounts — calls, complaints, escalations. Spent enough time in that world to understand how support agents are trained to read tickets, and what makes a complaint get resolved vs. get closed. That's what the appeal letters are built around.</div>
     </div>
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(59,130,246,0.1);">🏨</div>
-      <div class="feat-title">Hotel Front Desk Management</div>
-      <div class="feat-desc">High-pressure, face-to-face de-escalation with guests who feel entitled. The customer scripts come directly from that experience — what actually works when someone is upset, not what sounds good on paper.</div>
+      <div class="feat-title">Hotel Front Desk</div>
+      <div class="feat-desc">Worked front desk through busy summer seasons — overbooked nights, guests who'd been traveling all day, situations that needed handling right then with no time to think. Most of the customer scripts came from figuring out what actually worked in those moments.</div>
     </div>
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(16,185,129,0.1);">🛒</div>
-      <div class="feat-title">Retail &amp; Grocery Management</div>
-      <div class="feat-desc">Ran real operations at volume — teams under pressure, decisions made in seconds, customers who need handling. That's the foundation of the checklists, habits, and shift tools.</div>
+      <div class="feat-title">Retail &amp; Grocery</div>
+      <div class="feat-desc">Team management in high-volume retail — the checklists and shift tools in the app are built from that kind of work.</div>
     </div>
   </div>
 
   <div class="reveal" style="margin-top:28px;background:var(--s2);border:1px solid rgba(245,166,35,0.2);border-radius:20px;padding:28px 24px;max-width:560px;margin-left:auto;margin-right:auto;text-align:center;">
     <div style="font-size:22px;color:var(--amber);margin-bottom:12px;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;">Built From Real Experience</div>
-    <div style="font-size:15px;color:var(--text2);line-height:1.8;font-style:italic;margin-bottom:18px;">"The appeal letters work because I know how support teams actually read them. The scripts work because I've de-escalated the exact customers you're dealing with. I've managed both sides of this."</div>
+    <div style="font-size:15px;color:var(--text2);line-height:1.8;font-style:italic;margin-bottom:18px;">"I built this because I've spent years on both sides of these conversations — managing support teams and working customer-facing jobs. I know what gets a complaint resolved, and what doesn't. The scripts and letters here reflect that."</div>
     <div style="font-size:13px;font-weight:800;color:var(--amber);">James · Creator of DropPilot</div>
-    <div style="font-size:12px;color:var(--text3);margin-top:4px;">Call Center Management · Hotel Front Desk · Retail &amp; Grocery · Gig Driver</div>
+    <div style="font-size:12px;color:var(--text3);margin-top:4px;">CS Operations · Hotel Front Desk · Retail &amp; Grocery · Gig Driver</div>
   </div>
 </section>
 
@@ -519,22 +558,26 @@ footer{
 <section style="text-align:center;padding-top:0;">
   <div class="section-label reveal">Simple pricing</div>
   <h2 class="section-title reveal">One price.<br/>Lifetime access.</h2>
-  <div class="pricing-card reveal">
-    <div class="pricing-eyebrow">Elite Access</div>
-    <div class="pricing-price"><sup>$</sup>10</div>
-    <div class="pricing-lifetime">One-time · Lifetime access · All feature updates included</div>
-    <div class="pricing-list">
-      <div class="pricing-item"><div class="pricing-item-dot">✓</div>30+ message scripts — copy in one tap</div>
-      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Platform-specific appeal letters with fill-in blanks</div>
-      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Training lessons on service &amp; tip psychology</div>
-      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Full beginner guide for all 6 platforms</div>
-      <div class="pricing-item"><div class="pricing-item-dot">✓</div>Service psychology guides backed by research</div>
-      <div class="pricing-item"><div class="pricing-item-dot" style="background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);">✓</div><span>📡 <strong>Policy Watch</strong> — monthly platform policy updates included</span></div>
-      <div class="pricing-item"><div class="pricing-item-dot">✓</div>All future app feature updates included</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:760px;margin:48px auto 0;">
+
+    <!-- Elite card -->
+    <div class="pricing-card reveal" style="margin:0;">
+      <div class="pricing-eyebrow">Elite Access</div>
+      <div class="pricing-price"><sup>$</sup>10</div>
+      <div class="pricing-lifetime">One-time · Lifetime access · All future updates free</div>
+      <div class="pricing-list">
+        <div class="pricing-item"><div class="pricing-item-dot">✓</div>30+ message scripts — copy in one tap</div>
+        <div class="pricing-item"><div class="pricing-item-dot">✓</div>Platform-specific appeal letters</div>
+        <div class="pricing-item"><div class="pricing-item-dot">✓</div>Training videos on service &amp; tip psychology</div>
+        <div class="pricing-item"><div class="pricing-item-dot">✓</div>Full beginner guide for all 8 platforms</div>
+        <div class="pricing-item"><div class="pricing-item-dot">✓</div>Service psychology guides backed by research</div>
+        <div class="pricing-item"><div class="pricing-item-dot">✓</div>Every update we ever ship, free forever</div>
+      </div>
+      <p style="font-size:15px;color:var(--amber);font-weight:700;margin-bottom:20px;">The right appeal letter can save your account. The right script can turn a 3-star into a 5-star. This is $10.</p>
+      <a href="app.html" class="btn-cta-lg">Get Elite Access →</a>
+      <p style="font-size:12px;color:var(--text3);margin-top:14px;">One-time payment · No subscription · Secure checkout via Stripe</p>
+      <p style="font-size:12px;color:var(--text3);margin-top:8px;">Not what you expected? Email me and I'll refund you — no friction.</p>
     </div>
-    <a href="app.html" class="btn-cta-lg">Get Elite Access →</a>
-    <p style="font-size:12px;color:var(--text3);margin-top:14px;">One-time payment · No subscription · Secure checkout via Stripe</p>
-    <p style="font-size:12px;color:var(--text3);margin-top:8px;">Not what you expected? Email me and I'll refund you — no friction.</p>
   </div>
 </section>
 
@@ -544,7 +587,7 @@ footer{
     <div style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:14px;">🚗</div>
     <span style="font-weight:800;color:var(--text2);">DropPilot</span>
   </div>
-  <p>Customer Service for Gig Drivers · Built by someone who's managed both sides of the counter.</p>
+  <p>Customer Service for Gig Drivers · Built by someone who's worked customer service from both sides — and driven the same routes you do.</p>
 
   <!-- Affiliation Disclaimer -->
   <div style="font-size:11px;color:#6B7A8D;text-align:center;margin:24px 16px 16px;line-height:1.4;padding:12px 16px;background:rgba(13,15,19,0.6);border-radius:12px;border:1px solid rgba(255,255,255,0.06);max-width:520px;margin-left:auto;margin-right:auto;">
