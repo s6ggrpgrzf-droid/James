@@ -487,6 +487,22 @@ const POLICY_WATCH = {
      category:"Appeals",severity:"low",
      title:"Amazon Flex appeal timeline — what to expect",
      body:"If your account is deactivated, you have 10 days from the deactivation notice to submit your appeal. After submitting, allow 3–5 business days for an initial review — complex cases can take longer. Do not assume silence means denial — wait at least 10 business days before following up. Escalating too early can reset the clock on your review."},
+    {platform:"lyft",label:"Lyft",color:"#FF00BF",e:"🩷",isNew:true,
+     category:"Standing",severity:"medium",
+     title:"Lyft Tier Points system — how your standing is actually calculated",
+     body:"Lyft moved away from a simple star rating to a Tier Points + Driving Score system. Your Driving Score must be 60%+ to maintain Silver status, and 80%+ for Gold, Platinum, and Elite. Driving Score is calculated from your last 100 rides — one bad week won't tank you, but a pattern will. Check your score in the app under 'Rewards' monthly."},
+    {platform:"spark",label:"Walmart Spark",color:"#0071CE",e:"⚡",isNew:true,
+     category:"Ratings",severity:"medium",
+     title:"Spark is enforcing delivery photo requirements more strictly",
+     body:"Spark Driver support has been citing missing or unclear delivery photos as grounds for non-delivery complaints sticking. Each photo must show the bags at the door, with the door or address number visible. A photo of the driveway from 10 feet away is not enough. Retake if it isn't clear."},
+    {platform:"uber",label:"Uber",color:"#1D1D1D",e:"🚗",isNew:true,
+     category:"Deactivation",severity:"high",
+     title:"Uber's safety complaint process — what happens and how fast",
+     body:"Uber can temporarily restrict your account within minutes of a safety complaint being filed — before any review. If this happens, you'll receive an email with a case ID. Respond immediately and include trip screenshots, any in-app messages, and your dashcam footage if available. First response speed matters. Accounts with documented safety habits (dashcam, name confirmation, clean rating history) recover faster."},
+    {platform:"gopuff",label:"GoPuff",color:"#4338CA",e:"🟣",isNew:true,
+     category:"Policy",severity:"low",
+     title:"GoPuff facility check-in and order count requirements",
+     body:"GoPuff's support team has been rejecting non-delivery disputes where the driver left the facility without confirming their order count against the app manifest. Before you leave, confirm bag count matches what the app shows. A photo of the sealed bags at the facility before departure is increasingly being used as supporting evidence in dispute reviews — consider adding it to your routine."},
   ]
 };
 
@@ -1256,6 +1272,7 @@ function App() {
           const age = Date.now() - ts;
           const SEVEN_DAYS = 7*24*60*60*1000;
           if(age < SEVEN_DAYS){
+            save("dp3-token-ts", Date.now());
             doLoad(true);
           } else {
             fetch(TOKEN_CHECK_URL, {
@@ -1471,7 +1488,7 @@ function App() {
                 ["Is my data saved if I clear my browser or get a new phone?",
                  "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset. Elite access can be restored — contact support from your original Stripe receipt email and we'll sort it out same day."],
                 ["What platforms does DropPilot cover?",
-                 "DoorDash, Uber Eats, Instacart, Lyft, Walmart Spark, and Amazon Flex. Every platform has its own habits, appeal letter templates, checklist, and a dedicated section in the Basics guide."],
+                 "DoorDash, Uber Eats, Lyft, Instacart, Walmart Spark, Amazon Flex, Uber (rideshare), and GoPuff. Every platform has its own habits, appeal letter templates, checklist, and a dedicated section in the Basics guide."],
                 ["Can I use DropPilot on multiple devices?",
                  "Yes — just pay once and it's yours. Each device stores access locally, so if you set up a new phone just reach out with your original Stripe receipt and we'll get you restored. Notes and checklist progress are device-specific."],
                 ["Something's not working. How do I get help?",
@@ -1883,13 +1900,17 @@ function App() {
             {(()=>{
               const sevColor={high:C.red,medium:C.amber,low:C.green};
               const previewUpdate=POLICY_WATCH.updates[0];
+              const newCount=POLICY_WATCH.updates.filter(u=>u.isNew).length;
               return(
                 <div style={{background:"rgba(139,92,246,0.06)",border:`1px solid ${pro?"rgba(139,92,246,0.35)":"rgba(139,92,246,0.18)"}`,borderRadius:18,overflow:"hidden"}}>
                   {/* Header */}
                   <div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(139,92,246,0.12)"}}>
                     <div>
                       <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>📡 Policy Watch</div>
-                      <div style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · Last updated {POLICY_WATCH.lastUpdated}</div>
+                      <div style={{display:"flex",alignItems:"center",gap:6}}>
+                        <span style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · Last updated {POLICY_WATCH.lastUpdated}</span>
+                        {newCount>0&&<span style={{background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.35)",borderRadius:6,padding:"2px 7px",fontSize:10,fontWeight:800,color:C.amber}}>{newCount} new</span>}
+                      </div>
                     </div>
                     {pro?(
                       <div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.green}}>Included</div>
@@ -1901,6 +1922,7 @@ function App() {
                   {pro?(
                     /* Elite — show all updates */
                     <div style={{display:"flex",flexDirection:"column",gap:0}}>
+                      <div style={{padding:"10px 16px 4px",fontSize:12,color:C.text2,lineHeight:1.5}}>What changed this month across your platforms — and what to do about it.</div>
                       {POLICY_WATCH.updates.map((u,i)=>(
                         <div key={i} style={{padding:"14px 16px",borderBottom:i<POLICY_WATCH.updates.length-1?"1px solid rgba(139,92,246,0.08)":"none"}}>
                           <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
