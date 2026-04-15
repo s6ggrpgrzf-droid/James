@@ -1199,7 +1199,7 @@ function App() {
   }
 
   useEffect(()=>{
-    const VERIFY_URL = "https://james-pi-one.vercel.app/api/verify";
+    const VERIFY_URL = "/api/verify";
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
 

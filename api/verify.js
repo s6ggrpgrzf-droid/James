@@ -1,13 +1,11 @@
 const Stripe = require("stripe");
 
-export default async function handler(req, res) {
-  // Only allow requests from your app
-  res.setHeader("Access-Control-Allow-Origin", "https://s6ggrpgrzf-droid.github.io");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") return res.status(200).end();
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+module.exports = async function handler(req, res) {
+  // Same-origin: app and API are on the same Vercel domain, no CORS needed.
+  // OPTIONS pre-flight not required for same-origin requests.
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
 
   const { session_id } = req.body;
 
@@ -29,4 +27,4 @@ export default async function handler(req, res) {
     // Don't expose Stripe error details to client
     return res.status(400).json({ valid: false, error: "Could not verify session" });
   }
-}
+};
