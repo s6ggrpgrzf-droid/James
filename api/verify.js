@@ -1,8 +1,20 @@
 const Stripe = require("stripe");
+const crypto = require("crypto");
+
+function createToken() {
+  const payload = Buffer.from(JSON.stringify({
+    e: 1,                                          // elite = true
+    t: Date.now(),                                 // issued at
+    x: Date.now() + 365 * 24 * 60 * 60 * 1000,   // expires in 1 year
+  })).toString("base64url");
+  const sig = crypto
+    .createHmac("sha256", process.env.TOKEN_SECRET)
+    .update(payload)
+    .digest("base64url");
+  return `${payload}.${sig}`;
+}
 
 module.exports = async function handler(req, res) {
-  // Same-origin: app and API are on the same Vercel domain, no CORS needed.
-  // OPTIONS pre-flight not required for same-origin requests.
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -19,7 +31,8 @@ module.exports = async function handler(req, res) {
     const session = await stripe.checkout.sessions.retrieve(session_id);
 
     if (session.payment_status === "paid") {
-      return res.status(200).json({ valid: true });
+      const token = createToken();
+      return res.status(200).json({ valid: true, token });
     } else {
       return res.status(200).json({ valid: false });
     }
