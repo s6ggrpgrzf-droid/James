@@ -222,6 +222,14 @@ const MSG_CATS = [
     {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Uber app — you can claim it through your trip history under Lost Items. Hope you get it back!",w:"Always report through Uber's official lost and found — never arrange a direct return outside the app. This protects both you and the passenger."},
     {h:"Passenger seems upset during the ride",msg:"I'm sorry you're having a rough time. Let me get you there as smoothly as I can.",w:"Short, calm, genuine. Don't ask what's wrong, don't over-explain. Just acknowledge and focus on the drive. Most passengers settle within 60 seconds."},
   ]},
+  {e:"🔥",t:"De-Escalation Scripts",sub:"Word-for-word responses when a situation gets hard",secs:[
+    {h:"Customer threatening a bad rating",msg:"I'm sorry to hear you're not happy. I genuinely did my best on this delivery. If there's an issue with the order itself, support can make it right — they're the fastest path to a resolution.",w:"Doesn't argue, doesn't plead. Acknowledges your effort, redirects to the channel that can actually fix it. Keeps you out of a back-and-forth that won't end well."},
+    {h:"Angry customer at the door",msg:"I hear you — I'm sorry for the wait. I got here as quickly as I could. I hope the food makes up for it. Have a good night.",w:"Four sentences. Acknowledge, brief context, warmth, exit. You're not debating the wait time — you're ending the interaction. Short and done is better than long and right."},
+    {h:"Customer insisting the order is wrong (sealed bag)",msg:"I picked up the sealed bag directly from the restaurant — everything was packed by them. For a missing or wrong item, support can issue a credit or replacement quickly. I'd go through the app — they usually sort it out fast.",w:"Factual and redirect. You're not responsible for what the restaurant packed in a sealed bag. This frames things correctly without sounding defensive."},
+    {h:"Passenger upset about the route",msg:"I hear you — I'll keep that in mind. Let me get you there as smoothly as I can from here.",w:"Acknowledge once, pivot forward. You're not agreeing you were wrong. You're not explaining yourself. One acknowledgment and one forward-looking sentence ends it."},
+    {h:"Customer says you left without them knowing",msg:"Hi — I arrived at [address] at [time] and waited [X] minutes. I sent a message through the app before completing the delivery. I'm sorry we missed each other — support should be able to review the delivery record.",w:"Factual, documented, no apology for completing correctly. You have a timestamp, a message record, and a photo. State the facts calmly and point them to support."},
+    {h:"When you need to end a ride early for safety",msg:"I'm going to need to end this trip here. I hope you get where you're going safely.",w:"Short, calm, final. You don't owe an explanation. If you feel unsafe, end it — that's always the right call. Report through the app immediately after with specific details of what happened."},
+  ]},
 ];
 
 // ─── Defend Data ──────────────────────────────────────────────────────────────
@@ -732,7 +740,142 @@ const VIDEOS = [
       {t:28000,tag:"when you can't fix it",emoji:"🎯",hed:"Redirect.\nDon't argue.",sub:"Some things are outside your control. Your job is to give the customer the fastest path to a solution — not to win the argument.",vs:{bad:["Don't say","That's not my fault / The restaurant did that / The app glitched"],good:["Say this","I understand that's frustrating — reach out to [platform] support. They fix this fast."]}},
       {t:34000,tag:"the professional's mindset",emoji:"🏆",hed:"You can't control\nwhat happens.\nYou control\nhow you respond.",sub:"Every difficult customer is a chance to practice the skill most drivers don't have.",hi:{color:"#10B981",text:"Next time a delivery goes wrong — use Feel, Felt, Found. Own it briefly. Redirect calmly. That's the whole framework. Professionals practice it until it's automatic."}},
     ]},
+  {id:5,title:"Reading People in 10 Seconds",dur:34000,icon:"👁️",color:"#8B5CF6",desc:"The skill behind the job — how to read a customer before you've said a word.",
+    scenes:[
+      {t:0,tag:"the real skill",emoji:"👁️",hed:"Customer service\nstarts before\nyou say\na word.",sub:"Most drivers miss this entirely."},
+      {t:5500,tag:"reading the text",emoji:"📱",hed:"Their first text\ntells you\neverything.",sub:null,vs:{bad:["Short and direct","'Where is my order' — low patience. Match their pace — be brief and fast."],good:["Warm and casual","'Hey! Just checking on my order :)' — they want a human moment, not just a transaction."]}},
+      {t:12500,tag:"the door moment",emoji:"🚪",hed:"You have\n10 seconds\nat the door.",sub:"What they do in those 10 seconds tells you exactly what they need.",hi:{color:"#8B5CF6",text:"Opens immediately = they were waiting. Brief, warm interaction welcome. Cracks the door = cautious, keep it short. Doesn't answer first knock = low engagement, quiet drop-off preferred."}},
+      {t:20000,tag:"three customer modes",emoji:"🧑‍🤝‍🧑",hed:"Every customer\nis in one\nof three modes.",sub:null,listGood:[["😊","Warm — wants a human moment. Brief eye contact, smile, say something genuine."],["⚡","Efficient — wants the food and nothing else. Smile, hand it over, done."],["😔","Distracted — not really present. Don't try to connect. Be calm, quiet, and kind."]]},
+      {t:27000,tag:"match the energy",emoji:"🎯",hed:"Match it.\nDon't fight it.",sub:"Being warm with someone who wants efficiency feels intrusive. Being efficient with someone who wants warmth feels cold.",hi:{color:"#8B5CF6",text:"This one habit — read the customer, match their mode — is worth more than any script. You can't memorize it. You practice it on every delivery starting today."}},
+    ]},
 ];
+
+// ─── Scenario Trainer Data ────────────────────────────────────────────────────
+const SCENARIOS = [
+  {e:"🚪",tag:"False non-delivery",difficulty:"high",
+   situation:"You drop off an order, take a delivery photo, and mark it complete. Twenty minutes later the customer messages: 'Where's my food? I never got it.' What do you do first?",
+   choices:[
+     {text:"Reply and apologize — let them know you'll contact support on their behalf",correct:false,why:"Apologizing implies fault before any facts are established. Don't admit anything — respond with your evidence first."},
+     {text:"Reply with your delivery photo and the exact time you dropped off, then report through the app",correct:true,why:"Your photo and GPS timestamp are your strongest defense. Reply with the facts, show your evidence, then open a support case to create a formal trail. This is the right sequence."},
+     {text:"Don't respond — you have a photo and the app shows it delivered, so you're covered",correct:false,why:"Silence leaves the complaint one-sided. Your response needs to be documented too. Reply with proof, then report it."},
+   ]},
+  {e:"⭐",tag:"Rating threat",difficulty:"medium",
+   situation:"You're finishing a Lyft ride. The passenger says 'I'm giving you 1 star because you took a different route than my GPS.' What do you say?",
+   choices:[
+     {text:"'I'm so sorry — I should have followed your GPS.'",correct:false,why:"Apologizing for a professional navigation decision without knowing if it was even wrong puts you in a losing position. Don't concede fault over something subjective."},
+     {text:"'I hear you — I took that route because [reason]. I hope the rest of your day goes well.'",correct:true,why:"Brief, calm, factual. Acknowledge them, give one sentence of context, wish them well, and end it. You've said your piece without escalating. Short and done."},
+     {text:"Show them the map and explain in detail why your route was faster",correct:false,why:"Proving someone wrong in the last 60 seconds of a ride almost always makes things worse. People don't want to lose an argument — they want to feel heard. Acknowledge and move on."},
+   ]},
+  {e:"📦",tag:"Sealed bag request",difficulty:"medium",
+   situation:"A customer messages mid-delivery: 'The bag is sealed but this place always forgets my drink — can you check?' What do you do?",
+   choices:[
+     {text:"Pull over and open the sealed bag to check",correct:false,why:"Never open a sealed bag. The moment you do, you own whatever's inside. A missing item from an opened bag is now your problem, not the restaurant's."},
+     {text:"Message back: 'I picked up the sealed bag from the restaurant — everything inside was packed by them. If something's missing, support can get it sorted quickly.'",correct:true,why:"Factual, helpful, and redirects responsibility correctly. You picked up what they gave you. This message documents that you handled it professionally."},
+     {text:"Ignore the message and finish the delivery",correct:false,why:"No response means no documentation. If they file a complaint, there's no record of you handling it professionally. Always reply."},
+   ]},
+  {e:"😤",tag:"Angry customer at door",difficulty:"high",
+   situation:"You deliver an order and the customer opens the door visibly frustrated: 'This took 45 minutes! I ordered an hour ago!' What do you say?",
+   choices:[
+     {text:"'I'm so sorry — the restaurant was really backed up, I came as fast as I could!'",correct:false,why:"Over-apologizing makes you the target and keeps the conversation focused on the problem. It also doesn't actually help them."},
+     {text:"'I hear you — I got here as fast as I could. I hope the food makes up for the wait. Enjoy your evening.'",correct:true,why:"Acknowledge the frustration, state your effort briefly, close with warmth, and exit. Four sentences and you're done. You're not debating the wait — you're ending the interaction positively."},
+     {text:"Explain the restaurant's wait time so they understand it wasn't your fault",correct:false,why:"Frustrated people don't want explanations — they want to feel acknowledged. Detailed explanations to someone who's upset almost always escalate things."},
+   ]},
+  {e:"🚗",tag:"Uncomfortable passenger",difficulty:"high",
+   situation:"Mid-ride, a passenger starts making comments that make you uncomfortable. Nothing explicit yet, but the vibe is off. What do you do?",
+   choices:[
+     {text:"Stay silent and get them to their destination as fast as possible",correct:false,why:"Silence can be misread as acceptance. It also gives you no documentation if things escalate. One calm statement is better than none."},
+     {text:"Say calmly: 'I'd prefer to keep things professional.' Continue the ride, but be ready to end it early if needed.",correct:true,why:"One clear, calm boundary statement sets the tone without escalating. It's on record that you addressed it. If they continue after that, you have grounds to end the trip and report it."},
+     {text:"End the ride immediately without saying anything",correct:false,why:"Ending without warning is the right call only if you feel genuinely unsafe — always do it then. For a 'vibe off' situation, one boundary statement first is usually the right sequence."},
+   ]},
+  {e:"🔄",tag:"Appeal denied",difficulty:"medium",
+   situation:"You appealed a false non-delivery complaint. Support replied: 'After reviewing, we are unable to change the outcome.' What do you do?",
+   choices:[
+     {text:"Accept it — they reviewed the evidence and denied it, there's nothing more to do",correct:false,why:"First-tier denials are often scripted responses, not full reviews. A follow-up requesting senior review reaches a different tier entirely. Most drivers give up here."},
+     {text:"Reply requesting escalation to a senior specialist and briefly restate your evidence",correct:true,why:"'I am requesting escalation to a senior account specialist' is specific language that triggers a routing change. Your case reaches a different reviewer. This is the step most drivers don't know."},
+     {text:"File a brand new appeal from scratch with the same evidence",correct:false,why:"A fresh appeal on the same issue usually gets the same first-tier response. An escalation request within the existing thread is more effective."},
+   ]},
+  {e:"📱",tag:"Proactive communication",difficulty:"low",
+   situation:"You pick up an order. The restaurant was slow and the food has been sitting 10 minutes. The customer hasn't messaged you. Do you reach out?",
+   choices:[
+     {text:"No — messaging about a delay might make them anxious when they weren't thinking about it",correct:false,why:"Customers left in the dark assume the worst. A brief proactive message almost always reduces anxiety, not increases it."},
+     {text:"Yes — a short message: 'Got your order — had a slight wait at the restaurant but on my way now. See you soon!'",correct:true,why:"One sentence sets expectations and shows you're on it. Customers who get this message almost never rate low for wait times — they've been acknowledged and trust you're coming."},
+     {text:"Yes — send a detailed explanation of exactly what happened at the restaurant",correct:false,why:"Over-communicating a problem makes it bigger. One short forward-looking sentence is enough."},
+   ]},
+  {e:"🌧️",tag:"Difficult conditions",difficulty:"low",
+   situation:"It's raining. You're delivering to a house with a long driveway and the bag might get wet. What do you do?",
+   choices:[
+     {text:"Run to the door fast and hope the bag stays dry",correct:false,why:"No documentation, no message. If the bag gets wet and the customer complains, you have nothing to show for your effort."},
+     {text:"Keep the bag protected on the walk, take a clear photo at the door, and message: 'Delivered safely — kept your order dry on the way up. Enjoy!'",correct:true,why:"You've documented the delivery, protected the order, and turned a bad-weather drop-off into a moment of genuine service. That message changes how they remember the experience."},
+     {text:"Message the customer first to ask if you should wait for the rain to stop",correct:false,why:"Asking for weather permission adds delay and puts an unfair decision on them. Protect the food and deliver it."},
+   ]},
+];
+
+// ─── What Not To Do Data ──────────────────────────────────────────────────────
+const MISTAKES = [
+  {e:"🙏",t:"Asking for 5 stars or a tip",why:"Makes customers uncomfortable every single time. It almost always results in a lower rating, not a higher one. It also violates platform rules. Never ask — not directly, not as a hint, not as a joke."},
+  {e:"😔",t:"Over-apologizing for things outside your control",why:"Apologizing for restaurant delays, missing items, or app problems makes you look responsible for things you had nothing to do with. Acknowledge the frustration without taking the blame."},
+  {e:"📞",t:"Calling the customer instead of texting",why:"A call from an unknown number feels intrusive and creates anxiety. Text first, always. Customers respond to texts at twice the rate they answer calls from strangers."},
+  {e:"💬",t:"Explaining too much when something goes wrong",why:"Long explanations make problems feel bigger. Customers don't want a full account — they want to feel heard and get their order. One calm sentence is almost always enough."},
+  {e:"🛍️",t:"Opening a sealed bag to check the order",why:"The moment you open a sealed bag, whatever's inside is your responsibility. The answer to every 'can you check?' is the same: 'I picked up a sealed bag — support can make it right fast.'"},
+  {e:"🕐",t:"Waiting at a door without messaging",why:"Silent waiting looks like inattention. A quick 'I'm at your door' text creates a timestamp and gives the customer a chance to respond. If no one answers, you're documented."},
+  {e:"😤",t:"Arguing back when a customer complains",why:"You cannot win an argument with a customer. Even when you're right, arguing looks unprofessional and usually results in a worse rating or escalated complaint. Say your piece once, calmly, then stop."},
+  {e:"📷",t:"Skipping the delivery photo 'just this once'",why:"The one delivery you don't photo will be the one where someone files a complaint. No exceptions — good weather, bad weather, empty driveway, crowded door. Every delivery, every time."},
+];
+
+// ─── Scenario Trainer Component ───────────────────────────────────────────────
+function ScenarioTrainer() {
+  const [idx,setIdx]=useState(0);
+  const [chosen,setChosen]=useState(null);
+  const sc=SCENARIOS[idx%SCENARIOS.length];
+  const diffColor={high:C.red,medium:C.amber,low:C.green};
+  const next=()=>{setIdx(idx+1);setChosen(null);};
+  return(
+    <div style={{display:"flex",flexDirection:"column",gap:12}}>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+        <div style={{fontSize:11,color:C.text3,fontWeight:700,letterSpacing:"0.5px"}}>SCENARIO {(idx%SCENARIOS.length)+1} OF {SCENARIOS.length}</div>
+        <div style={{background:`${diffColor[sc.difficulty]}15`,border:`1px solid ${diffColor[sc.difficulty]}35`,borderRadius:6,padding:"3px 8px",fontSize:10,fontWeight:800,color:diffColor[sc.difficulty],textTransform:"uppercase"}}>{sc.difficulty}</div>
+      </div>
+      <div style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:16,padding:"16px"}}>
+        <div style={{fontSize:10,fontWeight:800,color:C.text3,letterSpacing:"1px",textTransform:"uppercase",marginBottom:8}}>{sc.e} {sc.tag}</div>
+        <div style={{fontSize:14,color:C.text,lineHeight:1.75,fontWeight:500}}>{sc.situation}</div>
+      </div>
+      <div style={{display:"flex",flexDirection:"column",gap:8}}>
+        {sc.choices.map((ch,i)=>{
+          const isChosen=chosen===i;
+          const revealed=chosen!==null;
+          const ok=ch.correct;
+          const bc=!revealed?C.border:ok?"#10B981":isChosen?"#F43F5E":C.border;
+          const bg=!revealed?C.s1:ok?"rgba(16,185,129,0.08)":isChosen?"rgba(244,63,94,0.06)":C.s1;
+          return(
+            <div key={i}>
+              <button onClick={()=>{if(chosen===null)setChosen(i);}} style={{background:bg,border:`1px solid ${bc}`,borderRadius:13,padding:"13px 14px",width:"100%",textAlign:"left",cursor:chosen===null?"pointer":"default",display:"flex",alignItems:"flex-start",gap:10,transition:"all 0.18s",fontFamily:C.sans,WebkitTapHighlightColor:"transparent"}}>
+                <div style={{width:22,height:22,borderRadius:"50%",background:!revealed?"rgba(255,255,255,0.06)":ok?"rgba(16,185,129,0.2)":isChosen?"rgba(244,63,94,0.2)":"rgba(255,255,255,0.04)",border:`1.5px solid ${bc}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:900,color:!revealed?C.text3:ok?C.green:isChosen?C.red:C.text3,flexShrink:0,marginTop:1}}>
+                  {!revealed?String.fromCharCode(65+i):ok?"✓":isChosen?"✗":String.fromCharCode(65+i)}
+                </div>
+                <span style={{fontSize:13,color:revealed&&!ok&&!isChosen?C.text3:C.text,lineHeight:1.55,fontWeight:500}}>{ch.text}</span>
+              </button>
+              {revealed&&isChosen&&(
+                <div style={{marginTop:6,padding:"11px 14px",background:ok?"rgba(16,185,129,0.07)":"rgba(244,63,94,0.06)",border:`1px solid ${ok?"rgba(16,185,129,0.2)":"rgba(244,63,94,0.15)"}`,borderRadius:11,fontSize:12,color:C.text2,lineHeight:1.65}}>
+                  <span style={{fontWeight:800,color:ok?C.green:C.red,marginRight:6}}>{ok?"✓ Right —":"✗ Not ideal —"}</span>{ch.why}
+                </div>
+              )}
+              {revealed&&!isChosen&&ok&&(
+                <div style={{marginTop:6,padding:"11px 14px",background:"rgba(16,185,129,0.07)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:11,fontSize:12,color:C.text2,lineHeight:1.65}}>
+                  <span style={{fontWeight:800,color:C.green,marginRight:6}}>✓ Best response —</span>{ch.why}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      {chosen!==null&&(
+        <button onClick={next} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,color:"#000",cursor:"pointer",width:"100%",WebkitTapHighlightColor:"transparent"}}>
+          {idx%SCENARIOS.length===SCENARIOS.length-1?"Start Over →":"Next Scenario →"}
+        </button>
+      )}
+    </div>
+  );
+}
 
 // ─── Spanish Tips ─────────────────────────────────────────────────────────────
 const ALL_TIPS_ES = [
@@ -2251,10 +2394,10 @@ function App() {
                   <div className="train-pulse" style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:"linear-gradient(160deg,#1a0f00,#0e0a16,#07080A)",border:"2px solid rgba(245,166,35,0.4)",width:"100%",position:"relative"}}>
                     <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
                     <div className="train-float" style={{fontSize:44,marginBottom:12,display:"block"}}>🎓</div>
-                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>4 Training Lessons</div>
-                    <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>Short lessons on the psychology and science behind what makes customers tip more and rate higher. Not theory — real research applied to real deliveries.</div>
+                    <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Full Training Suite</div>
+                    <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>6 training lessons, 8 real-world scenarios with feedback, and a complete guide to mistakes that kill your rating. Not theory — applied to real deliveries.</div>
                     <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
-                      {[["📈","Why customer service makes you more money — with the math"],["💬","The exact words that earn tips — phrase by phrase"],["🏆","What top earners do differently — the 60-second habit gap"],["🙏","Please, thank you, you're welcome — proven to increase tips 23%"]].map(([e,f],i)=>(
+                      {[["📈","Why customer service makes you more money — with the math"],["💬","The exact words that earn tips — phrase by phrase"],["🏆","What top earners do differently"],["👁️","Reading people in 10 seconds"],["🎯","Scenario Trainer — 8 real situations with feedback"],["🚫","What not to do — 8 mistakes that cost you ratings"]].map(([e,f],i)=>(
                         <div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(245,166,35,0.06)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(245,166,35,0.12)"}}>
                           <span style={{fontSize:14,flexShrink:0}}>{e}</span>
                           <span style={{fontSize:12,color:C.text2}}>{f}</span>
@@ -2267,6 +2410,54 @@ function App() {
                 </div>
               </div>
             )}
+
+            {/* ── Scenario Trainer ─────────────────────────────────────────── */}
+            <div style={{background:"rgba(245,166,35,0.04)",border:"1px solid rgba(245,166,35,0.15)",borderRadius:18,overflow:"hidden"}}>
+              <div style={{padding:"14px 16px 12px",borderBottom:"1px solid rgba(245,166,35,0.1)",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                <div>
+                  <div style={{fontSize:11,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>🎯 Scenario Trainer</div>
+                  <div style={{fontSize:13,color:C.text2}}>Real situations — pick the right response</div>
+                </div>
+                {!pro&&<div style={{background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.amber}}>Elite</div>}
+              </div>
+              {pro?(
+                <div style={{padding:"16px"}}>
+                  <ScenarioTrainer/>
+                </div>
+              ):(
+                <div style={{padding:"16px"}}>
+                  <div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>{SCENARIOS.length} real-world gig driver situations. Pick a response, get instant feedback on why it works — or doesn't. Covers false complaints, angry customers, rating threats, de-escalation, and more.</div>
+                  <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",WebkitTapHighlightColor:"transparent"}}>Unlock Elite — $10 one time</button>
+                </div>
+              )}
+            </div>
+
+            {/* ── What Not To Do ───────────────────────────────────────────── */}
+            <div style={{background:"rgba(244,63,94,0.04)",border:"1px solid rgba(244,63,94,0.15)",borderRadius:18,overflow:"hidden"}}>
+              <div style={{padding:"14px 16px 12px",borderBottom:"1px solid rgba(244,63,94,0.1)",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+                <div>
+                  <div style={{fontSize:11,fontWeight:800,color:C.red,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>🚫 What Not To Do</div>
+                  <div style={{fontSize:13,color:C.text2}}>8 mistakes that silently kill your rating</div>
+                </div>
+                {!pro&&<div style={{background:"rgba(244,63,94,0.1)",border:"1px solid rgba(244,63,94,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.red}}>Elite</div>}
+              </div>
+              {pro?(
+                <div style={{display:"flex",flexDirection:"column",gap:0}}>
+                  {MISTAKES.map((m,i)=>(
+                    <div key={i} style={{padding:"14px 16px",borderBottom:i<MISTAKES.length-1?"1px solid rgba(244,63,94,0.07)":"none"}}>
+                      <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:5}}>{m.e} {m.t}</div>
+                      <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{m.why}</div>
+                    </div>
+                  ))}
+                </div>
+              ):(
+                <div style={{padding:"16px"}}>
+                  <div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>The specific habits that hurt your rating without you realizing it — asking for stars, over-apologizing, opening sealed bags, arguing back. Know them so you stop doing them.</div>
+                  <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",WebkitTapHighlightColor:"transparent"}}>Unlock Elite — $10 one time</button>
+                </div>
+              )}
+            </div>
+
           </div>
         )}
         {/* ══ BASICS ════════════════════════════════════════════════════════════ */}
