@@ -16,14 +16,14 @@
     body{background:#07080A;}
     @keyframes lFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
     #splash{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:'Outfit',system-ui,sans-serif;}
-    #splash .s-icon{font-size:52px;animation:lFloat 2s ease-in-out infinite;}
+    #splash .s-icon{animation:lFloat 2s ease-in-out infinite;}
     #splash .s-msg{color:#F5A623;font-size:17px;font-weight:800;letter-spacing:-0.3px;}
   </style>
 </head>
 <body>
   <div id="root">
     <div id="splash">
-      <div class="s-icon">🚗</div>
+      <div class="s-icon" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#F5A623,#C8820A);box-shadow:0 12px 36px rgba(245,166,35,0.35);"><svg width="28" height="28" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
       <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
@@ -178,24 +178,24 @@ const LEARN_CATS = [
 // ─── Message Templates ────────────────────────────────────────────────────────
 const MSG_CATS = [
   {e:"📲",t:"What to Say When You Arrive",sub:"Texts that get 5-star ratings",secs:[
-    {h:"Standard arrival",msg:"Hey! Pulling up now with your order from [restaurant]. I'll leave it at your door. Enjoy! 😊",w:"Sets expectations before they open the app. Customers often rate you before they even see the food."},
+    {h:"Standard arrival",msg:"Hey! Pulling up now with your order from [restaurant]. I'll leave it at your door. Enjoy! 😊",w:"Sets expectations before they open the app. Customers often rate you before they even see the food.",hint:"Replace [restaurant] with the actual restaurant name — e.g. 'McDonald's' or 'Chipotle'."},
     {h:"A few minutes away",msg:"Hi! Just a heads up — about 3-4 minutes away with your food. See you soon!",w:"Advance notice means they meet you at the door or are ready when you arrive. Cuts your wait time too."},
     {h:"Apartment building",msg:"Hi! I'm at the main entrance with your order. Could you buzz me in or meet me at the lobby? Thanks!",w:"Always text before calling for apartments. Most people respond in under 30 seconds when their food is outside."},
     {h:"Leave at door confirmation",msg:"Your order has been left at your door. Enjoy your meal! 🍕",w:"A quick confirmation nearly eliminates false non-delivery complaints."},
-    {h:"Office or business",msg:"Hi! Downstairs at [building] with your order. Happy to leave it at the front desk or you can meet me!",w:"Offering options signals professionalism and saves you a wasted trip."},
+    {h:"Office or business",msg:"Hi! Downstairs at [building] with your order. Happy to leave it at the front desk or you can meet me!",w:"Offering options signals professionalism and saves you a wasted trip.",hint:"Replace [building] with the company or building name shown in the app."},
   ]},
   {e:"⏰",t:"When You Are Running Late",sub:"How to turn a bad situation into a 5-star",secs:[
     {h:"Restaurant taking forever",msg:"Hey! Your order is still being prepared at the restaurant. I'm here and will head your way as soon as it's ready. Thanks for your patience!",w:"Customers who hear nothing assume you forgot them. One text flips that completely. 'Thanks for your patience' credits the customer — 'sorry for the wait' puts you in a guilty position for something that isn't your fault."},
     {h:"Stuck in traffic",msg:"Hi! Running a little behind due to traffic. On my way and will be there as soon as I can — thanks for your patience!",w:"Never blame the app or restaurant. Own it briefly and stay positive."},
-    {h:"Significantly late",msg:"Hi! Really sorry for the delay tonight. Dealing with [traffic / long restaurant wait] and I'll be there in about [X] minutes. I truly appreciate your patience.",w:"Bigger delays need a bigger acknowledgment. Be direct, give a real ETA."},
+    {h:"Significantly late",msg:"Hi! Really sorry for the delay tonight. Dealing with [traffic / long restaurant wait] and I'll be there in about [X] minutes. I truly appreciate your patience.",w:"Bigger delays need a bigger acknowledgment. Be direct, give a real ETA.",hint:"Replace [traffic / long restaurant wait] with what's actually happening, and [X] with your real estimated minutes."},
     {h:"Follow up after a late delivery",msg:"Just dropped off your order — really sorry for the wait tonight. Hope everything still tastes great! Have a good evening.",w:"Almost no drivers do this. It often turns a 3-star into a 5-star."},
   ]},
   {e:"🚨",t:"When Something Goes Wrong",sub:"Scripts that protect your rating",secs:[
-    {h:"Cannot find the address",msg:"Hi! Having a little trouble locating you. I'm near [landmark]. Could you help with directions or a gate code?",w:"Always text before calling. Give them something specific to work with."},
+    {h:"Cannot find the address",msg:"Hi! Having a little trouble locating you. I'm near [landmark]. Could you help with directions or a gate code?",w:"Always text before calling. Give them something specific to work with.",hint:"Replace [landmark] with something you can see nearby — a store name, street sign, or building."},
     {h:"Need a gate code",msg:"Hi! At the gate but need a code to get in. Could you send it over? Right here!",w:"People respond in seconds when their food is right outside."},
     {h:"No one answers the door",msg:"Hi! At your door and knocked. I'll wait a couple minutes — if I don't hear back I may need to leave it at the door. Just want to make sure you get it!",w:"Documents your attempt and gives them a chance to respond."},
     {h:"Safe drop-off with photo",msg:"Your order has been left at your door. Took a photo as confirmation. Enjoy!",w:"Mentioning the photo casually shields you from false complaints."},
-    {h:"Large apartment complex",msg:"Hi! I'm in the [building/complex name] parking lot but having trouble finding your unit. Could you help — which building number, entrance, or stairwell? Almost there!",w:"Asking for a specific landmark gets you a useful answer fast."},
+    {h:"Large apartment complex",msg:"Hi! I'm in the [building/complex name] parking lot but having trouble finding your unit. Could you help — which building number, entrance, or stairwell? Almost there!",w:"Asking for a specific landmark gets you a useful answer fast.",hint:"Replace [building/complex name] with the apartment complex name from the delivery address."},
   ]},
   {e:"⭐",t:"How to Get Better Tips and Ratings",sub:"What to say — and what never to say",secs:[
     {h:"Natural sign-off that earns tips",msg:"Enjoy your meal! If anything ever comes up feel free to reach out through the app. Have a great night! 😊",w:"Positions you as someone who cares — without ever asking for anything."},
@@ -204,22 +204,22 @@ const MSG_CATS = [
     {h:"What you should NEVER say",caution:true,msg:"Please leave me 5 stars! / I really need a good rating this week. / Could you add a tip? / This order was really far.",w:"Asking for ratings or tips is against platform rules and makes customers deeply uncomfortable. It almost always results in a worse rating, not a better one."},
   ]},
   {e:"🏢",t:"Tricky Delivery Situations",sub:"Word-for-word scripts for the hard ones",secs:[
-    {h:"Hotel delivery",msg:"Hi! In the lobby of [hotel] with your order. The front desk can't accept deliveries — would you be able to come down? Happy to wait!",w:"Always announce from the lobby, not the room floor."},
+    {h:"Hotel delivery",msg:"Hi! In the lobby of [hotel] with your order. The front desk can't accept deliveries — would you be able to come down? Happy to wait!",w:"Always announce from the lobby, not the room floor.",hint:"Replace [hotel] with the hotel's actual name."},
     {h:"Gated community, no code",msg:"Hi! At the gate but did not get a code with the order. Could you send it or buzz me in? Right here!",w:"Don't wait. Text immediately. Every minute at the gate is wasted."},
     {h:"Customer seems upset at the door",msg:"I understand — got here as fast as I could. I hope the rest of your evening gets better from here!",w:"Empathy, not apology. You don't know what 'that' is — it may have nothing to do with you. 'I understand' acknowledges their feeling without admitting fault. Short, calm, warm. Wish them well and leave."},
   ]},
   {e:"🚙",t:"Lyft — Ride Messages",sub:"For pickups, no-shows, and tricky passenger situations",secs:[
-    {h:"On my way to your pickup",msg:"Hey! On my way — about 2-3 minutes out. I'll be in a [car color and model]. See you shortly!",w:"Passengers who know what car to look for find you faster, cutting wait time and reducing cancellations before you even arrive."},
-    {h:"At pickup — passenger not visible",msg:"Hi! I'm at your pickup location. I'm in a [car color and model] — let me know if you need me to pull up a bit!",w:"Send this instead of waiting silently or cancelling early. Most passengers respond in under a minute when they know you're there."},
-    {h:"Slight delay on the way to pickup",msg:"Hey! Running about [X] minutes late — slight [traffic / detour]. Still on my way and almost there!",w:"One honest heads-up almost always prevents a cancellation. Passengers who know you're coming rarely leave."},
-    {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Lyft app — you can claim it through your ride history under Lost Items. Hope you get it back!",w:"Always report lost items through Lyft's official lost and found — never arrange returns directly outside the app. This protects both you and the passenger."},
+    {h:"On my way to your pickup",msg:"Hey! On my way — about 2-3 minutes out. I'll be in a [car color and model]. See you shortly!",w:"Passengers who know what car to look for find you faster, cutting wait time and reducing cancellations before you even arrive.",hint:"Replace [car color and model] with your car's description — e.g. 'silver Honda Accord' or 'white Toyota Camry'."},
+    {h:"At pickup — passenger not visible",msg:"Hi! I'm at your pickup location. I'm in a [car color and model] — let me know if you need me to pull up a bit!",w:"Send this instead of waiting silently or cancelling early. Most passengers respond in under a minute when they know you're there.",hint:"Replace [car color and model] with your car's description — e.g. 'silver Honda Accord'."},
+    {h:"Slight delay on the way to pickup",msg:"Hey! Running about [X] minutes late — slight [traffic / detour]. Still on my way and almost there!",w:"One honest heads-up almost always prevents a cancellation. Passengers who know you're coming rarely leave.",hint:"Replace [X] with your real estimated delay in minutes, and [traffic / detour] with the actual reason."},
+    {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Lyft app — you can claim it through your ride history under Lost Items. Hope you get it back!",w:"Always report lost items through Lyft's official lost and found — never arrange returns directly outside the app. This protects both you and the passenger.",hint:"Replace [item] with what they left — e.g. 'your phone' or 'a backpack'."},
     {h:"Passenger seems upset during the ride",msg:"I'm sorry you're having a rough time. Let me get you there as smoothly as I can.",w:"Short, calm, genuine. Don't ask what's wrong, don't over-explain, don't apologize for things you didn't do. Just acknowledge and refocus on the drive. Most passengers will settle down within 60 seconds."},
   ]},
   {e:"🚗",t:"Uber — Ride Messages",sub:"For pickups, no-shows, and tricky passenger situations",secs:[
-    {h:"On my way to your pickup",msg:"Hey! On my way — about 2-3 minutes out. I'll be in a [car color and model]. See you shortly!",w:"Passengers who know what car to look for find you faster. It cuts wait time and reduces cancellations before you even arrive."},
-    {h:"At pickup — passenger not visible",msg:"Hi! I'm at your pickup location now. I'm in a [car color and model] — let me know if you need me to pull forward or if you're on your way out!",w:"Send this instead of waiting silently or cancelling early. Most passengers respond in under a minute when they know you're there."},
-    {h:"Slight delay on the way to pickup",msg:"Hey! Running about [X] minutes late — [traffic / slight detour]. Still on my way and almost there!",w:"One honest heads-up almost always prevents a cancellation. Passengers who know you're coming rarely leave."},
-    {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Uber app — you can claim it through your trip history under Lost Items. Hope you get it back!",w:"Always report through Uber's official lost and found — never arrange a direct return outside the app. This protects both you and the passenger."},
+    {h:"On my way to your pickup",msg:"Hey! On my way — about 2-3 minutes out. I'll be in a [car color and model]. See you shortly!",w:"Passengers who know what car to look for find you faster. It cuts wait time and reduces cancellations before you even arrive.",hint:"Replace [car color and model] with your car's description — e.g. 'silver Honda Accord' or 'black Kia Soul'."},
+    {h:"At pickup — passenger not visible",msg:"Hi! I'm at your pickup location now. I'm in a [car color and model] — let me know if you need me to pull forward or if you're on your way out!",w:"Send this instead of waiting silently or cancelling early. Most passengers respond in under a minute when they know you're there.",hint:"Replace [car color and model] with your car's description — e.g. 'silver Honda Accord'."},
+    {h:"Slight delay on the way to pickup",msg:"Hey! Running about [X] minutes late — [traffic / slight detour]. Still on my way and almost there!",w:"One honest heads-up almost always prevents a cancellation. Passengers who know you're coming rarely leave.",hint:"Replace [X] with your real estimated delay in minutes, and [traffic / slight detour] with the actual reason."},
+    {h:"Passenger left something in your car",msg:"Hi! It looks like you may have left [item] in my car. I've reported it through the Uber app — you can claim it through your trip history under Lost Items. Hope you get it back!",w:"Always report through Uber's official lost and found — never arrange a direct return outside the app. This protects both you and the passenger.",hint:"Replace [item] with what they left — e.g. 'your phone' or 'a jacket'."},
     {h:"Passenger seems upset during the ride",msg:"I'm sorry you're having a rough time. Let me get you there as smoothly as I can.",w:"Short, calm, genuine. Don't ask what's wrong, don't over-explain. Just acknowledge and focus on the drive. Most passengers settle within 60 seconds."},
   ]},
   {e:"🔥",t:"De-Escalation Scripts",sub:"Word-for-word responses when a situation gets hard",secs:[
@@ -312,27 +312,27 @@ const PLATFORM_HABITS = {
 const PLATFORM_APPEALS = {
   doordash:[
     {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can trigger deactivation",color:"#F43F5E",secs:[
-      {h:"Standard non-delivery dispute",msg:"Hello Dasher Support,\n\nI am writing to dispute a false non-delivery complaint on Dasher order #[ORDER ID] from [DATE].\n\nThis delivery was completed successfully. My documentation:\n- Delivery photo showing the order placed at [ADDRESS] with the door visible\n- GPS data confirming my location at [ADDRESS] at [TIME]\n- App delivery confirmation timestamp\n\nThe customer's claim is inaccurate. I am requesting:\n1. This complaint be reviewed against my delivery photo and GPS data\n2. Any negative impact on my completion rate or Dasher standing be reversed\n3. The customer's account be reviewed if this is part of a pattern\n\nThank you.",w:"'Dasher order #' is the exact term DoorDash support uses to pull your record. List each piece of evidence as a separate bullet — agents check each one individually."},
-      {h:"Same address filing multiple complaints",msg:"Hello Dasher Support,\n\nI am writing about a pattern of false complaints I believe is coming from the same location.\n\nComplaints from [ADDRESS]:\n- Order #[ORDER ID 1] on [DATE 1] — I have delivery photo proof\n- Order #[ORDER ID 2] on [DATE 2] — I have delivery photo proof\n\nI believe this customer is repeatedly filing false non-delivery complaints to receive refunds. I am asking for:\n1. A review of all complaints from this address against my delivery evidence\n2. This address to be flagged in DoorDash's system if a pattern is confirmed\n3. All negative effects on my account to be reversed\n\nThank you.",w:"The phrase 'pattern of false complaints' moves your ticket from an individual review to a fraud investigation — handled differently and more seriously."},
+      {h:"Standard non-delivery dispute",timing:"File within 24 hours — support reviews complaints in daily batches",msg:"Hello Dasher Support,\n\nI am writing to dispute a false non-delivery complaint on Dasher order #[ORDER ID] from [DATE].\n\nThis delivery was completed successfully. My documentation:\n- Delivery photo showing the order placed at [ADDRESS] with the door visible\n- GPS data confirming my location at [ADDRESS] at [TIME]\n- App delivery confirmation timestamp\n\nThe customer's claim is inaccurate. I am requesting:\n1. This complaint be reviewed against my delivery photo and GPS data\n2. Any negative impact on my completion rate or Dasher standing be reversed\n3. The customer's account be reviewed if this is part of a pattern\n\nThank you.",w:"'Dasher order #' is the exact term DoorDash support uses to pull your record. List each piece of evidence as a separate bullet — agents check each one individually."},
+      {h:"Same address filing multiple complaints",timing:"File as soon as the second complaint appears — pattern reports get escalation treatment",msg:"Hello Dasher Support,\n\nI am writing about a pattern of false complaints I believe is coming from the same location.\n\nComplaints from [ADDRESS]:\n- Order #[ORDER ID 1] on [DATE 1] — I have delivery photo proof\n- Order #[ORDER ID 2] on [DATE 2] — I have delivery photo proof\n\nI believe this customer is repeatedly filing false non-delivery complaints to receive refunds. I am asking for:\n1. A review of all complaints from this address against my delivery evidence\n2. This address to be flagged in DoorDash's system if a pattern is confirmed\n3. All negative effects on my account to be reversed\n\nThank you.",w:"The phrase 'pattern of false complaints' moves your ticket from an individual review to a fraud investigation — handled differently and more seriously."},
     ]},
     {e:"⭐",t:"Unfair Customer Rating",urgency:"MEDIUM — Affects order access and Top Dasher",color:"#F5A623",secs:[
-      {h:"Rating caused by restaurant error",msg:"Hello Dasher Support,\n\nI am requesting removal of a 1-star rating on order #[ORDER ID] from [DATE].\n\nThis rating was caused by a restaurant error, not my performance:\n- I received a sealed bag from the restaurant\n- I had no ability to inspect or verify the contents\n- My delivery was completed correctly and on time\n\nDoorDash policy allows removal of ratings that reflect factors outside the Dasher's control. A restaurant packing error falls directly within that policy. My rating before this was [X stars].\n\nPlease review and remove this rating.\n\nThank you.",w:"'Factors outside the Dasher's control' is the exact language in DoorDash's internal rating review policy. Using it gives the agent the justification to approve the removal."},
-      {h:"Rating caused by wait time",msg:"Hello Dasher Support,\n\nI am requesting removal of a rating on order #[ORDER ID] from [DATE].\n\nThe customer left a low rating due to delivery time. I want to note:\n- The order was not ready at the restaurant until [TIME]\n- I waited [X] minutes at [restaurant name] before the order was ready\n- I delivered the order as quickly as possible once I had it\n\nRestaurant preparation delays are outside a Dasher's control per DoorDash policy. I am asking for this rating to be removed.\n\nThank you.",w:"DoorDash can see your pickup timestamp versus the order ready time. Naming the restaurant and the wait time gives the agent something concrete to verify."},
+      {h:"Rating caused by restaurant error",timing:"File after the rating posts — you need the order ID and timestamp first",msg:"Hello Dasher Support,\n\nI am requesting removal of a 1-star rating on order #[ORDER ID] from [DATE].\n\nThis rating was caused by a restaurant error, not my performance:\n- I received a sealed bag from the restaurant\n- I had no ability to inspect or verify the contents\n- My delivery was completed correctly and on time\n\nDoorDash policy allows removal of ratings that reflect factors outside the Dasher's control. A restaurant packing error falls directly within that policy. My rating before this was [X stars].\n\nPlease review and remove this rating.\n\nThank you.",w:"'Factors outside the Dasher's control' is the exact language in DoorDash's internal rating review policy. Using it gives the agent the justification to approve the removal."},
+      {h:"Rating caused by wait time",timing:"File within 48 hours of the delivery — the agent can pull restaurant wait timestamps",msg:"Hello Dasher Support,\n\nI am requesting removal of a rating on order #[ORDER ID] from [DATE].\n\nThe customer left a low rating due to delivery time. I want to note:\n- The order was not ready at the restaurant until [TIME]\n- I waited [X] minutes at [restaurant name] before the order was ready\n- I delivered the order as quickly as possible once I had it\n\nRestaurant preparation delays are outside a Dasher's control per DoorDash policy. I am asking for this rating to be removed.\n\nThank you.",w:"DoorDash can see your pickup timestamp versus the order ready time. Naming the restaurant and the wait time gives the agent something concrete to verify."},
     ]},
     {e:"📉",t:"Completion Rate Wrongly Affected",urgency:"HIGH — Impacts Dasher tier and access",color:"#F43F5E",secs:[
-      {h:"Completion rate dispute",msg:"Hello Dasher Support,\n\nMy completion rate has been negatively affected by a complaint on order #[ORDER ID] from [DATE] that I believe is incorrect.\n\nProof of successful delivery:\n- Delivery photo at [ADDRESS]\n- GPS data confirming I was at the address at [TIME]\n- App delivery confirmation\n\nMy completion rate directly affects my Dasher status and access to Top Dasher benefits and priority orders. I am asking that this complaint be reviewed and reversed if it is not supported by the evidence.\n\nThank you.",w:"Naming 'Dasher status,' 'Top Dasher,' and 'priority orders' shows the agent this has a real financial impact on you. That makes them more likely to escalate a reversal."},
+      {h:"Completion rate dispute",timing:"File immediately — completion rate drops affect order access right away",msg:"Hello Dasher Support,\n\nMy completion rate has been negatively affected by a complaint on order #[ORDER ID] from [DATE] that I believe is incorrect.\n\nProof of successful delivery:\n- Delivery photo at [ADDRESS]\n- GPS data confirming I was at the address at [TIME]\n- App delivery confirmation\n\nMy completion rate directly affects my Dasher status and access to Top Dasher benefits and priority orders. I am asking that this complaint be reviewed and reversed if it is not supported by the evidence.\n\nThank you.",w:"Naming 'Dasher status,' 'Top Dasher,' and 'priority orders' shows the agent this has a real financial impact on you. That makes them more likely to escalate a reversal."},
     ]},
     {e:"🔄",t:"Escalation — Appeal Was Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
-      {h:"Second appeal to senior agent",msg:"Hello,\n\nI am following up on a previous Dasher support request regarding order #[ORDER ID] from [DATE].\n\nMy original appeal was not resolved to my satisfaction. I am requesting escalation to a senior Dasher account specialist because:\n- My delivery photo evidence was not properly reviewed\n- The complaint directly contradicts my GPS track, photo timestamp, and app delivery record\n- This complaint is continuing to impact my account standing and income\n\nI have been an active Dasher since [DATE] with a strong record. I am asking for a thorough senior review.\n\nThank you.",w:"Asking for a 'senior Dasher account specialist' routes your ticket to a different tier of review. Most drivers don't know to ask for this. It significantly improves your odds."},
+      {h:"Second appeal to senior agent",timing:"Use only after your first appeal closes without resolution — typically 2–3 business days",msg:"Hello,\n\nI am following up on a previous Dasher support request regarding order #[ORDER ID] from [DATE].\n\nMy original appeal was not resolved to my satisfaction. I am requesting escalation to a senior Dasher account specialist because:\n- My delivery photo evidence was not properly reviewed\n- The complaint directly contradicts my GPS track, photo timestamp, and app delivery record\n- This complaint is continuing to impact my account standing and income\n\nI have been an active Dasher since [DATE] with a strong record. I am asking for a thorough senior review.\n\nThank you.",w:"Asking for a 'senior Dasher account specialist' routes your ticket to a different tier of review. Most drivers don't know to ask for this. It significantly improves your odds."},
     ]},
   ],
   ubereats:[
     {e:"🚫",t:"False Non-Delivery Complaint",urgency:"HIGH — Can affect your account standing",color:"#F43F5E",secs:[
-      {h:"Standard non-delivery dispute",msg:"Hello Uber Eats Support,\n\nI am writing to dispute a non-delivery complaint on trip #[TRIP ID] from [DATE].\n\nI completed this delivery successfully. My documentation:\n- Delivery photo taken at [ADDRESS] at [TIME] — geotagged and timestamped\n- GPS trip data showing my location at the delivery address\n- In-app delivery confirmation record\n\nI am requesting:\n1. This complaint be reviewed against my photo and GPS trip data\n2. Any negative effect on my account or completion rate be reversed\n3. A review of this customer's complaint history if this is a pattern\n\nThank you.",w:"Uber support works from Trip IDs — include it in the first line. 'Geotagged and timestamped' tells the agent exactly what to look for in your photo record."},
-      {h:"Contactless delivery — no knock requested",msg:"Hello Uber Eats Support,\n\nI am disputing a complaint on trip #[TRIP ID] from [DATE].\n\nThe customer selected contactless delivery. Here is what happened:\n1. I arrived at [ADDRESS] at [TIME]\n2. I placed the order at the door as instructed — no knock or ring per the customer's preference\n3. I took and submitted a delivery photo\n4. The app confirmed delivery and a notification was sent\n\nI followed the customer's exact delivery instructions. Please review and remove this complaint.\n\nThank you.",w:"Uber Eats has a specific policy protecting drivers who follow contactless delivery instructions. Framing your appeal around 'the customer's delivery preference' invokes that policy directly."},
+      {h:"Standard non-delivery dispute",timing:"File within 48 hours — Uber's review queue deprioritizes older complaints",msg:"Hello Uber Eats Support,\n\nI am writing to dispute a non-delivery complaint on trip #[TRIP ID] from [DATE].\n\nI completed this delivery successfully. My documentation:\n- Delivery photo taken at [ADDRESS] at [TIME] — geotagged and timestamped\n- GPS trip data showing my location at the delivery address\n- In-app delivery confirmation record\n\nI am requesting:\n1. This complaint be reviewed against my photo and GPS trip data\n2. Any negative effect on my account or completion rate be reversed\n3. A review of this customer's complaint history if this is a pattern\n\nThank you.",w:"Uber support works from Trip IDs — include it in the first line. 'Geotagged and timestamped' tells the agent exactly what to look for in your photo record."},
+      {h:"Contactless delivery — no knock requested",timing:"File within 24 hours of the complaint appearing on your account",msg:"Hello Uber Eats Support,\n\nI am disputing a complaint on trip #[TRIP ID] from [DATE].\n\nThe customer selected contactless delivery. Here is what happened:\n1. I arrived at [ADDRESS] at [TIME]\n2. I placed the order at the door as instructed — no knock or ring per the customer's preference\n3. I took and submitted a delivery photo\n4. The app confirmed delivery and a notification was sent\n\nI followed the customer's exact delivery instructions. Please review and remove this complaint.\n\nThank you.",w:"Uber Eats has a specific policy protecting drivers who follow contactless delivery instructions. Framing your appeal around 'the customer's delivery preference' invokes that policy directly."},
     ]},
     {e:"⭐",t:"Unfair Rating",urgency:"MEDIUM — Affects trip quality and earnings",color:"#F5A623",secs:[
-      {h:"Rating caused by restaurant issue",msg:"Hello Uber Eats Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nThis rating does not reflect my service. The customer was dissatisfied with [missing item / food quality / wait time], which was caused by the restaurant, not by me.\n\nI picked up a sealed order from [RESTAURANT NAME]. I had no way to inspect or modify the contents. My delivery was completed correctly.\n\nUber policy allows removal of ratings caused by factors outside the delivery partner's control. My rating before this was [X]. Please review and remove this rating.\n\nThank you.",w:"'Factors outside the delivery partner's control' mirrors Uber's internal review language. Naming the restaurant specifically gives the agent something to verify independently."},
+      {h:"Rating caused by restaurant issue",timing:"File after the rating posts and shows on your account — not before",msg:"Hello Uber Eats Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nThis rating does not reflect my service. The customer was dissatisfied with [missing item / food quality / wait time], which was caused by the restaurant, not by me.\n\nI picked up a sealed order from [RESTAURANT NAME]. I had no way to inspect or modify the contents. My delivery was completed correctly.\n\nUber policy allows removal of ratings caused by factors outside the delivery partner's control. My rating before this was [X]. Please review and remove this rating.\n\nThank you.",w:"'Factors outside the delivery partner's control' mirrors Uber's internal review language. Naming the restaurant specifically gives the agent something to verify independently."},
     ]},
     {e:"🔄",t:"Escalation — First Appeal Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
       {h:"Escalate to senior specialist",msg:"Hello,\n\nI am following up on a previous request about Uber Eats trip #[TRIP ID] from [DATE].\n\nMy initial appeal was not resolved. I am requesting escalation to a senior account specialist for a full review because:\n- My photo and GPS evidence were not properly evaluated\n- The complaint contradicts my documented delivery record\n- This is continuing to affect my account and income\n\nI have been an Uber delivery partner since [DATE] with a strong track record. I am asking for a thorough review.\n\nThank you.",w:"Asking for 'senior account specialist' by name triggers a routing change. Most drivers exhaust themselves on first-tier agents — this one request often gets a different result."},
@@ -373,14 +373,14 @@ const PLATFORM_APPEALS = {
   ],
   lyft:[
     {e:"⭐",t:"Unfair Low Rating",urgency:"HIGH — Affects ride access and priority",color:"#F43F5E",secs:[
-      {h:"Rating caused by factors outside your control",msg:"Hello Lyft Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nThis rating does not reflect my actual service. It appears to have been caused by [traffic delay / GPS navigation error / long pickup wait], which was outside my control as a driver.\n\nMy overall rating and driving history show consistent, professional service. Lyft's policy allows review of ratings caused by external factors. Please review and remove this rating.\n\nThank you.",w:"Always include the Trip ID — agents can't pull your record without it. 'Outside my control as a driver' is the exact framing Lyft's review team looks for when deciding whether to remove a rating."},
+      {h:"Rating caused by factors outside your control",timing:"File after the rating posts and your average drops — Lyft can't remove a rating before it appears",msg:"Hello Lyft Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nThis rating does not reflect my actual service. It appears to have been caused by [traffic delay / GPS navigation error / long pickup wait], which was outside my control as a driver.\n\nMy overall rating and driving history show consistent, professional service. Lyft's policy allows review of ratings caused by external factors. Please review and remove this rating.\n\nThank you.",w:"Always include the Trip ID — agents can't pull your record without it. 'Outside my control as a driver' is the exact framing Lyft's review team looks for when deciding whether to remove a rating."},
       {h:"Rating caused by a false complaint",msg:"Hello Lyft Support,\n\nI am requesting review of a low rating and complaint on trip #[TRIP ID] from [DATE].\n\nThe complaint states [describe complaint briefly]. This did not happen. Here is what actually occurred:\n[Brief, factual account — where you picked up, route taken, drop-off location, how the ride felt]\n\nI have been a Lyft driver since [DATE] with a consistent record. This complaint is inaccurate and is affecting my standing unfairly. I am asking for a review of the trip GPS data and a removal of this rating.\n\nThank you.",w:"Keep your account brief and factual — no emotion. Lyft agents check GPS routes and timestamps, not narratives. A clean factual timeline is far more persuasive than a long explanation."},
     ]},
     {e:"🚨",t:"Passenger Misconduct Report",urgency:"FILE IMMEDIATELY — Protects your safety record",color:"#F43F5E",secs:[
-      {h:"Reporting harassment or threatening behavior",msg:"Hello Lyft Safety Team,\n\nI am filing a safety report regarding a passenger on trip #[TRIP ID] from [DATE].\n\nWhat happened:\n[Describe clearly — what was said or done, when in the ride it occurred, how you responded, and where you ended the ride if applicable]\n\nI am requesting:\n1. This incident be documented in the passenger's account\n2. A review of whether this passenger should be flagged for future rides\n3. Confirmation that this report will not negatively affect my standing\n\nThank you.",w:"File this the same day. Addressing it to 'Lyft Safety Team' routes it to a specialized department. Passenger misconduct reports are permanently noted and Lyft takes them seriously — but you must file promptly."},
+      {h:"Reporting harassment or threatening behavior",timing:"File the same day — safety reports are prioritized when filed promptly",msg:"Hello Lyft Safety Team,\n\nI am filing a safety report regarding a passenger on trip #[TRIP ID] from [DATE].\n\nWhat happened:\n[Describe clearly — what was said or done, when in the ride it occurred, how you responded, and where you ended the ride if applicable]\n\nI am requesting:\n1. This incident be documented in the passenger's account\n2. A review of whether this passenger should be flagged for future rides\n3. Confirmation that this report will not negatively affect my standing\n\nThank you.",w:"File this the same day. Addressing it to 'Lyft Safety Team' routes it to a specialized department. Passenger misconduct reports are permanently noted and Lyft takes them seriously — but you must file promptly."},
     ]},
     {e:"❌",t:"Cancellation Dispute",urgency:"MEDIUM — Protects your cancellation rate",color:"#F5A623",secs:[
-      {h:"Cancellation fee not received — passenger was a no-show",msg:"Hello Lyft Support,\n\nI am requesting review of a missed cancellation fee on trip #[TRIP ID] from [DATE].\n\nI arrived at the pickup location at [TIME] and waited the required time before cancelling. The passenger did not appear and did not message me through the app.\n\nMy GPS confirms I was at [PICKUP ADDRESS] for the required wait period. I am requesting the appropriate cancellation fee be credited to my account.\n\nThank you.",w:"Lyft can verify your GPS arrival time and how long you waited. Most no-show cancellation disputes resolve in the driver's favor when your GPS confirms you were at the pin."},
+      {h:"Cancellation fee not received — passenger was a no-show",timing:"File within 24 hours — GPS arrival data is clearest right after the ride",msg:"Hello Lyft Support,\n\nI am requesting review of a missed cancellation fee on trip #[TRIP ID] from [DATE].\n\nI arrived at the pickup location at [TIME] and waited the required time before cancelling. The passenger did not appear and did not message me through the app.\n\nMy GPS confirms I was at [PICKUP ADDRESS] for the required wait period. I am requesting the appropriate cancellation fee be credited to my account.\n\nThank you.",w:"Lyft can verify your GPS arrival time and how long you waited. Most no-show cancellation disputes resolve in the driver's favor when your GPS confirms you were at the pin."},
     ]},
     {e:"🔄",t:"Escalation — Appeal Denied",urgency:"USE AFTER FIRST DENIAL",color:"#8B5CF6",secs:[
       {h:"Request senior account review",msg:"Hello,\n\nI am following up on a previous Lyft support request about trip #[TRIP ID] from [DATE].\n\nMy initial request was not resolved. I am asking for escalation to a senior driver account specialist.\n\nThe original issue: [brief summary — one sentence]\n\nThis is continuing to affect my driver rating and income. I have been a Lyft driver since [DATE] with a strong record and I am asking for a complete, fair review.\n\nThank you.",w:"'Senior driver account specialist' routes your ticket past first-tier support. Most drivers give up after a first denial — this one follow-up often gets a different result."},
@@ -388,11 +388,11 @@ const PLATFORM_APPEALS = {
   ],
   uber:[
     {e:"⭐",t:"Unfair Passenger Rating",urgency:"MEDIUM — Affects standing and Uber Pro tier",color:"#F5A623",secs:[
-      {h:"Rating caused by traffic, navigation, or price",msg:"Hello Uber Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nBased on the timing and any comments left, I believe the passenger rated me low due to [traffic delay / navigation issue / trip price] — none of which are within my control as a driver.\n\nUber's rating policy explicitly excludes ratings caused by traffic, navigation, pricing, and other factors outside driver control. I am asking for this rating to be reviewed and removed under that policy.\n\nThank you.",w:"Price complaints, traffic frustration, and navigation errors are explicitly listed in Uber's rating exclusion policy. Naming the specific category gives the agent a clear policy anchor to approve the removal."},
+      {h:"Rating caused by traffic, navigation, or price",timing:"File after the rating posts — Uber can't remove a rating that hasn't appeared yet",msg:"Hello Uber Support,\n\nI am requesting removal of a low rating on trip #[TRIP ID] from [DATE].\n\nBased on the timing and any comments left, I believe the passenger rated me low due to [traffic delay / navigation issue / trip price] — none of which are within my control as a driver.\n\nUber's rating policy explicitly excludes ratings caused by traffic, navigation, pricing, and other factors outside driver control. I am asking for this rating to be reviewed and removed under that policy.\n\nThank you.",w:"Price complaints, traffic frustration, and navigation errors are explicitly listed in Uber's rating exclusion policy. Naming the specific category gives the agent a clear policy anchor to approve the removal."},
       {h:"Rating from a passenger who consistently rates drivers low",msg:"Hello Uber Support,\n\nI am requesting a review of a low rating received on trip #[TRIP ID] from [DATE].\n\nI completed this trip professionally and safely. I am requesting review because I believe this rating may not reflect a genuine service issue.\n\nUber's policy allows exclusion of ratings from riders who consistently rate drivers low. Please review this passenger's rating history and consider removal if the pattern applies.\n\nMy rating before this was [X stars]. Thank you.",w:"Uber's system already automatically excludes some low ratings from frequent low-raters. This letter accelerates that review by surfacing the concern explicitly. Keep it brief and factual."},
     ]},
     {e:"🚫",t:"False Complaint from Passenger",urgency:"HIGH — Can affect account standing",color:"#F43F5E",secs:[
-      {h:"Dispute a passenger complaint",msg:"Hello Uber Support,\n\nI am writing to dispute a complaint filed against me on trip #[TRIP ID] from [DATE].\n\nI completed this trip professionally and safely. The complaint is inaccurate. Here is what I can document:\n- Passenger name was confirmed at pickup per Uber policy\n- GPS data confirms the correct route was taken\n- No incidents occurred during the trip\n\nI am requesting:\n1. A full review of this complaint against my trip record and GPS data\n2. Any negative impact on my account standing to be reversed\n3. A review of this passenger's complaint history if this is a pattern\n\nThank you.",w:"Lead with your documentation, not your denial. Agents review trip data, not arguments. Asking for a complaint history review signals that you understand the formal process — and that you're not going away after one response."},
+      {h:"Dispute a passenger complaint",timing:"File within 24 hours — Uber can temporarily restrict accounts quickly after safety complaints",msg:"Hello Uber Support,\n\nI am writing to dispute a complaint filed against me on trip #[TRIP ID] from [DATE].\n\nI completed this trip professionally and safely. The complaint is inaccurate. Here is what I can document:\n- Passenger name was confirmed at pickup per Uber policy\n- GPS data confirms the correct route was taken\n- No incidents occurred during the trip\n\nI am requesting:\n1. A full review of this complaint against my trip record and GPS data\n2. Any negative impact on my account standing to be reversed\n3. A review of this passenger's complaint history if this is a pattern\n\nThank you.",w:"Lead with your documentation, not your denial. Agents review trip data, not arguments. Asking for a complaint history review signals that you understand the formal process — and that you're not going away after one response."},
     ]},
     {e:"🔄",t:"Escalation — First Appeal Denied",urgency:"USE AFTER A FIRST DENIAL",color:"#8B5CF6",secs:[
       {h:"Escalate to senior specialist",msg:"Hello,\n\nI am following up on a previous request about Uber trip #[TRIP ID] from [DATE].\n\nMy initial appeal was not resolved. I am requesting escalation to a senior account specialist because:\n- My GPS data and trip record were not properly reviewed\n- The complaint contradicts my documented trip history\n- This is continuing to affect my account standing and income\n\nI have been an Uber driver since [DATE] with a strong record. I am asking for a thorough review.\n\nThank you.",w:"Asking for 'senior account specialist' routes your ticket to a higher-tier review. Most drivers exhaust themselves on first-tier agents — this escalation request often gets a meaningfully different result."},
@@ -403,7 +403,7 @@ const PLATFORM_APPEALS = {
       {h:"Standard non-delivery dispute",msg:"Hello GoPuff Driver Support,\n\nI am writing to dispute a non-delivery complaint on order #[ORDER ID] from [DATE].\n\nI completed this delivery successfully. My documentation:\n- Delivery photo taken at [ADDRESS] showing the items at the door\n- GPS data confirming my location at [ADDRESS] at [TIME]\n- In-app delivery confirmation\n\nI am requesting:\n1. This complaint be reviewed against my photo and GPS data\n2. Any negative impact on my driver account be reversed\n\nThank you.",w:"GoPuff support reviews photo and GPS data the same way other platforms do. Lead with your evidence — photo first, then GPS, then app confirmation. Keep it factual and brief."},
     ]},
     {e:"⛔",t:"Account Deactivation Appeal",urgency:"HIGH — Submit as soon as possible",color:"#F43F5E",secs:[
-      {h:"General deactivation appeal",msg:"Hello GoPuff Driver Support,\n\nI am writing to appeal the deactivation of my GoPuff driver account, which I received notice of on [DATE].\n\nI believe this deactivation was made in error. Here is my account of the situation:\n- [Describe what happened, factually and briefly]\n- I have always followed GoPuff's Community Guidelines regarding Safety, Respect, and Integrity\n- I have completed [X] deliveries on the platform with a clean record\n\nI am asking for a full review of my account history and the specific incident cited. I am committed to GoPuff's standards and would appreciate the opportunity to continue.\n\nThank you.",w:"GoPuff's stated deactivation grounds are violations of Safety, Respect, or Integrity. Frame your appeal around your compliance with those three categories. Note your delivery count — drivers with a long, clean record get more benefit of the doubt."},
+      {h:"General deactivation appeal",timing:"File as soon as you receive the deactivation notice — response windows are short",msg:"Hello GoPuff Driver Support,\n\nI am writing to appeal the deactivation of my GoPuff driver account, which I received notice of on [DATE].\n\nI believe this deactivation was made in error. Here is my account of the situation:\n- [Describe what happened, factually and briefly]\n- I have always followed GoPuff's Community Guidelines regarding Safety, Respect, and Integrity\n- I have completed [X] deliveries on the platform with a clean record\n\nI am asking for a full review of my account history and the specific incident cited. I am committed to GoPuff's standards and would appreciate the opportunity to continue.\n\nThank you.",w:"GoPuff's stated deactivation grounds are violations of Safety, Respect, or Integrity. Frame your appeal around your compliance with those three categories. Note your delivery count — drivers with a long, clean record get more benefit of the doubt."},
       {h:"Deactivation caused by a Checkr background check error",msg:"Hello GoPuff Driver Support,\n\nI am appealing my account deactivation, which I believe was triggered by an error in my Checkr background check.\n\nI have reviewed my results and believe the following item is inaccurate:\n- [Describe the specific item in dispute]\n\nI have submitted a dispute directly with Checkr at consumer.checkr.com. Under the Fair Credit Reporting Act, I have the right to dispute inaccurate background information.\n\nI am asking GoPuff to hold my deactivation pending the outcome of my Checkr dispute. I can provide documentation of my dispute submission upon request.\n\nThank you.",w:"Background check errors via Checkr are one of the most common causes of GoPuff deactivation. File the Checkr dispute first, then reference it in your GoPuff appeal. This creates a paper trail and gives the platform a reason to wait before making the deactivation permanent."},
     ]},
   ],
@@ -563,8 +563,8 @@ function IntroAnimation({onDone}) {
       {/* Scene 0: Brand */}
       <div style={ss(0)}>
         <div style={{position:"absolute",top:-60,right:-40,width:240,height:240,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,166,35,0.15),transparent 68%)",pointerEvents:"none"}}/>
-        <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,marginBottom:22,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
-        <div className="iup id1" style={{fontSize:40,fontWeight:900,letterSpacing:"-2px",background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6,textAlign:"center"}}>DropPilot</div>
+        <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:22,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+        <div className="iup id1" style={{fontSize:40,fontWeight:700,letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6,textAlign:"center"}}>DropPilot</div>
         <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Customer Service · Gig Edition</div>
         <Divider/>
         <div className="iup id2" style={{fontSize:15,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.9,fontWeight:500}}>The first customer service app<br/>built specifically for gig drivers.<br/>The delivery is the task.<br/>The service is the job.</div>
@@ -652,7 +652,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 5: Elite access */}
       <div style={ss(5)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $10 one time</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>All feature<br/>updates included.</div>
+        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
           {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Lessons"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
@@ -669,8 +669,8 @@ function IntroAnimation({onDone}) {
         <div style={{position:"absolute",top:-80,left:"50%",transform:"translateX(-50%)",width:300,height:300,borderRadius:"50%",background:`radial-gradient(circle,rgba(245,166,35,0.18),transparent 65%)`,pointerEvents:"none"}}/>
         <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${A}70,transparent)`}}/>
         <div style={{position:"relative",zIndex:1,textAlign:"center",width:"100%"}}>
-          <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:38,margin:"0 auto 18px",boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}>🚗</div>
-          <div className="iup id1" style={{fontSize:40,fontWeight:900,letterSpacing:"-2px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4,textAlign:"center"}}>DropPilot</div>
+          <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+          <div className="iup id1" style={{fontSize:40,fontWeight:700,letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4,textAlign:"center"}}>DropPilot</div>
           <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Customer Service · Gig Edition</div>
           <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
           <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:7,marginBottom:26,width:"100%"}}>
@@ -877,6 +877,38 @@ function ScenarioTrainer() {
   );
 }
 
+// ─── Video Quizzes ────────────────────────────────────────────────────────────
+const QUIZZES = {
+  0:[
+    {q:"Tips are primarily driven by…",options:["Speed of delivery","How professional you look","How the customer feels about the interaction","Order accuracy"],correct:2,explain:"Tips are an emotional response. Warmth and acknowledgment matter more than speed."},
+    {q:"Earning $1 more per delivery at 2 deliveries/hour for 200 hours adds…",options:["$200","$400","$600","$800"],correct:1,explain:"$1 × 2/hr × 200 hrs = $400. Small changes compound fast over a full year."},
+  ],
+  1:[
+    {q:"Which phrase shows personal ownership of the situation?",options:["I'll try to check on that","I'll see what I can do","I'll make sure everything is taken care of","That should be fine"],correct:2,explain:"'I'll make sure' commits to an outcome. 'I'll try' signals doubt and puts the customer on edge."},
+    {q:"When reaching a customer first, you should…",options:["Call — it's more personal","Text — less intrusive, they respond when ready","Message only through the app","Wait to see if they contact you"],correct:1,explain:"A text lets them respond when ready. Calls from unknown numbers interrupt and often create anxiety."},
+  ],
+  2:[
+    {q:"The rating gap between average and top earners is roughly…",options:["0.1 stars","0.2 stars","0.4 stars","1 full star"],correct:2,explain:"4.5 vs 4.9 is a 0.4 gap — small, but enough to affect which orders you see and how much you earn."},
+    {q:"Which single habit has the biggest reported tip impact?",options:["Smiling at the door","Texting when 3–4 min away","Using the customer's first name","Arriving faster than estimated"],correct:1,explain:"The arrival text reduces customer anxiety and signals professionalism before you even show up."},
+  ],
+  3:[
+    {q:"'No problem' vs 'you're welcome' — which creates a more positive impression?",options:["No problem — it sounds casual and modern","You're welcome — it acknowledges the exchange properly","They're equivalent","Depends on the customer's age"],correct:1,explain:"'No problem' implies the interaction could have been a burden. 'You're welcome' closes the loop positively."},
+    {q:"Research found that adding 'please' to a request increased compliance by roughly…",options:["5%","18%","35%","50%"],correct:1,explain:"From the Cornell study cited in the lesson. One word, measurable effect."},
+  ],
+  4:[
+    {q:"The first step when a customer is upset is…",options:["Apologize immediately","Explain what happened","Pause for 3 seconds before responding","Ask them to calm down"],correct:2,explain:"The 3-second pause prevents reactive responses and signals that you're taking it seriously."},
+    {q:"In the Feel / Felt / Found formula, what does the third step do?",options:["Apologizes again","Explains what went wrong","Offers a path forward","Redirects to support"],correct:2,explain:"The formula validates, normalizes, then redirects. The third step must offer a way forward — not more explanation."},
+  ],
+};
+
+const KEY_TAKEAWAYS = {
+  0:["Tips are emotional — warmth earns more than speed","$1 more per delivery × 200 hours = $400/year","One habit per shift compounds into real income over time"],
+  1:["'I'll make sure' > 'I'll try' — ownership earns trust","Text first, never call first","End with 'enjoy your meal' — it closes the loop"],
+  2:["Top earners avg 4.9 vs 4.5 — 0.4 stars is real money","Arrival text is the highest-ROI single habit","Photo every drop-off — it's protection, not just courtesy"],
+  3:["'Please' increases compliance by 18% (Cornell study)","'You're welcome' > 'no problem' — it acknowledges the exchange","60-second pre-shift practice builds phrases that come out naturally"],
+  4:["3-second pause before responding to anything tense","Feel / Felt / Found — validate, normalize, then redirect","Owning a mistake briefly defuses faster than explaining it"],
+};
+
 // ─── Spanish Tips ─────────────────────────────────────────────────────────────
 const ALL_TIPS_ES = [
   {e:"👋",t:"Saluda con una sonrisa",s:"La primera impresión decide tu calificación.",d:"Haz un breve contacto visual y di algo simple — '¡Hola, aquí está tu pedido!' No necesitas hablar mucho. Solo sé amable. Los clientes califican mucho más alto a los repartidores que parecen personas reales que a los que entregan la bolsa en silencio y se van."},
@@ -952,6 +984,9 @@ function VideoPlayer({video}) {
   const [scene, setScene] = useState(0);
   const [progress, setProgress] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [quizPhase, setQuizPhase] = useState(null);
+  const [quizIdx, setQuizIdx] = useState(0);
+  const [answered, setAnswered] = useState(null);
   const elapsed = useRef(0);
   const rafRef = useRef(null);
   const t0Ref = useRef(null);
@@ -962,6 +997,7 @@ function VideoPlayer({video}) {
     if(rafRef.current)cancelAnimationFrame(rafRef.current);
     elapsed.current=0; t0Ref.current=null;
     setScene(0); setProgress(0); setPlaying(autoplay);
+    setQuizPhase(null); setQuizIdx(0); setAnswered(null);
     if(autoplay) rafRef.current=requestAnimationFrame(tick);
   }
 
@@ -973,7 +1009,7 @@ function VideoPlayer({video}) {
     for(let i=video.scenes.length-1;i>=0;i--){if(elapsed.current>=video.scenes[i].t){sc=i;break;}}
     setScene(sc);
     if(elapsed.current<video.dur){rafRef.current=requestAnimationFrame(tick);}
-    else{setPlaying(false);}
+    else{setPlaying(false);if(QUIZZES[video.id]?.length)setQuizPhase('quiz');}
   }
 
   function togglePlay(){
@@ -1077,23 +1113,74 @@ function VideoPlayer({video}) {
       </div>
       {/* Controls */}
       <div style={{padding:"12px 16px 18px",borderTop:`1px solid ${vc}20`}}>
-        {/* Scene dots + counter */}
-        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:7,marginBottom:14}}>
-          {video.scenes.map((_,si)=>(
-            <button key={si} onClick={()=>jumpToScene(si)} aria-label={`Scene ${si+1}`} style={{width:si===scene?22:9,height:9,borderRadius:99,background:si===scene?vc:"rgba(255,255,255,0.15)",border:"none",cursor:"pointer",padding:0,transition:"all 0.2s"}}/>
-          ))}
-          <span style={{fontSize:11,color:`${vc}90`,fontWeight:800,marginLeft:6,letterSpacing:"0.5px",fontFamily:"'JetBrains Mono',monospace"}}>{scene+1}/{video.scenes.length}</span>
-        </div>
-        {/* Play controls */}
-        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:14}}>
-          <button onClick={()=>restart(false)} aria-label="Restart" style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,color:"rgba(255,255,255,0.4)"}}>↺</button>
-          <button onClick={togglePlay} aria-label={playing?"Pause":"Play"} style={{background:`linear-gradient(135deg,${vc},${vc}BB)`,border:"none",borderRadius:50,width:56,height:56,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:22,boxShadow:`0 6px 22px ${vc}45`,flexShrink:0,transition:"transform 0.15s",fontFamily:"inherit"}}>
-            {playing?"⏸":elapsed.current>=video.dur?"↺":"▶"}
-          </button>
-          <div style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'JetBrains Mono',monospace",fontSize:11,fontWeight:700,color:`${vc}90`}}>
-            {Math.max(0,Math.ceil(video.dur*(1-progress/100)/1000))}s
+        {quizPhase==='quiz'&&(QUIZZES[video.id]||[]).length>0?(()=>{
+          const qd=QUIZZES[video.id];
+          const q=qd[quizIdx];
+          return(
+            <div key={quizIdx}>
+              <div style={{fontSize:11,fontWeight:800,color:vc,letterSpacing:1,textTransform:"uppercase",marginBottom:10}}>Quick Check · {quizIdx+1}/{qd.length}</div>
+              <div style={{fontSize:14,fontWeight:700,color:C.text,lineHeight:1.55,marginBottom:12}}>{q.q}</div>
+              <div style={{display:"flex",flexDirection:"column",gap:7}}>
+                {q.options.map((opt,oi)=>{
+                  const isAnswered=answered!==null;
+                  const isCorrect=oi===q.correct;
+                  const isSelected=oi===answered;
+                  let bg="rgba(255,255,255,0.04)",brd="1px solid rgba(255,255,255,0.1)",col=C.text;
+                  if(isAnswered&&isCorrect){bg="rgba(16,185,129,0.12)";brd=`1px solid ${C.green}50`;col=C.green;}
+                  else if(isAnswered&&isSelected&&!isCorrect){bg="rgba(244,63,94,0.1)";brd=`1px solid ${C.red}40`;col=C.red;}
+                  return(
+                    <button key={oi} onClick={()=>{if(!isAnswered)setAnswered(oi);}} style={{background:bg,border:brd,borderRadius:10,padding:"10px 12px",fontSize:13,fontWeight:isAnswered&&isCorrect?700:400,cursor:isAnswered?"default":"pointer",color:col,textAlign:"left",display:"flex",alignItems:"center",gap:8,transition:"all 0.18s"}}>
+                      <span style={{width:18,height:18,borderRadius:4,background:isAnswered&&isCorrect?C.green:isAnswered&&isSelected?C.red:"rgba(255,255,255,0.1)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"#000",fontWeight:900,flexShrink:0}}>{isAnswered&&isCorrect?"✓":isAnswered&&isSelected?"✗":String.fromCharCode(65+oi)}</span>
+                      {opt}
+                    </button>
+                  );
+                })}
+              </div>
+              {answered!==null&&(
+                <div>
+                  <div style={{marginTop:10,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"9px 11px",fontSize:12,color:C.text2,lineHeight:1.6}}>{q.explain}</div>
+                  <button onClick={()=>{if(quizIdx<qd.length-1){setQuizIdx(i=>i+1);setAnswered(null);}else{setQuizPhase('takeaways');}}} style={{marginTop:10,background:vc,border:"none",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:"#000",width:"100%"}}>
+                    {quizIdx<qd.length-1?"Next question →":"See key takeaways →"}
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })()
+        :quizPhase==='takeaways'&&(KEY_TAKEAWAYS[video.id]||[]).length>0?(
+          <div>
+            <div style={{fontSize:11,fontWeight:800,color:C.green,letterSpacing:1,textTransform:"uppercase",marginBottom:12}}>✓ 3 Things to Remember</div>
+            <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:14}}>
+              {(KEY_TAKEAWAYS[video.id]||[]).map((t,i)=>(
+                <div key={i} style={{display:"flex",alignItems:"flex-start",gap:8,padding:"9px 11px",background:"rgba(16,185,129,0.07)",border:"1px solid rgba(16,185,129,0.2)",borderRadius:10}}>
+                  <span style={{color:C.green,fontSize:13,fontWeight:900,flexShrink:0,marginTop:1}}>✓</span>
+                  <span style={{fontSize:12,color:C.text,lineHeight:1.55}}>{t}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={()=>restart(false)} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:C.text2,width:"100%"}}>↺ Restart Lesson</button>
           </div>
-        </div>
+        ):(
+          <>
+            {/* Scene dots + counter */}
+            <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:7,marginBottom:14}}>
+              {video.scenes.map((_,si)=>(
+                <button key={si} onClick={()=>jumpToScene(si)} aria-label={`Scene ${si+1}`} style={{width:si===scene?22:9,height:9,borderRadius:99,background:si===scene?vc:"rgba(255,255,255,0.15)",border:"none",cursor:"pointer",padding:0,transition:"all 0.2s"}}/>
+              ))}
+              <span style={{fontSize:11,color:`${vc}90`,fontWeight:800,marginLeft:6,letterSpacing:"0.5px",fontFamily:"'JetBrains Mono',monospace"}}>{scene+1}/{video.scenes.length}</span>
+            </div>
+            {/* Play controls */}
+            <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:14}}>
+              <button onClick={()=>restart(false)} aria-label="Restart" style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,color:"rgba(255,255,255,0.4)"}}>↺</button>
+              <button onClick={togglePlay} aria-label={playing?"Pause":"Play"} style={{background:`linear-gradient(135deg,${vc},${vc}BB)`,border:"none",borderRadius:50,width:56,height:56,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:22,boxShadow:`0 6px 22px ${vc}45`,flexShrink:0,transition:"transform 0.15s",fontFamily:"inherit"}}>
+                {playing?"⏸":elapsed.current>=video.dur?"↺":"▶"}
+              </button>
+              <div style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'JetBrains Mono',monospace",fontSize:11,fontWeight:700,color:`${vc}90`}}>
+                {Math.max(0,Math.ceil(video.dur*(1-progress/100)/1000))}s
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -1528,8 +1615,8 @@ function App() {
 
   if(!loaded) return(
     <div style={{background:C.bg,height:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,fontFamily:C.sans}}>
-      <div style={{fontSize:52,animation:"floatY 2s ease-in-out infinite"}}>🚗</div>
-      <div style={{color:C.amber,fontSize:17,fontWeight:800}}>Loading DropPilot...</div>
+      <div style={{width:60,height:60,borderRadius:20,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",animation:"floatY 2s ease-in-out infinite",boxShadow:`0 10px 32px rgba(245,166,35,0.35)`}}><svg width="32" height="32" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+      <div style={{color:C.amber,fontSize:17,fontWeight:700}}>Loading DropPilot...</div>
     </div>
   );
 
@@ -1543,9 +1630,9 @@ function App() {
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",position:"sticky",top:0,zIndex:60}}>
         <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default",flex:1}}>
-          <div className="glow" style={{width:38,height:38,borderRadius:12,background:shiftMode&&shiftPlatform?`linear-gradient(135deg,${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber},${C.amberD})`:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{shiftMode&&shiftPlatform?PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.e:"🚗"}</div>
+          <div className="glow" style={{width:38,height:38,borderRadius:12,background:shiftMode&&shiftPlatform?`linear-gradient(135deg,${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber},${C.amberD})`:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{shiftMode&&shiftPlatform?PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.e:<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg>}</div>
           <div>
-            <div style={{fontSize:18,fontWeight:900,letterSpacing:"-0.5px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
+            <div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.3px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
             {shiftMode&&shiftPlatform?(
               <div style={{fontSize:10,fontWeight:800,letterSpacing:"1px",textTransform:"uppercase",color:PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber}}>● {PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.label} Shift Active</div>
             ):(
@@ -1621,7 +1708,7 @@ function App() {
             <div style={{display:"flex",flexDirection:"column",gap:6}}>
               {[
                 ["What's free and what's Elite?",
-                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($10 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training lessons, and all future app feature updates."],
+                 "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($10 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship."],
                 ["I paid but my access didn't unlock. What do I do?",
                  "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
                 ["How do I add DropPilot to my home screen?",
@@ -2009,6 +2096,7 @@ function App() {
                             </div>
                             {subOpen2&&(
                               <div style={{padding:"0 14px 14px"}}>
+                                {sec.hint&&<div style={{background:"rgba(245,166,35,0.08)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:8,padding:"8px 10px",marginBottom:8,fontSize:12,color:C.amber,lineHeight:1.5}}>💡 {sec.hint}</div>}
                                 <div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"11px 13px",marginBottom:10,fontSize:12,color:sec.caution?C.red:C.text,lineHeight:1.65,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{sec.msg}</div>
                                 {!sec.caution&&(
                                   <button onClick={()=>copyMsg(sec.msg,subKey)} style={{background:C.green,border:"none",borderRadius:10,padding:"10px 14px",fontSize:12,fontWeight:700,cursor:"pointer",color:"#000",width:"100%",marginBottom:8}}>
@@ -2234,6 +2322,7 @@ function App() {
                                         const preview=isFilling?applyFill(sec.msg,fillVals):sec.msg;
                                         return(
                                         <div style={{padding:"0 14px 14px",animation:"slideUp 0.2s cubic-bezier(0.16,1,0.3,1)"}}>
+                                          {sec.timing&&<div style={{display:"flex",alignItems:"center",gap:6,background:"rgba(245,166,35,0.08)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:8,padding:"7px 10px",marginBottom:10,fontSize:12,color:C.amber,fontWeight:600}}>🕐 {sec.timing}</div>}
                                           <div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"12px 13px",marginBottom:10,fontSize:12,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{preview}</div>
                                           {hasPhs&&!isFilling&&(
                                             <button onClick={()=>{setFillKey(subKey);setFillVals({});}} style={{background:`${ap.color}15`,border:`1px solid ${ap.color}40`,borderRadius:10,padding:"11px 14px",fontSize:13,fontWeight:700,cursor:"pointer",color:ap.color,width:"100%",marginBottom:8}}>✏️ Fill In & Copy</button>

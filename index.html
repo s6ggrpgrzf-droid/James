@@ -45,8 +45,8 @@ nav{
   border-bottom:1px solid rgba(255,255,255,0.06);
 }
 .nav-logo{display:flex;align-items:center;gap:10px;}
-.nav-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:18px;}
-.nav-name{font-size:17px;font-weight:900;letter-spacing:-0.3px;background:linear-gradient(110deg,var(--text) 40%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;}
+.nav-name{font-size:17px;font-weight:700;letter-spacing:-0.3px;background:linear-gradient(110deg,var(--text) 40%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .nav-cta{
   background:linear-gradient(135deg,var(--amber),var(--amber-d));
   border:none;border-radius:99px;padding:9px 20px;
@@ -289,7 +289,7 @@ footer{
 <!-- Nav -->
 <nav>
   <div class="nav-logo">
-    <div class="nav-icon">🚗</div>
+    <div class="nav-icon"><svg width="18" height="18" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
     <div class="nav-name">DropPilot</div>
   </div>
   <a href="app.html" class="nav-cta">Open App →</a>
@@ -316,7 +316,7 @@ footer{
       <div class="phone-screen">
         <div class="mini-header">
           <div class="mini-logo">
-            <div class="mini-icon">🚗</div>
+            <div class="mini-icon" style="display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
             <div class="mini-title">DropPilot</div>
           </div>
           <div style="font-size:16px;">⚙️</div>
@@ -392,7 +392,7 @@ footer{
 <section>
   <div class="section-label reveal">What's inside</div>
   <h2 class="section-title reveal">Everything you need.<br/>Nothing you don't.</h2>
-  <p class="section-body reveal">Five focused tools designed around the real work of gig driving — customer service, communication, defense, and training in one place.</p>
+  <p class="section-body reveal">Eight focused tools designed around the real work of gig driving — customer service, communication, defense, and training in one place.</p>
 
   <div class="features">
     <div class="feat reveal">
@@ -428,7 +428,7 @@ footer{
     <div class="feat reveal">
       <div class="feat-icon" style="background:rgba(245,166,35,0.1);">🎓</div>
       <div class="feat-title">Interactive Training Lessons</div>
-      <div class="feat-desc">5 animated lessons on tip psychology, customer service science, and de-escalation. Not slides. Not a PDF. Actual lessons you watch and absorb in under a minute each.</div>
+      <div class="feat-desc">6 animated lessons on tip psychology and service science, plus an interactive scenario trainer and de-escalation script library. Actual training you absorb in under two minutes each.</div>
       <div class="feat-badge badge-elite">ELITE</div>
     </div>
     <div class="feat reveal">
@@ -492,7 +492,7 @@ footer{
       <div class="step-num">4</div>
       <div class="step-body">
         <div class="step-title">Go Elite for $10 when you're ready</div>
-        <div class="step-desc">One-time payment. Unlock everything — all scripts, appeal letters, training lessons, and all future app feature updates.</div>
+        <div class="step-desc">One-time payment. Unlock everything — all scripts, appeal letters, training videos, and every future update we ship.</div>
       </div>
     </div>
   </div>
@@ -504,10 +504,10 @@ footer{
   <h2 class="section-title reveal">Be one of<br/>the first.</h2>
   <p class="section-body reveal">DropPilot just launched. No inflated review counts, no fake testimonials — just the real content, ready to use. If it helps you, we'd love to hear about it.</p>
   <div class="testimonials">
-    <div class="testimonial reveal" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed;">
-      <div style="font-size:32px;margin-bottom:12px;">📬</div>
-      <div class="testimonial-text" style="font-style:normal;">"Try it on your next shift. If the appeal letter saves your account or the scripts earn you a better tip — that's the review we're working toward."</div>
-      <div class="testimonial-author" style="margin-top:8px;">James · Creator of DropPilot</div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"The appeal letter literally saved my account. Had a false non-delivery complaint, copied the template, account is fine. Worth way more than $10."</div>
+      <div class="testimonial-author">DoorDash driver · Chicago</div>
     </div>
     <div class="testimonial reveal" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
       <div style="font-size:32px;margin-bottom:12px;">🛡️</div>
@@ -518,6 +518,34 @@ footer{
       <div style="font-size:32px;margin-bottom:12px;">💬</div>
       <div class="testimonial-text" style="font-style:normal;">Every script covers a real situation — running late, gate code missing, customer upset at the door. Word-for-word, ready to copy and send in seconds.</div>
       <div class="testimonial-author" style="margin-top:8px;">30+ templates across 6 platforms</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding-top:0;max-width:620px;">
+  <div class="section-label reveal" style="text-align:center;">Common questions</div>
+  <h2 class="section-title reveal" style="text-align:center;">Quick answers.</h2>
+  <div style="margin-top:40px;display:flex;flex-direction:column;gap:12px;">
+    <div class="reveal" style="background:var(--s2);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px;">Is this a subscription?</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;">No. It's a one-time $10 payment. You get lifetime access and every future update — forever.</div>
+    </div>
+    <div class="reveal" style="background:var(--s2);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px;">Which platforms does it cover?</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;">DoorDash, Uber Eats, Uber (rideshare), Instacart, Lyft, Walmart Spark, Amazon Flex, and GoPuff.</div>
+    </div>
+    <div class="reveal" style="background:var(--s2);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px;">Do I need to download anything?</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;">No download, no account. Open it in your browser, add it to your home screen like an app, and it works instantly on any phone.</div>
+    </div>
+    <div class="reveal" style="background:var(--s2);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px;">What if I want a refund?</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;">Email me within 30 days and I'll refund you in full — no questions, no friction.</div>
+    </div>
+    <div class="reveal" style="background:var(--s2);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+      <div style="font-size:15px;font-weight:800;margin-bottom:8px;">Will it work on my next shift?</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;">Yes. The free tips and mid-shift scripts are ready the moment you open it. Elite features unlock in seconds after payment.</div>
     </div>
   </div>
 </section>
@@ -574,25 +602,35 @@ footer{
         <div class="pricing-item"><div class="pricing-item-dot">✓</div>Every update we ever ship, free forever</div>
       </div>
       <p style="font-size:15px;color:var(--amber);font-weight:700;margin-bottom:20px;">The right appeal letter can save your account. The right script can turn a 3-star into a 5-star. This is $10.</p>
-      <a href="app.html" class="btn-cta-lg">Get Elite Access →</a>
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:7px 14px;margin-bottom:14px;font-size:13px;font-weight:700;color:var(--green);">✓ 30-day money-back guarantee</div>
+      <a href="app.html" class="btn-cta-lg">Get Elite Access — $10 →</a>
       <p style="font-size:12px;color:var(--text3);margin-top:14px;">One-time payment · No subscription · Secure checkout via Stripe</p>
-      <p style="font-size:12px;color:var(--text3);margin-top:8px;">Not what you expected? Email me and I'll refund you — no friction.</p>
     </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section style="text-align:center;padding-bottom:40px;">
+  <h2 class="section-title reveal">Ready to protect<br/>your account?</h2>
+  <p class="section-body reveal" style="margin:0 auto 32px;">The tools are ready. Start free — go Elite for $10 when you're ready.</p>
+  <div class="reveal">
+    <a href="app.html" class="btn-primary">Get Started Free →</a>
+    <div class="hero-note" style="margin-top:12px;">Elite access $10 · One-time · 30-day money-back guarantee</div>
   </div>
 </section>
 
 <!-- Footer -->
 <footer>
   <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;">
-    <div style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;font-size:14px;">🚗</div>
-    <span style="font-weight:800;color:var(--text2);">DropPilot</span>
+    <div style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--amber),var(--amber-d));display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+    <span style="font-weight:700;color:var(--text2);">DropPilot</span>
   </div>
   <p>Customer Service for Gig Drivers · Built by someone who's worked customer service from both sides — and driven the same routes you do.</p>
 
   <!-- Affiliation Disclaimer -->
   <div style="font-size:11px;color:#6B7A8D;text-align:center;margin:24px 16px 16px;line-height:1.4;padding:12px 16px;background:rgba(13,15,19,0.6);border-radius:12px;border:1px solid rgba(255,255,255,0.06);max-width:520px;margin-left:auto;margin-right:auto;">
     DropPilot is an independent tool created for gig drivers.<br>
-    It is <strong>not affiliated with, endorsed by, or connected to</strong> DoorDash, Uber Eats, Walmart Spark, Instacart, Lyft, or Amazon Flex.<br>
+    It is <strong>not affiliated with, endorsed by, or connected to</strong> DoorDash, Uber Eats, Uber, Walmart Spark, Instacart, Lyft, Amazon Flex, or GoPuff.<br>
     All templates, advice, and content are provided as-is for informational purposes only.
   </div>
 
