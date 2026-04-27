@@ -534,7 +534,7 @@ function Toast({msg, onDone}) {
 }
 
 // ─── Quick Situations Carousel ────────────────────────────────────────────────
-function QuickSituationsCarousel() {
+function QuickSituationsCarousel({lang}) {
   const [carouselIdx, setCarouselIdx] = useState(0);
   const [swipeStart, setSwipeStart] = useState(null);
 
@@ -1947,7 +1947,7 @@ function App() {
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
 
             {/* Quick Situations Carousel */}
-            <QuickSituationsCarousel/>
+            <QuickSituationsCarousel lang={lang}/>
 
             {/* 10 Free Tips */}
             <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
