@@ -534,7 +534,7 @@ function Toast({msg, onDone}) {
 }
 
 // ─── Quick Situations Carousel (Yahoo-style) ──────────────────────────────────
-function QuickSituationsCarousel({lang}) {
+function QuickSituationsCarousel({lang, onCardClick}) {
   const [scrollPos, setScrollPos] = useState(0);
   const scrollRef = useRef(null);
 
@@ -572,6 +572,7 @@ function QuickSituationsCarousel({lang}) {
         {situations.map((sit, i) => (
           <div
             key={i}
+            onClick={() => onCardClick(i)}
             style={{
               flex: `0 0 ${cardWidth}px`,
               minWidth: `${cardWidth}px`,
@@ -1937,7 +1938,7 @@ function App() {
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
 
             {/* Quick Situations Carousel */}
-            <QuickSituationsCarousel lang={lang}/>
+            <QuickSituationsCarousel lang={lang} onCardClick={(i)=>{setShowQuickHelp(true);setQhActive(i);}}/>
 
             {/* 10 Free Tips */}
             <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
