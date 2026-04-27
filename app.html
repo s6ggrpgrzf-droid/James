@@ -533,6 +533,244 @@ function Toast({msg, onDone}) {
   );
 }
 
+// ─── Daily Tips Carousel ──────────────────────────────────────────────────────
+function DailyTipsCarousel({onDone}) {
+  const [idx, setIdx] = useState(0);
+  const [swipeStart, setSwipeStart] = useState(null);
+  const containerRef = useRef(null);
+
+  const tips = ALL_TIPS;
+  const current = tips[idx];
+
+  function goNext() { if(idx < tips.length - 1) setIdx(idx + 1); }
+  function goPrev() { if(idx > 0) setIdx(idx - 1); }
+
+  function handleTouchStart(e) {
+    setSwipeStart(e.touches[0].clientX);
+  }
+
+  function handleTouchEnd(e) {
+    if(!swipeStart) return;
+    const swipeEnd = e.changedTouches[0].clientX;
+    const diff = swipeStart - swipeEnd;
+    if(Math.abs(diff) > 40) {
+      if(diff > 0) goNext();
+      else goPrev();
+    }
+    setSwipeStart(null);
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: C.bg,
+        zIndex: 999,
+        fontFamily: C.sans,
+        color: C.text,
+        maxWidth: 430,
+        margin: "0 auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "28px 24px",
+        overflow: "hidden",
+      }}
+    >
+      {/* Card Container */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          width: "100%",
+          animation: "fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards",
+        }}
+      >
+        {/* Emoji */}
+        <div style={{fontSize: 56, marginBottom: 20, display: "block"}}>
+          {current.e}
+        </div>
+
+        {/* Title */}
+        <h2
+          style={{
+            fontSize: 26,
+            fontWeight: 900,
+            letterSpacing: "-0.5px",
+            marginBottom: 12,
+            lineHeight: 1.2,
+            color: C.text,
+          }}
+        >
+          {current.t}
+        </h2>
+
+        {/* Subtitle */}
+        <p
+          style={{
+            fontSize: 14,
+            color: C.text2,
+            marginBottom: 24,
+            fontWeight: 500,
+            maxWidth: "90%",
+          }}
+        >
+          {current.s}
+        </p>
+
+        {/* Description */}
+        <p
+          style={{
+            fontSize: 15,
+            color: C.text,
+            lineHeight: 1.7,
+            maxWidth: "100%",
+            fontWeight: 400,
+          }}
+        >
+          {current.d}
+        </p>
+      </div>
+
+      {/* Dot Indicators */}
+      <div
+        style={{
+          display: "flex",
+          gap: 6,
+          justifyContent: "center",
+          marginBottom: 20,
+          marginTop: 24,
+        }}
+      >
+        {tips.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            style={{
+              width: idx === i ? 28 : 8,
+              height: 8,
+              borderRadius: 99,
+              background: idx === i ? C.amber : "rgba(255,255,255,0.2)",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
+        {idx > 0 && (
+          <button
+            onClick={goPrev}
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              borderRadius: 50,
+              padding: "12px 20px",
+              color: C.text,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: C.sans,
+              transition: "all 0.14s",
+            }}
+            onMouseDown={(e) => (e.target.style.opacity = "0.7")}
+            onMouseUp={(e) => (e.target.style.opacity = "1")}
+          >
+            ← Back
+          </button>
+        )}
+
+        {idx < tips.length - 1 ? (
+          <button
+            onClick={goNext}
+            style={{
+              background: `linear-gradient(135deg,${C.amber},${C.amberD})`,
+              border: "none",
+              borderRadius: 50,
+              padding: "12px 24px",
+              color: "#000",
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: C.sans,
+              flex: idx === 0 ? 1 : "auto",
+              transition: "all 0.14s",
+              boxShadow: `0 6px 20px rgba(245,166,35,0.3)`,
+            }}
+            onMouseDown={(e) => (e.target.style.transform = "scale(0.96)")}
+            onMouseUp={(e) => (e.target.style.transform = "scale(1)")}
+          >
+            Next →
+          </button>
+        ) : (
+          <button
+            onClick={onDone}
+            style={{
+              background: `linear-gradient(135deg,${C.amber},${C.amberD})`,
+              border: "none",
+              borderRadius: 50,
+              padding: "14px 32px",
+              color: "#000",
+              fontSize: 16,
+              fontWeight: 900,
+              cursor: "pointer",
+              fontFamily: C.sans,
+              transition: "all 0.14s",
+              boxShadow: `0 8px 24px rgba(245,166,35,0.4)`,
+              letterSpacing: "-0.3px",
+            }}
+            onMouseDown={(e) => (e.target.style.transform = "scale(0.96)")}
+            onMouseUp={(e) => (e.target.style.transform = "scale(1)")}
+          >
+            Let's Go →
+          </button>
+        )}
+      </div>
+
+      {/* Skip at top */}
+      <button
+        onClick={onDone}
+        style={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+          background: "rgba(255,255,255,0.12)",
+          border: "1px solid rgba(255,255,255,0.22)",
+          borderRadius: 20,
+          padding: "7px 16px",
+          color: "rgba(255,255,255,0.7)",
+          fontSize: 13,
+          fontWeight: 700,
+          cursor: "pointer",
+          fontFamily: C.sans,
+          zIndex: 1,
+        }}
+      >
+        Skip →
+      </button>
+    </div>
+  );
+}
+
 // ─── Intro Animation ──────────────────────────────────────────────────────────
 function IntroAnimation({onDone}) {
   const [scene, setScene] = useState(0);
@@ -1620,7 +1858,7 @@ function App() {
     </div>
   );
 
-  if(showIntro) return <IntroAnimation onDone={()=>{setShowIntro(false);save("dp3-intro-seen",true);}}/>;
+  if(showIntro) return <DailyTipsCarousel onDone={()=>{setShowIntro(false);save("dp3-intro-seen",true);}}/>;
 
   return(
     <div style={{background:C.bg,minHeight:"100vh",maxWidth:430,margin:"0 auto",fontFamily:C.sans,color:C.text,display:"flex",flexDirection:"column"}}>
