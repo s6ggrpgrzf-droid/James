@@ -1937,8 +1937,17 @@ function App() {
         {!shiftMode&&tab==="tips"&&(
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
 
-            {/* Quick Situations Carousel */}
-            <QuickSituationsCarousel lang={lang} onCardClick={(i)=>{setShowQuickHelp(true);setQhActive(i);}}/>
+            {/* Quick Situations Carousel - Elite Only */}
+            {pro ? (
+              <QuickSituationsCarousel lang={lang} onCardClick={(i)=>{setShowQuickHelp(true);setQhActive(i);}}/>
+            ) : (
+              <div style={{background:`linear-gradient(135deg,rgba(245,166,35,0.08),rgba(245,166,35,0.03))`,border:"1px solid rgba(245,166,35,0.15)",borderRadius:18,padding:20,marginBottom:12,textAlign:"center"}}>
+                <div style={{fontSize:32,marginBottom:8}}>🎯</div>
+                <div style={{fontSize:14,fontWeight:800,color:C.text,marginBottom:4}}>Quick Help Carousel</div>
+                <div style={{fontSize:12,color:C.text2,marginBottom:12,lineHeight:1.5}}>Browse quick solutions for common delivery situations</div>
+                <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:50,padding:"8px 16px",color:"#000",fontSize:13,fontWeight:800,cursor:"pointer",fontFamily:C.sans}}>Unlock with Elite</button>
+              </div>
+            )}
 
             {/* 10 Free Tips */}
             <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
