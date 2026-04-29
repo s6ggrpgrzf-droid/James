@@ -1151,7 +1151,7 @@ function VideoPlayer({video}) {
           {sc.statSub&&<div style={{fontSize:18,fontWeight:800,color:"rgba(255,255,255,0.8)",animation:"vUp 0.4s 0.15s both",opacity:0}}>{sc.statSub}</div>}
           {sc.hed&&<div style={{fontSize:sc.hed.length>30?24:30,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${vc})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",whiteSpace:"pre-line",animation:"vUp 0.5s 0.15s cubic-bezier(0.16,1,0.3,1) both",opacity:0}}>{sc.hed}</div>}
           <div style={{width:32,height:2,borderRadius:99,background:`linear-gradient(90deg,${vc},#fff)`,animation:"vFade 0.4s 0.3s both",opacity:0}}/>
-          {sc.sub&&<div style={{fontSize:12,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.75,animation:"vUp 0.5s 0.3s both",opacity:0}} dangerouslySetInnerHTML={{__html:sc.sub.replace(/\n/g,'<br/>')}}/>}
+          {sc.sub&&<div style={{fontSize:12,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.75,animation:"vUp 0.5s 0.3s both",opacity:0}}>{sc.sub.split('\n').map((line,i,arr)=><React.Fragment key={i}>{line}{i<arr.length-1&&<br/>}</React.Fragment>)}</div>}
           {sc.hi&&<div style={{width:"100%",background:`${sc.hi.color}10`,border:`1px solid ${sc.hi.color}40`,borderRadius:12,padding:"11px 14px",animation:"vUp 0.5s 0.45s both",opacity:0}}><div style={{fontSize:12,fontWeight:700,color:sc.hi.color,lineHeight:1.7,whiteSpace:"pre-line"}}>{sc.hi.text}</div></div>}
           {sc.cite&&<div style={{fontSize:12,color:"rgba(255,255,255,0.25)",fontStyle:"italic",textAlign:"center",animation:"vFade 0.4s 0.6s both",opacity:0}}>{sc.cite}</div>}
           {sc.vs&&<div style={{display:"flex",gap:8,width:"100%",animation:"vUp 0.5s 0.3s both",opacity:0}}>
@@ -1504,6 +1504,11 @@ function App() {
   const searchDebounce = useRef(null);
   const [searchDisplay, setSearchDisplay] = useState("");
 
+  useEffect(()=>()=>{
+    if(searchDebounce.current) clearTimeout(searchDebounce.current);
+    if(tapTimer.current) clearTimeout(tapTimer.current);
+  },[]);
+
   // Escape key closes paywall modal
   useEffect(()=>{
     const h=e=>{if(e.key==="Escape"&&showPay){setShowPay(false);setPayStep("offer");}};
@@ -1578,12 +1583,7 @@ function App() {
       doLoad(true);
     };
 
-    const legacyUnlock = params.get("dp3")==="elite";
-    if(legacyUnlock){
-      save("dp3-elite",true);
-      history.replaceState(null,"",window.location.pathname);
-      doLoad(true);
-    } else if(sessionId){
+    if(sessionId){
       history.replaceState(null,"",window.location.pathname);
       fetch(VERIFY_URL, {
         method:"POST",
@@ -1810,19 +1810,19 @@ function App() {
                 ["What's free and what's Elite?",
                  "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($10 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship."],
                 ["I paid but my access didn't unlock. What do I do?",
-                 "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
+                 "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Email support@droppilot.app and we'll sort it out same day."],
                 ["How do I add DropPilot to my home screen?",
                  "On iPhone: tap the Share button (the box with an arrow) in Safari, then tap 'Add to Home Screen.' On Android: tap the three-dot menu in Chrome, then 'Add to Home screen.' It'll sit on your home screen and open like a real app."],
                 ["Does the app work offline?",
                  "Yes — once it's loaded, all the tips, scripts, and guides work without a connection. Your notes and checklist progress save locally on your phone. The only thing that needs internet is the initial load and the Stripe payment."],
                 ["Is my data saved if I clear my browser or get a new phone?",
-                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset. Elite access can be restored — contact support from your original Stripe receipt email and we'll sort it out same day."],
+                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset. Elite access can be restored — email support@droppilot.app from the same address used at checkout and we'll sort it out same day."],
                 ["What platforms does DropPilot cover?",
                  "DoorDash, Uber Eats, Lyft, Instacart, Walmart Spark, Amazon Flex, Uber (rideshare), and GoPuff. Every platform has its own habits, appeal letter templates, checklist, and a dedicated section in the Basics guide."],
                 ["Can I use DropPilot on multiple devices?",
-                 "Yes — just pay once and it's yours. Each device stores access locally, so if you set up a new phone just reach out with your original Stripe receipt and we'll get you restored. Notes and checklist progress are device-specific."],
+                 "Yes — just pay once and it's yours. Each device stores access locally, so if you set up a new phone email support@droppilot.app from the address used at checkout and we'll get you restored. Notes and checklist progress are device-specific."],
                 ["Something's not working. How do I get help?",
-                 "For payment or access issues, email the address on your Stripe receipt. For anything else, you can reach out through the same channel. Most issues are resolved same day."],
+                 "Email support@droppilot.app — payment issues, access problems, anything else. Most issues are resolved same day."],
               ].map(([q,a],i)=>{
                 const open=faqOpen===i;
                 return(
@@ -1843,6 +1843,16 @@ function App() {
           {/* Replay intro */}
           <div style={{marginBottom:14}}>
             <button onClick={()=>{setShowProfile(false);setShowIntro(true);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"10px 12px",color:C.text3,fontSize:13,width:"100%",cursor:"pointer"}}>↺ Replay Intro</button>
+          </div>
+
+          {/* Support & legal */}
+          <div style={{marginBottom:14,padding:"12px 14px",background:C.s1,border:"1px solid rgba(255,255,255,0.06)",borderRadius:12}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:8,textTransform:"uppercase",letterSpacing:"1px"}}>Support & Legal</div>
+            <a href="mailto:support@droppilot.app" style={{display:"block",fontSize:13,fontWeight:700,color:C.amber,textDecoration:"none",marginBottom:6}}>✉ support@droppilot.app</a>
+            <div style={{fontSize:12,color:C.text3}}>
+              <a href="terms.html" target="_blank" rel="noopener" style={{color:C.text2,textDecoration:"none",marginRight:14}}>Terms</a>
+              <a href="privacy.html" target="_blank" rel="noopener" style={{color:C.text2,textDecoration:"none"}}>Privacy</a>
+            </div>
           </div>
 
           <button onClick={()=>setShowProfile(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
@@ -2927,7 +2937,26 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+class ErrorBoundary extends React.Component {
+  constructor(p){super(p); this.state={err:null};}
+  static getDerivedStateFromError(err){return{err};}
+  componentDidCatch(err,info){if(window.console)console.error("DropPilot error:",err,info);}
+  render(){
+    if(this.state.err){
+      return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"32px 24px",background:"#07080A",color:"#EDF0F7",fontFamily:"system-ui,sans-serif",textAlign:"center"}},
+        React.createElement("div",{style:{maxWidth:380}},
+          React.createElement("div",{style:{fontSize:48,marginBottom:16}},"⚠️"),
+          React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:8}},"Something went wrong"),
+          React.createElement("div",{style:{fontSize:14,color:"#8B95A8",lineHeight:1.6,marginBottom:24}},"The app hit an unexpected error. Your saved progress is fine — try reloading. If this keeps happening, email support@droppilot.app."),
+          React.createElement("button",{onClick:()=>window.location.reload(), style:{background:"linear-gradient(135deg,#F5A623,#C8820A)",border:"none",borderRadius:99,padding:"12px 28px",fontSize:14,fontWeight:800,color:"#000",cursor:"pointer"}},"Reload")
+        )
+      );
+    }
+    return this.props.children;
+  }
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(ErrorBoundary,null,React.createElement(App)));
 
   </script>
 </body>
