@@ -19,6 +19,10 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.TOKEN_SECRET) {
+    return res.status(503).json({ valid: false, error: "Payment system not configured" });
+  }
+
   const { session_id } = req.body;
 
   // Basic sanity check — Stripe session IDs always start with cs_

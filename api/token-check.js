@@ -20,6 +20,11 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
+
+  if (!process.env.TOKEN_SECRET) {
+    return res.status(503).json({ valid: false, error: "Token verification not configured" });
+  }
+
   const { token } = req.body;
   if (!token || typeof token !== "string") {
     return res.status(400).json({ valid: false });

@@ -7,6 +7,10 @@
     "api/token-check.js": {
       "memory": 128,
       "maxDuration": 5
+    },
+    "api/health.js": {
+      "memory": 128,
+      "maxDuration": 5
     }
   }
 }

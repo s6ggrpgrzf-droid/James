@@ -1425,6 +1425,7 @@ function App() {
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [toast, setToast]       = useState(null);
+  const showToast = (msg) => setToast(msg);
 
   // Modals
   const [showPay, setShowPay]   = useState(false);
@@ -1624,7 +1625,7 @@ function App() {
               if(data.valid){ save("dp3-token-ts",Date.now()); doLoad(true); }
               else { doLoad(false); }
             })
-            .catch(()=>doLoad(true));
+            .catch(()=>doLoad(false));
           }
         } else {
           doLoad(false);
