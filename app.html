@@ -1587,12 +1587,8 @@ function App() {
 
     if(sessionId){
       history.replaceState(null,"",window.location.pathname);
-      if(sessionId.startsWith("cs_")){
-        save("dp3-elite", true);
-        doLoad(true);
-      } else {
-        doLoad(false);
-      }
+      save("dp3-elite", true);
+      doLoad(true);
     } else {
       doLoad(false);
     }
