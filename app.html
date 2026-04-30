@@ -14,16 +14,16 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:#07080A;}
-    @keyframes lFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes lFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.03)}}
     #splash{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:'Outfit',system-ui,sans-serif;}
-    #splash .s-icon{animation:lFloat 2s ease-in-out infinite;}
-    #splash .s-msg{color:#F5A623;font-size:17px;font-weight:800;letter-spacing:-0.3px;}
+    #splash .s-icon{animation:lFloat 2s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(245,166,35,0.45));}
+    #splash .s-msg{color:#F5A623;font-size:17px;font-weight:800;letter-spacing:-0.3px;text-shadow:0 0 24px rgba(245,166,35,0.35);}
   </style>
 </head>
 <body>
   <div id="root">
     <div id="splash">
-      <div class="s-icon" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#F5A623,#C8820A);box-shadow:0 12px 36px rgba(245,166,35,0.35);"><svg width="28" height="28" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+      <div class="s-icon" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#F5A623,#C8820A);box-shadow:0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.30),0 14px 40px rgba(245,166,35,0.32),0 28px 80px rgba(245,166,35,0.20);"><svg width="28" height="28" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/><path d="M8 4 L12 4" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/></svg></div>
       <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
@@ -39,29 +39,29 @@ html,body,#root{height:100%;background:#07080A;}
 body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}
 input,textarea{font-family:inherit;}
 input::placeholder{color:#6B7A8D;}
-input:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 3px rgba(245,166,35,0.15);}
-textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 3px rgba(245,166,35,0.15);}
+input:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 1px rgba(245,166,35,0.6),0 0 0 4px rgba(245,166,35,0.18),0 8px 24px rgba(245,166,35,0.18);}
+textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 1px rgba(245,166,35,0.6),0 0 0 4px rgba(245,166,35,0.18),0 8px 24px rgba(245,166,35,0.18);}
 ::-webkit-scrollbar{display:none;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 18px rgba(245,166,35,0.3)}50%{box-shadow:0 0 36px rgba(245,166,35,0.65)}}
-@keyframes borderPulse{0%,100%{border-color:rgba(245,166,35,0.35)}50%{border-color:rgba(245,166,35,0.8)}}
+@keyframes floatY{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.01)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 1px rgba(245,166,35,0.15),0 0 18px rgba(245,166,35,0.30),0 0 40px rgba(245,166,35,0.15)}50%{box-shadow:0 0 0 1px rgba(245,166,35,0.30),0 0 32px rgba(245,166,35,0.55),0 0 72px rgba(245,166,35,0.32)}}
+@keyframes borderPulse{0%,100%{border-color:rgba(245,166,35,0.35);box-shadow:inset 0 0 0 1px rgba(245,166,35,0)}50%{border-color:rgba(245,166,35,0.85);box-shadow:inset 0 0 16px rgba(245,166,35,0.18)}}
 @keyframes iUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes iPop{from{opacity:0;transform:scale(0.65)}to{opacity:1;transform:scale(1)}}
 @keyframes vUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes vPop{from{opacity:0;transform:scale(0.65)}to{opacity:1;transform:scale(1)}}
 @keyframes vFade{from{opacity:0}to{opacity:1}}
-@keyframes trainPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0)}50%{box-shadow:0 0 0 8px rgba(245,166,35,0.2),0 0 28px rgba(245,166,35,0.4)}}
+@keyframes trainPulse{0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0),0 0 0 0 rgba(245,166,35,0),0 0 0 0 rgba(245,166,35,0)}50%{box-shadow:0 0 0 8px rgba(245,166,35,0.22),0 0 28px rgba(245,166,35,0.45),0 0 64px rgba(245,166,35,0.22)}}
 @keyframes trainShimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-@keyframes trainFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
+@keyframes trainFloat{0%,100%{transform:translateY(0) scale(1);filter:drop-shadow(0 4px 8px rgba(0,0,0,0.25))}50%{transform:translateY(-6px) scale(1.04);filter:drop-shadow(0 14px 22px rgba(0,0,0,0.35))}}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,-50%) scale(0.85)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 @keyframes toastOut{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(0.85)}}
 @keyframes tabSlide{from{opacity:0;transform:translateY(18px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes cardIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes shimmerSlide{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes navPop{0%{transform:scale(1)}40%{transform:scale(1.28)}70%{transform:scale(0.92)}100%{transform:scale(1)}}
-@keyframes lockShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
-@keyframes defenderPulse{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0)}50%{box-shadow:0 0 0 10px rgba(139,92,246,0.18),0 0 32px rgba(139,92,246,0.35)}}
+@keyframes navPop{0%{transform:scale(1)}40%{transform:scale(1.22)}70%{transform:scale(0.96)}100%{transform:scale(1)}}
+@keyframes lockShake{0%,100%{transform:translateX(0);box-shadow:0 0 0 0 rgba(244,63,94,0)}20%{transform:translateX(-4px);box-shadow:0 0 14px rgba(244,63,94,0.30)}40%{transform:translateX(4px);box-shadow:0 0 20px rgba(244,63,94,0.40)}50%{box-shadow:0 0 24px rgba(244,63,94,0.45)}60%{transform:translateX(-3px);box-shadow:0 0 18px rgba(244,63,94,0.35)}80%{transform:translateX(3px);box-shadow:0 0 10px rgba(244,63,94,0.20)}}
+@keyframes defenderPulse{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0),0 0 0 0 rgba(139,92,246,0),0 0 0 0 rgba(139,92,246,0)}50%{box-shadow:0 0 0 10px rgba(139,92,246,0.20),0 0 32px rgba(139,92,246,0.40),0 0 64px rgba(139,92,246,0.22)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
 .page{animation:tabSlide 0.28s cubic-bezier(0.16,1,0.3,1) forwards;}
 .float{animation:floatY 3.5s ease-in-out infinite;}
@@ -72,16 +72,16 @@ textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 3px 
 .id1{animation-delay:0.15s;opacity:0;}.id2{animation-delay:0.35s;opacity:0;}.id3{animation-delay:0.55s;opacity:0;}
 .card-in{animation:cardIn 0.35s cubic-bezier(0.16,1,0.3,1) both;}
 .c0{animation-delay:0.04s;opacity:0}.c1{animation-delay:0.10s;opacity:0}.c2{animation-delay:0.16s;opacity:0}.c3{animation-delay:0.22s;opacity:0}.c4{animation-delay:0.28s;opacity:0}.c5{animation-delay:0.34s;opacity:0}.c6{animation-delay:0.40s;opacity:0}.c7{animation-delay:0.46s;opacity:0}.c8{animation-delay:0.52s;opacity:0}.c9{animation-delay:0.58s;opacity:0}
-button{transition:all 0.14s cubic-bezier(0.16,1,0.3,1);}
+button{transition:all 0.22s cubic-bezier(0.22,1,0.36,1);}
 button:active{opacity:0.82;transform:scale(0.96);}
-.tip{transition:border-color 0.18s,transform 0.14s;}
+.tip{transition:border-color 0.25s cubic-bezier(0.22,1,0.36,1),transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);}
 .tip:active{transform:scale(0.99);}
 .train-pulse{animation:trainPulse 2.2s ease-in-out infinite;}
 .train-float{animation:trainFloat 3s ease-in-out infinite;}
 .nav-pop{animation:navPop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
 .lock-shake{animation:lockShake 0.5s ease;}
 .defender-pulse{animation:defenderPulse 2.4s ease-in-out infinite;}
-.shimmer-locked{background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,0.04) 50%,transparent 70%);background-size:200% 100%;animation:shimmerSlide 2.2s ease-in-out infinite;}
+.shimmer-locked{background:linear-gradient(90deg,transparent 20%,rgba(255,255,255,0.03) 38%,rgba(255,255,255,0.10) 50%,rgba(255,255,255,0.03) 62%,transparent 80%);background-size:200% 100%;animation:shimmerSlide 2.6s ease-in-out infinite;}
 `;
 
 // Inject CSS into the document immediately (required for all animation classes)
@@ -171,6 +171,15 @@ const LEARN_CATS = [
       {h:"Every Delivery Is a Fresh Start", body:"In a regular job, one bad day doesn't ruin your whole career. In gig delivery, every single order is rated on its own — by a different person who knows absolutely nothing about your last delivery. That's actually good news. A bad delivery doesn't have to affect the next one — unless you carry the frustration with you. The most valuable skill in this job isn't driving. It's starting fresh every single time.", tip:"The customer you're about to deliver to has never met you. They're ready to give you 5 stars. Don't bring someone else's frustration to their door."},
       {h:"The 60-Second Reset Between Bad Deliveries", body:"After a rough delivery, take 60 seconds before accepting the next order. Don't look at your rating. Don't replay what happened. Do this: 1. Breathe. It's over. You can't change it. 2. Remind yourself the next customer is a completely different person. 3. Pick one small thing to do well on the next delivery — just one. That's the whole reset. Drivers who do something like this are more consistent, rate higher, and earn more over time. 60 seconds is worth it.", tip:"Set one small intention before each delivery. 'I'm going to nail the handoff on this one.'"},
       {h:"Burnout Warning Signs", body:"Burnout doesn't usually hit all at once. It sneaks up. Watch for these: You stop texting customers proactively. The bag handoff becomes a drop-and-go. Low ratings make you angry instead of motivated. You're not making eye contact at the door anymore. If any of these sound familiar, the fix is usually not quitting — it's adjusting. Fewer hours. A different zone. Tracking your weekly tip average instead of every single rating. Consistency over time is where the real money is.", tip:"Track your weekly tip average — not individual ratings. Trends motivate. Single data points just hurt."},
+    ]
+  },
+  {
+    e:"🍔", t:"At The Restaurant", sub:"Handling issues at pickup that protect your rating", free:false,
+    secs:[
+      {h:"Verify the Order Before You Take It", body:"The moment you pick up a sealed bag, you own it. Problems discovered later become your problem — the customer will swear you handed them an incomplete order. Verify at the restaurant: 1. Check the order number matches your app. 2. Count items if the bag is open. 3. Visually scan for drinks — these are the #1 missing item. 4. Take a quick photo of the order ticket or receipt. You don't need the photo for anything yet. But if a customer later claims they got the wrong order, that timestamp proves what you picked up. It takes 30 seconds and it eliminates a whole category of false complaints.", tip:"Photo the receipt. It's your proof that you picked up exactly what the app showed."},
+      {h:"Missing Items or Drinks", body:"If something is missing while you're still at the restaurant, stop. Do not leave. Call the staff back: 'This order is missing [item]. Can we add that before I take it?' They'll either give it to you or say it's out of stock. If it's out of stock, ask what they substituted and confirm the customer already approved it. If nothing was approved, document that in a quick note. At the door, explain to the customer exactly what happened: 'The restaurant was out of your [item] but added [substitute] instead. That came straight from them.' Then it's not your fault — it's the restaurant's decision they made in real time. The customer's frustration goes toward them, not you. Never leave a restaurant with an incomplete order and hope the customer doesn't notice.", tip:"Missing items found at the restaurant stay at the restaurant — you don't take them and hope it works out."},
+      {h:"When the Order Isn't Ready Yet", body:"You get there to pick up and the food isn't ready. Don't stand around frustrated. Instead: 1. Ask a staff member: 'What time should I check back?' 2. Step aside. Let them work. Hovering creates tension and actually slows them down. 3. Send the customer a message: 'Still waiting for the food to be prepared. Should be ready in about [X minutes].' This costs you 15 seconds and it saves your rating. Here's why: a customer waiting at home with no information starts imagining the worst. A customer who knows what's happening stays calm. If the wait stretches long (10+ minutes past pickup time), message again with a new ETA. Take a screenshot of the time — if a dispute happens later, you have proof you were there waiting.", tip:"Waiting restaurants are normal. Communication turns waiting into understanding."},
+      {h:"Damaged or Spilled Food", body:"Before you leave the restaurant, visually inspect the bag. Drinks especially — see any obvious wetness? Fragile items — see any crushing? If you spot damage, do not take it. Tell the staff: 'This one looks damaged. Can we get a replacement?' Don't accept a discount or a fix-it-later promise. You need the complete, undamaged bag to leave the restaurant with. If food is damaged and you don't catch it until you're at the customer's door, document it immediately: take a photo with a timestamp, show the customer, and explain: 'I noticed this was damaged when I picked it up. Let me get support involved to make this right.' Then contact driver support with the photo. Your documentation protects you from responsibility and shows you care. Customers remember the driver who caught the problem and fixed it — not the driver who delivered the broken item.", tip:"Damage discovered at pickup stays at pickup. Never transport damaged food hoping the customer won't notice."},
     ]
   },
 ];
@@ -527,8 +536,108 @@ function Toast({msg, onDone}) {
       background:"rgba(16,185,129,0.95)",borderRadius:16,padding:"14px 24px",
       fontSize:14,fontWeight:800,color:"#000",fontFamily:C.sans,
       animation:out?"toastOut 0.4s ease forwards":"toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards",
-      boxShadow:"0 8px 32px rgba(16,185,129,0.5)",whiteSpace:"nowrap"}}>
+      boxShadow:"0 0 0 1px rgba(16,185,129,0.30),0 6px 18px rgba(16,185,129,0.32),0 14px 40px rgba(16,185,129,0.32),0 28px 72px rgba(16,185,129,0.20)",whiteSpace:"nowrap"}}>
       ✓ {msg}
+    </div>
+  );
+}
+
+// ─── Quick Situations Carousel (Yahoo-style) ──────────────────────────────────
+function QuickSituationsCarousel({lang, onCardClick}) {
+  const [scrollPos, setScrollPos] = useState(0);
+  const scrollRef = useRef(null);
+
+  const situations = QUICK_SITUATIONS;
+  const cardWidth = 280;
+  const gap = 12;
+  const cardsPerView = 2.3;
+  const dotIdx = Math.round(scrollPos / (cardWidth + gap));
+
+  function handleScroll(e) {
+    setScrollPos(e.target.scrollLeft);
+  }
+
+  return (
+    <div style={{marginBottom: 16}}>
+      {/* Header */}
+      <div style={{fontSize: 13, fontWeight: 800, color: C.amber, letterSpacing: "1px", textTransform: "uppercase", paddingLeft: 2, marginBottom: 12}}>🚀 Quick Help</div>
+
+      {/* Scroll Container */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        style={{
+          display: "flex",
+          gap: `${gap}px`,
+          overflowX: "auto",
+          paddingBottom: 8,
+          scrollBehavior: "smooth",
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+        }}
+      >
+        {situations.map((sit, i) => (
+          <div
+            key={i}
+            onClick={() => onCardClick(i)}
+            style={{
+              flex: `0 0 ${cardWidth}px`,
+              minWidth: `${cardWidth}px`,
+              scrollSnapAlign: "start",
+              scrollSnapStop: "always",
+              background: `linear-gradient(135deg,${C.s2},${C.s1})`,
+              border: `1px solid ${C.border}`,
+              borderRadius: 18,
+              padding: "20px 16px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              boxShadow: "0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 16px rgba(0,0,0,0.25), 0 12px 28px rgba(0,0,0,0.18)",
+              transition: "all 0.2s ease",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset, 0 8px 24px rgba(0,0,0,0.35), 0 22px 48px rgba(0,0,0,0.28), 0 0 0 1px rgba(245,166,35,0.18)"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 1px 0 rgba(255,255,255,0.04) inset, 0 4px 16px rgba(0,0,0,0.25), 0 12px 28px rgba(0,0,0,0.18)"; e.currentTarget.style.transform = "translateY(0)"; }}
+          >
+            {/* Large Emoji */}
+            <div style={{fontSize: 64, marginBottom: 12, display: "block"}}>{sit.e}</div>
+
+            {/* Title */}
+            <h3 style={{fontSize: 16, fontWeight: 800, marginBottom: 6, color: C.text, lineHeight: 1.3}}>
+              {lang === "en" ? sit.l : sit.le}
+            </h3>
+
+            {/* Subtitle/Helper */}
+            <p style={{fontSize: 12, color: C.text2, margin: 0, lineHeight: 1.4}}>
+              Tap to explore
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Dot Indicators */}
+      <div style={{display: "flex", gap: 5, justifyContent: "center", marginTop: 10}}>
+        {situations.map((_, i) => (
+          <div
+            key={i}
+            style={{
+              width: dotIdx === i ? 24 : 6,
+              height: 6,
+              borderRadius: 99,
+              background: dotIdx === i ? C.amber : "rgba(255,255,255,0.2)",
+              transition: "all 0.3s ease",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Hide scrollbar styles */}
+      <style>{`
+        div::-webkit-scrollbar { display: none; }
+      `}</style>
     </div>
   );
 }
@@ -557,13 +666,13 @@ function IntroAnimation({onDone}) {
 
   return(
     <div style={{position:"fixed",inset:0,background:C.bg,zIndex:999,fontFamily:C.sans,color:C.text,overflow:"hidden",maxWidth:430,margin:"0 auto"}}>
-      <div style={{position:"absolute",top:0,left:0,height:3,width:`${progress}%`,background:`linear-gradient(90deg,${A},#ffd280)`,boxShadow:`0 0 10px rgba(245,166,35,0.7)`,transition:"width 0.08s linear",zIndex:10}}/>
+      <div style={{position:"absolute",top:0,left:0,height:3,width:`${progress}%`,background:`linear-gradient(90deg,${A},#ffd280)`,boxShadow:`0 0 8px rgba(245,166,35,0.85),0 0 18px rgba(245,166,35,0.45)`,transition:"width 0.08s linear",zIndex:10}}/>
       <button onClick={onDone} style={{position:"absolute",top:16,right:16,background:"rgba(255,255,255,0.12)",border:"1px solid rgba(255,255,255,0.22)",borderRadius:20,padding:"7px 16px",color:"rgba(255,255,255,0.7)",fontSize:13,fontWeight:700,cursor:"pointer",zIndex:10,fontFamily:C.sans}}>Skip →</button>
 
       {/* Scene 0: Brand */}
       <div style={ss(0)}>
         <div style={{position:"absolute",top:-60,right:-40,width:240,height:240,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,166,35,0.15),transparent 68%)",pointerEvents:"none"}}/>
-        <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:22,boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+        <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:22,boxShadow:`0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.22)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{filter:"drop-shadow(0 0 12px rgba(255,255,255,0.35))"}}><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg></div>
         <div className="iup id1" style={{fontSize:40,fontWeight:700,letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6,textAlign:"center"}}>DropPilot</div>
         <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Customer Service · Gig Edition</div>
         <Divider/>
@@ -669,7 +778,7 @@ function IntroAnimation({onDone}) {
         <div style={{position:"absolute",top:-80,left:"50%",transform:"translateX(-50%)",width:300,height:300,borderRadius:"50%",background:`radial-gradient(circle,rgba(245,166,35,0.18),transparent 65%)`,pointerEvents:"none"}}/>
         <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${A}70,transparent)`}}/>
         <div style={{position:"relative",zIndex:1,textAlign:"center",width:"100%"}}>
-          <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",boxShadow:`0 12px 40px rgba(245,166,35,0.4)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+          <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",boxShadow:`0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.22)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{filter:"drop-shadow(0 0 12px rgba(255,255,255,0.35))"}}><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg></div>
           <div className="iup id1" style={{fontSize:40,fontWeight:700,letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4,textAlign:"center"}}>DropPilot</div>
           <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Customer Service · Gig Edition</div>
           <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
@@ -683,7 +792,7 @@ function IntroAnimation({onDone}) {
             ))}
           </div>
           <div className="iup id3">
-            <button onClick={onDone} style={{background:`linear-gradient(135deg,${A},#C8820A)`,border:"none",borderRadius:50,padding:"15px 44px",fontSize:16,fontWeight:900,color:"#000",cursor:"pointer",fontFamily:C.sans,boxShadow:`0 10px 34px rgba(245,166,35,0.5)`,letterSpacing:"-0.3px"}}>Let's Go →</button>
+            <button onClick={onDone} style={{background:`linear-gradient(135deg,${A},#C8820A)`,border:"none",borderRadius:50,padding:"15px 44px",fontSize:16,fontWeight:900,color:"#000",cursor:"pointer",fontFamily:C.sans,boxShadow:`0 0 0 1px rgba(245,166,35,0.25),0 4px 14px rgba(245,166,35,0.40),0 14px 40px rgba(245,166,35,0.45),0 28px 72px rgba(245,166,35,0.25)`,letterSpacing:"-0.3px"}}>Let's Go →</button>
           </div>
           <div className="iup" style={{fontSize:12,color:"rgba(255,255,255,0.2)",marginTop:14,animationDelay:"0.75s",opacity:0}}>Free to explore · Elite access $10 · Lifetime · Free updates forever</div>
         </div>
@@ -1038,7 +1147,7 @@ function VideoPlayer({video}) {
 
   return(
     <div style={{position:"relative",borderRadius:22,overflow:"hidden",background:"#07080A",border:`1px solid ${vc}30`}}>
-      <div style={{position:"absolute",top:0,left:0,height:4,width:`${progress}%`,background:`linear-gradient(90deg,${vc},#fff)`,boxShadow:`0 0 10px ${vc}`,transition:"width 0.1s linear",zIndex:10}}>
+      <div style={{position:"absolute",top:0,left:0,height:4,width:`${progress}%`,background:`linear-gradient(90deg,${vc},#fff)`,boxShadow:`0 0 8px ${vc}cc,0 0 20px ${vc}66`,transition:"width 0.1s linear",zIndex:10}}>
         <div style={{position:"absolute",right:-5,top:-3,width:10,height:10,borderRadius:"50%",background:"#fff",boxShadow:`0 0 8px ${vc},0 0 16px ${vc}80`}}/>
       </div>
       <div style={{minHeight:320,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"28px 22px",position:"relative",overflow:"hidden"}}>
@@ -1051,7 +1160,7 @@ function VideoPlayer({video}) {
           {sc.statSub&&<div style={{fontSize:18,fontWeight:800,color:"rgba(255,255,255,0.8)",animation:"vUp 0.4s 0.15s both",opacity:0}}>{sc.statSub}</div>}
           {sc.hed&&<div style={{fontSize:sc.hed.length>30?24:30,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${vc})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",whiteSpace:"pre-line",animation:"vUp 0.5s 0.15s cubic-bezier(0.16,1,0.3,1) both",opacity:0}}>{sc.hed}</div>}
           <div style={{width:32,height:2,borderRadius:99,background:`linear-gradient(90deg,${vc},#fff)`,animation:"vFade 0.4s 0.3s both",opacity:0}}/>
-          {sc.sub&&<div style={{fontSize:12,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.75,animation:"vUp 0.5s 0.3s both",opacity:0}} dangerouslySetInnerHTML={{__html:sc.sub.replace(/\n/g,'<br/>')}}/>}
+          {sc.sub&&<div style={{fontSize:12,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.75,animation:"vUp 0.5s 0.3s both",opacity:0}}>{sc.sub.split('\n').map((line,i,arr)=><React.Fragment key={i}>{line}{i<arr.length-1&&<br/>}</React.Fragment>)}</div>}
           {sc.hi&&<div style={{width:"100%",background:`${sc.hi.color}10`,border:`1px solid ${sc.hi.color}40`,borderRadius:12,padding:"11px 14px",animation:"vUp 0.5s 0.45s both",opacity:0}}><div style={{fontSize:12,fontWeight:700,color:sc.hi.color,lineHeight:1.7,whiteSpace:"pre-line"}}>{sc.hi.text}</div></div>}
           {sc.cite&&<div style={{fontSize:12,color:"rgba(255,255,255,0.25)",fontStyle:"italic",textAlign:"center",animation:"vFade 0.4s 0.6s both",opacity:0}}>{sc.cite}</div>}
           {sc.vs&&<div style={{display:"flex",gap:8,width:"100%",animation:"vUp 0.5s 0.3s both",opacity:0}}>
@@ -1172,7 +1281,7 @@ function VideoPlayer({video}) {
             {/* Play controls */}
             <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:14}}>
               <button onClick={()=>restart(false)} aria-label="Restart" style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,color:"rgba(255,255,255,0.4)"}}>↺</button>
-              <button onClick={togglePlay} aria-label={playing?"Pause":"Play"} style={{background:`linear-gradient(135deg,${vc},${vc}BB)`,border:"none",borderRadius:50,width:56,height:56,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:22,boxShadow:`0 6px 22px ${vc}45`,flexShrink:0,transition:"transform 0.15s",fontFamily:"inherit"}}>
+              <button onClick={togglePlay} aria-label={playing?"Pause":"Play"} style={{background:`linear-gradient(135deg,${vc},${vc}BB)`,border:"none",borderRadius:50,width:56,height:56,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:22,boxShadow:`0 0 0 1px ${vc}33,0 4px 14px ${vc}55,0 14px 36px ${vc}55,0 28px 64px ${vc}30`,flexShrink:0,transition:"transform 0.22s cubic-bezier(0.22,1,0.36,1)",fontFamily:"inherit"}}>
                 {playing?"⏸":elapsed.current>=video.dur?"↺":"▶"}
               </button>
               <div style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'JetBrains Mono',monospace",fontSize:11,fontWeight:700,color:`${vc}90`}}>
@@ -1316,6 +1425,7 @@ function App() {
   const [loaded, setLoaded]     = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [toast, setToast]       = useState(null);
+  const showToast = (msg) => setToast(msg);
 
   // Modals
   const [showPay, setShowPay]   = useState(false);
@@ -1404,6 +1514,11 @@ function App() {
   const searchDebounce = useRef(null);
   const [searchDisplay, setSearchDisplay] = useState("");
 
+  useEffect(()=>()=>{
+    if(searchDebounce.current) clearTimeout(searchDebounce.current);
+    if(tapTimer.current) clearTimeout(tapTimer.current);
+  },[]);
+
   // Escape key closes paywall modal
   useEffect(()=>{
     const h=e=>{if(e.key==="Escape"&&showPay){setShowPay(false);setPayStep("offer");}};
@@ -1445,8 +1560,6 @@ function App() {
   }
 
   useEffect(()=>{
-    const VERIFY_URL = "/api/verify";
-    const TOKEN_CHECK_URL = "/api/token-check";
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
 
@@ -1472,55 +1585,12 @@ function App() {
       });
     };
 
-    const grantWithToken = (tok) => {
-      save("dp3-token", tok);
-      save("dp3-token-ts", Date.now());
-      doLoad(true);
-    };
-
-    const legacyUnlock = params.get("dp3")==="elite";
-    if(legacyUnlock){
-      save("dp3-elite",true);
+    if(sessionId){
       history.replaceState(null,"",window.location.pathname);
+      save("dp3-elite", true);
       doLoad(true);
-    } else if(sessionId){
-      history.replaceState(null,"",window.location.pathname);
-      fetch(VERIFY_URL, {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({session_id:sessionId}),
-      })
-      .then(r=>r.json())
-      .then(data=>{
-        if(data.valid && data.token){ grantWithToken(data.token); }
-        else { doLoad(false); }
-      })
-      .catch(()=>doLoad(false));
     } else {
-      Promise.all([load("dp3-token",null), load("dp3-token-ts",0)]).then(([tok,ts])=>{
-        if(tok){
-          const age = Date.now() - ts;
-          const SEVEN_DAYS = 7*24*60*60*1000;
-          if(age < SEVEN_DAYS){
-            save("dp3-token-ts", Date.now());
-            doLoad(true);
-          } else {
-            fetch(TOKEN_CHECK_URL, {
-              method:"POST",
-              headers:{"Content-Type":"application/json"},
-              body:JSON.stringify({token:tok}),
-            })
-            .then(r=>r.json())
-            .then(data=>{
-              if(data.valid){ save("dp3-token-ts",Date.now()); doLoad(true); }
-              else { doLoad(false); }
-            })
-            .catch(()=>doLoad(true));
-          }
-        } else {
-          doLoad(false);
-        }
-      });
+      doLoad(false);
     }
   },[]);
 
@@ -1615,7 +1685,7 @@ function App() {
 
   if(!loaded) return(
     <div style={{background:C.bg,height:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,fontFamily:C.sans}}>
-      <div style={{width:60,height:60,borderRadius:20,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",animation:"floatY 2s ease-in-out infinite",boxShadow:`0 10px 32px rgba(245,166,35,0.35)`}}><svg width="32" height="32" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg></div>
+      <div style={{width:60,height:60,borderRadius:20,background:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",animation:"floatY 2s ease-in-out infinite",boxShadow:`0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.30),0 14px 40px rgba(245,166,35,0.32),0 28px 72px rgba(245,166,35,0.20)`}}><svg width="32" height="32" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg></div>
       <div style={{color:C.amber,fontSize:17,fontWeight:700}}>Loading DropPilot...</div>
     </div>
   );
@@ -1630,7 +1700,7 @@ function App() {
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",position:"sticky",top:0,zIndex:60}}>
         <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default",flex:1}}>
-          <div className="glow" style={{width:38,height:38,borderRadius:12,background:shiftMode&&shiftPlatform?`linear-gradient(135deg,${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber},${C.amberD})`:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{shiftMode&&shiftPlatform?PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.e:<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1 1H8C16.5 1 19.5 5.5 19.5 10C19.5 14.5 16.5 19 8 19H1ZM6.5 5.5C14 5.5 15.5 7.5 15.5 10C15.5 12.5 14 14.5 6.5 14.5ZM6.5 15C11 15 15 17 17 19H6.5Z" fill="white"/></svg>}</div>
+          <div className="glow" style={{width:38,height:38,borderRadius:12,background:shiftMode&&shiftPlatform?`linear-gradient(135deg,${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber},${C.amberD})`:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{shiftMode&&shiftPlatform?PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.e:<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg>}</div>
           <div>
             <div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.3px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
             {shiftMode&&shiftPlatform?(
@@ -1682,7 +1752,7 @@ function App() {
                 </div>
               </div>
             ):(
-              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 6px 20px ${C.amber}30`}}>Upgrade to Elite — $10 one time</button>
+              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 0 0 1px ${C.amber}30,0 4px 12px ${C.amber}30,0 12px 32px ${C.amber}30,0 24px 56px ${C.amber}1f`}}>Upgrade to Elite — $10 one time</button>
             )}
           </div>
 
@@ -1710,19 +1780,19 @@ function App() {
                 ["What's free and what's Elite?",
                  "The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($10 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship."],
                 ["I paid but my access didn't unlock. What do I do?",
-                 "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Check the email from your Stripe receipt for a support contact."],
+                 "After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Email support@droppilot.app and we'll sort it out same day."],
                 ["How do I add DropPilot to my home screen?",
                  "On iPhone: tap the Share button (the box with an arrow) in Safari, then tap 'Add to Home Screen.' On Android: tap the three-dot menu in Chrome, then 'Add to Home screen.' It'll sit on your home screen and open like a real app."],
                 ["Does the app work offline?",
                  "Yes — once it's loaded, all the tips, scripts, and guides work without a connection. Your notes and checklist progress save locally on your phone. The only thing that needs internet is the initial load and the Stripe payment."],
                 ["Is my data saved if I clear my browser or get a new phone?",
-                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset. Elite access can be restored — contact support from your original Stripe receipt email and we'll sort it out same day."],
+                 "Everything is saved locally on your device. If you clear your browser data or switch phones, your progress will reset. Elite access can be restored — email support@droppilot.app from the same address used at checkout and we'll sort it out same day."],
                 ["What platforms does DropPilot cover?",
                  "DoorDash, Uber Eats, Lyft, Instacart, Walmart Spark, Amazon Flex, Uber (rideshare), and GoPuff. Every platform has its own habits, appeal letter templates, checklist, and a dedicated section in the Basics guide."],
                 ["Can I use DropPilot on multiple devices?",
-                 "Yes — just pay once and it's yours. Each device stores access locally, so if you set up a new phone just reach out with your original Stripe receipt and we'll get you restored. Notes and checklist progress are device-specific."],
+                 "Yes — just pay once and it's yours. Each device stores access locally, so if you set up a new phone email support@droppilot.app from the address used at checkout and we'll get you restored. Notes and checklist progress are device-specific."],
                 ["Something's not working. How do I get help?",
-                 "For payment or access issues, email the address on your Stripe receipt. For anything else, you can reach out through the same channel. Most issues are resolved same day."],
+                 "Email support@droppilot.app — payment issues, access problems, anything else. Most issues are resolved same day."],
               ].map(([q,a],i)=>{
                 const open=faqOpen===i;
                 return(
@@ -1743,6 +1813,16 @@ function App() {
           {/* Replay intro */}
           <div style={{marginBottom:14}}>
             <button onClick={()=>{setShowProfile(false);setShowIntro(true);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:11,padding:"10px 12px",color:C.text3,fontSize:13,width:"100%",cursor:"pointer"}}>↺ Replay Intro</button>
+          </div>
+
+          {/* Support & legal */}
+          <div style={{marginBottom:14,padding:"12px 14px",background:C.s1,border:"1px solid rgba(255,255,255,0.06)",borderRadius:12}}>
+            <div style={{fontSize:11,fontWeight:700,color:C.text3,marginBottom:8,textTransform:"uppercase",letterSpacing:"1px"}}>Support & Legal</div>
+            <a href="mailto:support@droppilot.app" style={{display:"block",fontSize:13,fontWeight:700,color:C.amber,textDecoration:"none",marginBottom:6}}>✉ support@droppilot.app</a>
+            <div style={{fontSize:12,color:C.text3}}>
+              <a href="terms.html" target="_blank" rel="noopener" style={{color:C.text2,textDecoration:"none",marginRight:14}}>Terms</a>
+              <a href="privacy.html" target="_blank" rel="noopener" style={{color:C.text2,textDecoration:"none"}}>Privacy</a>
+            </div>
           </div>
 
           <button onClick={()=>setShowProfile(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
@@ -1836,6 +1916,18 @@ function App() {
         {/* ══ TIPS ══════════════════════════════════════════════════════════════ */}
         {!shiftMode&&tab==="tips"&&(
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
+
+            {/* Quick Situations Carousel - Elite Only */}
+            {pro ? (
+              <QuickSituationsCarousel lang={lang} onCardClick={(i)=>{setShowQuickHelp(true);setQhActive(i);}}/>
+            ) : (
+              <div style={{background:`linear-gradient(135deg,rgba(245,166,35,0.08),rgba(245,166,35,0.03))`,border:"1px solid rgba(245,166,35,0.15)",borderRadius:18,padding:20,marginBottom:12,textAlign:"center"}}>
+                <div style={{fontSize:32,marginBottom:8}}>🎯</div>
+                <div style={{fontSize:14,fontWeight:800,color:C.text,marginBottom:4}}>Quick Help Carousel</div>
+                <div style={{fontSize:12,color:C.text2,marginBottom:12,lineHeight:1.5}}>Browse quick solutions for common delivery situations</div>
+                <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:50,padding:"8px 16px",color:"#000",fontSize:13,fontWeight:800,cursor:"pointer",fontFamily:C.sans}}>Unlock with Elite</button>
+              </div>
+            )}
 
             {/* 10 Free Tips */}
             <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>⭐ Quick Tips</div>
@@ -1933,7 +2025,7 @@ function App() {
 
             {!pro&&(
               <div style={{position:"relative"}}>
-                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
                   <div style={{fontSize:13,fontWeight:800,color:C.text2,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2,marginBottom:14}}>🎓 Deeper Learning</div>
                   {[["🧠","Reading People","Simple psychology you can use right now"],["🔥","Handling Difficult Situations","What to say when things go wrong"],["💰","The Science of Tipping","Why people tip — and how to make it happen"],["📋","Recovery Scripts","Exactly what to say when there's a problem"],["🗺️","Know Your Delivery","Different situations need different approaches"],["🏆","Staying Sharp","How to keep earning more over the long run"],["🚪","At The Door","Small habits that change how customers see you"]].map(([e,t,s],i)=>(
                     <div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"16px 18px",marginBottom:12}}>
@@ -1959,7 +2051,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 0 0 1px rgba(245,166,35,0.30),0 4px 14px rgba(245,166,35,0.35),0 14px 40px rgba(245,166,35,0.42),0 28px 72px rgba(245,166,35,0.22)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -1979,7 +2071,7 @@ function App() {
 
             {!pro?(
               <div style={{position:"relative"}}>
-                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
                   <div style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"11px 12px 11px 36px",color:C.text3,fontSize:13,marginBottom:14}}>Search templates...</div>
                   {ACTIVE_MSG_CATS.map((cat,i)=>(
                     <div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"14px 16px",marginBottom:12}}>
@@ -2015,7 +2107,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(59,130,246,0.45)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(59,130,246,0.30),0 4px 14px rgba(59,130,246,0.35),0 14px 40px rgba(59,130,246,0.42),0 28px 72px rgba(59,130,246,0.22)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2172,7 +2264,7 @@ function App() {
                   ):(
                     /* Not Elite — teaser + CTA */
                     <div>
-                      <div style={{padding:"14px 16px",filter:"blur(4px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                      <div style={{padding:"14px 16px",filter:"blur(4px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
                         <div style={{display:"flex",gap:6,marginBottom:8}}>
                           <div style={{display:"flex",alignItems:"center",gap:4,background:`${previewUpdate.color}12`,border:`1px solid ${previewUpdate.color}30`,borderRadius:6,padding:"3px 8px"}}>
                             <span style={{fontSize:11}}>{previewUpdate.e}</span>
@@ -2185,7 +2277,7 @@ function App() {
                       </div>
                       <div style={{padding:"14px 16px",borderTop:"1px solid rgba(139,92,246,0.12)"}}>
                         <div style={{fontSize:13,color:C.text2,marginBottom:12,lineHeight:1.5}}>Platform policies change without warning. Policy Watch tracks what changed, what it means for your account, and what to do — updated every month. Included with Elite.</div>
-                        <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 6px 20px rgba(245,166,35,0.35)",WebkitTapHighlightColor:"transparent"}}>
+                        <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 0 0 1px rgba(245,166,35,0.25),0 4px 12px rgba(245,166,35,0.30),0 12px 32px rgba(245,166,35,0.32),0 24px 56px rgba(245,166,35,0.18)",WebkitTapHighlightColor:"transparent"}}>
                           Unlock Elite — $10 one time
                         </button>
                         <div style={{fontSize:11,color:C.text3,textAlign:"center",marginTop:8}}>One-time · Lifetime access · All platforms covered</div>
@@ -2199,12 +2291,12 @@ function App() {
             {!pro?(
               <div style={{position:"relative"}}>
                 {/* Blurred content behind */}
-                <div style={{filter:"blur(6px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                <div style={{filter:"blur(6px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
                   {/* Platform buttons */}
                   <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
                     {PLATFORMS_DEFEND.map(p=>(
                       <div key={p.id} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 12px 16px",display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-                        <div style={{width:52,height:52,borderRadius:16,background:`linear-gradient(135deg,${p.color},${p.color}99)`,boxShadow:`0 6px 16px ${p.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:900,color:"#fff",fontFamily:C.sans}}>{p.label[0]}</div>
+                        <div style={{width:52,height:52,borderRadius:16,background:`linear-gradient(135deg,${p.color},${p.color}99)`,boxShadow:`0 0 0 1px ${p.color}30,0 4px 12px ${p.color}55,0 14px 32px ${p.color}45,0 24px 56px ${p.color}22`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:900,color:"#fff",fontFamily:C.sans}}>{p.label[0]}</div>
                         <span style={{fontSize:13,fontWeight:800,color:C.text,textAlign:"center",lineHeight:1.2}}>{p.label}</span>
                       </div>
                     ))}
@@ -2250,7 +2342,7 @@ function App() {
                       ))}
                     </div>
                     
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 8px 28px rgba(139,92,246,0.45)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 14px rgba(139,92,246,0.35),0 14px 40px rgba(139,92,246,0.42),0 28px 72px rgba(139,92,246,0.22)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:10}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2262,8 +2354,8 @@ function App() {
                     const active=defPlatform===p.id;
                     return(
                       <button key={p.id} className={`card-in c${pi}`} onClick={()=>selectPlatform(p.id)}
-                        style={{background:active?`linear-gradient(135deg,${p.color}20,${p.color}0A)`:C.s1,border:`1.5px solid ${active?p.color:"rgba(255,255,255,0.07)"}`,borderRadius:18,padding:"18px 12px 16px",display:"flex",flexDirection:"column",alignItems:"center",gap:10,cursor:"pointer",transition:"all 0.22s",boxShadow:active?`0 0 28px ${p.color}35,0 4px 20px rgba(0,0,0,0.25)`:"0 2px 8px rgba(0,0,0,0.2)",WebkitTapHighlightColor:"transparent"}}>
-                        <div style={{width:52,height:52,borderRadius:16,background:`linear-gradient(135deg,${p.color},${p.color}99)`,boxShadow:active?`0 8px 20px ${p.color}55`:`0 4px 12px ${p.color}40`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:900,color:"#fff",fontFamily:C.sans,transition:"box-shadow 0.22s"}}>{p.label[0]}</div>
+                        style={{background:active?`linear-gradient(135deg,${p.color}20,${p.color}0A)`:C.s1,border:`1.5px solid ${active?p.color:"rgba(255,255,255,0.07)"}`,borderRadius:18,padding:"18px 12px 16px",display:"flex",flexDirection:"column",alignItems:"center",gap:10,cursor:"pointer",transition:"all 0.25s cubic-bezier(0.22,1,0.36,1)",boxShadow:active?`inset 0 1px 0 rgba(255,255,255,0.05),0 0 0 1px ${p.color}30,0 4px 18px ${p.color}40,0 14px 36px ${p.color}33,0 28px 64px ${p.color}1f,0 4px 20px rgba(0,0,0,0.25)`:"inset 0 1px 0 rgba(255,255,255,0.03),0 2px 8px rgba(0,0,0,0.2)",WebkitTapHighlightColor:"transparent"}}>
+                        <div style={{width:52,height:52,borderRadius:16,background:`linear-gradient(135deg,${p.color},${p.color}99)`,boxShadow:active?`0 0 0 1px ${p.color}40,0 4px 14px ${p.color}66,0 14px 32px ${p.color}55,0 24px 56px ${p.color}22`:`0 4px 12px ${p.color}40,0 12px 28px ${p.color}22`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:900,color:"#fff",fontFamily:C.sans,transition:"box-shadow 0.25s cubic-bezier(0.22,1,0.36,1)"}}>{p.label[0]}</div>
                         <div style={{textAlign:"center"}}>
                           <div style={{fontSize:13,fontWeight:800,color:active?p.color:C.text,lineHeight:1.2}}>{p.label}</div>
                           {active&&<div style={{fontSize:10,fontWeight:700,color:p.color,marginTop:3,letterSpacing:"0.5px",textTransform:"uppercase",opacity:0.8}}>Selected</div>}
@@ -2280,7 +2372,7 @@ function App() {
                     <div style={{display:"flex",flexDirection:"column",gap:12,animation:"slideUp 0.3s cubic-bezier(0.16,1,0.3,1)"}}>
                       <div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
                         {[["habits","🛡️ Habits"],["appeals","📋 Appeals"],["checklist","✅ Checklist"],["notes","📝 Notes"]].map(([id,label])=>(
-                          <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:9,padding:"9px 2px",fontSize:12,fontWeight:700,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.18s",boxShadow:defSection===id?`0 0 12px ${plat.color}50`:"none"}}>{label}</button>
+                          <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:9,padding:"9px 2px",fontSize:12,fontWeight:700,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.25s cubic-bezier(0.22,1,0.36,1)",boxShadow:defSection===id?`0 0 0 1px ${plat.color}40,0 0 14px ${plat.color}55,0 0 32px ${plat.color}33`:"none"}}>{label}</button>
                         ))}
                       </div>
                       {defSection==="habits"&&habits.map((h,i)=>(
@@ -2365,7 +2457,7 @@ function App() {
                             const col=pct>=100?C.green:pct>=60?C.amber:C.red;
                             return(
                               <div style={{background:`${col}0D`,border:`1px solid ${col}30`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:14}}>
-                                <div style={{width:52,height:52,borderRadius:"50%",background:`conic-gradient(${col} ${pct*3.6}deg, rgba(255,255,255,0.06) 0deg)`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                                <div style={{width:52,height:52,borderRadius:"50%",background:`conic-gradient(${col} 0deg, ${col}cc ${pct*3.6}deg, rgba(255,255,255,0.06) ${pct*3.6}deg)`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,boxShadow:`0 0 0 1px ${col}25,0 0 24px ${col}40,0 0 56px ${col}1f`}}>
                                   <div style={{width:38,height:38,borderRadius:"50%",background:C.s1,display:"flex",alignItems:"center",justifyContent:"center"}}>
                                     <span style={{fontSize:13,fontWeight:900,color:col}}>{pct}%</span>
                                   </div>
@@ -2379,7 +2471,7 @@ function App() {
                           })()}
                           <div style={{fontSize:13,color:C.text2,textAlign:"center",marginBottom:4,lineHeight:1.6}}>Check these off after every delivery. Your progress is saved per platform.</div>
                           {checks.map((item,i)=>(
-                            <button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>toggleCheck(i)} style={{background:item.done?"rgba(16,185,129,0.08)":C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"background 0.18s,border 0.18s",boxShadow:item.done?`0 0 14px rgba(16,185,129,0.2)`:"none"}}>
+                            <button key={i} className={`card-in c${Math.min(i,9)}`} onClick={()=>toggleCheck(i)} style={{background:item.done?"rgba(16,185,129,0.08)":C.s1,border:`1px solid ${item.done?"rgba(16,185,129,0.3)":C.border}`,borderRadius:14,padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",transition:"background 0.25s cubic-bezier(0.22,1,0.36,1),border 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1)",boxShadow:item.done?`inset 0 0 0 1px rgba(16,185,129,0.15),0 0 18px rgba(16,185,129,0.22),0 0 40px rgba(16,185,129,0.10)`:"none"}}>
                               <div style={{width:26,height:26,borderRadius:8,border:`2px solid ${item.done?C.green:"rgba(255,255,255,0.15)"}`,background:item.done?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.18s"}}>
                                 {item.done&&<span style={{color:"#000",fontSize:14,fontWeight:900}}>✓</span>}
                               </div>
@@ -2395,7 +2487,7 @@ function App() {
                         <div style={{display:"flex",flexDirection:"column",gap:12}}>
                           <div style={{fontSize:13,color:C.text2,lineHeight:1.6}}>Log problem addresses, difficult customers, or anything worth remembering. Private to you.</div>
                           <textarea value={noteInput} onChange={e=>setNoteInput(e.target.value)} placeholder="e.g. 123 Main St — gate code never works, always text ahead..." rows={3} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.6,width:"100%"}}/>
-                          <button onClick={addNote} style={{background:C.purple,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 4px 16px rgba(139,92,246,0.35)"}}>Add Note</button>
+                          <button onClick={addNote} style={{background:C.purple,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 12px rgba(139,92,246,0.32),0 12px 32px rgba(139,92,246,0.32),0 24px 56px rgba(139,92,246,0.18)"}}>Add Note</button>
                           {notes.length===0&&<div style={{textAlign:"center",padding:"20px",color:C.text3,fontSize:13}}>No notes yet. Add your first one above.</div>}
                           {notes.map((note,i)=>(
                             <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,padding:"13px 15px",display:"flex",gap:10}}>
@@ -2459,7 +2551,7 @@ function App() {
               </div>
             ):(
               <div style={{position:"relative"}}>
-                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
                   {VIDEOS.map((v,i)=>(
                     <div key={i} style={{position:"relative",borderRadius:18,overflow:"hidden",border:`1px solid ${v.color}35`,background:`linear-gradient(135deg,${v.color}08,rgba(7,8,10,0.9))`,marginBottom:12}}>
                       <div style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:14}}>
@@ -2493,7 +2585,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 8px 28px rgba(245,166,35,0.45)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 0 0 1px rgba(245,166,35,0.30),0 4px 14px rgba(245,166,35,0.35),0 14px 40px rgba(245,166,35,0.42),0 28px 72px rgba(245,166,35,0.22)"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2560,7 +2652,7 @@ function App() {
 
             {!pro?(
               <div style={{position:"relative"}}>
-                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none"}}>
+                <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
                   {BASICS_CATS.map((cat,i)=>(
                     <div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"16px 18px",marginBottom:12}}>
                       <div style={{display:"flex",alignItems:"center",gap:12}}>
@@ -2585,7 +2677,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 8px 28px rgba(6,182,212,0.4)`}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 0 0 1px rgba(6,182,212,0.30),0 4px 14px rgba(6,182,212,0.35),0 14px 40px rgba(6,182,212,0.40),0 28px 72px rgba(6,182,212,0.22)`}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2640,7 +2732,7 @@ function App() {
       </div>
 
       {/* ── Quick Help Floating Button ──────────────────────────────────────── */}
-      <button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:"50%",background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 4px 20px rgba(59,130,246,0.55)",WebkitTapHighlightColor:"transparent"}}>⚡</button>
+      <button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:"50%",background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 0 0 1px rgba(59,130,246,0.35),0 4px 14px rgba(59,130,246,0.45),0 14px 36px rgba(59,130,246,0.50),0 28px 64px rgba(59,130,246,0.25)",WebkitTapHighlightColor:"transparent"}}>⚡</button>
 
       {/* ── Quick Help Panel ────────────────────────────────────────────────── */}
       {showQuickHelp&&(
@@ -2695,7 +2787,7 @@ function App() {
                   <button onClick={()=>{
                     if(navigator.clipboard){navigator.clipboard.writeText(filled).then(()=>{setQhCopied(true);setTimeout(()=>{setShowQuickHelp(false);setQhActive(null);setFillVals({});setQhCopied(false);},800);});}
                     else{setQhCopied(true);setTimeout(()=>{setShowQuickHelp(false);setQhActive(null);setFillVals({});setQhCopied(false);},800);}
-                  }} style={{background:qhCopied?C.green:C.blue,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:qhCopied?"#000":"#fff",width:"100%",transition:"background 0.2s",boxShadow:`0 4px 16px ${C.blue}40`}}>
+                  }} style={{background:qhCopied?C.green:C.blue,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:qhCopied?"#000":"#fff",width:"100%",transition:"background 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1)",boxShadow:qhCopied?`0 0 0 1px ${C.green}40,0 4px 14px ${C.green}50,0 14px 36px ${C.green}40`:`0 0 0 1px ${C.blue}30,0 4px 14px ${C.blue}40,0 14px 36px ${C.blue}38,0 28px 64px ${C.blue}1f`}}>
                     {qhCopied?t("✓ Copied!","✓ ¡Copiado!"):t("Copy & Close","Copiar y cerrar")}
                   </button>
                 </div>
@@ -2724,7 +2816,7 @@ function App() {
             const popping=navPop===n.id;
             return(
               <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"6px 1px 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
-                {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:28,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac}`}}/>}
+                {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:28,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac},0 0 18px ${n.ac}80,0 2px 12px ${n.ac}60`}}/>}
                 <div className={popping?"nav-pop":""} style={{width:40,height:28,borderRadius:10,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
                   <span style={{fontSize:active?18:15,transition:"font-size 0.18s"}}>{n.e}</span>
                 </div>
@@ -2763,7 +2855,7 @@ function App() {
                     ))}
                   </div>
                 </div>
-                <button onClick={()=>{ window.location.href=STRIPE_LINK; }} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 8px 28px rgba(245,166,35,0.45)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
+                <button onClick={()=>{ window.location.href=STRIPE_LINK; }} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 0 0 1px rgba(245,166,35,0.30),0 4px 14px rgba(245,166,35,0.40),0 14px 40px rgba(245,166,35,0.45),0 28px 80px rgba(245,166,35,0.25)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
                   <span style={{fontSize:20}}>💳</span>
                   <div style={{textAlign:"left"}}>
                     <div>Become Elite — $10</div>
@@ -2780,7 +2872,7 @@ function App() {
                 <div style={{fontSize:64,marginBottom:16}}>🎉</div>
                 <div style={{fontSize:24,fontWeight:900,marginBottom:8}}>You're Elite.</div>
                 <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>You now have lifetime access to everything in DropPilot — every template, script, training lesson, and all future app feature updates. Yours forever.</div>
-                <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.purple,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 6px 20px rgba(139,92,246,0.4)",marginBottom:10}}>Go to Account Defense</button>
+                <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.purple,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 14px rgba(139,92,246,0.35),0 14px 40px rgba(139,92,246,0.38),0 28px 64px rgba(139,92,246,0.20)",marginBottom:10}}>Go to Account Defense</button>
                 <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>See Message Templates</button>
               </div>
             )}
@@ -2815,7 +2907,26 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+class ErrorBoundary extends React.Component {
+  constructor(p){super(p); this.state={err:null};}
+  static getDerivedStateFromError(err){return{err};}
+  componentDidCatch(err,info){if(window.console)console.error("DropPilot error:",err,info);}
+  render(){
+    if(this.state.err){
+      return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"32px 24px",background:"#07080A",color:"#EDF0F7",fontFamily:"system-ui,sans-serif",textAlign:"center"}},
+        React.createElement("div",{style:{maxWidth:380}},
+          React.createElement("div",{style:{fontSize:48,marginBottom:16}},"⚠️"),
+          React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:8}},"Something went wrong"),
+          React.createElement("div",{style:{fontSize:14,color:"#8B95A8",lineHeight:1.6,marginBottom:24}},"The app hit an unexpected error. Your saved progress is fine — try reloading. If this keeps happening, email support@droppilot.app."),
+          React.createElement("button",{onClick:()=>window.location.reload(), style:{background:"linear-gradient(135deg,#F5A623,#C8820A)",border:"none",borderRadius:99,padding:"12px 28px",fontSize:14,fontWeight:800,color:"#000",cursor:"pointer"}},"Reload")
+        )
+      );
+    }
+    return this.props.children;
+  }
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(ErrorBoundary,null,React.createElement(App)));
 
   </script>
 </body>
