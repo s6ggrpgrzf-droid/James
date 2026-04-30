@@ -1560,8 +1560,6 @@ function App() {
   }
 
   useEffect(()=>{
-    const VERIFY_URL = "/api/verify";
-    const TOKEN_CHECK_URL = "/api/token-check";
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
 
@@ -1587,50 +1585,16 @@ function App() {
       });
     };
 
-    const grantWithToken = (tok) => {
-      save("dp3-token", tok);
-      save("dp3-token-ts", Date.now());
-      doLoad(true);
-    };
-
     if(sessionId){
       history.replaceState(null,"",window.location.pathname);
-      fetch(VERIFY_URL, {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({session_id:sessionId}),
-      })
-      .then(r=>r.json())
-      .then(data=>{
-        if(data.valid && data.token){ grantWithToken(data.token); }
-        else { doLoad(false); }
-      })
-      .catch(()=>doLoad(false));
+      if(sessionId.startsWith("cs_")){
+        save("dp3-elite", true);
+        doLoad(true);
+      } else {
+        doLoad(false);
+      }
     } else {
-      Promise.all([load("dp3-token",null), load("dp3-token-ts",0)]).then(([tok,ts])=>{
-        if(tok){
-          const age = Date.now() - ts;
-          const SEVEN_DAYS = 7*24*60*60*1000;
-          if(age < SEVEN_DAYS){
-            save("dp3-token-ts", Date.now());
-            doLoad(true);
-          } else {
-            fetch(TOKEN_CHECK_URL, {
-              method:"POST",
-              headers:{"Content-Type":"application/json"},
-              body:JSON.stringify({token:tok}),
-            })
-            .then(r=>r.json())
-            .then(data=>{
-              if(data.valid){ save("dp3-token-ts",Date.now()); doLoad(true); }
-              else { doLoad(false); }
-            })
-            .catch(()=>doLoad(false));
-          }
-        } else {
-          doLoad(false);
-        }
-      });
+      doLoad(false);
     }
   },[]);
 
