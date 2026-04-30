@@ -483,6 +483,15 @@ const PLATFORM_CHECKLISTS = {
   ],
 };
 
+// ─── Pre-Shift Prep (universal, not per-platform) ─────────────────────────────
+const PREP_CHECKLIST = [
+  {e:"🔋",en:"Phone charged to 80% or higher",es:"Teléfono cargado al 80% o más"},
+  {e:"📍",en:"GPS / location services on",es:"GPS / ubicación activado"},
+  {e:"🧊",en:"Hot bag or insulated cooler in the car",es:"Bolsa térmica o nevera aislada en el auto"},
+  {e:"📷",en:"Dashcam recording",es:"Cámara de tablero grabando"},
+  {e:"✨",en:"Interior clean — no odors, charger ready",es:"Interior limpio — sin olores, cargador listo"},
+];
+
 // ─── Policy Watch ─────────────────────────────────────────────────────────────
 const POLICY_WATCH = {
   month: "April 2026",
@@ -1479,11 +1488,28 @@ function App() {
   const [shiftMode, setShiftMode] = useState(false);
   const [shiftPlatform, setShiftPlatform] = useState(null);
   const [showPlatformPicker, setShowPlatformPicker] = useState(false);
+  const [prepChecks, setPrepChecks] = useState(()=>PREP_CHECKLIST.map(p=>({...p,done:false})));
+  const [expandedHabit, setExpandedHabit] = useState(null);
+
+  useEffect(()=>{
+    load("dp3-prep-checks", null).then(saved=>{
+      if(Array.isArray(saved)&&saved.length===PREP_CHECKLIST.length){
+        setPrepChecks(PREP_CHECKLIST.map((p,i)=>({...p,done:!!saved[i]?.done})));
+      }
+    });
+  },[]);
+
+  function togglePrepCheck(i){
+    const updated=prepChecks.map((c,idx)=>idx===i?{...c,done:!c.done}:c);
+    setPrepChecks(updated);
+    save("dp3-prep-checks",updated.map(c=>({done:c.done})));
+  }
 
   function startShift(platId){
     setShiftPlatform(platId);
     setShiftMode(true);
     setShowPlatformPicker(false);
+    setExpandedHabit(null);
     load(`dp3-checks-${platId}`, PLATFORM_CHECKLISTS[platId]||[]).then(saved=>{
       const base=(PLATFORM_CHECKLISTS[platId]||[]).map(c=>({...c,done:false}));
       setChecks(saved.length?saved.map((s,i)=>({...(base[i]||s),done:s.done})):base);
@@ -1493,6 +1519,7 @@ function App() {
   function endShift(){
     setShiftMode(false);
     setShiftPlatform(null);
+    setExpandedHabit(null);
   }
 
   // User profile panel
@@ -1621,7 +1648,8 @@ function App() {
   function toggleCheck(i){
     const updated=checks.map((c,idx)=>idx===i?{...c,done:!c.done}:c);
     setChecks(updated);
-    if(defPlatform) save(`dp3-checks-${defPlatform}`,updated);
+    const key=shiftPlatform||defPlatform;
+    if(key) save(`dp3-checks-${key}`,updated);
   }
 
   function selectPlatform(id){
@@ -1837,70 +1865,107 @@ function App() {
         </div>
       )}
 
-      <div style={{flex:1,overflowY:"auto",paddingBottom:shiftMode?100:80}}>
+      <div style={{flex:1,overflowY:"auto",paddingBottom:shiftMode?116:80}}>
 
         {/* ══ SHIFT MODE ════════════════════════════════════════════════════════ */}
         {shiftMode&&shiftPlatform&&(()=>{
           const plat=PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform);
           const pc=plat?.color||C.amber;
-          const habits=(PLATFORM_HABITS[shiftPlatform]||[]).filter(h=>h.urgent).slice(0,3);
+          const allHabits=PLATFORM_HABITS[shiftPlatform]||[];
           const done=checks.filter(c=>c.done).length;
           const pct=checks.length?Math.round(done/checks.length*100):0;
-          const pctCol=pct>=100?C.green:pct>=60?C.amber:C.red;
+          const pctCol=pct>=100?C.green:pct>=60?pc:C.red;
+          const prepDone=prepChecks.filter(c=>c.done).length;
+          const prepTotal=prepChecks.length;
+          const ringR=22, ringC=2*Math.PI*ringR;
           return(
-            <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14}}>
+            <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:14,background:`linear-gradient(180deg,${pc}10,transparent 280px)`}}>
 
-              {/* Platform badge */}
-              <div style={{background:`${pc}10`,border:`1px solid ${pc}30`,borderRadius:18,padding:"14px 16px",display:"flex",alignItems:"center",gap:12}}>
-                <div style={{width:46,height:46,borderRadius:14,background:`${pc}20`,border:`1px solid ${pc}50`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,flexShrink:0}}>{plat?.e}</div>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:11,fontWeight:800,color:pc,letterSpacing:"1.5px",textTransform:"uppercase"}}>{t("Shift Active","Turno Activo")}</div>
-                  <div style={{fontSize:20,fontWeight:900,color:C.text}}>{plat?.label}</div>
+              {/* 1. Platform header */}
+              <div className="card-in" style={{background:`linear-gradient(135deg,${pc}1A,${pc}05)`,border:`1px solid ${pc}40`,borderRadius:20,padding:"16px 18px",display:"flex",alignItems:"center",gap:14,boxShadow:`0 8px 32px ${pc}1F`}}>
+                <div style={{width:54,height:54,borderRadius:16,background:`linear-gradient(135deg,${pc}30,${pc}10)`,border:`1px solid ${pc}60`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:28,flexShrink:0,boxShadow:`0 0 0 1px ${pc}25,0 0 24px ${pc}50,0 0 48px ${pc}28`}}>{plat?.e}</div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontSize:11,fontWeight:800,color:pc,letterSpacing:"1.5px",textTransform:"uppercase"}}>● {t("Shift Active","Turno Activo")}</div>
+                  <div style={{fontSize:21,fontWeight:900,color:C.text,letterSpacing:"-0.3px"}}>{plat?.label}</div>
                 </div>
-                <div style={{textAlign:"center"}}>
-                  <div style={{fontSize:20,fontWeight:900,color:pctCol}}>{pct}%</div>
-                  <div style={{fontSize:10,color:C.text3,fontWeight:700}}>{t("protected","protegido")}</div>
+                <div style={{width:54,height:54,position:"relative",flexShrink:0}}>
+                  <svg width="54" height="54" viewBox="0 0 54 54">
+                    <circle cx="27" cy="27" r={ringR} stroke="rgba(255,255,255,0.08)" strokeWidth="4" fill="none"/>
+                    <circle cx="27" cy="27" r={ringR} stroke={pctCol} strokeWidth="4" fill="none" strokeLinecap="round" strokeDasharray={`${ringC*pct/100} ${ringC}`} transform="rotate(-90 27 27)" style={{transition:"stroke-dasharray 0.4s ease,stroke 0.3s ease"}}/>
+                  </svg>
+                  <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    <div style={{fontSize:13,fontWeight:900,color:pctCol,lineHeight:1,fontFamily:C.sans}}>{pct}%</div>
+                  </div>
                 </div>
               </div>
 
-              {/* Checklist */}
-              <div style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:18,overflow:"hidden"}}>
-                <div style={{padding:"14px 16px 10px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                  <div style={{fontSize:13,fontWeight:800,color:C.text,letterSpacing:"0.5px"}}>✅ {t("Delivery Checklist","Lista de entrega")}</div>
-                  <button onClick={()=>{const r=checks.map(c=>({...c,done:false}));setChecks(r);save(`dp3-checks-${shiftPlatform}`,r);}} style={{background:"transparent",border:"none",color:C.text3,fontSize:12,fontWeight:700,cursor:"pointer",padding:"4px 8px",WebkitTapHighlightColor:"transparent"}}>{t("Reset","Reiniciar")}</button>
+              {/* 2. Pre-Shift Prep */}
+              <div className="card-in" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:18,overflow:"hidden",animationDelay:"0.05s"}}>
+                <div style={{padding:"14px 16px 10px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10}}>
+                  <div style={{fontSize:12,fontWeight:800,color:pc,letterSpacing:"1.2px",textTransform:"uppercase"}}>🚀 {t("Pre-Shift Prep","Preparación Previa")}</div>
+                  <div style={{fontSize:11,fontWeight:800,color:prepDone===prepTotal?C.green:C.text3,background:prepDone===prepTotal?`${C.green}15`:"rgba(255,255,255,0.04)",border:`1px solid ${prepDone===prepTotal?`${C.green}40`:"rgba(255,255,255,0.08)"}`,borderRadius:99,padding:"3px 10px",letterSpacing:"0.3px",flexShrink:0}}>{prepDone}/{prepTotal} {t("ready","listo")}</div>
                 </div>
                 <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:8}}>
-                  {checks.map((item,i)=>(
-                    <button key={i} onClick={()=>toggleCheck(i)} style={{background:item.done?`${C.green}10`:C.s2,border:`1px solid ${item.done?`${C.green}35`:"rgba(255,255,255,0.06)"}`,borderRadius:13,padding:"13px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent",transition:"background 0.15s,border 0.15s"}}>
-                      <div style={{width:28,height:28,borderRadius:8,border:`2px solid ${item.done?C.green:"rgba(255,255,255,0.2)"}`,background:item.done?C.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.15s"}}>
+                  {prepChecks.map((item,i)=>(
+                    <button key={i} onClick={()=>togglePrepCheck(i)} style={{background:item.done?`${pc}12`:C.s2,border:`1px solid ${item.done?`${pc}40`:"rgba(255,255,255,0.06)"}`,borderRadius:13,padding:"13px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent",transition:"background 0.15s,border 0.15s"}}>
+                      <div style={{width:28,height:28,borderRadius:8,border:`2px solid ${item.done?pc:"rgba(255,255,255,0.2)"}`,background:item.done?pc:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.15s"}}>
                         {item.done&&<span style={{color:"#000",fontSize:15,fontWeight:900}}>✓</span>}
                       </div>
-                      <span style={{fontSize:14,fontWeight:600,color:item.done?C.green:C.text,lineHeight:1.3}}>{item.e} {item.t}</span>
+                      <span style={{fontSize:14,fontWeight:600,color:item.done?pc:C.text,lineHeight:1.3}}>{item.e} {t(item.en,item.es)}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Critical habits */}
-              {habits.length>0&&(
-                <div style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:18,overflow:"hidden"}}>
-                  <div style={{padding:"14px 16px 10px",fontSize:13,fontWeight:800,color:C.red}}>⚠️ {t("Critical Habits","Hábitos Críticos")}</div>
-                  <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:8}}>
-                    {habits.map((h,i)=>(
-                      <div key={i} style={{background:"rgba(244,63,94,0.06)",border:"1px solid rgba(244,63,94,0.18)",borderRadius:12,padding:"12px 13px",display:"flex",alignItems:"flex-start",gap:10}}>
-                        <span style={{fontSize:18,flexShrink:0}}>{h.e}</span>
-                        <div>
-                          <div style={{fontSize:13,fontWeight:700,color:C.text,marginBottom:3}}>{h.t}</div>
-                          <div style={{fontSize:12,color:C.text3,lineHeight:1.5}}>{h.why.slice(0,90)}{h.why.length>90?"…":""}</div>
-                        </div>
+              {/* 3. Delivery Checklist */}
+              <div className="card-in" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:18,overflow:"hidden",animationDelay:"0.1s"}}>
+                <div style={{padding:"14px 16px 10px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10}}>
+                  <div style={{fontSize:12,fontWeight:800,color:pc,letterSpacing:"1.2px",textTransform:"uppercase"}}>✅ {t("Delivery Checklist","Lista de Entrega")}</div>
+                  <button onClick={()=>{const r=checks.map(c=>({...c,done:false}));setChecks(r);save(`dp3-checks-${shiftPlatform}`,r);}} style={{background:"transparent",border:"none",color:C.text3,fontSize:12,fontWeight:700,cursor:"pointer",padding:"4px 8px",WebkitTapHighlightColor:"transparent",flexShrink:0}}>{t("Reset","Reiniciar")}</button>
+                </div>
+                <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:8}}>
+                  {checks.map((item,i)=>(
+                    <button key={i} onClick={()=>toggleCheck(i)} style={{background:item.done?`${pc}12`:C.s2,border:`1px solid ${item.done?`${pc}40`:"rgba(255,255,255,0.06)"}`,borderRadius:13,padding:"13px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent",transition:"background 0.15s,border 0.15s"}}>
+                      <div style={{width:28,height:28,borderRadius:8,border:`2px solid ${item.done?pc:"rgba(255,255,255,0.2)"}`,background:item.done?pc:"transparent",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.15s"}}>
+                        {item.done&&<span style={{color:"#000",fontSize:15,fontWeight:900}}>✓</span>}
                       </div>
-                    ))}
+                      <span style={{fontSize:14,fontWeight:600,color:item.done?pc:C.text,lineHeight:1.3}}>{item.e} {item.t}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Habits This Shift (all 6, expandable) */}
+              {allHabits.length>0&&(
+                <div className="card-in" style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:18,overflow:"hidden",animationDelay:"0.15s"}}>
+                  <div style={{padding:"14px 16px 10px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10}}>
+                    <div style={{fontSize:12,fontWeight:800,color:pc,letterSpacing:"1.2px",textTransform:"uppercase"}}>⭐ {t("Habits This Shift","Hábitos del Turno")}</div>
+                    <div style={{fontSize:10,color:C.text3,fontWeight:600,letterSpacing:"0.3px",flexShrink:0}}>{t("tap to expand","toca para ampliar")}</div>
+                  </div>
+                  <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:8}}>
+                    {allHabits.map((h,i)=>{
+                      const open=expandedHabit===i;
+                      return(
+                        <button key={i} onClick={()=>setExpandedHabit(open?null:i)} style={{background:open?`${pc}10`:h.urgent?"rgba(244,63,94,0.06)":C.s2,border:`1px solid ${open?`${pc}40`:h.urgent?"rgba(244,63,94,0.22)":"rgba(255,255,255,0.06)"}`,borderRadius:13,padding:"12px 13px",display:"flex",flexDirection:"column",gap:8,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent",transition:"background 0.18s,border 0.18s"}}>
+                          <div style={{display:"flex",alignItems:"flex-start",gap:10,width:"100%"}}>
+                            <span style={{fontSize:18,flexShrink:0,lineHeight:1.2}}>{h.e}</span>
+                            <div style={{flex:1,minWidth:0}}>
+                              <div style={{fontSize:13,fontWeight:700,color:C.text,lineHeight:1.35}}>{h.t}</div>
+                              {!open&&<div style={{fontSize:12,color:C.text3,lineHeight:1.5,marginTop:3}}>{h.why.slice(0,90)}{h.why.length>90?"…":""}</div>}
+                            </div>
+                            {h.urgent&&<span style={{flexShrink:0,fontSize:9,fontWeight:900,color:C.red,background:"rgba(244,63,94,0.12)",border:"1px solid rgba(244,63,94,0.35)",borderRadius:99,padding:"3px 7px",letterSpacing:"0.6px",alignSelf:"flex-start",marginTop:1}}>{t("CRITICAL","CRÍTICO")}</span>}
+                            <span style={{fontSize:14,color:`${pc}AA`,flexShrink:0,transform:open?"rotate(90deg)":"none",transition:"transform 0.18s",alignSelf:"flex-start",marginTop:1}}>›</span>
+                          </div>
+                          {open&&<div style={{fontSize:13,color:C.text2,lineHeight:1.6,paddingLeft:28}}>{h.why}</div>}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
-              {/* Quick Scripts CTA */}
-              <button onClick={()=>{setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} style={{background:`linear-gradient(135deg,${C.blue}18,${C.blue}08)`,border:`1.5px solid ${C.blue}40`,borderRadius:16,padding:"16px 18px",display:"flex",alignItems:"center",gap:14,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent"}}>
+              {/* 5. Quick Scripts CTA */}
+              <button className="card-in" onClick={()=>{setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} style={{background:`linear-gradient(135deg,${C.blue}18,${C.blue}08)`,border:`1.5px solid ${C.blue}40`,borderRadius:16,padding:"16px 18px",display:"flex",alignItems:"center",gap:14,cursor:"pointer",textAlign:"left",WebkitTapHighlightColor:"transparent",animationDelay:"0.2s"}}>
                 <div style={{width:44,height:44,borderRadius:13,background:`${C.blue}20`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>⚡</div>
                 <div style={{flex:1}}>
                   <div style={{fontSize:15,fontWeight:800,color:C.blue}}>{t("Need a script right now?","¿Necesitas un mensaje ahora?")}</div>
@@ -2798,18 +2863,30 @@ function App() {
       )}
 
       {/* ── Bottom Nav ──────────────────────────────────────────────────────── */}
-      {shiftMode?(
-        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.97)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:`1px solid ${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber}40`,display:"flex",gap:10,zIndex:100,padding:"10px 14px 20px"}}>
-          <button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} style={{flex:1,background:`${C.blue}15`,border:`1.5px solid ${C.blue}35`,borderRadius:15,padding:"14px 10px",display:"flex",alignItems:"center",justifyContent:"center",gap:8,cursor:"pointer",WebkitTapHighlightColor:"transparent"}}>
-            <span style={{fontSize:20}}>⚡</span>
-            <span style={{fontSize:14,fontWeight:800,color:C.blue}}>{t("Quick Script","Script Rápido")}</span>
-          </button>
-          <button onClick={endShift} style={{flex:1,background:"rgba(244,63,94,0.1)",border:"1.5px solid rgba(244,63,94,0.3)",borderRadius:15,padding:"14px 10px",display:"flex",alignItems:"center",justifyContent:"center",gap:8,cursor:"pointer",WebkitTapHighlightColor:"transparent"}}>
-            <span style={{fontSize:20}}>🏁</span>
-            <span style={{fontSize:14,fontWeight:800,color:C.red}}>{t("End Shift","Fin de Turno")}</span>
-          </button>
+      {shiftMode?(()=>{
+        const navPc=PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber;
+        const cDone=checks.filter(c=>c.done).length, cTotal=checks.length;
+        const pDone=prepChecks.filter(c=>c.done).length, pTotal=prepChecks.length;
+        return(
+        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.97)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:`1px solid ${navPc}40`,display:"flex",flexDirection:"column",gap:6,zIndex:100,padding:"8px 14px 20px"}}>
+          <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10,fontSize:11,fontWeight:700,color:C.text3,letterSpacing:"0.3px"}}>
+            <span><span style={{color:cDone===cTotal&&cTotal>0?C.green:navPc,fontWeight:800}}>{cDone}/{cTotal}</span> {t("checklist","entrega")}</span>
+            <span style={{color:"rgba(255,255,255,0.15)"}}>·</span>
+            <span><span style={{color:pDone===pTotal&&pTotal>0?C.green:navPc,fontWeight:800}}>{pDone}/{pTotal}</span> {t("prep","previa")}</span>
+          </div>
+          <div style={{display:"flex",gap:10}}>
+            <button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} style={{flex:1,background:`${C.blue}15`,border:`1.5px solid ${C.blue}35`,borderRadius:15,padding:"14px 10px",display:"flex",alignItems:"center",justifyContent:"center",gap:8,cursor:"pointer",WebkitTapHighlightColor:"transparent"}}>
+              <span style={{fontSize:20}}>⚡</span>
+              <span style={{fontSize:14,fontWeight:800,color:C.blue}}>{t("Quick Script","Script Rápido")}</span>
+            </button>
+            <button onClick={endShift} style={{flex:1,background:"rgba(244,63,94,0.1)",border:"1.5px solid rgba(244,63,94,0.3)",borderRadius:15,padding:"14px 10px",display:"flex",alignItems:"center",justifyContent:"center",gap:8,cursor:"pointer",WebkitTapHighlightColor:"transparent"}}>
+              <span style={{fontSize:20}}>🏁</span>
+              <span style={{fontSize:14,fontWeight:800,color:C.red}}>{t("End Shift","Fin de Turno")}</span>
+            </button>
+          </div>
         </div>
-      ):(
+        );
+      })():(
         <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
           {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
             const active=tab===n.id;
