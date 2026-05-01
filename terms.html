@@ -7,18 +7,30 @@
 <title>Terms of Service — DropPilot</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
+/* @brand-tokens — KEEP IN SYNC WITH app.html, index.html, privacy.html */
+:root{
+  --amber:#F5A623; --amber-d:#C8820A; --amber-l:#ffc84a;
+  --bg:#07080A; --s1:#0D0F13; --s2:#12151A; --s3:#1A1E26;
+  --text:#EDF0F7; --text2:#8B95A8; --text3:#6B7A8D;
+  --green:#10B981; --blue:#3B82F6; --purple:#8B5CF6; --teal:#06B6D4; --red:#F43F5E;
+  --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px; --r-full:9999px;
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+  --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+  --sans:'Outfit',sans-serif;
+  --display:'Bebas Neue',sans-serif;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#07080A;color:#EDF0F7;font-family:'Outfit',sans-serif;line-height:1.7;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;}
 .wrap{max-width:720px;margin:0 auto;padding:80px 24px 120px;}
-a{color:#F5A623;text-decoration:none;}
+a{color:var(--amber);text-decoration:none;}
 a:hover{text-decoration:underline;}
 h1{font-size:36px;font-weight:900;letter-spacing:-0.5px;margin-bottom:8px;}
-h2{font-size:18px;font-weight:800;margin:36px 0 12px;color:#F5A623;}
-p,li{font-size:15px;color:#8B95A8;margin-bottom:12px;}
+h2{font-size:18px;font-weight:800;margin:36px 0 12px;color:var(--amber);}
+p,li{font-size:15px;color:var(--text2);margin-bottom:12px;}
 ul{padding-left:22px;margin-bottom:12px;}
-.meta{font-size:13px;color:#6B7A8D;margin-bottom:32px;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:32px;}
 .back{display:inline-block;margin-bottom:40px;font-size:13px;font-weight:700;}
-strong{color:#EDF0F7;}
+strong{color:var(--text);}
 </style>
 </head>
 <body>

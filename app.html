@@ -10,20 +10,40 @@
   <title>DropPilot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
   <style>
+    /* @brand-tokens — KEEP IN SYNC WITH index.html, privacy.html, terms.html, AND the JS C object below */
+    :root{
+      --bg:#07080A; --s1:#0D0F13; --s2:#12151A; --s3:#1A1E26;
+      --amber:#F5A623; --amber-d:#C8820A; --amber-l:#ffc84a;
+      --green:#10B981; --blue:#3B82F6; --purple:#8B5CF6; --teal:#06B6D4; --red:#F43F5E;
+      --text:#EDF0F7; --text2:#8B95A8; --text3:#6B7A8D;
+      --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px; --r-full:9999px;
+      --ease-out:cubic-bezier(0.22,1,0.36,1);
+      --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+      --sans:'Outfit',system-ui,sans-serif;
+      --display:'Bebas Neue','Outfit',sans-serif;
+      --mono:'JetBrains Mono','Courier New',monospace;
+    }
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:#07080A;}
+    body{background:var(--bg);}
     @keyframes lFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-10px) scale(1.03)}}
-    #splash{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:'Outfit',system-ui,sans-serif;}
-    #splash .s-icon{animation:lFloat 2s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(245,166,35,0.45));}
-    #splash .s-msg{color:#F5A623;font-size:17px;font-weight:800;letter-spacing:-0.3px;text-shadow:0 0 24px rgba(245,166,35,0.35);}
+    #splash{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:var(--sans);}
+    #splash .s-icon{
+      display:flex;align-items:center;justify-content:center;
+      width:52px;height:52px;border-radius:var(--r-lg);
+      background:linear-gradient(135deg,var(--amber),var(--amber-d));
+      box-shadow:0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.30),0 14px 40px rgba(245,166,35,0.32),0 28px 80px rgba(245,166,35,0.20);
+      animation:lFloat 2s ease-in-out infinite;
+      filter:drop-shadow(0 0 18px rgba(245,166,35,0.45));
+    }
+    #splash .s-msg{color:var(--amber);font-size:17px;font-weight:800;letter-spacing:-0.3px;text-shadow:0 0 24px rgba(245,166,35,0.35);}
   </style>
 </head>
 <body>
   <div id="root">
     <div id="splash">
-      <div class="s-icon" style="display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#F5A623,#C8820A);box-shadow:0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.30),0 14px 40px rgba(245,166,35,0.32),0 28px 80px rgba(245,166,35,0.20);"><svg width="28" height="28" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/><path d="M8 4 L12 4" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/></svg></div>
+      <div class="s-icon"><svg width="28" height="28" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/><path d="M8 4 L12 4" stroke="white" stroke-width="1" opacity="0.6" stroke-linecap="round"/></svg></div>
       <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
@@ -63,14 +83,14 @@ textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 1px 
 @keyframes lockShake{0%,100%{transform:translateX(0);box-shadow:0 0 0 0 rgba(244,63,94,0)}20%{transform:translateX(-4px);box-shadow:0 0 14px rgba(244,63,94,0.30)}40%{transform:translateX(4px);box-shadow:0 0 20px rgba(244,63,94,0.40)}50%{box-shadow:0 0 24px rgba(244,63,94,0.45)}60%{transform:translateX(-3px);box-shadow:0 0 18px rgba(244,63,94,0.35)}80%{transform:translateX(3px);box-shadow:0 0 10px rgba(244,63,94,0.20)}}
 @keyframes defenderPulse{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0),0 0 0 0 rgba(139,92,246,0),0 0 0 0 rgba(139,92,246,0)}50%{box-shadow:0 0 0 10px rgba(139,92,246,0.20),0 0 32px rgba(139,92,246,0.40),0 0 64px rgba(139,92,246,0.22)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
-.page{animation:tabSlide 0.28s cubic-bezier(0.16,1,0.3,1) forwards;}
+.page{animation:tabSlide 0.28s cubic-bezier(0.22,1,0.36,1) forwards;}
 .float{animation:floatY 3.5s ease-in-out infinite;}
 .glow{animation:glowPulse 3s ease-in-out infinite;}
 .border-pulse{animation:borderPulse 3s ease-in-out infinite;}
-.iup{animation:iUp 0.5s cubic-bezier(0.16,1,0.3,1) both;}
+.iup{animation:iUp 0.5s cubic-bezier(0.22,1,0.36,1) both;}
 .ipop{animation:iPop 0.45s cubic-bezier(0.34,1.56,0.64,1) both;}
 .id1{animation-delay:0.15s;opacity:0;}.id2{animation-delay:0.35s;opacity:0;}.id3{animation-delay:0.55s;opacity:0;}
-.card-in{animation:cardIn 0.35s cubic-bezier(0.16,1,0.3,1) both;}
+.card-in{animation:cardIn 0.35s cubic-bezier(0.22,1,0.36,1) both;}
 .c0{animation-delay:0.04s;opacity:0}.c1{animation-delay:0.10s;opacity:0}.c2{animation-delay:0.16s;opacity:0}.c3{animation-delay:0.22s;opacity:0}.c4{animation-delay:0.28s;opacity:0}.c5{animation-delay:0.34s;opacity:0}.c6{animation-delay:0.40s;opacity:0}.c7{animation-delay:0.46s;opacity:0}.c8{animation-delay:0.52s;opacity:0}.c9{animation-delay:0.58s;opacity:0}
 button{transition:all 0.22s cubic-bezier(0.22,1,0.36,1);}
 button:active{opacity:0.82;transform:scale(0.96);}
@@ -82,6 +102,12 @@ button:active{opacity:0.82;transform:scale(0.96);}
 .lock-shake{animation:lockShake 0.5s ease;}
 .defender-pulse{animation:defenderPulse 2.4s ease-in-out infinite;}
 .shimmer-locked{background:linear-gradient(90deg,transparent 20%,rgba(255,255,255,0.03) 38%,rgba(255,255,255,0.10) 50%,rgba(255,255,255,0.03) 62%,transparent 80%);background-size:200% 100%;animation:shimmerSlide 2.6s ease-in-out infinite;}
+.brand-wordmark{font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:-0.3px;background:linear-gradient(110deg,#EDF0F7 40%,#F5A623);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.brand-display{font-family:'Bebas Neue','Outfit',sans-serif;letter-spacing:0.5px;line-height:1;}
+.brand-headline-grad{background:linear-gradient(110deg,#fff 35%,#F5A623);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Bebas Neue','Outfit',sans-serif;letter-spacing:-0.5px;line-height:1.05;}
+.brand-btn-primary{background:linear-gradient(135deg,#F5A623,#C8820A);border:none;border-radius:9999px;padding:14px 28px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;color:#000;cursor:pointer;letter-spacing:-0.2px;box-shadow:0 0 0 1px rgba(245,166,35,0.25),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.20);transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);}
+.brand-btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(245,166,35,0.35),0 6px 18px rgba(245,166,35,0.42),0 18px 50px rgba(245,166,35,0.48),0 34px 96px rgba(245,166,35,0.28);}
+.brand-card{background:#12151A;border:1px solid rgba(255,255,255,0.11);border-radius:18px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.20);}
 `;
 
 // Inject CSS into the document immediately (required for all animation classes)
@@ -90,6 +116,7 @@ button:active{opacity:0.82;transform:scale(0.96);}
 async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
 async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){console.warn("Save failed:",k,e);return false;}}
 
+// @brand-tokens — KEEP IN SYNC WITH the :root block above (and index/privacy/terms.html)
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
   border:"rgba(255,255,255,0.11)",
@@ -97,7 +124,85 @@ const C = {
   green:"#10B981", teal:"#06B6D4", blue:"#3B82F6",
   red:"#F43F5E", purple:"#8B5CF6",
   text:"#EDF0F7", text2:"#8B95A8", text3:"#6B7A8D",
-  sans:"'Outfit',system-ui,sans-serif", mono:"'JetBrains Mono','Courier New',monospace"
+  sans:"'Outfit',system-ui,sans-serif",
+  display:"'Bebas Neue','Outfit',sans-serif",
+  mono:"'JetBrains Mono','Courier New',monospace",
+  r:{xs:6, sm:10, md:14, lg:18, xl:24, full:9999},
+  sp:{1:4, 2:8, 3:12, 4:16, 5:20, 6:24, 7:32, 8:40, 9:64, 10:80},
+  sh:{
+    1:"inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.20)",
+    2:"inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 16px rgba(0,0,0,0.25), 0 12px 28px rgba(0,0,0,0.18)",
+    3:"0 8px 24px rgba(0,0,0,0.30), 0 18px 48px rgba(0,0,0,0.18), 0 24px 60px rgba(0,0,0,0.45)",
+    hero:"0 40px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04), 0 60px 120px -20px rgba(245,166,35,0.18)",
+    amber:"0 0 0 1px rgba(245,166,35,0.25),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.20)",
+    amberHi:"0 0 0 1px rgba(245,166,35,0.35),0 6px 18px rgba(245,166,35,0.42),0 18px 50px rgba(245,166,35,0.48),0 34px 96px rgba(245,166,35,0.28)",
+    accent:(c)=>`0 0 0 1px ${c}33,0 4px 14px ${c}55,0 14px 36px ${c}55,0 28px 64px ${c}30`,
+  },
+  ease:{out:"cubic-bezier(0.22,1,0.36,1)", spring:"cubic-bezier(0.34,1.56,0.64,1)"},
+};
+
+// Reusable JSX style presets — spread via {...S.X, override:val}
+const S = {
+  wordmark:{
+    background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,
+    WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+    fontWeight:700, letterSpacing:"-0.3px",
+  },
+  headlineGrad:(accent=C.amber)=>({
+    background:`linear-gradient(110deg,#fff 35%,${accent})`,
+    WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent",
+    fontFamily:C.display, letterSpacing:"-0.5px", lineHeight:1.05,
+  }),
+  pageTitle:{
+    fontFamily:C.display, fontSize:"clamp(22px,5vw,28px)",
+    fontWeight:400, letterSpacing:"0.5px", lineHeight:1, color:C.text,
+  },
+  btnPrimary:{
+    background:`linear-gradient(135deg,${C.amber},${C.amberD})`,
+    border:"none", borderRadius:C.r.full, padding:"14px 28px",
+    fontFamily:C.sans, fontSize:15, fontWeight:900, color:"#000",
+    cursor:"pointer", boxShadow:C.sh.amber,
+    transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,
+    letterSpacing:"-0.2px", WebkitTapHighlightColor:"transparent",
+  },
+  btnGhost:{
+    background:"rgba(255,255,255,0.05)",
+    border:"1px solid rgba(255,255,255,0.08)",
+    borderRadius:C.r.sm, padding:"7px 12px",
+    fontFamily:C.sans, fontSize:12, fontWeight:800, color:C.text2,
+    cursor:"pointer", letterSpacing:"0.5px",
+    transition:`background 0.18s ${C.ease.out}, color 0.18s ${C.ease.out}`,
+  },
+  card:{
+    background:C.s2,
+    border:`1px solid ${C.border}`,
+    borderRadius:C.r.lg, padding:C.sp[4],
+    boxShadow:C.sh[1],
+  },
+  modalSheet:{
+    position:"relative",
+    background:`linear-gradient(180deg,${C.s2},${C.s1})`,
+    borderTop:"1px solid rgba(255,255,255,0.08)",
+    borderRadius:`${C.r.xl}px ${C.r.xl}px 0 0`,
+    padding:C.sp[6], paddingBottom:C.sp[8],
+    width:"100%", maxWidth:430, zIndex:1,
+    boxShadow:C.sh[3],
+  },
+  modalScrim:{
+    position:"absolute", inset:0, background:"rgba(0,0,0,0.78)",
+  },
+  modalGrip:{
+    width:40, height:4, borderRadius:C.r.full,
+    background:"rgba(255,255,255,0.15)",
+    margin:`0 auto ${C.sp[5]}px`,
+  },
+  logoBox:(size=38)=>({
+    width:size, height:size,
+    borderRadius: size>=60 ? C.r.xl : (size>=30 ? C.r.lg : C.r.sm),
+    background:`linear-gradient(135deg,${C.amber},${C.amberD})`,
+    display:"flex", alignItems:"center", justifyContent:"center",
+    boxShadow: size>=60 ? C.sh.amber : C.sh[1],
+  }),
 };
 
 // ─── Free Tips ────────────────────────────────────────────────────────────────
@@ -662,7 +767,7 @@ function IntroAnimation({onDone}) {
 
   const A=C.amber,G=C.green,B=C.blue,T=C.teal,P=C.purple;
   const ss=(n)=>({position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"36px 28px",opacity:scene===n?1:0,transition:"opacity 0.5s ease",pointerEvents:scene===n?"auto":"none"});
-  const Divider=({color=A})=><div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${color},#fff)`,margin:"0 auto 16px",opacity:0,animation:"iUp 0.4s 0.35s cubic-bezier(0.16,1,0.3,1) both"}}/>;
+  const Divider=({color=A})=><div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${color},#fff)`,margin:"0 auto 16px",opacity:0,animation:"iUp 0.4s 0.35s cubic-bezier(0.22,1,0.36,1) both"}}/>;
 
   return(
     <div style={{position:"fixed",inset:0,background:C.bg,zIndex:999,fontFamily:C.sans,color:C.text,overflow:"hidden",maxWidth:430,margin:"0 auto"}}>
@@ -673,7 +778,7 @@ function IntroAnimation({onDone}) {
       <div style={ss(0)}>
         <div style={{position:"absolute",top:-60,right:-40,width:240,height:240,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,166,35,0.15),transparent 68%)",pointerEvents:"none"}}/>
         <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:22,boxShadow:`0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.22)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{filter:"drop-shadow(0 0 12px rgba(255,255,255,0.35))"}}><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg></div>
-        <div className="iup id1" style={{fontSize:40,fontWeight:700,letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 40%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:6,textAlign:"center"}}>DropPilot</div>
+        <div className="iup id1" style={{...S.headlineGrad(A),fontSize:48,marginBottom:6,textAlign:"center"}}>DropPilot</div>
         <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.3)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:24}}>Customer Service · Gig Edition</div>
         <Divider/>
         <div className="iup id2" style={{fontSize:15,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.9,fontWeight:500}}>The first customer service app<br/>built specifically for gig drivers.<br/>The delivery is the task.<br/>The service is the job.</div>
@@ -682,7 +787,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 1: The Real Job */}
       <div style={ss(1)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>what your job actually is</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>You don't get rated<br/>on speed.<br/>You get rated on<br/>how you made them feel.</div>
+        <div className="iup id1" style={{...S.headlineGrad(A),fontSize:34,lineHeight:1.15,textAlign:"center",marginBottom:20}}>You don't get rated<br/>on speed.<br/>You get rated on<br/>how you made them feel.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:10,width:"100%"}}>
           {[
@@ -700,7 +805,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 2: The Craft */}
       <div style={ss(2)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(139,92,246,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>the service gap</div>
-        <div className="iup id1" style={{fontSize:27,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${P})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Most gig drivers<br/>were never taught<br/>customer service.<br/>That's the gap.</div>
+        <div className="iup id1" style={{...S.headlineGrad(P),fontSize:34,lineHeight:1.15,textAlign:"center",marginBottom:20}}>Most gig drivers<br/>were never taught<br/>customer service.<br/>That's the gap.</div>
         <Divider color={P}/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
           {[
@@ -719,7 +824,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 3: Five sections */}
       <div style={ss(3)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>five sections. one toolkit.</div>
-        <div className="iup id1" style={{fontSize:26,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.6px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Scripts. Habits. Defense.<br/>Training. All built for<br/>the real job.</div>
+        <div className="iup id1" style={{...S.headlineGrad(A),fontSize:34,lineHeight:1.15,textAlign:"center",marginBottom:20}}>Scripts. Habits. Defense.<br/>Training. All built for<br/>the real job.</div>
         <Divider/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
           {[
@@ -740,7 +845,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 4: Platforms */}
       <div style={ss(4)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(6,182,212,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>built for every platform</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.25,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 35%,${T})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>DoorDash. Uber Eats.<br/>Instacart. Lyft. Flex.</div>
+        <div className="iup id1" style={{...S.headlineGrad(T),fontSize:36,lineHeight:1.15,textAlign:"center",marginBottom:20}}>DoorDash. Uber Eats.<br/>Instacart. Lyft. Flex.</div>
         <Divider color={T}/>
         <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:8,width:"100%"}}>
           {[
@@ -761,7 +866,7 @@ function IntroAnimation({onDone}) {
       {/* Scene 5: Elite access */}
       <div style={ss(5)}>
         <div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(245,166,35,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>elite access — $10 one time</div>
-        <div className="iup id1" style={{fontSize:28,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
+        <div className="iup id1" style={{...S.headlineGrad(A),fontSize:36,lineHeight:1.15,textAlign:"center",marginBottom:20}}>Lifetime access.<br/>Every update<br/>we ever ship.</div>
         <Divider color={G}/>
         <div className="iup id2" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,width:"100%"}}>
           {[["💬",B,"30+ Scripts"],["🛡️",P,"Appeal Letters"],["🎓",A,"Lessons"],["🧠",G,"Psychology"],["🎯",T,"Scenarios"],["💰",A,"Tip Science"]].map(([e,col,label],i)=>(
@@ -779,7 +884,7 @@ function IntroAnimation({onDone}) {
         <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${A}70,transparent)`}}/>
         <div style={{position:"relative",zIndex:1,textAlign:"center",width:"100%"}}>
           <div className="ipop" style={{width:76,height:76,borderRadius:24,background:`linear-gradient(135deg,${A},#C8820A)`,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 18px",boxShadow:`0 0 0 1px rgba(245,166,35,0.20),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.22)`}}><svg width="38" height="38" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{filter:"drop-shadow(0 0 12px rgba(255,255,255,0.35))"}}><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg></div>
-          <div className="iup id1" style={{fontSize:40,fontWeight:700,letterSpacing:"-1px",background:`linear-gradient(135deg,#fff 35%,${A})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",marginBottom:4,textAlign:"center"}}>DropPilot</div>
+          <div className="iup id1" style={{...S.headlineGrad(A),fontSize:48,marginBottom:4,textAlign:"center"}}>DropPilot</div>
           <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>Customer Service · Gig Edition</div>
           <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
           <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:7,marginBottom:26,width:"100%"}}>
@@ -792,7 +897,7 @@ function IntroAnimation({onDone}) {
             ))}
           </div>
           <div className="iup id3">
-            <button onClick={onDone} style={{background:`linear-gradient(135deg,${A},#C8820A)`,border:"none",borderRadius:50,padding:"15px 44px",fontSize:16,fontWeight:900,color:"#000",cursor:"pointer",fontFamily:C.sans,boxShadow:`0 0 0 1px rgba(245,166,35,0.25),0 4px 14px rgba(245,166,35,0.40),0 14px 40px rgba(245,166,35,0.45),0 28px 72px rgba(245,166,35,0.25)`,letterSpacing:"-0.3px"}}>Let's Go →</button>
+            <button onClick={onDone} style={{...S.btnPrimary,padding:"15px 44px",fontSize:16}}>Let's Go →</button>
           </div>
           <div className="iup" style={{fontSize:12,color:"rgba(255,255,255,0.2)",marginTop:14,animationDelay:"0.75s",opacity:0}}>Free to explore · Elite access $10 · Lifetime · Free updates forever</div>
         </div>
@@ -1154,11 +1259,11 @@ function VideoPlayer({video}) {
         <div style={{position:"absolute",top:-40,right:-30,width:180,height:180,borderRadius:"50%",background:`radial-gradient(circle,${vc}20,transparent 65%)`,pointerEvents:"none"}}/>
         <div style={{position:"absolute",bottom:-40,left:-20,width:140,height:140,borderRadius:"50%",background:`radial-gradient(circle,${vc}15,transparent 65%)`,pointerEvents:"none"}}/>
         <div key={`${video.id}-${scene}`} style={{position:"relative",zIndex:1,width:"100%",display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          {sc.tag&&<div style={{fontSize:11,fontWeight:800,color:vc,letterSpacing:1.5,textTransform:"uppercase",animation:"vUp 0.4s cubic-bezier(0.16,1,0.3,1) both",background:`${vc}15`,border:`1px solid ${vc}35`,borderRadius:99,padding:"4px 12px"}}>{sc.tag}</div>}
+          {sc.tag&&<div style={{fontSize:11,fontWeight:800,color:vc,letterSpacing:1.5,textTransform:"uppercase",animation:"vUp 0.4s cubic-bezier(0.22,1,0.36,1) both",background:`${vc}15`,border:`1px solid ${vc}35`,borderRadius:99,padding:"4px 12px"}}>{sc.tag}</div>}
           {sc.emoji&&!sc.stat&&<div style={{fontSize:sc.hed?48:64,animation:"vPop 0.4s 0.1s cubic-bezier(0.34,1.56,0.64,1) both",opacity:0}}>{sc.emoji}</div>}
           {sc.stat&&<div style={{fontSize:72,fontWeight:900,letterSpacing:"-3px",color:G,lineHeight:1,animation:"vPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both"}}>{sc.stat}</div>}
           {sc.statSub&&<div style={{fontSize:18,fontWeight:800,color:"rgba(255,255,255,0.8)",animation:"vUp 0.4s 0.15s both",opacity:0}}>{sc.statSub}</div>}
-          {sc.hed&&<div style={{fontSize:sc.hed.length>30?24:30,fontWeight:900,lineHeight:1.2,textAlign:"center",letterSpacing:"-0.8px",background:`linear-gradient(135deg,#fff 30%,${vc})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",whiteSpace:"pre-line",animation:"vUp 0.5s 0.15s cubic-bezier(0.16,1,0.3,1) both",opacity:0}}>{sc.hed}</div>}
+          {sc.hed&&<div style={{...S.headlineGrad(vc),fontSize:sc.hed.length>30?32:38,lineHeight:1.15,textAlign:"center",whiteSpace:"pre-line",animation:`vUp 0.5s 0.15s ${C.ease.out} both`,opacity:0}}>{sc.hed}</div>}
           <div style={{width:32,height:2,borderRadius:99,background:`linear-gradient(90deg,${vc},#fff)`,animation:"vFade 0.4s 0.3s both",opacity:0}}/>
           {sc.sub&&<div style={{fontSize:12,color:"rgba(255,255,255,0.55)",textAlign:"center",lineHeight:1.75,animation:"vUp 0.5s 0.3s both",opacity:0}}>{sc.sub.split('\n').map((line,i,arr)=><React.Fragment key={i}>{line}{i<arr.length-1&&<br/>}</React.Fragment>)}</div>}
           {sc.hi&&<div style={{width:"100%",background:`${sc.hi.color}10`,border:`1px solid ${sc.hi.color}40`,borderRadius:12,padding:"11px 14px",animation:"vUp 0.5s 0.45s both",opacity:0}}><div style={{fontSize:12,fontWeight:700,color:sc.hi.color,lineHeight:1.7,whiteSpace:"pre-line"}}>{sc.hi.text}</div></div>}
@@ -1700,9 +1805,9 @@ function App() {
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div style={{background:"rgba(10,12,16,0.94)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"13px 18px",display:"flex",alignItems:"center",position:"sticky",top:0,zIndex:60}}>
         <div onClick={handleSecretTap} style={{display:"flex",alignItems:"center",gap:10,userSelect:"none",WebkitUserSelect:"none",cursor:"default",flex:1}}>
-          <div className="glow" style={{width:38,height:38,borderRadius:12,background:shiftMode&&shiftPlatform?`linear-gradient(135deg,${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber},${C.amberD})`:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{shiftMode&&shiftPlatform?PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.e:<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg>}</div>
+          <div className="glow" style={{width:38,height:38,borderRadius:C.r.lg,background:shiftMode&&shiftPlatform?`linear-gradient(135deg,${PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber},${C.amberD})`:`linear-gradient(135deg,${C.amber},${C.amberD})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>{shiftMode&&shiftPlatform?PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.e:<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M1 10 L3 6 L8 4 L10 2 L12 4 L17 6 L19 10 L17.5 18 L2.5 18 Z" fill="white"/><path d="M10 2 L10 18" stroke="white" strokeWidth="0.8" opacity="0.4" strokeLinecap="round"/><path d="M8 4 L12 4" stroke="white" strokeWidth="1" opacity="0.6" strokeLinecap="round"/></svg>}</div>
           <div>
-            <div style={{fontSize:18,fontWeight:700,letterSpacing:"-0.3px",background:`linear-gradient(110deg,${C.text} 40%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>DropPilot</div>
+            <div style={{...S.wordmark,fontSize:18}}>DropPilot</div>
             {shiftMode&&shiftPlatform?(
               <div style={{fontSize:10,fontWeight:800,letterSpacing:"1px",textTransform:"uppercase",color:PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.color||C.amber}}>● {PLATFORMS_DEFEND.find(p=>p.id===shiftPlatform)?.label} Shift Active</div>
             ):(
@@ -1710,11 +1815,11 @@ function App() {
             )}
           </div>
         </div>
-        {!shiftMode&&<button onClick={()=>setShowPlatformPicker(true)} aria-label="Start shift" style={{background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:13,flexShrink:0,marginRight:6,gap:5,WebkitTapHighlightColor:"transparent"}}>
+        {!shiftMode&&<button onClick={()=>setShowPlatformPicker(true)} aria-label="Start shift" style={{background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:C.r.sm,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:13,flexShrink:0,marginRight:6,gap:5,WebkitTapHighlightColor:"transparent"}}>
           <span>🚗</span><span style={{fontSize:11,fontWeight:800,color:C.amber,fontFamily:C.sans}}>Drive</span>
         </button>}
-        <button onClick={toggleLang} aria-label="Toggle language" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:11,fontWeight:800,color:C.text2,letterSpacing:"0.5px",flexShrink:0,marginRight:6,fontFamily:C.sans}}>{lang==="en"?"ES":"EN"}</button>
-        <button onClick={()=>setShowProfile(o=>!o)} aria-label="Profile & Settings" style={{background:showProfile?`${C.amber}18`:"rgba(255,255,255,0.05)",border:`1px solid ${showProfile?`${C.amber}40`:"rgba(255,255,255,0.08)"}`,borderRadius:10,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0,transition:"all 0.15s"}}>⚙️</button>
+        <button onClick={toggleLang} aria-label="Toggle language" style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:C.r.sm,padding:"0 10px",height:32,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:11,fontWeight:800,color:C.text2,letterSpacing:"0.5px",flexShrink:0,marginRight:6,fontFamily:C.sans}}>{lang==="en"?"ES":"EN"}</button>
+        <button onClick={()=>setShowProfile(o=>!o)} aria-label="Profile & Settings" style={{background:showProfile?`${C.amber}18`:"rgba(255,255,255,0.05)",border:`1px solid ${showProfile?`${C.amber}40`:"rgba(255,255,255,0.08)"}`,borderRadius:C.r.sm,width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,flexShrink:0,transition:"all 0.15s"}}>⚙️</button>
       </div>
 
       {/* ── Admin Settings Panel (secret 5-tap) ────────────────────────────── */}
@@ -1725,13 +1830,13 @@ function App() {
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
             {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>Reset Elite Access</button>}
           </div>
-          <button onClick={()=>setShowCfg(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
+          <button onClick={()=>setShowCfg(false)} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>Save & Close</button>
         </div>
       )}
 
       {/* ── User Profile Panel (⚙️ button) ─────────────────────────────────── */}
       {showProfile&&(
-        <div style={{background:C.s2,borderBottom:"1px solid rgba(255,255,255,0.07)",padding:18,animation:"slideUp 0.22s cubic-bezier(0.16,1,0.3,1)"}}>
+        <div style={{background:C.s2,borderBottom:"1px solid rgba(255,255,255,0.07)",padding:18,animation:"slideUp 0.22s cubic-bezier(0.22,1,0.36,1)"}}>
 
           {/* Name */}
           <div style={{fontSize:14,fontWeight:800,color:C.text,marginBottom:14}}>👤 Your Profile</div>
@@ -1752,7 +1857,7 @@ function App() {
                 </div>
               </div>
             ):(
-              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 0 0 1px ${C.amber}30,0 4px 12px ${C.amber}30,0 12px 32px ${C.amber}30,0 24px 56px ${C.amber}1f`}}>Upgrade to Elite — $10 one time</button>
+              <button onClick={()=>{setShowProfile(false);setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"13px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>Upgrade to Elite — $10 one time</button>
             )}
           </div>
 
@@ -1825,7 +1930,7 @@ function App() {
             </div>
           </div>
 
-          <button onClick={()=>setShowProfile(false)} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",width:"100%",color:"#000"}}>Save & Close</button>
+          <button onClick={()=>setShowProfile(false)} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>Save & Close</button>
 
           {/* Disclaimer */}
           <div style={{marginTop:16,padding:"12px 14px",background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:12}}>
@@ -1925,7 +2030,7 @@ function App() {
                 <div style={{fontSize:32,marginBottom:8}}>🎯</div>
                 <div style={{fontSize:14,fontWeight:800,color:C.text,marginBottom:4}}>Quick Help Carousel</div>
                 <div style={{fontSize:12,color:C.text2,marginBottom:12,lineHeight:1.5}}>Browse quick solutions for common delivery situations</div>
-                <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:50,padding:"8px 16px",color:"#000",fontSize:13,fontWeight:800,cursor:"pointer",fontFamily:C.sans}}>Unlock with Elite</button>
+                <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,padding:"8px 16px",fontSize:13,fontWeight:800,letterSpacing:0,boxShadow:`0 0 0 1px rgba(245,166,35,0.25),0 4px 12px rgba(245,166,35,0.30)`}}>Unlock with Elite</button>
               </div>
             )}
 
@@ -2051,7 +2156,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 0 0 1px rgba(245,166,35,0.30),0 4px 14px rgba(245,166,35,0.35),0 14px 40px rgba(245,166,35,0.42),0 28px 72px rgba(245,166,35,0.22)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,borderRadius:C.r.lg,padding:"16px",fontSize:15,width:"100%",letterSpacing:0}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2065,7 +2170,7 @@ function App() {
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
               <div style={{fontSize:13,fontWeight:800,color:C.blue,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Message Templates</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>What to Say & When</div>
+              <div style={{...S.pageTitle}}>What to Say & When</div>
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Ready-to-send messages for every situation.</div>
             </div>
 
@@ -2107,7 +2212,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(59,130,246,0.30),0 4px 14px rgba(59,130,246,0.35),0 14px 40px rgba(59,130,246,0.42),0 28px 72px rgba(59,130,246,0.22)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",borderRadius:C.r.lg,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",fontFamily:C.sans,boxShadow:C.sh.accent(C.blue),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2215,7 +2320,7 @@ function App() {
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
               <div style={{fontSize:13,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Account Defense</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Protect Your Account</div>
+              <div style={{...S.pageTitle}}>Protect Your Account</div>
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Habits, appeal scripts, checklists, and notes — by platform.</div>
             </div>
 
@@ -2277,7 +2382,7 @@ function App() {
                       </div>
                       <div style={{padding:"14px 16px",borderTop:"1px solid rgba(139,92,246,0.12)"}}>
                         <div style={{fontSize:13,color:C.text2,marginBottom:12,lineHeight:1.5}}>Platform policies change without warning. Policy Watch tracks what changed, what it means for your account, and what to do — updated every month. Included with Elite.</div>
-                        <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 0 0 1px rgba(245,166,35,0.25),0 4px 12px rgba(245,166,35,0.30),0 12px 32px rgba(245,166,35,0.32),0 24px 56px rgba(245,166,35,0.18)",WebkitTapHighlightColor:"transparent"}}>
+                        <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>
                           Unlock Elite — $10 one time
                         </button>
                         <div style={{fontSize:11,color:C.text3,textAlign:"center",marginTop:8}}>One-time · Lifetime access · All platforms covered</div>
@@ -2342,7 +2447,7 @@ function App() {
                       ))}
                     </div>
                     
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 14px rgba(139,92,246,0.35),0 14px 40px rgba(139,92,246,0.42),0 28px 72px rgba(139,92,246,0.22)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:C.r.lg,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",fontFamily:C.sans,boxShadow:C.sh.accent(C.purple),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:10}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2369,7 +2474,7 @@ function App() {
                   const habits=PLATFORM_HABITS[defPlatform]||[];
                   const appeals=PLATFORM_APPEALS[defPlatform]||[];
                   return(
-                    <div style={{display:"flex",flexDirection:"column",gap:12,animation:"slideUp 0.3s cubic-bezier(0.16,1,0.3,1)"}}>
+                    <div style={{display:"flex",flexDirection:"column",gap:12,animation:"slideUp 0.3s cubic-bezier(0.22,1,0.36,1)"}}>
                       <div style={{display:"flex",gap:6,background:C.s1,borderRadius:12,padding:4}}>
                         {[["habits","🛡️ Habits"],["appeals","📋 Appeals"],["checklist","✅ Checklist"],["notes","📝 Notes"]].map(([id,label])=>(
                           <button key={id} onClick={()=>setDefSection(id)} style={{flex:1,background:defSection===id?plat.color:"transparent",border:"none",borderRadius:9,padding:"9px 2px",fontSize:12,fontWeight:700,cursor:"pointer",color:defSection===id?"#000":C.text3,transition:"all 0.25s cubic-bezier(0.22,1,0.36,1)",boxShadow:defSection===id?`0 0 0 1px ${plat.color}40,0 0 14px ${plat.color}55,0 0 32px ${plat.color}33`:"none"}}>{label}</button>
@@ -2397,7 +2502,7 @@ function App() {
                               <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:apOpen?"rotate(180deg)":"none"}}>▾</div>
                             </div>
                             {apOpen&&(
-                              <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.16,1,0.3,1)"}}>
+                              <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.22,1,0.36,1)"}}>
                                 {ap.secs.map((sec,si)=>{
                                   const subKey=`ap${ai}-${si}`;
                                   const subOpen2=appealSub===subKey;
@@ -2413,7 +2518,7 @@ function App() {
                                         const hasPhs=phs.length>0;
                                         const preview=isFilling?applyFill(sec.msg,fillVals):sec.msg;
                                         return(
-                                        <div style={{padding:"0 14px 14px",animation:"slideUp 0.2s cubic-bezier(0.16,1,0.3,1)"}}>
+                                        <div style={{padding:"0 14px 14px",animation:"slideUp 0.2s cubic-bezier(0.22,1,0.36,1)"}}>
                                           {sec.timing&&<div style={{display:"flex",alignItems:"center",gap:6,background:"rgba(245,166,35,0.08)",border:"1px solid rgba(245,166,35,0.2)",borderRadius:8,padding:"7px 10px",marginBottom:10,fontSize:12,color:C.amber,fontWeight:600}}>🕐 {sec.timing}</div>}
                                           <div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"12px 13px",marginBottom:10,fontSize:12,color:C.text,lineHeight:1.75,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{preview}</div>
                                           {hasPhs&&!isFilling&&(
@@ -2520,7 +2625,7 @@ function App() {
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
               <div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>Training Series</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>The DropPilot Method</div>
+              <div style={{...S.pageTitle}}>The DropPilot Method</div>
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Five short training lessons on customer service skills that drive ratings and income.</div>
             </div>
 
@@ -2585,7 +2690,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:"0 0 0 1px rgba(245,166,35,0.30),0 4px 14px rgba(245,166,35,0.35),0 14px 40px rgba(245,166,35,0.42),0 28px 72px rgba(245,166,35,0.22)"}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,borderRadius:C.r.lg,padding:"16px",fontSize:15,width:"100%",letterSpacing:0}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2608,7 +2713,7 @@ function App() {
               ):(
                 <div style={{padding:"16px"}}>
                   <div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>{SCENARIOS.length} real-world gig driver situations. Pick a response, get instant feedback on why it works — or doesn't. Covers false complaints, angry customers, rating threats, de-escalation, and more.</div>
-                  <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",WebkitTapHighlightColor:"transparent"}}>Unlock Elite — $10 one time</button>
+                  <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>Unlock Elite — $10 one time</button>
                 </div>
               )}
             </div>
@@ -2634,7 +2739,7 @@ function App() {
               ):(
                 <div style={{padding:"16px"}}>
                   <div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>The specific habits that hurt your rating without you realizing it — asking for stars, over-apologizing, opening sealed bags, arguing back. Know them so you stop doing them.</div>
-                  <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD})`,border:"none",borderRadius:13,padding:"14px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#000",width:"100%",WebkitTapHighlightColor:"transparent"}}>Unlock Elite — $10 one time</button>
+                  <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>Unlock Elite — $10 one time</button>
                 </div>
               )}
             </div>
@@ -2646,7 +2751,7 @@ function App() {
           <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
             <div style={{textAlign:"center",padding:"8px 0 4px"}}>
               <div style={{fontSize:13,fontWeight:800,color:C.teal,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>New to This?</div>
-              <div style={{fontSize:22,fontWeight:900,letterSpacing:"-0.5px"}}>Start Here</div>
+              <div style={{...S.pageTitle}}>Start Here</div>
               <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>Everything explained in plain English — no experience needed.</div>
             </div>
 
@@ -2677,7 +2782,7 @@ function App() {
                         </div>
                       ))}
                     </div>
-                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:16,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",boxShadow:`0 0 0 1px rgba(6,182,212,0.30),0 4px 14px rgba(6,182,212,0.35),0 14px 40px rgba(6,182,212,0.40),0 28px 72px rgba(6,182,212,0.22)`}}>Unlock Elite Access — $10</button>
+                    <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:C.r.lg,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",fontFamily:C.sans,boxShadow:C.sh.accent(C.teal),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>Unlock Elite Access — $10</button>
                     <div style={{fontSize:12,color:C.text3,marginTop:9}}>Lifetime access · Free updates forever</div>
                   </div>
                 </div>
@@ -2701,7 +2806,7 @@ function App() {
                         <div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>
                       </div>
                       {catOpen&&(
-                        <div style={{padding:"0 14px 14px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.16,1,0.3,1)"}}>
+                        <div style={{padding:"0 14px 14px",display:"flex",flexDirection:"column",gap:10,animation:"slideUp 0.25s cubic-bezier(0.22,1,0.36,1)"}}>
                           {cat.secs.map((sec,si)=>{
                             const key=`b${ci}-${si}`;
                             const open2=basicsSub===key;
@@ -2712,7 +2817,7 @@ function App() {
                                   <div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:open2?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
                                 </div>
                                 {open2&&(
-                                  <div style={{padding:"0 15px 15px",animation:"slideUp 0.2s cubic-bezier(0.16,1,0.3,1)"}}>
+                                  <div style={{padding:"0 15px 15px",animation:"slideUp 0.2s cubic-bezier(0.22,1,0.36,1)"}}>
                                     <p style={{fontSize:14,color:C.text2,lineHeight:1.85,margin:0}}>{sec.body}</p>
                                   </div>
                                 )}
@@ -2732,12 +2837,12 @@ function App() {
       </div>
 
       {/* ── Quick Help Floating Button ──────────────────────────────────────── */}
-      <button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:"50%",background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:"0 0 0 1px rgba(59,130,246,0.35),0 4px 14px rgba(59,130,246,0.45),0 14px 36px rgba(59,130,246,0.50),0 28px 64px rgba(59,130,246,0.25)",WebkitTapHighlightColor:"transparent"}}>⚡</button>
+      <button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:C.r.full,background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:C.sh.accent(C.blue),WebkitTapHighlightColor:"transparent",transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`}}>⚡</button>
 
       {/* ── Quick Help Panel ────────────────────────────────────────────────── */}
       {showQuickHelp&&(
         <div style={{position:"fixed",inset:0,zIndex:500,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
-          <div onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.75)"}}/>
+          <div onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
           <div style={{position:"relative",background:"linear-gradient(180deg,#12151a,#0d0f13)",borderTop:"1px solid rgba(255,255,255,0.08)",borderRadius:"24px 24px 0 0",padding:20,paddingBottom:36,width:"100%",maxWidth:430,zIndex:1,maxHeight:"80vh",overflowY:"auto"}}>
             <div style={{width:40,height:4,borderRadius:99,background:"rgba(255,255,255,0.15)",margin:"0 auto 18px"}}/>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
@@ -2745,7 +2850,7 @@ function App() {
                 <div style={{fontSize:16,fontWeight:900}}>⚡ {t("Quick Scripts","Scripts Rápidos")}</div>
                 <div style={{fontSize:12,color:C.text3,marginTop:2}}>{t("What's happening right now?","¿Qué está pasando ahora?")}</div>
               </div>
-              <button onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,width:32,height:32,cursor:"pointer",color:C.text3,fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
+              <button onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{background:"rgba(255,255,255,0.07)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:C.r.sm,width:32,height:32,cursor:"pointer",color:C.text3,fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>✕</button>
             </div>
 
             {qhActive===null?(
@@ -2855,7 +2960,7 @@ function App() {
                     ))}
                   </div>
                 </div>
-                <button onClick={()=>{ window.location.href=STRIPE_LINK; }} style={{background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,border:"none",borderRadius:16,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",color:"#000",width:"100%",boxShadow:"0 0 0 1px rgba(245,166,35,0.30),0 4px 14px rgba(245,166,35,0.40),0 14px 40px rgba(245,166,35,0.45),0 28px 80px rgba(245,166,35,0.25)",display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
+                <button onClick={()=>{ window.location.href=STRIPE_LINK; }} style={{...S.btnPrimary,background:`linear-gradient(135deg,${C.amber},${C.amberD},${C.amberL})`,borderRadius:C.r.lg,padding:"17px",fontSize:16,width:"100%",letterSpacing:0,display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8}}>
                   <span style={{fontSize:20}}>💳</span>
                   <div style={{textAlign:"left"}}>
                     <div>Become Elite — $10</div>
