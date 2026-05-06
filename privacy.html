@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="DropPilot Privacy Policy"/>
 <title>Privacy Policy — DropPilot</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
 <style>
 /* @brand-tokens — KEEP IN SYNC WITH app.html, index.html, terms.html */
 :root{
@@ -27,17 +27,22 @@
   --mono:'JetBrains Mono','Courier New',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;}
-.wrap{max-width:720px;margin:0 auto;padding:80px 24px 120px;}
-a{color:var(--amber);text-decoration:none;}
-a:hover{text-decoration:underline;}
-h1{font-size:36px;font-weight:900;letter-spacing:-0.5px;margin-bottom:8px;}
-h2{font-size:18px;font-weight:800;margin:36px 0 12px;color:var(--amber);}
-p,li{font-size:15px;color:var(--text2);margin-bottom:12px;}
-ul{padding-left:22px;margin-bottom:12px;}
-.meta{font-size:13px;color:var(--text3);margin-bottom:32px;}
-.back{display:inline-block;margin-bottom:40px;font-size:13px;font-weight:700;}
-strong{color:var(--text);}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;-webkit-font-smoothing:antialiased;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(800px 500px at 50% -10%,rgba(245,166,35,0.08),transparent 60%);pointer-events:none;z-index:-1;}
+.wrap{max-width:760px;margin:0 auto;padding:clamp(64px,8vw,96px) 24px clamp(80px,10vw,120px);}
+a{color:var(--amber);text-decoration:none;transition:opacity 0.18s var(--ease-out);}
+a:hover{opacity:0.85;text-decoration:underline;text-underline-offset:3px;}
+h1{font-family:var(--display);font-size:clamp(44px,7vw,56px);font-weight:400;letter-spacing:0.5px;line-height:1;margin-bottom:12px;background:linear-gradient(110deg,#fff 30%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+h2{font-size:22px;font-weight:800;margin:48px 0 14px;color:var(--text);letter-spacing:-0.2px;position:relative;padding-bottom:10px;}
+h2::after{content:'';position:absolute;bottom:0;left:0;width:36px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--amber),transparent);}
+p,li{font-size:15px;color:var(--text2);margin-bottom:14px;}
+ul{padding-left:22px;margin-bottom:14px;}
+li{margin-bottom:8px;}
+.meta{font-size:13px;color:var(--text3);margin-bottom:40px;letter-spacing:0.3px;}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:40px;font-size:13px;font-weight:700;color:var(--text2);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:var(--r-full);padding:7px 14px;transition:background 0.18s var(--ease-out),color 0.18s var(--ease-out),border-color 0.18s var(--ease-out);}
+.back:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:var(--border-strong);text-decoration:none;}
+strong{color:var(--text);font-weight:700;}
+code{background:rgba(255,255,255,0.06);border:1px solid var(--border-soft);border-radius:var(--r-xs);padding:2px 6px;font-family:var(--mono);font-size:13px;color:var(--amber-l);}
 </style>
 </head>
 <body>
