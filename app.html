@@ -131,6 +131,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .toast.in{animation:toastIn 0.22s cubic-bezier(0.34,1.56,0.64,1) forwards;}
 .toast.out{animation:toastOut 0.18s cubic-bezier(0.22,1,0.36,1) forwards;}
 .skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.04),rgba(255,255,255,0.10),rgba(255,255,255,0.04));background-size:200% 100%;animation:shimmerSlide 1.4s ease-in-out infinite;border-radius:14px;}
+.badge-elite{display:inline-flex;align-items:center;font-family:'Outfit',sans-serif;font-size:11px;font-weight:900;letter-spacing:0.6px;color:#1a1206;background:linear-gradient(135deg,#FFC967 0%,#F5A623 55%,#C8820A 100%);border-radius:9999px;padding:3px 10px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.40),0 0 14px rgba(245,166,35,0.35),0 0 0 1px rgba(245,166,35,0.25);}
+.badge-free{display:inline-flex;align-items:center;font-family:'Outfit',sans-serif;font-size:11px;font-weight:800;letter-spacing:0.5px;color:#10B981;background:rgba(16,185,129,0.10);border:1px solid rgba(16,185,129,0.45);border-radius:9999px;padding:2px 10px;}
+.badge-critical{display:inline-flex;align-items:center;font-family:'Outfit',sans-serif;font-size:11px;font-weight:900;letter-spacing:0.8px;color:#FFF;background:linear-gradient(135deg,#F43F5E 0%,#B91D3A 100%);border-radius:9999px;padding:3px 10px;box-shadow:0 0 12px rgba(244,63,94,0.50),inset 0 1px 0 rgba(255,255,255,0.20);}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 20px;gap:10px;}
+.empty-state .es-icon{font-size:40px;opacity:0.55;line-height:1;}
+.empty-state .es-title{font-size:15px;font-weight:700;color:#A6B0C2;}
+.empty-state .es-hint{font-size:13px;color:#6B7A8D;line-height:1.5;max-width:260px;}
+.list-divider > * + *{border-top:1px solid rgba(255,255,255,0.06);}
 @media (prefers-reduced-motion: reduce){
 .float,.glow,.border-pulse,.train-pulse,.train-float,.defender-pulse,.shimmer-locked,.skeleton{animation:none!important;}
 .page,.iup,.ipop,.card-in,.id1,.id2,.id3,.c0,.c1,.c2,.c3,.c4,.c5,.c6,.c7,.c8,.c9{animation:none!important;opacity:1!important;transform:none!important;}
@@ -2586,7 +2594,7 @@ function App() {
                       <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
                         <div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
                         <div style={{flex:1}}>
-                          {h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>CRITICAL</span>}
+                          {h.urgent&&<span className="badge-critical" style={{marginBottom:4}}>CRITICAL</span>}
                           <div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div>
                           <div style={{height:10,background:"rgba(255,255,255,0.06)",borderRadius:6,width:"85%",marginBottom:6}}/>
                           <div style={{height:10,background:"rgba(255,255,255,0.04)",borderRadius:6,width:"60%"}}/>
@@ -2652,7 +2660,7 @@ function App() {
                           <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
                             <div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
                             <div style={{flex:1}}>
-                              {h.urgent&&<div style={{fontFamily:C.display,fontSize:11,fontWeight:800,color:C.red,letterSpacing:"1.6px",marginBottom:4}}>CRITICAL</div>}
+                              {h.urgent&&<div style={{marginBottom:4}}><span className="badge-critical">CRITICAL</span></div>}
                               <div style={{fontSize:14,fontWeight:700,marginBottom:5}}>{h.t}</div>
                               <p style={{fontSize:13,color:C.text2,lineHeight:1.75,margin:0}}>{h.why}</p>
                             </div>
@@ -2760,7 +2768,13 @@ function App() {
                           <div style={{fontSize:13,color:C.text2,lineHeight:1.6}}>Log problem addresses, difficult customers, or anything worth remembering. Private to you.</div>
                           <textarea value={noteInput} onChange={e=>setNoteInput(e.target.value)} placeholder="e.g. 123 Main St — gate code never works, always text ahead..." rows={3} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.6,width:"100%"}}/>
                           <button onClick={addNote} style={{background:C.purple,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 12px rgba(139,92,246,0.32),0 12px 32px rgba(139,92,246,0.32),0 24px 56px rgba(139,92,246,0.18)"}}>Add Note</button>
-                          {notes.length===0&&<div style={{textAlign:"center",padding:"20px",color:C.text3,fontSize:13}}>No notes yet. Add your first one above.</div>}
+                          {notes.length===0&&(
+                            <div className="empty-state">
+                              <div className="es-icon">📝</div>
+                              <div className="es-title">No notes yet</div>
+                              <div className="es-hint">Add your first one above to track what's working on this platform.</div>
+                            </div>
+                          )}
                           {notes.map((note,i)=>(
                             <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,padding:"13px 15px",display:"flex",gap:10}}>
                               <div style={{flex:1}}>
