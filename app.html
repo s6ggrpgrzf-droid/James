@@ -17,10 +17,16 @@
       --bg:#07080A; --s1:#0D0F13; --s2:#12151A; --s3:#1A1E26;
       --amber:#F5A623; --amber-d:#C8820A; --amber-l:#ffc84a;
       --green:#10B981; --blue:#3B82F6; --purple:#8B5CF6; --teal:#06B6D4; --red:#F43F5E;
-      --text:#EDF0F7; --text2:#8B95A8; --text3:#6B7A8D;
+      --text:#EDF0F7; --text2:#A6B0C2; --text3:#6B7A8D;
+      --border-soft:rgba(255,255,255,0.06);
+      --border:rgba(255,255,255,0.11);
+      --border-strong:rgba(255,255,255,0.18);
+      --surface-elev:linear-gradient(180deg,#161A22,#10131A);
+      --ring-amber:0 0 0 3px rgba(245,166,35,0.32);
       --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:18px; --r-xl:24px; --r-full:9999px;
       --ease-out:cubic-bezier(0.22,1,0.36,1);
       --ease-spring:cubic-bezier(0.34,1.56,0.64,1);
+      --ease-emphasized:cubic-bezier(0.2,0,0,1);
       --sans:'Outfit',system-ui,sans-serif;
       --display:'Bebas Neue','Outfit',sans-serif;
       --mono:'JetBrains Mono','Courier New',monospace;
@@ -108,6 +114,16 @@ button:active{opacity:0.82;transform:scale(0.96);}
 .brand-btn-primary{background:linear-gradient(135deg,#F5A623,#C8820A);border:none;border-radius:9999px;padding:14px 28px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;color:#000;cursor:pointer;letter-spacing:-0.2px;box-shadow:0 0 0 1px rgba(245,166,35,0.25),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.20);transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);}
 .brand-btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(245,166,35,0.35),0 6px 18px rgba(245,166,35,0.42),0 18px 50px rgba(245,166,35,0.48),0 34px 96px rgba(245,166,35,0.28);}
 .brand-card{background:#12151A;border:1px solid rgba(255,255,255,0.11);border-radius:18px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.20);}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(245,166,35,0.32);}
+.toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(20,24,32,0.96);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,0.14);border-radius:9999px;padding:12px 22px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#EDF0F7;letter-spacing:-0.1px;box-shadow:0 8px 24px rgba(0,0,0,0.35),0 18px 48px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08);pointer-events:none;}
+.toast.in{animation:toastIn 0.22s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+.toast.out{animation:toastOut 0.18s cubic-bezier(0.22,1,0.36,1) forwards;}
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.04),rgba(255,255,255,0.10),rgba(255,255,255,0.04));background-size:200% 100%;animation:shimmerSlide 1.4s ease-in-out infinite;border-radius:14px;}
+@media (prefers-reduced-motion: reduce){
+.float,.glow,.border-pulse,.train-pulse,.train-float,.defender-pulse,.shimmer-locked,.skeleton{animation:none!important;}
+.page,.iup,.ipop,.card-in,.id1,.id2,.id3,.c0,.c1,.c2,.c3,.c4,.c5,.c6,.c7,.c8,.c9{animation:none!important;opacity:1!important;transform:none!important;}
+*{transition-duration:0.01ms!important;}
+}
 `;
 
 // Inject CSS into the document immediately (required for all animation classes)
@@ -120,10 +136,12 @@ async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return tr
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
   border:"rgba(255,255,255,0.11)",
+  borderSoft:"rgba(255,255,255,0.06)",
+  borderStrong:"rgba(255,255,255,0.18)",
   amber:"#F5A623", amberD:"#C8820A", amberL:"#ffc84a",
   green:"#10B981", teal:"#06B6D4", blue:"#3B82F6",
   red:"#F43F5E", purple:"#8B5CF6",
-  text:"#EDF0F7", text2:"#8B95A8", text3:"#6B7A8D",
+  text:"#EDF0F7", text2:"#A6B0C2", text3:"#6B7A8D",
   sans:"'Outfit',system-ui,sans-serif",
   display:"'Bebas Neue','Outfit',sans-serif",
   mono:"'JetBrains Mono','Courier New',monospace",
@@ -138,7 +156,8 @@ const C = {
     amberHi:"0 0 0 1px rgba(245,166,35,0.35),0 6px 18px rgba(245,166,35,0.42),0 18px 50px rgba(245,166,35,0.48),0 34px 96px rgba(245,166,35,0.28)",
     accent:(c)=>`0 0 0 1px ${c}33,0 4px 14px ${c}55,0 14px 36px ${c}55,0 28px 64px ${c}30`,
   },
-  ease:{out:"cubic-bezier(0.22,1,0.36,1)", spring:"cubic-bezier(0.34,1.56,0.64,1)"},
+  ease:{out:"cubic-bezier(0.22,1,0.36,1)", spring:"cubic-bezier(0.34,1.56,0.64,1)", emphasized:"cubic-bezier(0.2,0,0,1)"},
+  ringAmber:"0 0 0 3px rgba(245,166,35,0.32)",
 };
 
 // Reusable JSX style presets — spread via {...S.X, override:val}
