@@ -99,7 +99,7 @@ textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 1px 
 .card-in{animation:cardIn 0.35s cubic-bezier(0.22,1,0.36,1) both;}
 .c0{animation-delay:0.04s;opacity:0}.c1{animation-delay:0.10s;opacity:0}.c2{animation-delay:0.16s;opacity:0}.c3{animation-delay:0.22s;opacity:0}.c4{animation-delay:0.28s;opacity:0}.c5{animation-delay:0.34s;opacity:0}.c6{animation-delay:0.40s;opacity:0}.c7{animation-delay:0.46s;opacity:0}.c8{animation-delay:0.52s;opacity:0}.c9{animation-delay:0.58s;opacity:0}
 button{transition:all 0.22s cubic-bezier(0.22,1,0.36,1);}
-button:active{opacity:0.82;transform:scale(0.96);}
+button:active{transform:scale(0.97);}
 .tip{transition:border-color 0.25s cubic-bezier(0.22,1,0.36,1),transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);}
 .tip:active{transform:scale(0.99);}
 .train-pulse{animation:trainPulse 2.2s ease-in-out infinite;}
@@ -111,8 +111,15 @@ button:active{opacity:0.82;transform:scale(0.96);}
 .brand-wordmark{font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:-0.3px;background:linear-gradient(110deg,#EDF0F7 40%,#F5A623);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .brand-display{font-family:'Bebas Neue','Outfit',sans-serif;letter-spacing:0.5px;line-height:1;}
 .brand-headline-grad{background:linear-gradient(110deg,#fff 35%,#F5A623);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Bebas Neue','Outfit',sans-serif;letter-spacing:-0.5px;line-height:1.05;}
-.brand-btn-primary{background:linear-gradient(135deg,#F5A623,#C8820A);border:none;border-radius:9999px;padding:14px 28px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:900;color:#000;cursor:pointer;letter-spacing:-0.2px;box-shadow:0 0 0 1px rgba(245,166,35,0.25),0 4px 14px rgba(245,166,35,0.32),0 14px 40px rgba(245,166,35,0.36),0 28px 80px rgba(245,166,35,0.20);transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);}
-.brand-btn-primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(245,166,35,0.35),0 6px 18px rgba(245,166,35,0.42),0 18px 50px rgba(245,166,35,0.48),0 34px 96px rgba(245,166,35,0.28);}
+.brand-btn-primary{background:linear-gradient(135deg,#FFB94A 0%,#E89010 55%,#C8820A 100%);border:none;border-radius:9999px;padding:14px 26px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:#000;cursor:pointer;letter-spacing:-0.1px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.30),0 0 0 1px rgba(245,166,35,0.30),0 8px 22px rgba(245,166,35,0.34),0 22px 60px rgba(245,166,35,0.22);transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);}
+.brand-btn-primary:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.35),0 0 0 1px rgba(245,166,35,0.40),0 12px 28px rgba(245,166,35,0.44),0 28px 72px rgba(245,166,35,0.30);}
+.brand-btn-primary:active{transform:translateY(0) scale(0.985);}
+.brand-btn-secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);border-radius:9999px;padding:12px 22px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#EDF0F7;cursor:pointer;letter-spacing:-0.1px;transition:background 0.18s cubic-bezier(0.22,1,0.36,1),transform 0.18s cubic-bezier(0.22,1,0.36,1),border-color 0.18s cubic-bezier(0.22,1,0.36,1);}
+.brand-btn-secondary:hover{background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.28);}
+.brand-btn-ghost{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:8px 14px;font-family:'Outfit',sans-serif;font-size:12px;font-weight:800;color:#A6B0C2;cursor:pointer;letter-spacing:0.4px;transition:background 0.18s cubic-bezier(0.22,1,0.36,1),color 0.18s cubic-bezier(0.22,1,0.36,1),border-color 0.18s cubic-bezier(0.22,1,0.36,1);}
+.brand-btn-ghost:hover{background:rgba(255,255,255,0.08);color:#EDF0F7;border-color:rgba(255,255,255,0.18);}
+.brand-btn-icon{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:9999px;color:#A6B0C2;cursor:pointer;transition:background 0.18s cubic-bezier(0.22,1,0.36,1),color 0.18s cubic-bezier(0.22,1,0.36,1),transform 0.18s cubic-bezier(0.22,1,0.36,1);}
+.brand-btn-icon:hover{background:rgba(255,255,255,0.10);color:#EDF0F7;}
 .brand-card{background:#12151A;border:1px solid rgba(255,255,255,0.11);border-radius:18px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 8px rgba(0,0,0,0.20);}
 button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(245,166,35,0.32);}
 .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(20,24,32,0.96);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid rgba(255,255,255,0.14);border-radius:9999px;padding:12px 22px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#EDF0F7;letter-spacing:-0.1px;box-shadow:0 8px 24px rgba(0,0,0,0.35),0 18px 48px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08);pointer-events:none;}
@@ -177,19 +184,38 @@ const S = {
     fontWeight:400, letterSpacing:"0.5px", lineHeight:1, color:C.text,
   },
   btnPrimary:{
-    background:`linear-gradient(135deg,${C.amber},${C.amberD})`,
-    border:"none", borderRadius:C.r.full, padding:"14px 28px",
-    fontFamily:C.sans, fontSize:15, fontWeight:900, color:"#000",
-    cursor:"pointer", boxShadow:C.sh.amber,
+    background:`linear-gradient(135deg,#FFB94A 0%,#E89010 55%,${C.amberD} 100%)`,
+    border:"none", borderRadius:C.r.full, padding:"14px 26px",
+    fontFamily:C.sans, fontSize:15, fontWeight:800, color:"#000",
+    cursor:"pointer",
+    boxShadow:"inset 0 1px 0 rgba(255,255,255,0.30), 0 0 0 1px rgba(245,166,35,0.30), 0 8px 22px rgba(245,166,35,0.34), 0 22px 60px rgba(245,166,35,0.22)",
     transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,
-    letterSpacing:"-0.2px", WebkitTapHighlightColor:"transparent",
+    letterSpacing:"-0.1px", WebkitTapHighlightColor:"transparent",
+  },
+  btnSecondary:{
+    background:"rgba(255,255,255,0.06)",
+    border:`1px solid ${C.borderStrong}`,
+    borderRadius:C.r.full, padding:"12px 22px",
+    fontFamily:C.sans, fontSize:14, fontWeight:700, color:C.text,
+    cursor:"pointer", letterSpacing:"-0.1px",
+    transition:`background 0.18s ${C.ease.out}, transform 0.18s ${C.ease.out}, border-color 0.18s ${C.ease.out}`,
+    WebkitTapHighlightColor:"transparent",
+  },
+  btnIcon:{
+    width:36, height:36, display:"inline-flex",
+    alignItems:"center", justifyContent:"center",
+    background:"rgba(255,255,255,0.06)",
+    border:`1px solid ${C.borderSoft}`,
+    borderRadius:C.r.full, color:C.text2, cursor:"pointer",
+    transition:`background 0.18s ${C.ease.out}, color 0.18s ${C.ease.out}, transform 0.18s ${C.ease.out}`,
+    WebkitTapHighlightColor:"transparent",
   },
   btnGhost:{
-    background:"rgba(255,255,255,0.05)",
-    border:"1px solid rgba(255,255,255,0.08)",
-    borderRadius:C.r.sm, padding:"7px 12px",
+    background:"rgba(255,255,255,0.04)",
+    border:`1px solid ${C.borderSoft}`,
+    borderRadius:C.r.sm, padding:"8px 14px",
     fontFamily:C.sans, fontSize:12, fontWeight:800, color:C.text2,
-    cursor:"pointer", letterSpacing:"0.5px",
+    cursor:"pointer", letterSpacing:"0.4px",
     transition:`background 0.18s ${C.ease.out}, color 0.18s ${C.ease.out}`,
   },
   card:{
