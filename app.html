@@ -591,41 +591,57 @@ const PLATFORM_CHECKLISTS = {
 
 // ─── Policy Watch ─────────────────────────────────────────────────────────────
 const POLICY_WATCH = {
-  month: "April 2026",
-  lastUpdated: "April 14, 2026",
+  month: "May 2026",
+  lastUpdated: "May 6, 2026",
   updates: [
     {platform:"doordash",label:"DoorDash",color:"#FF3008",e:"🔴",isNew:true,
      category:"Deactivation",severity:"high",
-     title:"DoorDash tightening 'Never Received' fraud detection",
-     body:"DoorDash has updated its fraud detection for non-delivery complaints. Drivers with GPS confirmation at the address and a clear delivery photo are now more protected. Drivers without a photo are being held to a stricter standard. Photo every single drop-off — this is no longer optional."},
+     title:"In-app deactivation appeals now resolve in days, not weeks",
+     body:"DoorDash's revamped appeal flow lets you file directly inside the Dasher app and watch status update in real time. Reviews team capacity has been expanded and the stated goal is for the vast majority of appeals to resolve within a few business days.",
+     action:"File from the in-app appeal screen the moment the deactivation email lands — every hour the case sits open is an hour you're not earning.",
+     source:"DoorDash News · 2026"},
     {platform:"ubereats",label:"Uber Eats",color:"#06C167",e:"🟢",isNew:true,
-     category:"Ratings",severity:"medium",
-     title:"Uber Eats rating floor adjusted in select markets",
-     body:"Uber Eats has quietly raised the minimum rating floor in select markets from 4.5 to 4.6 before access is restricted. If your rating sits between 4.5–4.6 right now, treat every delivery like an audition. The end-of-delivery routine matters more than ever."},
+     category:"Standing",severity:"medium",
+     title:"Uber Eats Pro reshuffled — on-time rate is now scored in select markets",
+     body:"Uber Eats Pro has added on-time rate as a scored metric in select markets and adjusted thresholds for cancellation rate, satisfaction rate, and points. Long restaurant waits now hurt status, not just acceptance rate.",
+     action:"Check your Pro Hub — if you see an on-time number, that market is live. Walk out and unassign on stalls of 8+ minutes.",
+     source:"Uber blog · 2026"},
     {platform:"instacart",label:"Instacart",color:"#43B02A",e:"🟩",isNew:true,
-     category:"Policy",severity:"medium",
-     title:"Instacart tightening substitution documentation requirements",
-     body:"Following a spike in customer complaints about unauthorized swaps, Instacart now requires more specific substitution documentation. Message the customer through the app before checking out — always. Your in-app message timestamp is your primary protection if a substitution gets disputed."},
+     category:"Earnings",severity:"high",
+     title:"NYC shoppers: $21.44/hr floor, batch caps, and online windows now fully enforced",
+     body:"NYC's grocery delivery law is fully live: $21.44/hr minimum (excluding tips), capped concurrent shoppers, online windows, and one-batch-at-a-time offers — the full batch list is gone in NYC. A $5.99 customer-side 'Regulatory Response Fee' is also being charged in NYC.",
+     action:"If you shop NYC, schedule online windows in advance and don't wait for 'the list' — it's gone. Outside NYC, nothing has changed.",
+     source:"Instacart Shopper Community · 2026"},
     {platform:"amazonflex",label:"Amazon Flex",color:"#FF9900",e:"📦",isNew:true,
-     category:"Appeals",severity:"low",
-     title:"Amazon Flex appeal timeline — what to expect",
-     body:"If your account is deactivated, you have 10 days from the deactivation notice to submit your appeal. After submitting, allow 3–5 business days for an initial review — complex cases can take longer. Do not assume silence means denial — wait at least 10 business days before following up. Escalating too early can reset the clock on your review."},
+     category:"Appeals",severity:"medium",
+     title:"Amazon Flex appeal review window is now 7–14 days, not 3–5",
+     body:"Driver reports and Amazon's own support guidance now point to a 7–14 business day review window for deactivation appeals. The 10-day window to file an appeal is unchanged.",
+     action:"Email amazonflex-support@amazon.com the same day, attach evidence, and don't escalate before day 14 — escalating early can reset the queue.",
+     source:"Amazon Flex Support · 2026"},
     {platform:"lyft",label:"Lyft",color:"#FF00BF",e:"🩷",isNew:true,
      category:"Standing",severity:"medium",
-     title:"Lyft Tier Points system — how your standing is actually calculated",
-     body:"Lyft moved away from a simple star rating to a Tier Points + Driving Score system. Your Driving Score must be 60%+ to maintain Silver status, and 80%+ for Gold, Platinum, and Elite. Driving Score is calculated from your last 100 rides — one bad week won't tank you, but a pattern will. Check your score in the app under 'Rewards' monthly."},
+     title:"Lyft Tier Points reset at 5 AM on the 1st — banked Shop points expire after 12 months",
+     body:"Tier Points officially reset at 5 AM local on the first of the month. Banked Shop points (Silver+ only) carry over but expire 12 months after they're earned. Acceptance rate multipliers (2–3×) still only apply in supported regions.",
+     action:"Spend or convert Shop points before the 12-month mark. Check the redemption page on the 1st of each month — that's when your tier resets.",
+     source:"Lyft Driver Rewards Terms · 2026"},
     {platform:"spark",label:"Walmart Spark",color:"#0071CE",e:"⚡",isNew:true,
-     category:"Ratings",severity:"medium",
-     title:"Spark is enforcing delivery photo requirements more strictly",
-     body:"Spark Driver support has been citing missing or unclear delivery photos as grounds for non-delivery complaints sticking. Each photo must show the bags at the door, with the door or address number visible. A photo of the driveway from 10 feet away is not enough. Retake if it isn't clear."},
+     category:"Identity",severity:"high",
+     title:"Spark selfie checks are stricter — hats and sunglasses can auto-lock you",
+     body:"Random in-shift selfie checks are firing more often and the matcher is rejecting faces partially covered by hats, sunglasses, or masks. The app also now requires iOS 16 / Android 13 minimum — older phones are being locked out. Walmart's $100M FTC settlement over Spark earnings claims closed in February; pay-disclosure changes are rolling out.",
+     action:"Take selfies face-on, in good light, hat and sunglasses off. Confirm your phone is on iOS 16+ / Android 13+ before your next shift.",
+     source:"FTC + Spark Driver Help · 2026"},
     {platform:"uber",label:"Uber",color:"#1D1D1D",e:"🚗",isNew:true,
      category:"Deactivation",severity:"high",
-     title:"Uber's safety complaint process — what happens and how fast",
-     body:"Uber can temporarily restrict your account within minutes of a safety complaint being filed — before any review. If this happens, you'll receive an email with a case ID. Respond immediately and include trip screenshots, any in-app messages, and your dashcam footage if available. First response speed matters. Accounts with documented safety habits (dashcam, name confirmation, clean rating history) recover faster."},
+     title:"You can now see and respond to safety reports in the app — before any decision",
+     body:"Uber's 'Fairness in the Driver's Seat' rollout makes eligible safety reports visible in-app with a window to respond before review. Uber will also cover a third-party drug test if you challenge a false impairment claim, and Record My Ride / dashcam footage can be used to dismiss bad-faith reports.",
+     action:"When a report appears, respond inside 24 hours. Attach Record My Ride or dashcam clip and any in-app messages. First response speed still beats length.",
+     source:"Uber blog (Fairness in the Driver's Seat) · 2026"},
     {platform:"gopuff",label:"GoPuff",color:"#4338CA",e:"🟣",isNew:true,
      category:"Policy",severity:"low",
-     title:"GoPuff facility check-in and order count requirements",
-     body:"GoPuff's support team has been rejecting non-delivery disputes where the driver left the facility without confirming their order count against the app manifest. Before you leave, confirm bag count matches what the app shows. A photo of the sealed bags at the facility before departure is increasingly being used as supporting evidence in dispute reviews — consider adding it to your routine."},
+     title:"Facility-side evidence still your best dispute defense — no new written policy this cycle",
+     body:"No new written policy this month, but support continues to lean on facility-side evidence when reviewing non-delivery disputes. A photo of sealed bags at the facility is being accepted as supporting evidence.",
+     action:"Confirm bag count against the app manifest before leaving every facility, and snap a quick photo of the sealed bags at the door before you drive off.",
+     source:"Gopuff Community Guidelines · 2026"},
   ]
 };
 
@@ -2399,7 +2415,10 @@ function App() {
                   {/* Header */}
                   <div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(139,92,246,0.12)"}}>
                     <div>
-                      <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2}}>📡 Policy Watch</div>
+                      <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2,display:"flex",alignItems:"center",gap:6}}>
+                        <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:"#10B981",boxShadow:"0 0 0 4px rgba(16,185,129,0.18)"}} />
+                        📡 Policy Watch
+                      </div>
                       <div style={{display:"flex",alignItems:"center",gap:6}}>
                         <span style={{fontSize:13,color:C.text2}}>{POLICY_WATCH.month} · Last updated {POLICY_WATCH.lastUpdated}</span>
                         {newCount>0&&<span style={{background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.35)",borderRadius:6,padding:"2px 7px",fontSize:10,fontWeight:800,color:C.amber}}>{newCount} new</span>}
@@ -2423,11 +2442,23 @@ function App() {
                               <span style={{fontSize:11}}>{u.e}</span>
                               <span style={{fontSize:11,fontWeight:700,color:u.color}}>{u.label}</span>
                             </div>
-                            <div style={{background:`${sevColor[u.severity]}12`,border:`1px solid ${sevColor[u.severity]}30`,borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:700,color:sevColor[u.severity]}}>{u.category}</div>
+                            <div style={{display:"flex",alignItems:"center",gap:6,background:`${sevColor[u.severity]}12`,border:`1px solid ${sevColor[u.severity]}30`,borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:700,color:sevColor[u.severity]}}>
+                              <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:sevColor[u.severity]}} />
+                              {u.category}
+                            </div>
                             {u.isNew&&<div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:6,padding:"3px 8px",fontSize:11,fontWeight:800,color:"#10B981"}}>New</div>}
                           </div>
                           <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{u.title}</div>
                           <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{u.body}</div>
+                          {u.action&&(
+                            <div style={{marginTop:10,background:"rgba(139,92,246,0.07)",borderLeft:`3px solid ${C.purple}`,borderRadius:8,padding:"10px 12px"}}>
+                              <div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1px",textTransform:"uppercase",marginBottom:4}}>→ What to do</div>
+                              <div style={{fontSize:13,color:C.text,lineHeight:1.55}}>{u.action}</div>
+                            </div>
+                          )}
+                          {u.source&&(
+                            <div style={{marginTop:8,fontSize:11,color:C.text3}}>Source · {u.source}</div>
+                          )}
                         </div>
                       ))}
                     </div>
