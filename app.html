@@ -3082,17 +3082,17 @@ function App() {
           </button>
         </div>
       ):(
-        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
+        <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.78)",backdropFilter:"blur(28px) saturate(140%)",WebkitBackdropFilter:"blur(28px) saturate(140%)",borderTop:"1px solid rgba(255,255,255,0.10)",boxShadow:"0 -1px 0 rgba(255,255,255,0.04), 0 -8px 32px rgba(0,0,0,0.45)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
           {[{id:"tips",l:"Earn",e:"⭐",ac:C.amber},{id:"templates",l:"Scripts",e:"💬",ac:C.blue},{id:"basics",l:"Basics",e:"📖",ac:C.teal},{id:"defend",l:"Defend",e:"🛡️",ac:C.purple},{id:"train",l:"Training",e:"🎓",ac:C.amber}].map(n=>{
             const active=tab===n.id;
             const popping=navPop===n.id;
             return(
-              <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"6px 1px 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:1,position:"relative",transition:"all 0.18s"}}>
-                {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:28,height:2,borderRadius:"0 0 4px 4px",background:n.ac,boxShadow:`0 0 8px ${n.ac},0 0 18px ${n.ac}80,0 2px 12px ${n.ac}60`}}/>}
-                <div className={popping?"nav-pop":""} style={{width:40,height:28,borderRadius:10,background:active?`${n.ac}18`:"transparent",border:active?`1px solid ${n.ac}30`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.18s,border 0.18s"}}>
-                  <span style={{fontSize:active?18:15,transition:"font-size 0.18s"}}>{n.e}</span>
+              <button key={n.id} onClick={()=>changeTab(n.id)} style={{flex:1,background:"transparent",border:"none",cursor:"pointer",padding:"6px 1px 3px",display:"flex",flexDirection:"column",alignItems:"center",gap:2,position:"relative",transition:"all 0.18s"}}>
+                {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:32,height:3,borderRadius:"0 0 5px 5px",background:n.ac,boxShadow:`0 0 10px ${n.ac},0 0 22px ${n.ac}80,0 2px 14px ${n.ac}60`,animation:`vFade 0.22s ${C.ease.out} both`}}/>}
+                <div className={popping?"nav-pop":""} style={{width:42,height:30,borderRadius:12,background:active?`${n.ac}26`:"transparent",border:active?`1px solid ${n.ac}40`:"1px solid transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:`background 0.22s ${C.ease.out},border-color 0.22s ${C.ease.out}`}}>
+                  <span style={{fontSize:active?19:16,transition:`font-size 0.22s ${C.ease.spring}`}}>{n.e}</span>
                 </div>
-                <span style={{fontSize:11,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px"}}>{n.l}</span>
+                <span style={{fontSize:11,fontWeight:active?800:600,color:active?n.ac:C.text3,fontFamily:C.sans,letterSpacing:"0.1px",transition:`color 0.22s ${C.ease.out}`}}>{n.l}</span>
               </button>
             );
           })}
