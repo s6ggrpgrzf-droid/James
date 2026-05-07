@@ -116,6 +116,79 @@ button:active{opacity:0.82;transform:scale(0.96);}
 async function load(k,fb){try{const v=localStorage.getItem(k);return v?JSON.parse(v):fb;}catch{return fb;}}
 async function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){console.warn("Save failed:",k,e);return false;}}
 
+// ── Elite token verification (ECDSA P-256) ───────────────────────────────
+// The app no longer trusts `?session_id=` from the URL or any boolean in
+// localStorage. Elite is granted only when the user arrives with a token
+// signed by the verification Worker (workers/verify.js), and it is
+// re-verified against the embedded public key on every load.
+//
+// To wire this up: run `node workers/generate-keys.mjs` and replace the
+// REPLACE_ME values below with the printed `publicKey`. Until you do,
+// no token will verify — which is the safe default.
+const ELITE_PUBLIC_JWK = {
+  kty: "EC", crv: "P-256",
+  x: "REPLACE_ME",
+  y: "REPLACE_ME"
+};
+const ELITE_TOKEN_VERSION = 1;
+
+function _b64uToBytes(s){
+  s = String(s).replace(/-/g,"+").replace(/_/g,"/");
+  while(s.length % 4) s += "=";
+  const bin = atob(s);
+  const out = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+let _eliteKeyPromise = null;
+function _getEliteKey(){
+  if(_eliteKeyPromise) return _eliteKeyPromise;
+  _eliteKeyPromise = (async ()=>{
+    if(!ELITE_PUBLIC_JWK || ELITE_PUBLIC_JWK.x === "REPLACE_ME") return null;
+    try{
+      return await crypto.subtle.importKey(
+        "jwk", ELITE_PUBLIC_JWK,
+        { name:"ECDSA", namedCurve:"P-256" },
+        false, ["verify"]
+      );
+    }catch(e){
+      console.warn("Elite key import failed:", e);
+      return null;
+    }
+  })();
+  return _eliteKeyPromise;
+}
+
+async function verifyEliteToken(token){
+  if(typeof token !== "string" || token.length > 4096 || !token.includes(".")) return false;
+  const dot = token.indexOf(".");
+  const payloadB64 = token.slice(0, dot);
+  const sigB64 = token.slice(dot + 1);
+  if(!payloadB64 || !sigB64 || sigB64.includes(".")) return false;
+
+  const key = await _getEliteKey();
+  if(!key) return false;
+
+  let payload;
+  try{ payload = JSON.parse(new TextDecoder().decode(_b64uToBytes(payloadB64))); }
+  catch{ return false; }
+  if(!payload || payload.v !== ELITE_TOKEN_VERSION) return false;
+  if(typeof payload.exp === "number" && Math.floor(Date.now()/1000) > payload.exp) return false;
+  if(typeof payload.sid !== "string" || !payload.sid) return false;
+
+  let sig;
+  try{ sig = _b64uToBytes(sigB64); }catch{ return false; }
+  if(sig.length !== 64) return false;
+
+  try{
+    return await crypto.subtle.verify(
+      { name:"ECDSA", hash:"SHA-256" },
+      key, sig, new TextEncoder().encode(payloadB64)
+    );
+  }catch{ return false; }
+}
+
 // @brand-tokens — KEEP IN SYNC WITH the :root block above (and index/privacy/terms.html)
 const C = {
   bg:"#07080A", s1:"#0D0F13", s2:"#12151A", s3:"#1A1E26",
@@ -1697,36 +1770,55 @@ function App() {
 
   useEffect(()=>{
     const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get("session_id");
+    const incomingToken = params.get("dp_token");
+    const payError = params.get("dp_error");
 
-    const doLoad = (verifiedPro) => {
+    const doLoad = (justVerified, errorMsg) => {
       Promise.all([
         load("dp3-cfg",{name:""}),
-        load("dp3-elite",false),
+        load("dp3-elite-token",null),
         load("dp3-intro-seen",false),
         load("dp3-fav-tips",[]),
         load("dp3-fav-tpl",[]),
         load("dp3-notes",[]),
         load("dp3-notif",false),
         load("dp3-lang","en"),
-      ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
-        setCfg_(c); setPro(verifiedPro||!!p); setLoaded(true);
+      ]).then(async ([c,storedToken,seen,ft,ftpl,n,notif,l])=>{
+        let isPro = !!justVerified;
+        if(!isPro && storedToken){
+          isPro = await verifyEliteToken(storedToken);
+          if(!isPro) save("dp3-elite-token", null);
+        }
+        setCfg_(c); setPro(isPro); setLoaded(true);
         setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
         setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
         setNotes(n);
         setNotifOn(!!notif);
         setLang(l||"en");
-        if(verifiedPro){ setShowPay(true); setPayStep("done"); }
+        if(justVerified){ setShowPay(true); setPayStep("done"); }
+        else if(errorMsg){ showToast(errorMsg); }
         else if(!seen) setShowIntro(true);
       });
     };
 
-    if(sessionId){
+    const errorMessageFor = (code) => {
+      if(code === "unpaid") return "Payment didn't complete — please try again or contact support.";
+      if(code === "invalid_session" || code === "not_found") return "Unlock link invalid — contact support@droppilot.app.";
+      if(code === "stripe_unreachable" || code === "sign_error") return "Couldn't verify right now — try again in a moment.";
+      return "Couldn't verify your purchase — contact support@droppilot.app.";
+    };
+
+    if(incomingToken){
       history.replaceState(null,"",window.location.pathname);
-      save("dp3-elite", true);
-      doLoad(true);
+      verifyEliteToken(incomingToken).then(ok=>{
+        if(ok){ save("dp3-elite-token", incomingToken); doLoad(true, null); }
+        else  { doLoad(false, "Unlock link invalid or expired — contact support@droppilot.app."); }
+      });
+    } else if(payError){
+      history.replaceState(null,"",window.location.pathname);
+      doLoad(false, errorMessageFor(payError));
     } else {
-      doLoad(false);
+      doLoad(false, null);
     }
   },[]);
 
@@ -1859,7 +1951,7 @@ function App() {
           <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>⚙ Admin Settings</div>
           <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
             <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>↺ Replay Intro</button>
-            {pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>Reset Elite Access</button>}
+            {pro&&<button onClick={()=>{setPro(false);save("dp3-elite-token",null);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>Reset Elite Access</button>}
           </div>
           <button onClick={()=>setShowCfg(false)} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>Save & Close</button>
         </div>

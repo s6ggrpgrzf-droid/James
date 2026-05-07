@@ -1,0 +1,11 @@
+name = "droppilot-verify"
+main = "verify.js"
+compatibility_date = "2024-12-01"
+
+[vars]
+# Public app URL (no trailing slash). Override per environment if needed.
+APP_URL = "https://s6ggrpgrzf-droid.github.io/James"
+
+# Secrets (do NOT commit; set with `npx wrangler secret put <NAME>`):
+#   STRIPE_SECRET_KEY    — restricted key with read access to Checkout Sessions
+#   SIGNING_PRIVATE_JWK  — JSON of the EC private JWK from generate-keys.mjs
