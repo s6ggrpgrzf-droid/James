@@ -296,7 +296,7 @@ return(
 <div style={{display:"flex",flexDirection:"column",gap:6}}>
 {[
 [t("What's free and what's Elite?","¿Qué es gratis y qué es Elite?"),
-t("The Earn tab — all 10 tips and the first two psychology guides — is completely free, forever. Elite ($10 one-time) unlocks everything else: all scripts, appeal letters, platform guides, training videos, and every update we ever ship.","La pestaña Ganar — los 10 consejos y las primeras dos guías de psicología — es totalmente gratis, para siempre. Elite ($10 una vez) desbloquea todo lo demás: todos los mensajes, cartas de apelación, guías por plataforma, videos y cada actualización que lancemos.")],
+t("Free forever: all 10 Earn tips, the first two psychology guides, 5 arrival scripts, and the account-protection habits. Elite ($10 one-time) unlocks everything else: 30+ more scripts, appeal letters, platform guides, training videos, and every update we ever ship.","Gratis para siempre: los 10 consejos de Ganar, las primeras dos guías de psicología, 5 guiones de llegada y los hábitos de protección de cuenta. Elite ($10 una vez) desbloquea todo lo demás: más de 30 guiones, cartas de apelación, guías por plataforma, videos y cada actualización que lancemos.")],
 [t("I paid but my access didn't unlock. What do I do?","Pagué pero no se desbloqueó. ¿Qué hago?"),
 t("After payment, Stripe sends you back to the app and it unlocks automatically. If something went wrong, close and reopen the app — your purchase is saved. Still not working? Email support@droppilot.app and we'll sort it out same day.","Después del pago, Stripe te regresa a la app y se desbloquea automáticamente. Si algo falló, cierra y vuelve a abrir la app — tu compra está guardada. ¿Sigue sin funcionar? Escribe a support@droppilot.app y lo resolvemos el mismo día.")],
 [t("How do I add DropPilot to my home screen?","¿Cómo agrego DropPilot a mi pantalla de inicio?"),
@@ -427,7 +427,7 @@ return(
 const open=tipOpen===i;
 const fav=favTips.has(i);
 return(
-<div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>(i<4||pro)?setTipOpen(open?null:i):(setShowPay(true),setPayStep("offer"))}
+<div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>setTipOpen(open?null:i)}
 style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",transition:"opacity 0.15s"}}>
 <div style={{display:"flex",alignItems:"center",gap:12}}>
 <div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
@@ -439,12 +439,10 @@ style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)
 <button aria-label={fav?t("Remove from favorites","Quitar de favoritos"):t("Save to favorites","Guardar en favoritos")} onClick={e=>{e.stopPropagation();toggleFavTip(i);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"4px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
 {fav?"★":"☆"}
 </button>
-):i<4?(
-<span style={{fontSize:12,fontWeight:700,color:C.green,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>{t("Free","Gratis")}</span>
 ):(
-<span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
+<span style={{fontSize:12,fontWeight:700,color:C.green,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>{t("Free","Gratis")}</span>
 )}
-{(pro||i<4)&&<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>}
+<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>}
 </div>
 {open&&(
 <div style={{marginTop:14,paddingTop:14,borderTop:"1px solid rgba(255,255,255,0.07)"}}>
@@ -458,19 +456,19 @@ style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)
 {pick(lang,LEARN_CATS,LEARN_CATS_ES).map((cat,ci)=>{
 const catOpen=learnOpen===ci;
 return(
-<div key={ci} style={{background:C.s1,border:`1px solid ${catOpen?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden",opacity:pro?1:0.55,transition:"opacity 0.15s"}}>
-<div onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setLearnOpen(catOpen?null:ci);setLearnSub(null);}} style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+<div key={ci} style={{background:C.s1,border:`1px solid ${catOpen?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden",opacity:(pro||ci<2)?1:0.55,transition:"opacity 0.15s"}}>
+<div onClick={()=>{if(!pro&&ci>=2){setShowPay(true);setPayStep("offer");return;}setLearnOpen(catOpen?null:ci);setLearnSub(null);}} style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
 <div style={{width:44,height:44,borderRadius:13,background:catOpen?"rgba(59,130,246,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{cat.e}</div>
 <div style={{flex:1}}>
 <div style={{fontSize:15,fontWeight:700}}>{cat.t}</div>
 <div style={{fontSize:13,color:C.text2,marginTop:2}}>{cat.sub}</div>
 </div>
-{!pro
+{(!pro&&ci>=2)
 ?<span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
 :<div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>
 }
 </div>
-{catOpen&&pro&&(
+{catOpen&&(pro||ci<2)&&(
 <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
 {cat.secs.map((sec,si)=>{
 const key=`l${ci}-${si}`;
@@ -675,24 +673,25 @@ style={{background:"rgba(245,166,35,0.08)",border:"1px solid rgba(245,166,35,0.2
 <div style={{textAlign:"center",padding:"32px 16px",color:C.text3,fontSize:13}}>No templates match "{templateSearch}"</div>
 )}
 {filteredCats.map((cat,ci)=>{
-const realCi=MSG_CATS.indexOf(cat);
+const realCi=ACTIVE_MSG_CATS.indexOf(cat);
+const isFreeCat=cat.t===ACTIVE_MSG_CATS[0].t;
 const catOpen=msgOpen===realCi||!!templateSearch;
 return(
 <div key={ci} style={{background:C.s1,border:`1px solid ${catOpen&&!templateSearch?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden"}}>
-<div onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}if(!templateSearch){setMsgOpen(catOpen?null:realCi);setSubOpen(null);}}} style={{padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+<div onClick={()=>{if(!pro&&!isFreeCat){setShowPay(true);setPayStep("offer");return;}if(!templateSearch){setMsgOpen(catOpen?null:realCi);setSubOpen(null);}}} style={{padding:"14px 16px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
 <div style={{width:40,height:40,borderRadius:12,background:catOpen?"rgba(59,130,246,0.12)":"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{cat.e}</div>
 <div style={{flex:1}}>
 <div style={{fontSize:14,fontWeight:700}}>{cat.t}</div>
 <div style={{fontSize:13,color:C.text2,marginTop:1}}>{cat.sub}</div>
 </div>
-{!pro?<span style={{fontSize:14}}>🔒</span>:(!templateSearch&&<div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>)}
+{(!pro&&!isFreeCat)?<span style={{fontSize:14}}>🔒</span>:(!templateSearch&&<div style={{color:C.text3,fontSize:12,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>)}
 </div>
 {(catOpen)&&(
 <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
 {cat.secs.map((sec,si)=>{
-const realSi=MSG_CATS[realCi]?.secs?.indexOf(sec);
+const realSi=ACTIVE_MSG_CATS[realCi]?.secs?.indexOf(sec);
 const subKey=`${realCi}-${realSi}`;
-if(!pro) return(
+if(!pro&&!isFreeCat) return(
 <div key={si} onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.06)",borderRadius:12,padding:"12px 14px",cursor:"pointer",display:"flex",alignItems:"flex-start",gap:10,opacity:0.45}}>
 <div style={{flex:1}}>
 <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:4}}>{sec.h}</div>
@@ -823,16 +822,8 @@ return(
 );
 })()}
 {!pro?(
-<div style={{position:"relative"}}>
-<div style={{filter:"blur(6px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
-<div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
-{pick(lang,PLATFORMS_DEFEND,PLATFORMS_DEFEND_ES).map(p=>(
-<div key={p.id} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"18px 12px 16px",display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-<div style={{width:52,height:52,borderRadius:16,background:`linear-gradient(135deg,${p.color},${p.color}99)`,boxShadow:`0 0 0 1px ${p.color}30,0 4px 12px ${p.color}55,0 14px 32px ${p.color}45,0 24px 56px ${p.color}22`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,fontWeight:900,color:"#fff",fontFamily:C.sans}}>{p.label[0]}</div>
-<span style={{fontSize:13,fontWeight:800,color:C.text,textAlign:"center",lineHeight:1.2}}>{p.label}</span>
-</div>
-))}
-</div>
+<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{fontSize:13,fontWeight:800,color:C.green,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>{t("🛡️ Free protection habits","🛡️ Hábitos de protección gratis")}</div>
 {[
 {e:"📸",t:t("Photo every drop-off before you leave","Foto de cada entrega antes de irte"),urgent:true},
 {e:"💬",t:t("Text the customer on every order","Envía mensaje al cliente en cada pedido"),urgent:true},
@@ -853,24 +844,12 @@ return(
 </div>
 </div>
 ))}
-</div>
-<div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.7) 25%,rgba(7,8,10,0.97) 50%)",borderRadius:16,padding:"24px 20px"}}>
-<div className="defender-pulse" style={{borderRadius:22,overflow:"hidden",padding:"26px 22px",textAlign:"center",background:"linear-gradient(160deg,#0e0a1a,#0d0f13)",border:"1px solid rgba(244,63,94,0.35)",width:"100%",position:"relative"}}>
-<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.red},transparent)`}}/>
-<div style={{fontSize:52,marginBottom:14}}>🛡️</div>
-<div style={{fontSize:21,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.red})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("Protect Your Account","Protege Tu Cuenta")}</div>
-<div style={{fontSize:14,color:C.text2,lineHeight:1.8,marginBottom:20}}>{t("False complaints, unfair ratings, and deactivation threats are real. This section gives you the exact habits, scripts, and appeal letters to fight back — by platform.","Quejas falsas, calificaciones injustas y amenazas de desactivación son reales. Esta sección te da los hábitos, guiones y cartas de apelación exactos para defenderte — por plataforma.")}</div>
-<div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:22,textAlign:"left"}}>
-{[["🛡️",t("Critical habits for DoorDash, Uber Eats, Spark, Instacart & Flex","Hábitos críticos para DoorDash, Uber Eats, Spark, Instacart y Flex")],["📋",t("Word-for-word appeal scripts written for support agents","Guiones de apelación palabra por palabra para agentes de soporte")],["✅",t("Per-delivery checklists saved per platform","Listas por entrega guardadas por plataforma")],["📝",t("Private notes log for problem addresses & customers","Registro privado de notas para direcciones y clientes problemáticos")]].map(([e,f],i)=>(
-<div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(244,63,94,0.07)",borderRadius:10,padding:"10px 13px",border:"1px solid rgba(244,63,94,0.15)"}}>
-<span style={{fontSize:16,flexShrink:0}}>{e}</span>
-<span style={{fontSize:13,color:C.text2}}>{f}</span>
-</div>
-))}
-</div>
-<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.red},#be123c)`,border:"none",borderRadius:C.r.lg,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",fontFamily:C.sans,boxShadow:C.sh.accent(C.red),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>{t("Unlock Elite Access — $10","Desbloquear Acceso Elite — $10")}</button>
-<div style={{fontSize:12,color:C.text3,marginTop:10}}>{t("Lifetime access · Free updates forever","Acceso de por vida · Actualizaciones gratis para siempre")}</div>
-</div>
+<div style={{background:"linear-gradient(160deg,#0e0a1a,#0d0f13)",border:"1px solid rgba(244,63,94,0.35)",borderRadius:18,padding:"22px 20px",textAlign:"center"}}>
+<div style={{fontSize:38,marginBottom:10}}>🛡️</div>
+<div style={{fontSize:16,fontWeight:900,marginBottom:6}}>{t("Want the full defense kit?","¿Quieres el kit de defensa completo?")}</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>{t("Word-for-word appeal letters, per-platform checklists, and a private notes log — for DoorDash, Uber Eats, Spark, Instacart & Flex.","Cartas de apelación palabra por palabra, listas por plataforma y un registro privado de notas — para DoorDash, Uber Eats, Spark, Instacart y Flex.")}</div>
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>{t("Unlock Elite — $10 one time","Desbloquear Elite — $10 una vez")}</button>
+<div style={{fontSize:11,color:C.text3,marginTop:8}}>{t("One-time · Lifetime access · Free updates forever","Una vez · Acceso de por vida · Actualizaciones gratis para siempre")}</div>
 </div>
 </div>
 ):(
