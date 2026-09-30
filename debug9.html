@@ -34,7 +34,7 @@ console.error = function(){
     (0,eval)(out1 + "\n;\n" + out2);
     setTimeout(function(){
       if(window.__appErr){
-        document.title = "ERR:" + window.__appErr.slice(0,180).replace(/\n/g,"|").replace(/\s+/g," ");
+        document.title = window.__appErr.slice(0,500);
       } else {
         document.title = "NO-ERROR";
       }
