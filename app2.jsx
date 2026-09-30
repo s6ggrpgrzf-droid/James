@@ -1,3 +1,4 @@
+const STRIPE_LINK = "/api/checkout"; // in-app Elite button uses the verified Stripe Checkout flow (not a payment link)
 function App() {
 const [tab, setTab] = useState("tips");
 const [navPop, setNavPop] = useState(null);
@@ -69,7 +70,6 @@ const [appealSub, setAppealSub] = useState(null);
 const [checks, setChecks] = useState([]);
 const [noteInput, setNoteInput] = useState("");
 const [notes, setNotes] = useState([]);
-const STRIPE_LINK = "https://buy.stripe.com/cNieVd2z0acu3Wjfoi48000";
 const searchDebounce = useRef(null);
 const [searchDisplay, setSearchDisplay] = useState("");
 useEffect(()=>()=>{
