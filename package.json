@@ -1,4 +1,1 @@
-{
-  "name": "droppilot",
-  "version": "1.0.0"
-}
+{"devDependencies":{"esbuild":"^0.24.0"},"name":"droppilot","scripts":{"build":"node tools/build.mjs"},"version":"1.0.0"}
