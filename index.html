@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="DropPilot — the customer service app for gig drivers. Scripts, habits, account defense, and training for DoorDash, Uber Eats, Uber, Instacart, Lyft, Spark, Flex, and GoPuff drivers."/>
 <title>DropPilot — Customer Service for Gig Drivers</title>
+<meta name="theme-color" content="#07080A"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
 
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website"/>
@@ -876,6 +879,13 @@ function setLang(l) {
   const browser = (navigator.language || navigator.userLanguage || 'en').slice(0,2).toLowerCase();
   setLang(saved || (browser === 'es' ? 'es' : 'en'));
 })();
+</script>
+<script>
+if("serviceWorker" in navigator){
+  window.addEventListener("load",function(){
+    navigator.serviceWorker.register("/sw.js").catch(function(){});
+  });
+}
 </script>
 </body>
 </html>

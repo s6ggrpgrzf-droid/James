@@ -9,6 +9,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="theme-color" content="#07080A"/>
   <title>DropPilot</title>
+  <link rel="manifest" href="/manifest.webmanifest"/>
+  <link rel="apple-touch-icon" href="/icon-192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet"/>
@@ -57,5 +59,15 @@
   <!-- app.bundle.js is precompiled from app1.jsx + app2.jsx by `npm run build`
        (replaces the old in-browser Babel transpile — see tools/build.mjs). -->
   <script defer src="app.bundle.js"></script>
+  <script>
+  // Offline support for in-car use. The worker never touches /api/* or
+  // ?session_id= navigations, so Stripe checkout and payment verification
+  // always hit the network (see sw.js).
+  if("serviceWorker" in navigator){
+    window.addEventListener("load",function(){
+      navigator.serviceWorker.register("/sw.js").catch(function(){});
+    });
+  }
+  </script>
 </body>
 </html>
