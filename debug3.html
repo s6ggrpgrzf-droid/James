@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>Pretranspiled Test</title></head>
+<body style="background:#111;color:#0f0;font-family:monospace;padding:20px">
+<div id="log">LOADING...<br></div>
+<div id="root"><div style="color:#F5A623">SPLASH - if you see this, React hasn't replaced root yet</div></div>
+<script>
+window.onerror=function(m,s,l){document.getElementById('log').innerHTML+="ERR: "+m+" @"+s+":"+l+"<br>";document.title="ERR "+String(m).slice(0,50);};
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="content-en1.js"></script>
+<script src="content-en2.js"></script>
+<script src="content-es1.js"></script>
+<script src="content-es2.js"></script>
+<script src="app1.js"></script>
+<script src="app2.js"></script>
+<script>
+setTimeout(function(){
+  var l=document.getElementById('log');
+  l.innerHTML+="--- after 5s ---<br>root children: "+document.getElementById('root').childNodes.length+"<br>";
+  l.innerHTML+="root text: "+document.getElementById('root').innerText.slice(0,200)+"<br>";
+  document.title="PRE-DONE";
+},5000);
+</script>
+</body></html>
