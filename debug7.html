@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>TESTING</title></head>
+<body>
+<script>
+try{
+  var code = "function t(en,es){return en;} var result = t('hello','hola');";
+  (0,eval)(code);
+  document.title = "EVAL-OK";
+}catch(e){
+  document.title = "EVAL-FAIL: " + e.message;
+}
+</script>
+</body></html>
