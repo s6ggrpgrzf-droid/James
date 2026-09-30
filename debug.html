@@ -16,6 +16,7 @@ window.onunhandledrejection=function(e){window.__errs.push("REJ: "+(e.reason&&e.
 <script src="content-es2.js" onload="document.getElementById('log').innerHTML+='es2: '+typeof VIDEOS_ES+'<br>'" onerror="document.getElementById('log').innerHTML+='es2 FAILED<br>'"></script>
 <script type="text/babel" data-presets="react,env" src="app1.jsx"></script>
 <script type="text/babel" data-presets="react,env" src="app2.jsx"></script>
+<div id="root"></div>
 <script>
 setTimeout(function(){
   var l=document.getElementById('log');
@@ -27,5 +28,4 @@ setTimeout(function(){
   document.title='DBG-DONE errs='+window.__errs.length;
 },8000);
 </script>
-<div id="root"></div>
 </body></html>
