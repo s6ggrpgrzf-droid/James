@@ -69,7 +69,7 @@ const [appealSub, setAppealSub] = useState(null);
 const [checks, setChecks] = useState([]);
 const [noteInput, setNoteInput] = useState("");
 const [notes, setNotes] = useState([]);
-const STRIPE_LINK = "https://buy.stripe.com/cNieVd2z0acu3Wjfoi48000";
+const STRIPE_LINK = "/api/checkout"; // verified Stripe flow (replaces stale buy.stripe.com payment link)
 const searchDebounce = useRef(null);
 const [searchDisplay, setSearchDisplay] = useState("");
 useEffect(()=>()=>{
