@@ -39,7 +39,6 @@
     }
     #splash .s-msg{color:var(--amber);font-size:17px;font-weight:800;letter-spacing:-0.3px;text-shadow:0 0 24px rgba(245,166,35,0.35);}
   </style>
-<!-- deploy-trigger 2026-09-30 -->
 </head>
 <body>
   <div id="root">
@@ -48,13 +47,14 @@
       <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="content-en1.js"></script>
   <script src="content-en2.js"></script>
   <script src="content-es1.js"></script>
   <script src="content-es2.js"></script>
-  <script src="app1.min.js"></script>
-  <script src="app2.min.js"></script>
+  <!-- app.bundle.js is precompiled from app1.jsx + app2.jsx by `npm run build`
+       (replaces the old in-browser Babel transpile — see tools/build.mjs). -->
+  <script defer src="app.bundle.js"></script>
 </body>
 </html>
