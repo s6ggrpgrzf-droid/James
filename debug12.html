@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>TESTING</title></head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="content-en1.js"></script>
+<script src="content-en2.js"></script>
+<script src="content-es1.js"></script>
+<script src="content-es2.js"></script>
+<script>
+// Capture the actual error from ErrorBoundary
+var _origErr = console.error;
+console.error = function(){
+  var args = Array.prototype.slice.call(arguments);
+  if(args[0] && String(args[0]).indexOf("DropPilot error")>=0){
+    var err = args[1];
+    var msg = err ? (err.message || String(err)) : "unknown";
+    var stack = err && err.stack ? err.stack.split("\n").slice(0,3).join(" | ") : "";
+    document.title = "REALERR: " + msg.slice(0,100) + " || " + stack.slice(0,200);
+  }
+  return _origErr.apply(console, args);
+};
+window.addEventListener("error",function(e){
+  document.title="WINERR: "+String((e.error&&e.error.message)||e.message).slice(0,120);
+});
+
+document.title="LOADING";
+Promise.all([fetch("app1.jsx").then(r=>r.text()),fetch("app2.jsx").then(r=>r.text())]).then(function(parts){
+  document.title="TRANSFORMING";
+  var out1=Babel.transform(parts[0],{presets:["react"]}).code;
+  var out2=Babel.transform(parts[1],{presets:["react"]}).code;
+  document.title="EVALING";
+  (0,eval)(out1+"\n;\n"+out2);
+  setTimeout(function(){
+    if(document.title==="EVALING"||document.title==="TRANSFORMING"){
+      // Check if error screen is showing
+      var txt = document.body.innerText||"";
+      if(txt.indexOf("Something went wrong")>=0){
+        document.title="ERRSCREEN-NO-DETAIL";
+      } else {
+        document.title="NO-ERROR-OK";
+      }
+    }
+  }, 6000);
+}).catch(function(err){ document.title="LOADERR: "+String(err&&err.message||err).slice(0,80); });
+</script>
+</body></html>
