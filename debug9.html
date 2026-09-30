@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>TESTING</title></head>
+<body>
+<div id="root"></div>
+<script>
+window.__appErr = null;
+var _oe = console.error;
+console.error = function(){
+  var a = Array.prototype.slice.call(arguments);
+  if(a[0]==="DropPilot error:" && a[1]){
+    var stk = (a[1] && a[1].stack ? a[1].stack : String(a[1]));
+    var cstk = (a[2] && a[2].componentStack ? a[2].componentStack : "");
+    window.__appErr = (stk + "\nCOMP:" + cstk).slice(0,900);
+  }
+  return _oe.apply(console, arguments);
+};
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="content-en1.js"></script>
+<script src="content-en2.js"></script>
+<script src="content-es1.js"></script>
+<script src="content-es2.js"></script>
+<script>
+(async function(){
+  document.title = "FETCHING";
+  try{
+    var results = await Promise.all([fetch("app1.jsx").then(x=>x.text()), fetch("app2.jsx").then(x=>x.text())]);
+    document.title = "TRANSFORMING";
+    var out1 = Babel.transform(results[0], {presets:["react"]}).code;
+    var out2 = Babel.transform(results[1], {presets:["react"]}).code;
+    document.title = "EVALING";
+    (0,eval)(out1 + "\n;\n" + out2);
+    setTimeout(function(){
+      if(window.__appErr){
+        // stash stack in a global and show first 80 chars in title
+        document.title = "STACK:" + window.__appErr.slice(0,80).replace(/\n/g,"|");
+      } else {
+        document.title = "NO-ERROR";
+      }
+    }, 4000);
+  }catch(e){
+    document.title = "ERROR: " + String(e.message||e).slice(0,80);
+  }
+})();
+</script>
+</body></html>
