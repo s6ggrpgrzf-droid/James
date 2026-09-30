@@ -85,9 +85,9 @@ var VIDEOS = [
       {t:25000,tag:"your photo is your protection",emoji:"📸",hed:"A photo is not\njust courtesy.\nIt is evidence.",sub:"False non-delivery complaints are a top cause of deactivation. A timestamped photo wins almost every dispute.",hi:{color:"#F5A623",text:"Drivers who photo every drop-off win almost every false complaint. Drivers who don't — lose almost every one."}},
       {t:30500,tag:"the four-habit checklist",emoji:"✅",hed:"Text. Greet.\nPhoto. Confirm.",sub:"Every delivery. No exceptions.",listGood:[["💬","Text: 'I'm 3 min away with your order'"],["😊","Greet: make eye contact, be warm"],["📸","Photo: bag at door with address visible"],["✅","Confirm: mark delivered in the app"]]},
     ]},
-  {id:3,title:"Please, Thank You, and You're Welcome",dur:40000,icon:"🙏",color:"#8B5CF6",desc:"Three simple phrases backed by real research that measurably increase tips.",
+  {id:3,title:"Please, Thank You, and You're Welcome",dur:40000,icon:"🙏",color:"#8B5CF6",desc:"Three simple phrases drivers swear by — one backed by published research.",
     scenes:[
-      {t:0,tag:"backed by real research",emoji:"🔬",hed:"Three phrases.\nProven results.",sub:"Please. Thank you. You're welcome.\nNot just good manners — measurable income."},
+      {t:0,tag:"backed by real research",emoji:"🔬",hed:"Three phrases.\nReal results.",sub:"Please. Thank you. You're welcome.\nNot just good manners — measurable income."},
 
       {t:5000,tag:"the word 'please'",emoji:"🙏",hed:'"Please" makes\npeople more\nlikely to help.',sub:"Research shows adding 'please' to a request increases compliance by up to 18%.",hi:{color:"#F5A623",text:"'Could you buzz me in?' gets ignored.\n'Could you please buzz me in?' gets answered.\nSame words. One addition. Very different result."},cite:"Source: Langer, Blank & Chanowitz — Journal of Personality and Social Psychology"},
       {t:12500,tag:"the words 'thank you'",emoji:"🙌",hed:'"Thank you"\nmakes people\nwant to give back.',sub:"When someone expresses real gratitude, people feel an urge to reciprocate — to give something back.",hi:{color:"#3B82F6",text:"A sincere 'thank you for your order' at the door triggers a natural urge to tip. It's a basic human response."},cite:"Source: Cialdini — Influence: The Psychology of Persuasion"},
