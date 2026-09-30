@@ -426,16 +426,19 @@ return(
 {(lang==="en"?ALL_TIPS:ALL_TIPS_ES).map((tip,i)=>{
 const open=tipOpen===i;
 const fav=favTips.has(i);
+const locked=!pro&&i>=3;
 return(
-<div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>setTipOpen(open?null:i)}
-style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",transition:"opacity 0.15s"}}>
+<div key={i} className={`tip card-in c${Math.min(i,9)}`} onClick={()=>{if(locked){setShowPay(true);setPayStep("offer");return;}setTipOpen(open?null:i)}}
+style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)":C.border}`,borderRadius:16,padding:18,cursor:"pointer",transition:"opacity 0.15s",opacity:locked?0.55:1}}>
 <div style={{display:"flex",alignItems:"center",gap:12}}>
 <div style={{width:44,height:44,borderRadius:13,background:open?"rgba(245,166,35,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0}}>{tip.e}</div>
 <div style={{flex:1,minWidth:0}}>
 <div style={{fontSize:15,fontWeight:700,color:C.text,marginBottom:3}}>{tip.t}</div>
 <div style={{fontSize:13,color:C.text2,lineHeight:1.5}}>{tip.s}</div>
 </div>
-{pro?(
+{locked?(
+<span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
+):pro?(
 <button aria-label={fav?t("Remove from favorites","Quitar de favoritos"):t("Save to favorites","Guardar en favoritos")} onClick={e=>{e.stopPropagation();toggleFavTip(i);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,padding:"4px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
 {fav?"★":"☆"}
 </button>
@@ -456,19 +459,19 @@ style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)
 {pick(lang,LEARN_CATS,LEARN_CATS_ES).map((cat,ci)=>{
 const catOpen=learnOpen===ci;
 return(
-<div key={ci} style={{background:C.s1,border:`1px solid ${catOpen?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden",opacity:(pro||ci<2)?1:0.55,transition:"opacity 0.15s"}}>
-<div onClick={()=>{if(!pro&&ci>=2){setShowPay(true);setPayStep("offer");return;}setLearnOpen(catOpen?null:ci);setLearnSub(null);}} style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+<div key={ci} style={{background:C.s1,border:`1px solid ${catOpen?"rgba(59,130,246,0.3)":C.border}`,borderRadius:18,overflow:"hidden",opacity:(pro||ci<1)?1:0.55,transition:"opacity 0.15s"}}>
+<div onClick={()=>{if(!pro&&ci>=1){setShowPay(true);setPayStep("offer");return;}setLearnOpen(catOpen?null:ci);setLearnSub(null);}} style={{padding:"16px 18px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
 <div style={{width:44,height:44,borderRadius:13,background:catOpen?"rgba(59,130,246,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{cat.e}</div>
 <div style={{flex:1}}>
 <div style={{fontSize:15,fontWeight:700}}>{cat.t}</div>
 <div style={{fontSize:13,color:C.text2,marginTop:2}}>{cat.sub}</div>
 </div>
-{(!pro&&ci>=2)
+{(!pro&&ci>=1)
 ?<span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
 :<div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:catOpen?"rotate(180deg)":"none"}}>▾</div>
 }
 </div>
-{catOpen&&(pro||ci<2)&&(
+{catOpen&&(pro||ci<1)&&(
 <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
 {cat.secs.map((sec,si)=>{
 const key=`l${ci}-${si}`;
@@ -610,7 +613,7 @@ return(
 <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{ACTIVE_MSG_CATS[0].t}</div><div style={{fontSize:13,color:C.text2,marginTop:1}}>{ACTIVE_MSG_CATS[0].sub}</div></div>
 </div>
 <div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
-{ACTIVE_MSG_CATS[0].secs.map((sec,si)=>{
+{ACTIVE_MSG_CATS[0].secs.slice(0,2).map((sec,si)=>{
 const subKey=`0-${si}`;
 const subOpen2=subOpen===subKey;
 const fav=favTemplates.has(subKey);
@@ -639,6 +642,12 @@ return(
 </div>
 );
 })}
+{ACTIVE_MSG_CATS[0].secs.slice(2).map((sec,si)=>(
+<div key={`l${si}`} onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:C.s2,border:"1px solid rgba(255,255,255,0.06)",borderRadius:12,padding:"12px 14px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",gap:10,opacity:0.45}}>
+<span style={{fontSize:13,fontWeight:700,color:C.text}}>{sec.h}</span>
+<span style={{fontSize:11,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
+</div>
+))}
 </div>
 </div>
 </div>
@@ -863,18 +872,24 @@ return(
 {e:"🖼️",t:t("Screenshot your delivery confirmation","Captura tu confirmación de entrega"),d:t("Save the app's confirmation screen after every delivery. If the platform's records glitch, your screenshot is the backup.","Guarda la pantalla de confirmación de la app después de cada entrega. Si los registros de la plataforma fallan, tu captura es el respaldo.")},
 {e:"💎",t:t("Doing your best always pays off","Dar lo mejor siempre vale la pena"),d:t("Consistent care — hot food hot, careful handling, warm attitude — is what turns one-time orders into loyal tippers and 5-star streaks.","El cuidado constante — comida caliente, manejo cuidadoso, actitud amable — es lo que convierte pedidos únicos en clientes fieles y rachas de 5 estrellas.")},
 {e:"📋",t:t("Note the order number on problem deliveries","Anota el número de orden en entregas problemáticas"),d:t("When anything goes wrong, write down the order number, time, and what happened. Appeals without specifics almost never win.","Cuando algo sale mal, anota el número de orden, la hora y lo que pasó. Las apelaciones sin detalles casi nunca ganan.")},
-].map((h,i)=>(
-<div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"15px 16px",marginBottom:12}}>
+].map((h,i)=>{
+const hLocked=!pro&&i>=3;
+return(
+<div key={i} onClick={hLocked?()=>{setShowPay(true);setPayStep("offer");}:undefined} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"15px 16px",marginBottom:12,opacity:hLocked?0.55:1,cursor:hLocked?"pointer":"default"}}>
 <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
 <div style={{width:40,height:40,borderRadius:12,background:h.urgent?"rgba(244,63,94,0.12)":"rgba(255,255,255,0.05)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{h.e}</div>
 <div style={{flex:1}}>
 {h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>{t("CRITICAL","CRÍTICO")}</span>}
 <div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div>
+{hLocked?(
+<div style={{marginTop:8}}><span style={{fontSize:11,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px"}}>Elite</span></div>
+):(
 <div style={{fontSize:13,color:C.text2,lineHeight:1.6}}>{h.d}</div>
+)}
 </div>
 </div>
 </div>
-))}
+);})}
 <div style={{background:"linear-gradient(160deg,#0e0a1a,#0d0f13)",border:"1px solid rgba(244,63,94,0.35)",borderRadius:18,padding:"22px 20px",textAlign:"center"}}>
 <div style={{fontSize:38,marginBottom:10}}>🛡️</div>
 <div style={{fontSize:16,fontWeight:900,marginBottom:6}}>{t("Want the full defense kit?","¿Quieres el kit de defensa completo?")}</div>
