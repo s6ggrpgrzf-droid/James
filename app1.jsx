@@ -693,14 +693,14 @@ return(
 
 <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:7,marginBottom:14}}>
 {video.scenes.map((_,si)=>(
-<button key={si} onClick={()=>jumpToScene(si)} aria-label={`Scene ${si+1}`} style={{width:si===scene?22:9,height:9,borderRadius:99,background:si===scene?vc:"rgba(255,255,255,0.15)",border:"none",cursor:"pointer",padding:0,transition:"all 0.2s"}}/>
+<button key={si} onClick={()=>jumpToScene(si)} aria-label={`${t("Scene","Escena")} ${si+1}`} style={{width:si===scene?22:9,height:9,borderRadius:99,background:si===scene?vc:"rgba(255,255,255,0.15)",border:"none",cursor:"pointer",padding:0,transition:"all 0.2s"}}/>
 ))}
 <span style={{fontSize:11,color:`${vc}90`,fontWeight:800,marginLeft:6,letterSpacing:"0.5px",fontFamily:"'JetBrains Mono',monospace"}}>{scene+1}/{video.scenes.length}</span>
 </div>
 
 <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:14}}>
-<button onClick={()=>restart(false)} aria-label="Restart" style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,color:"rgba(255,255,255,0.4)"}}>↺</button>
-<button onClick={togglePlay} aria-label={playing?"Pause":"Play"} style={{background:`linear-gradient(135deg,${vc},${vc}BB)`,border:"none",borderRadius:50,width:56,height:56,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:22,boxShadow:`0 0 0 1px ${vc}33,0 4px 14px ${vc}55,0 14px 36px ${vc}55,0 28px 64px ${vc}30`,flexShrink:0,transition:"transform 0.22s cubic-bezier(0.22,1,0.36,1)",fontFamily:"inherit"}}>
+<button onClick={()=>restart(false)} aria-label={t("Restart","Reiniciar")} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:17,color:"rgba(255,255,255,0.4)"}}>↺</button>
+<button onClick={togglePlay} aria-label={playing?t("Pause","Pausa"):t("Play","Reproducir")} style={{background:`linear-gradient(135deg,${vc},${vc}BB)`,border:"none",borderRadius:50,width:56,height:56,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:22,boxShadow:`0 0 0 1px ${vc}33,0 4px 14px ${vc}55,0 14px 36px ${vc}55,0 28px 64px ${vc}30`,flexShrink:0,transition:"transform 0.22s cubic-bezier(0.22,1,0.36,1)",fontFamily:"inherit"}}>
 {playing?"⏸":elapsed.current>=video.dur?"↺":"▶"}
 </button>
 <div style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:99,width:42,height:42,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'JetBrains Mono',monospace",fontSize:11,fontWeight:700,color:`${vc}90`}}>
