@@ -54,7 +54,41 @@
   <script src="content-en2.js"></script>
   <script src="content-es1.js"></script>
   <script src="content-es2.js"></script>
-  <script type="text/babel" data-presets="react,env" src="app1.jsx"></script>
-  <script type="text/babel" data-presets="react,env" src="app2.jsx"></script>
+  <script>
+  // Manual JSX loader: fetches app1.jsx + app2.jsx, transpiles with Babel,
+  // and evaluates in a single scope. (Babel's built-in text/babel src handling
+  // fails silently on some deployments; this is explicit and debuggable.)
+  (async function(){
+    function fail(msg){
+      console.error("[DropPilot loader]", msg);
+      var r = document.getElementById("root");
+      if(r) r.innerHTML = '<div style="color:#F43F5E;padding:40px;font-family:sans-serif;max-width:600px;margin:0 auto">'
+        + '<h2>Could not start DropPilot</h2>'
+        + '<p style="margin-top:12px;opacity:0.8">' + String(msg).replace(/</g,"&lt;") + '</p>'
+        + '<p style="margin-top:12px;opacity:0.6">Please check your connection and reload.</p></div>';
+    }
+    try{
+      if(typeof Babel === "undefined") return fail("Babel failed to load from CDN.");
+      var results = await Promise.all([
+        fetch("app1.jsx").then(function(r){ if(!r.ok) throw new Error("app1.jsx HTTP "+r.status); return r.text(); }),
+        fetch("app2.jsx").then(function(r){ if(!r.ok) throw new Error("app2.jsx HTTP "+r.status); return r.text(); })
+      ]);
+      var combined = results[0] + "\n;\n" + results[1];
+      var out;
+      try{
+        out = Babel.transform(combined, {presets:["react","env"]}).code;
+      }catch(te){
+        return fail("JSX transform failed: " + (te.message || te));
+      }
+      try{
+        (0,eval)(out);
+      }catch(ee){
+        return fail("App error: " + (ee.message || ee));
+      }
+    }catch(e){
+      fail(e.message || e);
+    }
+  })();
+  </script>
 </body>
 </html>
