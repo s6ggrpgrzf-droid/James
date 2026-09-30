@@ -740,7 +740,7 @@ return(
 {!shiftMode&&tab==="defend"&&(
 <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
 <div style={{textAlign:"center",padding:"8px 0 4px"}}>
-<div style={{fontSize:13,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>{t("Account Defense","Defensa de Cuenta")}</div>
+<div style={{fontSize:13,fontWeight:800,color:C.red,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>{t("Account Defense","Defensa de Cuenta")}</div>
 <div style={{...S.pageTitle}}>{t("Protect Your Account","Protege Tu Cuenta")}</div>
 <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>{t("Habits, appeal scripts, checklists, and notes — by platform.","Hábitos, cartas de apelación, listas y notas — por plataforma.")}</div>
 </div>
@@ -749,10 +749,10 @@ const sevColor={high:C.red,medium:C.amber,low:C.green};
 const previewUpdate=pick(lang,POLICY_WATCH,POLICY_WATCH_ES).updates[0];
 const newCount=pick(lang,POLICY_WATCH,POLICY_WATCH_ES).updates.filter(u=>u.isNew).length;
 return(
-<div style={{background:"rgba(139,92,246,0.06)",border:`1px solid ${pro?"rgba(139,92,246,0.35)":"rgba(139,92,246,0.18)"}`,borderRadius:18,overflow:"hidden"}}>
-<div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(139,92,246,0.12)"}}>
+<div style={{background:"rgba(244,63,94,0.06)",border:`1px solid ${pro?"rgba(244,63,94,0.35)":"rgba(244,63,94,0.18)"}`,borderRadius:18,overflow:"hidden"}}>
+<div style={{padding:"14px 16px 12px",display:"flex",alignItems:"center",justifyContent:"space-between",borderBottom:"1px solid rgba(244,63,94,0.12)"}}>
 <div>
-<div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2,display:"flex",alignItems:"center",gap:6}}>
+<div style={{fontSize:11,fontWeight:800,color:C.red,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2,display:"flex",alignItems:"center",gap:6}}>
 <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:"#10B981",boxShadow:"0 0 0 4px rgba(16,185,129,0.18)"}} />{t("📡 Policy Watch","📡 Cambios de Política")}</div>
 <div style={{display:"flex",alignItems:"center",gap:6}}>
 <span style={{fontSize:13,color:C.text2}}>{pick(lang,POLICY_WATCH,POLICY_WATCH_ES).month} · Last updated {pick(lang,POLICY_WATCH,POLICY_WATCH_ES).lastUpdated}</span>
@@ -762,7 +762,7 @@ return(
 {pro?(
 <div style={{background:"rgba(16,185,129,0.12)",border:"1px solid rgba(16,185,129,0.3)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.green}}>Included</div>
 ):(
-<div style={{background:"rgba(139,92,246,0.1)",border:"1px solid rgba(139,92,246,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.purple}}>Elite</div>
+<div style={{background:"rgba(244,63,94,0.1)",border:"1px solid rgba(244,63,94,0.25)",borderRadius:8,padding:"4px 10px",fontSize:11,fontWeight:800,color:C.red}}>Elite</div>
 )}
 </div>
 {pro?(
@@ -770,7 +770,7 @@ return(
 <div style={{display:"flex",flexDirection:"column",gap:0}}>
 <div style={{padding:"10px 16px 4px",fontSize:12,color:C.text2,lineHeight:1.5}}>{t("What changed this month across your platforms — and what to do about it.","Lo que cambió este mes en tus plataformas — y qué hacer al respecto.")}</div>
 {pick(lang,POLICY_WATCH,POLICY_WATCH_ES).updates.map((u,i)=>(
-<div key={i} style={{padding:"14px 16px",borderBottom:i<pick(lang,POLICY_WATCH,POLICY_WATCH_ES).updates.length-1?"1px solid rgba(139,92,246,0.08)":"none"}}>
+<div key={i} style={{padding:"14px 16px",borderBottom:i<pick(lang,POLICY_WATCH,POLICY_WATCH_ES).updates.length-1?"1px solid rgba(244,63,94,0.08)":"none"}}>
 <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
 <div style={{display:"flex",alignItems:"center",gap:4,background:`${u.color}12`,border:`1px solid ${u.color}30`,borderRadius:6,padding:"3px 8px"}}>
 <span style={{fontSize:11}}>{u.e}</span>
@@ -785,8 +785,8 @@ return(
 <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{u.title}</div>
 <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{u.body}</div>
 {u.action&&(
-<div style={{marginTop:10,background:"rgba(139,92,246,0.07)",borderLeft:`3px solid ${C.purple}`,borderRadius:8,padding:"10px 12px"}}>
-<div style={{fontSize:11,fontWeight:800,color:C.purple,letterSpacing:"1px",textTransform:"uppercase",marginBottom:4}}>→ What to do</div>
+<div style={{marginTop:10,background:"rgba(244,63,94,0.07)",borderLeft:`3px solid ${C.red}`,borderRadius:8,padding:"10px 12px"}}>
+<div style={{fontSize:11,fontWeight:800,color:C.red,letterSpacing:"1px",textTransform:"uppercase",marginBottom:4}}>→ What to do</div>
 <div style={{fontSize:13,color:C.text,lineHeight:1.55}}>{u.action}</div>
 </div>
 )}
@@ -810,7 +810,7 @@ return(
 <div style={{fontSize:14,fontWeight:700,color:C.text,marginBottom:6}}>{previewUpdate.title}</div>
 <div style={{fontSize:13,color:C.text2,lineHeight:1.65}}>{previewUpdate.body.substring(0,80)}...</div>
 </div>
-<div style={{padding:"14px 16px",borderTop:"1px solid rgba(139,92,246,0.12)"}}>
+<div style={{padding:"14px 16px",borderTop:"1px solid rgba(244,63,94,0.12)"}}>
 <div style={{fontSize:13,color:C.text2,marginBottom:12,lineHeight:1.5}}>{t("Platform policies change without warning. Policy Watch tracks what changed, what it means for your account, and what to do — updated every month. Included with Elite.","Las políticas cambian sin aviso. Policy Watch rastrea qué cambió, qué significa para tu cuenta y qué hacer — actualizado cada mes. Incluido con Elite.")}</div>
 <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>
 {t("Unlock Elite — $10 one time","Desbloquear Elite — $10 una vez")}
@@ -855,20 +855,20 @@ return(
 ))}
 </div>
 <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.7) 25%,rgba(7,8,10,0.97) 50%)",borderRadius:16,padding:"24px 20px"}}>
-<div className="defender-pulse" style={{borderRadius:22,overflow:"hidden",padding:"26px 22px",textAlign:"center",background:"linear-gradient(160deg,#0e0a1a,#0d0f13)",border:"1px solid rgba(139,92,246,0.35)",width:"100%",position:"relative"}}>
-<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.purple},transparent)`}}/>
+<div className="defender-pulse" style={{borderRadius:22,overflow:"hidden",padding:"26px 22px",textAlign:"center",background:"linear-gradient(160deg,#0e0a1a,#0d0f13)",border:"1px solid rgba(244,63,94,0.35)",width:"100%",position:"relative"}}>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.red},transparent)`}}/>
 <div style={{fontSize:52,marginBottom:14}}>🛡️</div>
-<div style={{fontSize:21,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.purple})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("Protect Your Account","Protege Tu Cuenta")}</div>
+<div style={{fontSize:21,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.red})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("Protect Your Account","Protege Tu Cuenta")}</div>
 <div style={{fontSize:14,color:C.text2,lineHeight:1.8,marginBottom:20}}>{t("False complaints, unfair ratings, and deactivation threats are real. This section gives you the exact habits, scripts, and appeal letters to fight back — by platform.","Quejas falsas, calificaciones injustas y amenazas de desactivación son reales. Esta sección te da los hábitos, guiones y cartas de apelación exactos para defenderte — por plataforma.")}</div>
 <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:22,textAlign:"left"}}>
 {[["🛡️",t("Critical habits for DoorDash, Uber Eats, Spark, Instacart & Flex","Hábitos críticos para DoorDash, Uber Eats, Spark, Instacart y Flex")],["📋",t("Word-for-word appeal scripts written for support agents","Guiones de apelación palabra por palabra para agentes de soporte")],["✅",t("Per-delivery checklists saved per platform","Listas por entrega guardadas por plataforma")],["📝",t("Private notes log for problem addresses & customers","Registro privado de notas para direcciones y clientes problemáticos")]].map(([e,f],i)=>(
-<div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(139,92,246,0.07)",borderRadius:10,padding:"10px 13px",border:"1px solid rgba(139,92,246,0.15)"}}>
+<div key={i} style={{display:"flex",alignItems:"center",gap:10,background:"rgba(244,63,94,0.07)",borderRadius:10,padding:"10px 13px",border:"1px solid rgba(244,63,94,0.15)"}}>
 <span style={{fontSize:16,flexShrink:0}}>{e}</span>
 <span style={{fontSize:13,color:C.text2}}>{f}</span>
 </div>
 ))}
 </div>
-<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.purple},#6d28d9)`,border:"none",borderRadius:C.r.lg,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",fontFamily:C.sans,boxShadow:C.sh.accent(C.purple),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>{t("Unlock Elite Access — $10","Desbloquear Acceso Elite — $10")}</button>
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.red},#be123c)`,border:"none",borderRadius:C.r.lg,padding:"17px",fontSize:16,fontWeight:900,cursor:"pointer",width:"100%",color:"#fff",fontFamily:C.sans,boxShadow:C.sh.accent(C.red),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>{t("Unlock Elite Access — $10","Desbloquear Acceso Elite — $10")}</button>
 <div style={{fontSize:12,color:C.text3,marginTop:10}}>{t("Lifetime access · Free updates forever","Acceso de por vida · Actualizaciones gratis para siempre")}</div>
 </div>
 </div>
@@ -1013,7 +1013,7 @@ return(
 <div style={{display:"flex",flexDirection:"column",gap:12}}>
 <div style={{fontSize:13,color:C.text2,lineHeight:1.6}}>{t("Log problem addresses, difficult customers, or anything worth remembering. Private to you.","Registra direcciones problemáticas, clientes difíciles o lo que valga recordar. Privado para ti.")}</div>
 <textarea value={noteInput} onChange={e=>setNoteInput(e.target.value)} placeholder={t("e.g. 123 Main St — gate code never works, always text ahead...","ej. Calle Principal 123 — el código nunca funciona, avisa siempre...")} rows={3} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"12px 14px",color:C.text,fontSize:13,resize:"none",lineHeight:1.6,width:"100%"}}/>
-<button onClick={addNote} style={{background:C.purple,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 12px rgba(139,92,246,0.32),0 12px 32px rgba(139,92,246,0.32),0 24px 56px rgba(139,92,246,0.18)"}}>{t("Add Note","Agregar Nota")}</button>
+<button onClick={addNote} style={{background:C.red,border:"none",borderRadius:12,padding:"13px",fontSize:14,fontWeight:800,cursor:"pointer",color:"#fff",boxShadow:"0 0 0 1px rgba(244,63,94,0.30),0 4px 12px rgba(244,63,94,0.32),0 12px 32px rgba(244,63,94,0.32),0 24px 56px rgba(244,63,94,0.18)"}}>{t("Add Note","Agregar Nota")}</button>
 {notes.length===0&&<div style={{textAlign:"center",padding:"20px",color:C.text3,fontSize:13}}>{t("No notes yet. Add your first one above.","Aún no hay notas. Agrega la primera arriba.")}</div>}
 {notes.map((note,i)=>(
 <div key={i} className={`card-in c${Math.min(i,9)}`} style={{background:C.s1,border:"1px solid rgba(255,255,255,0.07)",borderRadius:12,padding:"13px 15px",display:"flex",gap:10}}>
@@ -1159,7 +1159,7 @@ return(
 {!shiftMode&&tab==="basics"&&(
 <div className="page" style={{padding:16,display:"flex",flexDirection:"column",gap:20}}>
 <div style={{textAlign:"center",padding:"8px 0 4px"}}>
-<div style={{fontSize:13,fontWeight:800,color:C.teal,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>{t("New to This?","¿Nuevo en Esto?")}</div>
+<div style={{fontSize:13,fontWeight:800,color:C.amber,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:6}}>{t("New to This?","¿Nuevo en Esto?")}</div>
 <div style={{...S.pageTitle}}>{t("Start Here","Empieza Aquí")}</div>
 <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>{t("Everything explained in plain English — no experience needed.","Todo explicado en español sencillo — no necesitas experiencia.")}</div>
 </div>
@@ -1178,9 +1178,9 @@ return(
 </div>
 <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",background:"linear-gradient(180deg,rgba(7,8,10,0) 0%,rgba(7,8,10,0.6) 15%,rgba(7,8,10,0.97) 33%)",borderRadius:16,padding:"20px 16px"}}>
 <div style={{borderRadius:22,padding:"24px 20px",textAlign:"center",background:`linear-gradient(160deg,#071418,#0d0f13)`,border:`1px solid rgba(6,182,212,0.35)`,width:"100%",position:"relative",animation:"defenderPulse 2.4s ease-in-out infinite"}}>
-<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.teal},transparent)`}}/>
+<div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
 <div style={{fontSize:44,marginBottom:12}}>🤝</div>
-<div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.teal})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("New to Gig Work?","¿Nuevo en Este Trabajo?")}</div>
+<div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("New to Gig Work?","¿Nuevo en Este Trabajo?")}</div>
 <div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>{t("Everything explained from scratch. Whether you just started or have questions no one ever answered — no jargon, no assumptions, just plain English.","Todo explicado desde cero. Ya sea que apenas empieces o tengas preguntas que nadie respondió — sin jerga, sin suposiciones, en lenguaje simple.")}</div>
 <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
 {[["🚀",t("How gig delivery works — pay, ratings, accepting orders","Cómo funciona el reparto — pago, calificaciones, aceptar pedidos")],["📱",t("Phone basics — GPS, battery, what to do when it crashes","Básicos del teléfono — GPS, batería, qué hacer si falla")],["🏃",t("Step-by-step walkthrough of your very first delivery","Guía paso a paso de tu primera entrega")],["💸",t("How you get paid, what boosts mean, why tips vary","Cómo te pagan, qué son los boosts, por qué varían las propinas")],["🔴",t("DoorDash — ratings, completion rate, Top Dasher","DoorDash — calificaciones, tasa de completitud, Top Dasher")],["🟢",t("Uber Eats — Trip IDs, ratings, Uber Pro levels","Uber Eats — IDs de viaje, calificaciones, niveles Uber Pro")],["🔵",t("Spark — scanning items, substitutions, on-time rate","Spark — escanear artículos, sustituciones, puntualidad")],["🟩",t("Instacart — batch IDs, replacements, the 4.7 rating","Instacart — IDs de lote, reemplazos, la calificación 4.7")],["📦",t("Flex — blocks, TBA numbers, what standing means","Flex — bloques, números TBA, qué significa tu nivel")]].map(([e,f],i)=>(
@@ -1190,7 +1190,7 @@ return(
 </div>
 ))}
 </div>
-<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.teal},#0891b2)`,border:"none",borderRadius:C.r.lg,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",fontFamily:C.sans,boxShadow:C.sh.accent(C.teal),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>{t("Unlock Elite Access — $10","Desbloquear Acceso Elite — $10")}</button>
+<button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{background:`linear-gradient(135deg,${C.amber},#C8820A)`,border:"none",borderRadius:C.r.lg,padding:"16px",fontSize:15,fontWeight:900,cursor:"pointer",width:"100%",color:"#000",fontFamily:C.sans,boxShadow:C.sh.accent(C.amber),transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`,WebkitTapHighlightColor:"transparent"}}>{t("Unlock Elite Access — $10","Desbloquear Acceso Elite — $10")}</button>
 <div style={{fontSize:12,color:C.text3,marginTop:9}}>{t("Lifetime access · Free updates forever","Acceso de por vida · Actualizaciones gratis para siempre")}</div>
 </div>
 </div>
@@ -1316,7 +1316,7 @@ else{setQhCopied(true);setTimeout(()=>{setShowQuickHelp(false);setQhActive(null)
 </div>
 ):(
 <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:430,background:"rgba(8,10,13,0.96)",backdropFilter:"blur(24px)",WebkitBackdropFilter:"blur(24px)",borderTop:"1px solid rgba(255,255,255,0.07)",display:"flex",zIndex:100,paddingBottom:6,paddingTop:4}}>
-{[{id:"tips",l:t("Earn","Ganar"),e:"⭐",ac:C.amber},{id:"templates",l:t("Scripts","Mensajes"),e:"💬",ac:C.blue},{id:"basics",l:t("Basics","Básicos"),e:"📖",ac:C.teal},{id:"defend",l:t("Defend","Defensa"),e:"🛡️",ac:C.purple},{id:"train",l:t("Training","Capacitación"),e:"🎓",ac:C.amber}].map(n=>{
+{[{id:"tips",l:t("Earn","Ganar"),e:"⭐",ac:C.amber},{id:"templates",l:t("Scripts","Mensajes"),e:"💬",ac:C.blue},{id:"basics",l:t("Basics","Básicos"),e:"📖",ac:C.amber},{id:"defend",l:t("Defend","Defensa"),e:"🛡️",ac:C.red},{id:"train",l:t("Training","Capacitación"),e:"🎓",ac:C.amber}].map(n=>{
 const active=tab===n.id;
 const popping=navPop===n.id;
 return(
