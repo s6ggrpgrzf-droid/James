@@ -36,7 +36,7 @@ const [templateSearch, setTemplateSearch] = useState("");
 const [favTemplates, setFavTemplates] = useState(new Set());
 const [activeVideo, setActiveVideo] = useState(0);
 const [lang, setLang] = useState("en");
-const t=(en,es)=>lang==="en"?en:es;
+function t(en,es){return lang==="en"?en:es;}
 const [showQuickHelp, setShowQuickHelp] = useState(false);
 const [qhActive, setQhActive] = useState(null);
 const [qhCopied, setQhCopied] = useState(false);
