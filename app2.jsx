@@ -601,27 +601,59 @@ return(
 <div style={{...S.pageTitle}}>{t("What to Say & When","Qué Decir y Cuándo")}</div>
 <div style={{fontSize:13,color:C.text2,marginTop:4,lineHeight:1.6}}>{t("Ready-to-send messages for every situation.","Mensajes listos para enviar para cada situación.")}</div>
 </div>
+{!pro&&(
+<div style={{display:"flex",flexDirection:"column",gap:12}}>
+<div style={{fontSize:13,fontWeight:800,color:C.green,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>{t("✅ Free scripts","✅ Mensajes gratis")}</div>
+<div style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,overflow:"hidden"}}>
+<div style={{padding:"14px 16px",display:"flex",alignItems:"center",gap:12}}>
+<div style={{width:40,height:40,borderRadius:12,background:"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{ACTIVE_MSG_CATS[0].e}</div>
+<div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{ACTIVE_MSG_CATS[0].t}</div><div style={{fontSize:13,color:C.text2,marginTop:1}}>{ACTIVE_MSG_CATS[0].sub}</div></div>
+</div>
+<div style={{padding:"0 12px 12px",display:"flex",flexDirection:"column",gap:10}}>
+{ACTIVE_MSG_CATS[0].secs.map((sec,si)=>{
+const subKey=`0-${si}`;
+const subOpen2=subOpen===subKey;
+const fav=favTemplates.has(subKey);
+return(
+<div key={si} style={{background:sec.caution?"rgba(244,63,94,0.06)":C.s2,border:`1px solid ${sec.caution?"rgba(244,63,94,0.2)":"rgba(255,255,255,0.06)"}`,borderRadius:14,overflow:"hidden"}}>
+<div onClick={()=>setSubOpen(subOpen2?null:subKey)} style={{padding:"12px 14px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}>
+<div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+{sec.caution&&<span style={{fontSize:13}}>⚠️</span>}
+<span style={{fontSize:13,fontWeight:700,color:sec.caution?C.red:C.text}}>{sec.h}</span>
+</div>
+<button aria-label={fav?t("Remove from saved templates","Quitar de plantillas guardadas"):"Save template"} onClick={e=>{e.stopPropagation();toggleFavTemplate(subKey);}} style={{background:"none",border:"none",cursor:"pointer",fontSize:14,padding:"2px 6px",color:fav?C.amber:"rgba(255,255,255,0.2)",flexShrink:0}}>
+{fav?"★":"☆"}
+</button>
+<div style={{color:C.text3,fontSize:13,transition:"transform 0.18s",transform:subOpen2?"rotate(180deg)":"none",flexShrink:0}}>▾</div>
+</div>
+{subOpen2&&(
+<div style={{padding:"0 14px 14px"}}>
+{sec.hint&&<div style={{background:"rgba(245,166,35,0.08)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:8,padding:"8px 10px",marginBottom:8,fontSize:12,color:C.amber,lineHeight:1.5}}>💡 {sec.hint}</div>}
+<div style={{background:"rgba(0,0,0,0.3)",borderRadius:10,padding:"11px 13px",marginBottom:10,fontSize:12,color:sec.caution?C.red:C.text,lineHeight:1.65,whiteSpace:"pre-wrap",fontFamily:C.mono}}>{sec.msg}</div>
+{!sec.caution&&(
+<button onClick={()=>copyMsg(sec.msg,subKey)} style={{background:C.green,border:"none",borderRadius:10,padding:"10px 14px",fontSize:12,fontWeight:700,cursor:"pointer",color:"#000",width:"100%",marginBottom:8}}>{t("Copy Message","Copiar Mensaje")}</button>
+)}
+<div style={{fontSize:13,color:C.text3,lineHeight:1.6,background:"rgba(59,130,246,0.06)",borderRadius:8,padding:"8px 10px",borderLeft:"2px solid rgba(59,130,246,0.3)"}}>{sec.w}</div>
+</div>
+)}
+</div>
+);
+})}
+</div>
+</div>
+</div>
+)}
 {!pro?(
 <div style={{position:"relative"}}>
 <div style={{filter:"blur(5px)",pointerEvents:"none",userSelect:"none",WebkitUserSelect:"none",WebkitMaskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)",maskImage:"linear-gradient(180deg,#000 0%,#000 55%,transparent 100%)"}}>
 <div style={{background:C.s1,border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:"11px 12px 11px 36px",color:C.text3,fontSize:13,marginBottom:14}}>{t("Search templates...","Buscar plantillas...")}</div>
-{ACTIVE_MSG_CATS.map((cat,i)=>(
+{ACTIVE_MSG_CATS.slice(1).map((cat,i)=>(
 <div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:18,padding:"14px 16px",marginBottom:12}}>
 <div style={{display:"flex",alignItems:"center",gap:12}}>
 <div style={{width:40,height:40,borderRadius:12,background:"rgba(255,255,255,0.04)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{cat.e}</div>
 <div style={{flex:1}}><div style={{fontSize:14,fontWeight:700}}>{cat.t}</div><div style={{fontSize:13,color:C.text2,marginTop:1}}>{cat.sub}</div></div>
 <div style={{color:C.text3,fontSize:13}}>▾</div>
 </div>
-{i===0&&(
-<div style={{marginTop:10,paddingTop:10,borderTop:"1px solid rgba(255,255,255,0.06)",display:"flex",flexDirection:"column",gap:8}}>
-{cat.secs.slice(0,2).map((sec,si)=>(
-<div key={si} style={{background:C.s2,borderRadius:12,padding:"11px 13px"}}>
-<div style={{fontSize:13,fontWeight:700,marginBottom:4}}>{sec.h}</div>
-<div style={{fontSize:12,color:C.text2,lineHeight:1.5,fontStyle:"italic"}}>"{sec.msg.substring(0,55)}..."</div>
-</div>
-))}
-</div>
-)}
 </div>
 ))}
 </div>
@@ -825,12 +857,12 @@ return(
 <div style={{display:"flex",flexDirection:"column",gap:12}}>
 <div style={{fontSize:13,fontWeight:800,color:C.green,letterSpacing:"1px",textTransform:"uppercase",paddingLeft:2}}>{t("🛡️ Free protection habits","🛡️ Hábitos de protección gratis")}</div>
 {[
-{e:"📸",t:t("Photo every drop-off before you leave","Foto de cada entrega antes de irte"),urgent:true},
-{e:"💬",t:t("Text the customer on every order","Envía mensaje al cliente en cada pedido"),urgent:true},
-{e:"📍",t:t("Keep GPS on the entire shift","Mantén el GPS encendido todo el turno"),urgent:true},
-{e:"🖼️",t:t("Screenshot your delivery confirmation","Captura tu confirmación de entrega")},
-{e:"💎",t:t("Doing your best always pays off","Dar lo mejor siempre vale la pena")},
-{e:"📋",t:t("Note the order number on problem deliveries","Anota el número de orden en entregas problemáticas")},
+{e:"📸",t:t("Photo every drop-off before you leave","Foto de cada entrega antes de irte"),d:t("A timestamped photo proves the order arrived in good condition. If a customer claims non-delivery, this is your strongest evidence.","Una foto con hora demuestra que el pedido llegó en buen estado. Si un cliente reclama no haberlo recibido, esta es tu mejor evidencia."),urgent:true},
+{e:"💬",t:t("Text the customer on every order","Envía mensaje al cliente en cada pedido"),d:t("One quick text — 'on my way' or 'left at your door' — creates a written record and makes false complaints much harder to stick.","Un mensaje rápido — 'en camino' o 'dejado en tu puerta' — crea un registro escrito y hace que las quejas falsas sean mucho más difíciles de sostener."),urgent:true},
+{e:"📍",t:t("Keep GPS on the entire shift","Mantén el GPS encendido todo el turno"),d:t("Location history proves you were at the drop-off address at the right time. Turn it off and you lose your alibi.","El historial de ubicación demuestra que estuviste en la dirección de entrega a la hora correcta. Si lo apagas, pierdes tu coartada."),urgent:true},
+{e:"🖼️",t:t("Screenshot your delivery confirmation","Captura tu confirmación de entrega"),d:t("Save the app's confirmation screen after every delivery. If the platform's records glitch, your screenshot is the backup.","Guarda la pantalla de confirmación de la app después de cada entrega. Si los registros de la plataforma fallan, tu captura es el respaldo.")},
+{e:"💎",t:t("Doing your best always pays off","Dar lo mejor siempre vale la pena"),d:t("Consistent care — hot food hot, careful handling, warm attitude — is what turns one-time orders into loyal tippers and 5-star streaks.","El cuidado constante — comida caliente, manejo cuidadoso, actitud amable — es lo que convierte pedidos únicos en clientes fieles y rachas de 5 estrellas.")},
+{e:"📋",t:t("Note the order number on problem deliveries","Anota el número de orden en entregas problemáticas"),d:t("When anything goes wrong, write down the order number, time, and what happened. Appeals without specifics almost never win.","Cuando algo sale mal, anota el número de orden, la hora y lo que pasó. Las apelaciones sin detalles casi nunca ganan.")},
 ].map((h,i)=>(
 <div key={i} style={{background:C.s1,border:`1px solid ${C.border}`,borderRadius:14,padding:"15px 16px",marginBottom:12}}>
 <div style={{display:"flex",alignItems:"flex-start",gap:12}}>
@@ -838,8 +870,7 @@ return(
 <div style={{flex:1}}>
 {h.urgent&&<span style={{fontSize:12,fontWeight:800,color:C.red,background:"rgba(244,63,94,0.12)",borderRadius:4,padding:"2px 6px",marginBottom:4,display:"inline-block"}}>{t("CRITICAL","CRÍTICO")}</span>}
 <div style={{fontSize:14,fontWeight:700,marginBottom:5,marginTop:h.urgent?4:0}}>{h.t}</div>
-<div style={{height:10,background:"rgba(255,255,255,0.06)",borderRadius:6,width:"85%",marginBottom:6}}/>
-<div style={{height:10,background:"rgba(255,255,255,0.04)",borderRadius:6,width:"60%"}}/>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.6}}>{h.d}</div>
 </div>
 </div>
 </div>
