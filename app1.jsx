@@ -30,7 +30,7 @@ textarea:focus{border-color:#F5A623!important;outline:none;box-shadow:0 0 0 1px 
 @keyframes shimmerSlide{0%{background-position:-200% 0}100%{background-position:200% 0}}
 @keyframes navPop{0%{transform:scale(1)}40%{transform:scale(1.22)}70%{transform:scale(0.96)}100%{transform:scale(1)}}
 @keyframes lockShake{0%,100%{transform:translateX(0);box-shadow:0 0 0 0 rgba(244,63,94,0)}20%{transform:translateX(-4px);box-shadow:0 0 14px rgba(244,63,94,0.30)}40%{transform:translateX(4px);box-shadow:0 0 20px rgba(244,63,94,0.40)}50%{box-shadow:0 0 24px rgba(244,63,94,0.45)}60%{transform:translateX(-3px);box-shadow:0 0 18px rgba(244,63,94,0.35)}80%{transform:translateX(3px);box-shadow:0 0 10px rgba(244,63,94,0.20)}}
-@keyframes defenderPulse{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0),0 0 0 0 rgba(139,92,246,0),0 0 0 0 rgba(139,92,246,0)}50%{box-shadow:0 0 0 10px rgba(139,92,246,0.20),0 0 32px rgba(139,92,246,0.40),0 0 64px rgba(139,92,246,0.22)}}
+@keyframes defenderPulse{0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0),0 0 0 0 rgba(244,63,94,0),0 0 0 0 rgba(244,63,94,0)}50%{box-shadow:0 0 0 10px rgba(244,63,94,0.20),0 0 32px rgba(244,63,94,0.40),0 0 64px rgba(244,63,94,0.22)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
 .page{animation:tabSlide 0.28s cubic-bezier(0.22,1,0.36,1) forwards;}
 .float{animation:floatY 3.5s ease-in-out infinite;}
@@ -296,7 +296,7 @@ if(elapsed<TOTAL){requestAnimationFrame(tick);}else{setTimeout(onDone,400);}
 requestAnimationFrame(tick);
 },[]);
 
-const A=C.amber,G=C.green,B=C.blue,T=C.teal,P=C.purple;
+const A=C.amber,G=C.green,B=C.blue,T=C.amber,P=C.red;
 const ss=(n)=>({position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"36px 28px",opacity:scene===n?1:0,transition:"opacity 0.5s ease",pointerEvents:scene===n?"auto":"none"});
 const Divider=({color=A})=><div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${color},#fff)`,margin:"0 auto 16px",opacity:0,animation:"iUp 0.4s 0.35s cubic-bezier(0.22,1,0.36,1) both"}}/>;
 
@@ -332,7 +332,7 @@ return(
 </div>
 
 <div style={ss(2)}>
-<div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(139,92,246,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>{t("the service gap","la brecha del servicio")}</div>
+<div className="iup" style={{fontSize:12,fontWeight:800,color:"rgba(244,63,94,0.7)",letterSpacing:2.5,textTransform:"uppercase",marginBottom:18}}>{t("the service gap","la brecha del servicio")}</div>
 <div className="iup id1" style={{...S.headlineGrad(P),fontSize:34,lineHeight:1.15,textAlign:"center",marginBottom:20}}>{t("Most gig drivers","La mayoría de los conductores")}<br/>{t("were never taught","nunca aprendieron")}<br/>{t("customer service.","servicio al cliente.")}<br/>{t("That's the gap.","Esa es la brecha.")}</div>
 <Divider color={P}/>
 <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:9,width:"100%"}}>
@@ -341,7 +341,7 @@ return(
 ["🏨",t("Hotel front desk management means face-to-face de-escalation with guests who feel entitled. The customer scripts come directly from that experience — not from a textbook.","La experiencia en recepción de hotel significa calmar cara a cara a huéspedes exigentes. Los mensajes para clientes vienen directo de esa experiencia — no de un libro.")],
 ["🚗",t("DropPilot brings real professional service experience to gig drivers. The person who built this has managed both sides of the counter.","DropPilot trae experiencia real de servicio profesional a los conductores. Quien creó esto ha estado en ambos lados del mostrador.")]
 ].map(([e,txt],i)=>(
-<div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"rgba(139,92,246,0.06)",border:"1px solid rgba(139,92,246,0.18)",borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
+<div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"rgba(244,63,94,0.06)",border:"1px solid rgba(244,63,94,0.18)",borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
 <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{e}</span>
 <div style={{fontSize:12.5,color:"rgba(255,255,255,0.72)",lineHeight:1.6,fontWeight:500}}>{txt}</div>
 </div>
@@ -763,7 +763,7 @@ return(
               <div style={{fontSize:64,marginBottom:16}}>🎉</div>
               <div style={{fontSize:24,fontWeight:900,marginBottom:8}}>{t("You're Elite.","Eres Elite.")}</div>
               <div style={{fontSize:14,color:C.text2,marginBottom:26,lineHeight:1.7}}>{t("You now have lifetime access to everything in DropPilot — every template, script, training lesson, and all future app feature updates. Yours forever.","Ahora tienes acceso de por vida a todo en DropPilot — cada plantilla, mensaje, lección y todas las futuras actualizaciones. Para siempre tuyo.")}</div>
-              <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.purple,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(139,92,246,0.30),0 4px 14px rgba(139,92,246,0.35),0 14px 40px rgba(139,92,246,0.38),0 28px 64px rgba(139,92,246,0.20)",marginBottom:10}}>{t("Go to Account Defense","Ir a Defensa de Cuenta")}</button>
+              <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("defend");}} style={{background:C.red,border:"none",borderRadius:16,padding:"16px",fontSize:16,fontWeight:800,cursor:"pointer",width:"100%",color:"#fff",boxShadow:"0 0 0 1px rgba(244,63,94,0.30),0 4px 14px rgba(244,63,94,0.35),0 14px 40px rgba(244,63,94,0.38),0 28px 64px rgba(244,63,94,0.20)",marginBottom:10}}>{t("Go to Account Defense","Ir a Defensa de Cuenta")}</button>
               <button onClick={()=>{setShowPay(false);setPayStep("offer");setTab("templates");}} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"13px",fontSize:14,fontWeight:700,cursor:"pointer",width:"100%",color:C.text2}}>{t("See Message Templates","Ver Plantillas de Mensajes")}</button>
             </div>
           )}
