@@ -1342,11 +1342,13 @@ static getDerivedStateFromError(err){return{err};}
 componentDidCatch(err,info){if(window.console)console.error("DropPilot error:",err,info);}
 render(){
 if(this.state.err){
+var _lang="en"; try{ _lang=localStorage.getItem("dp3-lang")||"en"; }catch(e){}
+var _isEs=_lang!=="en";
 return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"32px 24px",background:"#07080A",color:"#EDF0F7",fontFamily:"system-ui,sans-serif",textAlign:"center"}},
 React.createElement("div",{style:{maxWidth:380}},
 React.createElement("div",{style:{fontSize:48,marginBottom:16}},"⚠️"),
-React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:8}},t("Something went wrong","Algo salió mal")),
-React.createElement("div",{style:{fontSize:14,color:"#8B95A8",lineHeight:1.6,marginBottom:24}},"The app hit an unexpected error. Your saved progress is fine — try reloading. If this keeps happening, email support@droppilot.app."),
+React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:8}},_isEs?"Algo salió mal":"Something went wrong"),
+React.createElement("div",{style:{fontSize:14,color:"#8B95A8",lineHeight:1.6,marginBottom:24}},_isEs?"La app encontró un error inesperado. Tu progreso está a salvo — intenta recargar. Si sigue pasando, escribe a support@droppilot.app.":"The app hit an unexpected error. Your saved progress is fine — try reloading. If this keeps happening, email support@droppilot.app."),
 React.createElement("button",{onClick:()=>window.location.reload(), style:{background:"linear-gradient(135deg,#F5A623,#C8820A)",border:"none",borderRadius:99,padding:"12px 28px",fontSize:14,fontWeight:800,color:"#000",cursor:"pointer"}},"Reload")
 )
 );
