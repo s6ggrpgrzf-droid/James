@@ -34,17 +34,7 @@ console.error = function(){
     (0,eval)(out1 + "\n;\n" + out2);
     setTimeout(function(){
       if(window.__appErr){
-        // Extract component names from componentStack, e.g. "at App" -> "App"
-        var m = window.__appErr.match(/COMP:([\s\S]*)/);
-        var comps = "none";
-        if(m){
-          var names = m[1].match(/at ([A-Za-z_]+)/g) || [];
-          comps = names.map(function(s){return s.slice(3);}).join(">");
-        }
-        // Also get the first stack line after the error message
-        var lines = window.__appErr.split("|");
-        var loc = lines.length>1 ? lines[1].slice(0,60) : "";
-        document.title = "COMP:" + comps + " LOC:" + loc;
+        document.title = "ERR:" + window.__appErr.slice(0,180).replace(/\n/g,"|").replace(/\s+/g," ");
       } else {
         document.title = "NO-ERROR";
       }
