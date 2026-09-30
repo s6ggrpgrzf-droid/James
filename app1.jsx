@@ -323,9 +323,9 @@ return(
 [t("Your rating is a customer service score — every delivery adds to it.","Tu calificación es un puntaje de servicio al cliente — cada entrega suma."),"rgba(245,166,35,0.08)","rgba(245,166,35,0.25)"],
 [t("Tips are emotional, not logical. Customers tip how they felt, not how fast you were.","Las propinas son emocionales, no lógicas. Los clientes dan propina según cómo se sintieron, no según tu velocidad."),"rgba(59,130,246,0.08)","rgba(59,130,246,0.25)"],
 [t("Drivers who master service earn significantly more. Same roads. Same apps.","Los conductores que dominan el servicio ganan mucho más. Mismas calles. Mismas apps."),"rgba(16,185,129,0.08)","rgba(16,185,129,0.25)"]
-].map(([t,bg,border],i)=>(
+].map(([txt,bg,border],i)=>(
 <div key={i} className="iup" style={{padding:"12px 15px",background:bg,border:`1px solid ${border}`,borderRadius:13,animationDelay:`${0.3+i*0.14}s`,opacity:0}}>
-<div style={{fontSize:13,color:"rgba(255,255,255,0.8)",lineHeight:1.55,fontWeight:600}}>{t}</div>
+<div style={{fontSize:13,color:"rgba(255,255,255,0.8)",lineHeight:1.55,fontWeight:600}}>{txt}</div>
 </div>
 ))}
 </div>
@@ -340,10 +340,10 @@ return(
 ["📞",t("Built by someone who managed call center teams processing support tickets daily — who knows exactly how your appeals get read and what actually gets your account reinstated.","Creado por alguien que dirigió equipos de call center procesando tickets de soporte a diario — que sabe exactamente cómo se leen tus apelaciones y qué logra que te reactiven la cuenta.")],
 ["🏨",t("Hotel front desk management means face-to-face de-escalation with guests who feel entitled. The customer scripts come directly from that experience — not from a textbook.","La experiencia en recepción de hotel significa calmar cara a cara a huéspedes exigentes. Los mensajes para clientes vienen directo de esa experiencia — no de un libro.")],
 ["🚗",t("DropPilot brings real professional service experience to gig drivers. The person who built this has managed both sides of the counter.","DropPilot trae experiencia real de servicio profesional a los conductores. Quien creó esto ha estado en ambos lados del mostrador.")]
-].map(([e,t],i)=>(
+].map(([e,txt],i)=>(
 <div key={i} className="iup" style={{display:"flex",alignItems:"flex-start",gap:12,padding:"12px 14px",background:"rgba(139,92,246,0.06)",border:"1px solid rgba(139,92,246,0.18)",borderRadius:13,animationDelay:`${0.28+i*0.14}s`,opacity:0}}>
 <span style={{fontSize:18,flexShrink:0,marginTop:1}}>{e}</span>
-<div style={{fontSize:12.5,color:"rgba(255,255,255,0.72)",lineHeight:1.6,fontWeight:500}}>{t}</div>
+<div style={{fontSize:12.5,color:"rgba(255,255,255,0.72)",lineHeight:1.6,fontWeight:500}}>{txt}</div>
 </div>
 ))}
 </div>
@@ -412,10 +412,10 @@ return(
 <div className="iup id1" style={{fontSize:11,color:"rgba(255,255,255,0.28)",letterSpacing:"4px",fontWeight:700,textTransform:"uppercase",marginBottom:22}}>{t("Customer Service · Gig Edition","Servicio al Cliente · Edición Gig")}</div>
 <div style={{width:36,height:2,borderRadius:99,background:`linear-gradient(90deg,${A},#fff)`,margin:"0 auto 22px",animation:"iUp 0.4s 0.28s both",opacity:0}}/>
 <div className="iup id2" style={{display:"flex",flexDirection:"column",gap:7,marginBottom:26,width:"100%"}}>
-{[["⭐",t("Earn","Ganar"),A,t("Free","Gratis")],["💬",t("Scripts","Mensajes"),B,t("Elite","Elite")],["📖",t("Basics","Básicos"),T,t("Elite","Elite")],["🛡️",t("Defend","Defensa"),P,t("Elite","Elite")],["🎓",t("Training","Capacitación"),A,t("Elite","Elite")]].map(([e,t,col,badge],i)=>(
+{[["⭐",t("Earn","Ganar"),A,t("Free","Gratis")],["💬",t("Scripts","Mensajes"),B,t("Elite","Elite")],["📖",t("Basics","Básicos"),T,t("Elite","Elite")],["🛡️",t("Defend","Defensa"),P,t("Elite","Elite")],["🎓",t("Training","Capacitación"),A,t("Elite","Elite")]].map(([e,label,col,badge],i)=>(
 <div key={i} className="iup" style={{display:"flex",alignItems:"center",gap:12,padding:"9px 14px",background:"rgba(255,255,255,0.04)",borderRadius:12,border:"1px solid rgba(255,255,255,0.07)",animationDelay:`${0.25+i*0.09}s`,opacity:0}}>
 <span style={{fontSize:16,flexShrink:0}}>{e}</span>
-<span style={{fontSize:13,color:"rgba(255,255,255,0.75)",fontWeight:600,flex:1}}>{t}</span>
+<span style={{fontSize:13,color:"rgba(255,255,255,0.75)",fontWeight:600,flex:1}}>{label}</span>
 <span style={{fontSize:11,fontWeight:800,padding:"3px 9px",borderRadius:6,background:badge===t("Free","Gratis")?"rgba(16,185,129,0.15)":"rgba(245,166,35,0.12)",color:badge===t("Free","Gratis")?G:A,border:`1px solid ${badge===t("Free","Gratis")?"rgba(16,185,129,0.3)":"rgba(245,166,35,0.25)"}`}}>{badge}</span>
 </div>
 ))}
