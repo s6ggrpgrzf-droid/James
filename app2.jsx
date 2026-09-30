@@ -69,7 +69,7 @@ const [appealSub, setAppealSub] = useState(null);
 const [checks, setChecks] = useState([]);
 const [noteInput, setNoteInput] = useState("");
 const [notes, setNotes] = useState([]);
-const STRIPE_LINK = "/api/checkout"; // verified Stripe flow (replaces stale buy.stripe.com payment link)
+const STRIPE_LINK = "https://buy.stripe.com/cNieVd2z0acu3Wjfoi48000";
 const searchDebounce = useRef(null);
 const [searchDisplay, setSearchDisplay] = useState("");
 useEffect(()=>()=>{
@@ -1342,7 +1342,7 @@ static getDerivedStateFromError(err){return{err};}
 componentDidCatch(err,info){if(window.console)console.error("DropPilot error:",err,info);}
 render(){
 if(this.state.err){
-var _lang="en"; try{ _lang=localStorage.getItem("dp3-lang")||"en"; }catch(e){}
+var _lang="en"; try{ var _raw=localStorage.getItem("dp3-lang"); _lang=_raw?JSON.parse(_raw):"en"; if(typeof _lang!=="string")_lang="en"; }catch(e){ try{ _lang=localStorage.getItem("dp3-lang")||"en"; }catch(e2){} }
 var _isEs=_lang!=="en";
 return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"32px 24px",background:"#07080A",color:"#EDF0F7",fontFamily:"system-ui,sans-serif",textAlign:"center"}},
 React.createElement("div",{style:{maxWidth:380}},
