@@ -44,6 +44,18 @@ Disallow: /
 User-agent: DataForSeoBot
 Disallow: /
 
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Meta-ExternalFetcher
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
 # Allow Google/Bing for SEO (remove these lines if you want full privacy)
 User-agent: Googlebot
 Allow: /
