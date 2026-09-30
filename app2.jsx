@@ -1,4 +1,3 @@
-const STRIPE_LINK = "/api/checkout"; // in-app Elite button uses the verified Stripe Checkout flow (not a payment link)
 function App() {
 const [tab, setTab] = useState("tips");
 const [navPop, setNavPop] = useState(null);
@@ -70,6 +69,7 @@ const [appealSub, setAppealSub] = useState(null);
 const [checks, setChecks] = useState([]);
 const [noteInput, setNoteInput] = useState("");
 const [notes, setNotes] = useState([]);
+const STRIPE_LINK = "https://buy.stripe.com/cNieVd2z0acu3Wjfoi48000";
 const searchDebounce = useRef(null);
 const [searchDisplay, setSearchDisplay] = useState("");
 useEffect(()=>()=>{
@@ -1347,7 +1347,7 @@ var _isEs=_lang!=="en";
 return React.createElement("div",{style:{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"32px 24px",background:"#07080A",color:"#EDF0F7",fontFamily:"system-ui,sans-serif",textAlign:"center"}},
 React.createElement("div",{style:{maxWidth:380}},
 React.createElement("div",{style:{fontSize:48,marginBottom:16}},"⚠️"),
-React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:8}},_isEs?"Algo salió mal":"Something went wrong"),
+React.createElement("div",{style:{fontSize:20,fontWeight:800,marginBottom:8}},_isEs?"Algo salió mal":"Something went wrong"),React.createElement("div",{style:{fontSize:11,color:"#F43F5E",marginBottom:8,wordBreak:"break-all"}},String(this.state.err&&this.state.err.message||this.state.err).slice(0,300)),
 React.createElement("div",{style:{fontSize:14,color:"#8B95A8",lineHeight:1.6,marginBottom:24}},_isEs?"La app encontró un error inesperado. Tu progreso está a salvo — intenta recargar. Si sigue pasando, escribe a support@droppilot.app.":"The app hit an unexpected error. Your saved progress is fine — try reloading. If this keeps happening, email support@droppilot.app."),
 React.createElement("button",{onClick:()=>window.location.reload(), style:{background:"linear-gradient(135deg,#F5A623,#C8820A)",border:"none",borderRadius:99,padding:"12px 28px",fontSize:14,fontWeight:800,color:"#000",cursor:"pointer"}},"Reload")
 )
