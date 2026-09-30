@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>app1.js only test</title></head>
+<body style="background:#111;color:#0f0;font-family:monospace;padding:20px">
+<div id="log">LOADING...<br></div>
+<script>
+window.onerror=function(m,s,l){document.getElementById('log').innerHTML+="ERR: "+m+" @"+s+":"+l+"<br>";document.title="ERR";};
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="content-en1.js"></script>
+<script src="content-en2.js"></script>
+<script src="content-es1.js"></script>
+<script src="content-es2.js"></script>
+<script src="app1.js" onload="document.getElementById('log').innerHTML+='app1.js loaded, C='+(typeof C)+'<br>';document.title='APP1-DONE';"></script>
+</body></html>
