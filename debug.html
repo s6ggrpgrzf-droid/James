@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>Debug</title></head>
+<body style="background:#111;color:#0f0;font-family:monospace;padding:20px">
+<div id="log">LOADING...<br></div>
+<script>
+window.__errs=[];
+window.onerror=function(m,s,l,c){window.__errs.push("ERR: "+m+" @"+s+":"+l);document.getElementById('log').innerHTML+=("ERR: "+m+" @"+s+":"+l+"<br>");document.title="ERR: "+String(m).slice(0,60);};
+window.onunhandledrejection=function(e){window.__errs.push("REJ: "+(e.reason&&e.reason.message||e.reason));document.getElementById('log').innerHTML+=("REJ: "+(e.reason&&e.reason.message||e.reason)+"<br>");};
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" onload="document.getElementById('log').innerHTML+='React loaded: '+typeof React+'<br>'" onerror="document.getElementById('log').innerHTML+='React FAILED<br>'"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" onload="document.getElementById('log').innerHTML+='ReactDOM loaded: '+typeof ReactDOM+'<br>'" onerror="document.getElementById('log').innerHTML+='ReactDOM FAILED<br>'"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js" onload="document.getElementById('log').innerHTML+='Babel loaded: '+typeof Babel+'<br>'" onerror="document.getElementById('log').innerHTML+='Babel FAILED<br>'"></script>
+<script src="content-en1.js" onload="document.getElementById('log').innerHTML+='en1: '+typeof ALL_TIPS+'<br>'" onerror="document.getElementById('log').innerHTML+='en1 FAILED<br>'"></script>
+<script src="content-en2.js" onload="document.getElementById('log').innerHTML+='en2: '+typeof LEARN_CATS+'<br>'" onerror="document.getElementById('log').innerHTML+='en2 FAILED<br>'"></script>
+<script src="content-es1.js" onload="document.getElementById('log').innerHTML+='es1: '+typeof MSG_CATS_ES+'<br>'" onerror="document.getElementById('log').innerHTML+='es1 FAILED<br>'"></script>
+<script src="content-es2.js" onload="document.getElementById('log').innerHTML+='es2: '+typeof VIDEOS_ES+'<br>'" onerror="document.getElementById('log').innerHTML+='es2 FAILED<br>'"></script>
+<script type="text/babel" data-presets="react,env" src="app1.jsx"></script>
+<script type="text/babel" data-presets="react,env" src="app2.jsx"></script>
+<script>
+setTimeout(function(){
+  var l=document.getElementById('log');
+  l.innerHTML+='--- after 8s ---<br>';
+  l.innerHTML+='React: '+typeof React+', ReactDOM: '+typeof ReactDOM+', Babel: '+typeof Babel+'<br>';
+  l.innerHTML+='App: '+typeof App+', ErrorBoundary: '+typeof ErrorBoundary+'<br>';
+  l.innerHTML+='root children: '+document.getElementById('root').childNodes.length+'<br>';
+  l.innerHTML+='root html: '+document.getElementById('root').innerHTML.slice(0,200)+'<br>';
+  document.title='DBG-DONE errs='+window.__errs.length;
+},8000);
+</script>
+<div id="root"></div>
+</body></html>
