@@ -27,8 +27,8 @@ console.error = function(){
   try{
     var r = await Promise.all([fetch("app1.jsx").then(x=>x.text()), fetch("app2.jsx").then(x=>x.text())]);
     document.title = "TRANSFORMING";
-    var out1 = Babel.transform(r[0], {presets:["react","env"]}).code;
-    var out2 = Babel.transform(r[1], {presets:["react","env"]}).code;
+    var out1 = Babel.transform(r[0], {presets:["react"]}).code;
+    var out2 = Babel.transform(r[1], {presets:["react"]}).code;
     document.title = "EVALING";
     (0,eval)(out1 + "\n;\n" + out2);
     setTimeout(function(){
