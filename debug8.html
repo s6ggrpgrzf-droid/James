@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>TESTING</title></head>
+<body>
+<div id="root"></div>
+<script>
+window.__appError = null;
+var _oe = console.error;
+console.error = function(){
+  var a = Array.prototype.slice.call(arguments);
+  if(a[0]==="DropPilot error:" && a[1]) window.__appError = String(a[1].message||a[1]).slice(0,100);
+  return _oe.apply(console, arguments);
+};
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="content-en1.js"></script>
+<script src="content-en2.js"></script>
+<script src="content-es1.js"></script>
+<script src="content-es2.js"></script>
+<script>
+(async function(){
+  document.title = "FETCHING";
+  try{
+    // ONLY app2.jsx, with minimal app1 stubs
+    var stub = "const C={bg:'#000'}; const S={}; const pick=(l,e,s)=>e; async function load(k,f){return f;} async function save(k,v){} const CSS='';";
+    var r2 = await fetch("app2.jsx").then(x=>x.text());
+    document.title = "TRANSFORMING";
+    var out1 = Babel.transform(stub, {presets:["react"]}).code;
+    var out2 = Babel.transform(r2, {presets:["react"]}).code;
+    document.title = "EVALING";
+    (0,eval)(out1 + "\n;\n" + out2);
+    setTimeout(function(){
+      document.title = window.__appError ? "APPERR: "+window.__appError : "NO-ERROR";
+    }, 4000);
+  }catch(e){
+    document.title = "ERROR: " + String(e.message||e).slice(0,80);
+  }
+})();
+</script>
+</body></html>
