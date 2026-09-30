@@ -75,12 +75,12 @@
       ]);
       var out1, out2;
       try{
-        out1 = Babel.transform(results[0], {presets:["react","env"]}).code;
+        out1 = Babel.transform(results[0], {presets:["react"]}).code;
       }catch(te){
         return fail("app1.jsx transform failed: " + (te.message || te));
       }
       try{
-        out2 = Babel.transform(results[1], {presets:["react","env"]}).code;
+        out2 = Babel.transform(results[1], {presets:["react"]}).code;
       }catch(te){
         return fail("app2.jsx transform failed: " + (te.message || te));
       }
