@@ -48,53 +48,14 @@
       <div class="s-msg">DropPilot · Customer Service for Gig Drivers</div>
     </div>
   </div>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="content-en1.js"></script>
   <script src="content-en2.js"></script>
   <script src="content-es1.js"></script>
   <script src="content-es2.js"></script>
-  <script>
-  // Manual JSX loader: fetches app1.jsx + app2.jsx, transpiles with Babel,
-  // and evaluates in a single scope. (Babel's built-in text/babel src handling
-  // fails silently on some deployments; this is explicit and debuggable.)
-  (async function(){
-    function fail(msg){
-      console.error("[DropPilot loader]", msg);
-      var r = document.getElementById("root");
-      if(r) r.innerHTML = '<div style="color:#F43F5E;padding:40px;font-family:sans-serif;max-width:600px;margin:0 auto">'
-        + '<h2>Could not start DropPilot</h2>'
-        + '<p style="margin-top:12px;opacity:0.8">' + String(msg).replace(/</g,"&lt;") + '</p>'
-        + '<p style="margin-top:12px;opacity:0.6">Please check your connection and reload.</p></div>';
-    }
-    try{
-      if(typeof Babel === "undefined") return fail("Babel failed to load from CDN.");
-      var results = await Promise.all([
-        fetch("app1.jsx").then(function(r){ if(!r.ok) throw new Error("app1.jsx HTTP "+r.status); return r.text(); }),
-        fetch("app2.jsx").then(function(r){ if(!r.ok) throw new Error("app2.jsx HTTP "+r.status); return r.text(); })
-      ]);
-      var out1, out2;
-      try{
-        out1 = Babel.transform(results[0], {presets:["react"]}).code;
-      }catch(te){
-        return fail("app1.jsx transform failed: " + (te.message || te));
-      }
-      try{
-        out2 = Babel.transform(results[1], {presets:["react"]}).code;
-      }catch(te){
-        return fail("app2.jsx transform failed: " + (te.message || te));
-      }
-      try{
-        (0,eval)(out1 + "\n;\n" + out2);
-      }catch(ee){
-        return fail("App error: " + (ee.message || ee));
-      }
-    }catch(e){
-      fail(e.message || e);
-    }
-  })();
-  </script>
+  <!-- app.bundle.js is precompiled from app1.jsx + app2.jsx by `npm run build`
+       (replaces the old in-browser Babel transpile — see tools/build.mjs). -->
+  <script defer src="app.bundle.js"></script>
 </body>
 </html>
-<script async data-explicit-opt-in="true" data-deployment-id="dpl_qYCyTmF8hrKKouN5Tfr81vAaWJ8G" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
