@@ -440,7 +440,7 @@ style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)
 {fav?"★":"☆"}
 </button>
 ):i<4?(
-<span style={{fontSize:12,fontWeight:700,color:C.green,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Free</span>
+<span style={{fontSize:12,fontWeight:700,color:C.green,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>{t("Free","Gratis")}</span>
 ):(
 <span style={{fontSize:12,fontWeight:700,color:C.amber,background:"rgba(245,166,35,0.1)",border:"1px solid rgba(245,166,35,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>Elite</span>
 )}
@@ -579,7 +579,7 @@ return(
 <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.amber},transparent)`}}/>
 <div style={{fontSize:44,marginBottom:12}}>🎓</div>
 <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.amber})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("Unlock Deeper Learning","Desbloquear Aprendizaje Profundo")}</div>
-<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>t("The free tips are just the start. Elite unlocks the full psychology playbook — why people tip, how to handle upset customers, what top earners do differently, and science-backed scripts for every moment.","Los consejos gratis son solo el inicio. Elite desbloquea el manual completo de psicología — por qué la gente da propina, cómo manejar clientes molestos, qué hacen diferente los que más ganan, y guiones respaldados por ciencia para cada momento.")</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>{t("The free tips are just the start. Elite unlocks the full psychology playbook — why people tip, how to handle upset customers, what top earners do differently, and science-backed scripts for every moment.","Los consejos gratis son solo el inicio. Elite desbloquea el manual completo de psicología — por qué la gente da propina, cómo manejar clientes molestos, qué hacen diferente los que más ganan, y guiones respaldados por ciencia para cada momento.")}</div>
 <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
 {[["🧠",t("Reading people — psychology you can use at every door","Leer a la gente — psicología para cada puerta")],["🔥",t("De-escalation — exactly what to say when someone's upset","Desescalada — exactamente qué decir cuando alguien está molesto")],["💰",t("Tip science — the research behind what makes people tip","Ciencia de propinas — la investigación detrás de lo que hace que la gente dé propina")],["📋",t("Recovery scripts — cold food, missing items, your mistakes","Guiones de recuperación — comida fría, artículos faltantes, tus errores")],["🗺️",t("Delivery situations — apartments, hotels, grocery vs food","Situaciones de entrega — apartamentos, hoteles, mercado vs comida")],["🏆",t("Staying sharp — burnout, mindset, long-term consistency","Mantente alerta — agotamiento, mentalidad, consistencia a largo plazo")]].map(([e,f],i)=>(
 <div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(245,166,35,0.06)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(245,166,35,0.12)"}}>
@@ -632,7 +632,7 @@ return(
 <div style={{position:"absolute",top:0,left:0,right:0,height:1,background:`linear-gradient(90deg,transparent,${C.blue},transparent)`}}/>
 <div style={{fontSize:44,marginBottom:12}}>💬</div>
 <div style={{fontSize:19,fontWeight:900,marginBottom:8,background:`linear-gradient(135deg,${C.text} 20%,${C.blue})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>{t("30 Ready-to-Send Scripts","30 Mensajes Listos para Enviar")}</div>
-<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>t("Stop guessing what to say. Every situation you'll face — from running late to gate codes to upset customers — has a proven script ready for you.","Deja de adivinar qué decir. Cada situación que enfrentes — desde llegar tarde hasta códigos de puerta y clientes molestos — tiene un guion probado listo para ti.")</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.75,marginBottom:16}}>{t("Stop guessing what to say. Every situation you'll face — from running late to gate codes to upset customers — has a proven script ready for you.","Deja de adivinar qué decir. Cada situación que enfrentes — desde llegar tarde hasta códigos de puerta y clientes molestos — tiene un guion probado listo para ti.")}</div>
 <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18,textAlign:"left"}}>
 {[["📲",t("Arrival texts that get 5-star ratings before you knock","Textos de llegada que consiguen 5 estrellas antes de tocar")],["⏰",t("Late delivery messages that flip frustration into forgiveness","Mensajes de retraso que convierten frustración en perdón")],["🚨",t("Problem scripts — wrong address, gate codes, no answer","Guiones para problemas — dirección incorrecta, códigos, sin respuesta")],["⭐",t("What to say (and never say) to earn better tips","Qué decir (y qué nunca decir) para ganar mejores propinas")],["🏢",t("Scripts for hotels, gated communities & offices","Guiones para hoteles, comunidades cerradas y oficinas")]].map(([e,f],i)=>(
 <div key={i} style={{display:"flex",alignItems:"center",gap:9,background:"rgba(59,130,246,0.07)",borderRadius:9,padding:"9px 12px",border:"1px solid rgba(59,130,246,0.13)"}}>
@@ -755,8 +755,8 @@ return(
 <div style={{fontSize:11,fontWeight:800,color:C.red,letterSpacing:"1.5px",textTransform:"uppercase",marginBottom:2,display:"flex",alignItems:"center",gap:6}}>
 <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:"#10B981",boxShadow:"0 0 0 4px rgba(16,185,129,0.18)"}} />{t("📡 Policy Watch","📡 Cambios de Política")}</div>
 <div style={{display:"flex",alignItems:"center",gap:6}}>
-<span style={{fontSize:13,color:C.text2}}>{pick(lang,POLICY_WATCH,POLICY_WATCH_ES).month} · Last updated {pick(lang,POLICY_WATCH,POLICY_WATCH_ES).lastUpdated}</span>
-{newCount>0&&<span style={{background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.35)",borderRadius:6,padding:"2px 7px",fontSize:10,fontWeight:800,color:C.amber}}>{newCount} new</span>}
+<span style={{fontSize:13,color:C.text2}}>{pick(lang,POLICY_WATCH,POLICY_WATCH_ES).month} · {t("Last updated","Última actualización")}{" "}{pick(lang,POLICY_WATCH,POLICY_WATCH_ES).lastUpdated}</span>
+{newCount>0&&<span style={{background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.35)",borderRadius:6,padding:"2px 7px",fontSize:10,fontWeight:800,color:C.amber}}>{newCount}{" "}{t("new","nuevas")}</span>}
 </div>
 </div>
 {pro?(
@@ -1125,7 +1125,7 @@ return(
 </div>
 ):(
 <div style={{padding:"16px"}}>
-<div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>{pick(lang,SCENARIOS,SCENARIOS_ES).length} real-world gig driver situations. Pick a response, get instant feedback on why it works — or doesn't. Covers false complaints, angry customers, rating threats, de-escalation, and more.</div>
+<div style={{fontSize:13,color:C.text2,lineHeight:1.6,marginBottom:14}}>{t(`${pick(lang,SCENARIOS,SCENARIOS_ES).length} real-world gig driver situations. Pick a response, get instant feedback on why it works — or doesn't. Covers false complaints, angry customers, rating threats, de-escalation, and more.`,`${pick(lang,SCENARIOS,SCENARIOS_ES).length} situaciones reales de conductores de reparto. Elige una respuesta y recibe comentarios instantáneos sobre por qué funciona — o no. Cubre quejas falsas, clientes molestos, amenazas de calificación, desescalada y más.`)}</div>
 <button onClick={()=>{setShowPay(true);setPayStep("offer");}} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>{t("Unlock Elite — $10 one time","Desbloquear Elite — $10 una vez")}</button>
 </div>
 )}
@@ -1242,7 +1242,7 @@ return(
 </div>
 )}
 </div>
-<button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label="Quick Help" style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:C.r.full,background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:C.sh.accent(C.blue),WebkitTapHighlightColor:"transparent",transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`}}>⚡</button>
+<button onClick={()=>{if(!pro){setShowPay(true);setPayStep("offer");return;}setShowQuickHelp(true);setQhActive(null);setQhCopied(false);}} aria-label={t("Quick Help","Ayuda rápida")} style={{position:"fixed",bottom:74,right:16,zIndex:90,width:52,height:52,borderRadius:C.r.full,background:`linear-gradient(135deg,${C.blue},#1d4ed8)`,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,boxShadow:C.sh.accent(C.blue),WebkitTapHighlightColor:"transparent",transition:`transform 0.25s ${C.ease.out}, box-shadow 0.25s ${C.ease.out}`}}>⚡</button>
 {showQuickHelp&&(
 <div style={{position:"fixed",inset:0,zIndex:500,display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
 <div onClick={()=>{setShowQuickHelp(false);setQhActive(null);}} style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.78)"}}/>
