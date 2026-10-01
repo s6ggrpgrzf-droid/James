@@ -8,7 +8,9 @@
 // Requires the STRIPE_SECRET_KEY environment variable (a restricted key with
 // Checkout Sessions write access is enough).
 
-const PRICE_ID = "price_1TDCkgFiKgrWyiUSXyDZW2H3"; // DropPilot Elite — $10 one-time
+// Price ID comes from the STRIPE_PRICE_ID env var so preview deployments can
+// point at a test-mode price. Falls back to the live $10 price when unset.
+const PRICE_ID = process.env.STRIPE_PRICE_ID || "price_1TDCkgFiKgrWyiUSXyDZW2H3"; // DropPilot Elite — $10 one-time
 
 module.exports = async (req, res) => {
   try {
