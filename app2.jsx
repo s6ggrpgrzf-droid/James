@@ -445,7 +445,7 @@ style={{background:open?C.s2:C.s1,border:`1px solid ${open?"rgba(245,166,35,0.3)
 ):(
 <span style={{fontSize:12,fontWeight:700,color:C.green,background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:6,padding:"3px 8px",flexShrink:0}}>{t("Free","Gratis")}</span>
 )}
-<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>}
+<div style={{color:C.text3,fontSize:13,flexShrink:0,transition:"transform 0.18s",transform:open?"rotate(180deg)":"none"}}>▾</div>
 </div>
 {open&&(
 <div style={{marginTop:14,paddingTop:14,borderTop:"1px solid rgba(255,255,255,0.07)"}}>
