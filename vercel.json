@@ -1,1 +1,1 @@
-{"$schema":"https://openapi.vercel.sh/vercel.json","outputDirectory":"public"}
+{"$schema":"https://openapi.vercel.sh/vercel.json","functions":{"api/content.js":{"includeFiles":"content-src/**"}},"outputDirectory":"public"}
