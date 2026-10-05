@@ -15,7 +15,9 @@
  *   shell renders fully offline after the first visit.
  */
 
-const VERSION = "droppilot-v1";
+// __BUILD_VERSION__ is replaced at build time (tools/build.mjs) with the
+// Vercel commit SHA or a timestamp, so every deploy gets a fresh cache.
+const VERSION = "droppilot-__BUILD_VERSION__";
 const STATIC_CACHE = VERSION + "-static";
 const RUNTIME_CACHE = VERSION + "-runtime";
 
