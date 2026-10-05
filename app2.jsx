@@ -112,8 +112,9 @@ showToast(t("Tip of the Day turned off.","Consejo del día desactivado."));
 }
 }
 useEffect(()=>{
-const params = new URLSearchParams(window.location.search);
-const sessionId = params.get("session_id");
+// Elite is decided by the SERVER (signed dp_elite cookie), never by URL
+// params or localStorage. The edge middleware sets the cookie after
+// verifying a paid Stripe session; /api/status reads it here.
 const doLoad = (verifiedPro) => {
 Promise.all([
 load("dp3-cfg",{name:""}),
@@ -125,23 +126,34 @@ load("dp3-notes",[]),
 load("dp3-notif",false),
 load("dp3-lang","en"),
 ]).then(([c,p,seen,ft,ftpl,n,notif,l])=>{
-setCfg_(c); setPro(verifiedPro||!!p); setLoaded(true);
+setCfg_(c); setPro(verifiedPro); setLoaded(true);
 setFavTips(new Set(ft.filter(f=>typeof f==="number"&&f>=0&&f<ALL_TIPS.length)));
 setFavTemplates(new Set(ftpl.filter(k=>typeof k==="string")));
 setNotes(n);
 setNotifOn(!!notif);
 setLang(l||"en");
-if(verifiedPro){ setShowPay(true); setPayStep("done"); }
+if(verifiedPro){ save("dp3-elite",true); setShowPay(true); setPayStep("done"); }
 else if(!seen) setShowIntro(true);
 });
 };
-if(sessionId){
-history.replaceState(null,"",window.location.pathname);
-save("dp3-elite", true);
-doLoad(true);
-} else {
-doLoad(false);
+// Ask the server whether this browser is elite. If so, pull the full
+// content files first — they overwrite the free globals loaded by app.html.
+fetch("/api/status",{credentials:"include"}).then(r=>r.json()).then(async (s)=>{
+const elite = !!(s && s.elite);
+if(elite){
+try{
+for(const f of ["en1","en2","es1","es2"]){
+const r = await fetch("/api/content?f="+f,{credentials:"include"});
+if(r.ok){ (0,eval)(await r.text()); }
 }
+}catch(e){/* fall through with free content */}
+}
+doLoad(elite);
+}).catch(()=>{
+// Offline: fall back to the cached local flag so elite keeps working
+// without a signal (content served from the service-worker cache).
+load("dp3-elite",false).then(p=>doLoad(!!p));
+});
 },[]);
 const setCfg = useCallback(d=>{setCfg_(d); save("dp3-cfg",d);},[]);
 function copyMsg(text,key){
@@ -251,7 +263,7 @@ return(
 <div style={{fontSize:15,fontWeight:800,marginBottom:16}}>{t("⚙ Admin Settings","⚙ Ajustes de Admin")}</div>
 <div style={{borderTop:"1px solid rgba(255,255,255,0.07)",paddingTop:14,marginBottom:14}}>
 <button onClick={()=>{setShowIntro(true);setShowCfg(false);save("dp3-intro-seen",false);}} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:11,padding:"11px 12px",color:C.text2,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>{t("↺ Replay Intro","↺ Repetir Intro")}</button>
-{pro&&<button onClick={()=>{setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>{t("Reset Elite Access","Restablecer Acceso Elite")}</button>}
+{pro&&<button onClick={()=>{fetch("/api/reset",{credentials:"include"}).catch(()=>{});setPro(false);save("dp3-elite",false);}} style={{background:"rgba(244,63,94,0.08)",border:"1px solid rgba(244,63,94,0.2)",borderRadius:11,padding:"11px 12px",color:C.red,fontSize:13,width:"100%",cursor:"pointer",marginBottom:8}}>{t("Reset Elite Access","Restablecer Acceso Elite")}</button>}
 </div>
 <button onClick={()=>setShowCfg(false)} style={{...S.btnPrimary,borderRadius:C.r.md,padding:"14px",fontSize:14,fontWeight:800,width:"100%",letterSpacing:0}}>{t("Save & Close","Guardar y Cerrar")}</button>
 </div>
