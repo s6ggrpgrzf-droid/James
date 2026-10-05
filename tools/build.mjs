@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync, copyFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { transformSync } from "esbuild";
+import { filterFile } from "./filter-content.mjs";
 
 const SOURCES = ["app1.jsx", "app2.jsx"];
 const OUT_DIR = "public";
@@ -36,10 +37,6 @@ const STATIC = [
   "terms.html",
   "robots.txt",
   ".nojekyll",
-  "content-en1.js",
-  "content-en2.js",
-  "content-es1.js",
-  "content-es2.js",
   "manifest.webmanifest",
   "sw.js",
   "icon-192.png",
@@ -87,4 +84,23 @@ for (const file of STATIC) {
   mkdirSync(dirname(dest), { recursive: true });
   copyFileSync(file, dest);
   console.log(`Copied ${file} -> ${dest}`);
+}
+
+// Content: full sources live in content-src/ (never deployed publicly).
+// The build writes FILTERED free-tier files to public/; elite bodies are
+// stripped. Full files are served only via /api/content to verified buyers.
+const CONTENT_FILES = [
+  "content-en1.js",
+  "content-en2.js",
+  "content-es1.js",
+  "content-es2.js",
+];
+for (const file of CONTENT_FILES) {
+  const full = readFileSync(join("content-src", file), "utf8");
+  const free = filterFile(full, file);
+  const dest = join(OUT_DIR, file);
+  writeFileSync(dest, free);
+  console.log(
+    `Filtered content-src/${file} -> ${dest} (${full.length.toLocaleString()} -> ${free.length.toLocaleString()} bytes)`
+  );
 }
