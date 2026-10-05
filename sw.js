@@ -4,6 +4,9 @@
  * - /api/* and any navigation carrying ?session_id= always go to the
  *   network. The Stripe checkout session and the edge middleware's payment
  *   verification must never be served from cache.
+ * - EXCEPTION: /api/content (full elite content files) is cached at runtime
+ *   so verified elite buyers keep their content offline. The cookie-gated
+ *   endpoint only ever served it to them.
  * - App shell (same-origin static files) is precached on install and served
  *   stale-while-revalidate afterwards.
  * - Navigations are network-first with a cached fallback, so a reload with
@@ -84,6 +87,13 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
+
+  // Elite content files: cache at runtime so buyers keep them offline.
+  // (The endpoint only serves them to cookie-verified elite browsers.)
+  if (url.pathname === "/api/content") {
+    event.respondWith(staleWhileRevalidate(RUNTIME_CACHE, request));
+    return;
+  }
 
   // Never cache or intercept Stripe checkout / payment verification.
   if (isPaymentRequest(url)) return;
