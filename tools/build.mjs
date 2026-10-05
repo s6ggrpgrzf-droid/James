@@ -38,7 +38,6 @@ const STATIC = [
   "robots.txt",
   ".nojekyll",
   "manifest.webmanifest",
-  "sw.js",
   "icon-192.png",
   "icon-512.png",
 ];
@@ -104,3 +103,24 @@ for (const file of CONTENT_FILES) {
     `Filtered content-src/${file} -> ${dest} (${full.length.toLocaleString()} -> ${free.length.toLocaleString()} bytes)`
   );
 }
+
+// Vendor: third-party libs served locally (no CDN dependency, no integrity risk).
+for (const file of ["react.min.js", "react-dom.min.js"]) {
+  const dest = join(OUT_DIR, "vendor", file);
+  mkdirSync(dirname(dest), { recursive: true });
+  copyFileSync(join("vendor", file), dest);
+  console.log(`Copied vendor/${file} -> ${dest}`);
+}
+
+// Service worker: inject a unique build version so every deploy busts the
+// old cache. Uses Vercel's commit SHA when available, else a timestamp.
+const BUILD_VERSION =
+  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) || String(Date.now());
+const swSrc = readFileSync("sw.js", "utf8");
+if (!swSrc.includes("__BUILD_VERSION__")) {
+  console.error("ERROR: sw.js must contain the __BUILD_VERSION__ placeholder.");
+  process.exit(1);
+}
+const swOut = swSrc.replaceAll("__BUILD_VERSION__", BUILD_VERSION);
+writeFileSync(join(OUT_DIR, "sw.js"), swOut);
+console.log(`Wrote ${join(OUT_DIR, "sw.js")} with version ${BUILD_VERSION}`);
