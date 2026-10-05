@@ -105,11 +105,21 @@ for (const file of CONTENT_FILES) {
 }
 
 // Vendor: third-party libs served locally (no CDN dependency, no integrity risk).
-for (const file of ["react.min.js", "react-dom.min.js"]) {
-  const dest = join(OUT_DIR, "vendor", file);
+// react-dom.min.js is stored split (GitHub arg limits) and reassembled here.
+{
+  const dest = join(OUT_DIR, "vendor", "react.min.js");
   mkdirSync(dirname(dest), { recursive: true });
-  copyFileSync(join("vendor", file), dest);
-  console.log(`Copied vendor/${file} -> ${dest}`);
+  copyFileSync(join("vendor", "react.min.js"), dest);
+  console.log(`Copied vendor/react.min.js -> ${dest}`);
+}
+{
+  const parts = ["aa", "ab", "ac"].map((p) =>
+    readFileSync(join("vendor", `react-dom.min.js.part-${p}`), "utf8")
+  );
+  const dest = join(OUT_DIR, "vendor", "react-dom.min.js");
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, parts.join(""));
+  console.log(`Assembled vendor/react-dom.min.js -> ${dest} (${parts.join("").length.toLocaleString()} bytes)`);
 }
 
 // Service worker: inject a unique build version so every deploy busts the
