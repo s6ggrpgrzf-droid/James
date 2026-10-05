@@ -1,20 +1,31 @@
 // Edge gate for DropPilot Elite.
 //
-// The app unlocks Elite whenever the URL carries ?session_id=... — this
-// middleware makes sure only a genuinely PAID Stripe Checkout Session can
-// get through. Unpaid, unknown, or missing sessions are stripped from the
-// URL before the app loads, so the app never sees them.
+// Two jobs:
+//  1. Verify ?session_id= against Stripe. Paid -> set a signed, HTTP-only
+//     elite cookie and redirect to the clean URL. Unpaid/unknown -> strip
+//     the parameter and redirect.
+//  2. On later visits the signed cookie proves elite without another
+//     Stripe call.
 //
 // Runs only on /app.html. Requires STRIPE_SECRET_KEY (restricted key with
-// Checkout Sessions read access is enough).
+// Checkout Sessions read access is enough). The cookie is signed with
+// ELITE_SECRET, falling back to STRIPE_SECRET_KEY.
+
+import { issueEliteCookie, isEliteRequest } from "./lib/elite-auth.js";
 
 export const config = { matcher: "/app.html" };
+
+function redirect(url, setCookie) {
+  const headers = { Location: url.toString() };
+  if (setCookie) headers["Set-Cookie"] = setCookie;
+  return new Response(null, { status: 302, headers });
+}
 
 export default async function middleware(req) {
   const url = new URL(req.url);
   const sessionId = url.searchParams.get("session_id");
 
-  // No session id -> nothing to guard.
+  // No session id -> nothing to guard. A valid elite cookie passes through.
   if (!sessionId) return;
 
   const key = process.env.STRIPE_SECRET_KEY;
@@ -40,10 +51,15 @@ export default async function middleware(req) {
     }
   }
 
-  // Paid -> let the request through; the app unlocks Elite and remembers it.
-  if (paid) return;
+  // Strip the parameter either way so the app never sees a raw session id.
+  url.searchParams.delete("session_id");
+
+  if (paid) {
+    // Buyer verified: plant the signed elite cookie on the redirect.
+    const cookie = await issueEliteCookie();
+    return redirect(url, cookie);
+  }
 
   // Anything else -> strip the parameter and send them to the clean app URL.
-  url.searchParams.delete("session_id");
-  return Response.redirect(url.toString(), 302);
+  return redirect(url, null);
 }
